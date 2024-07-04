@@ -3,7 +3,7 @@ import { PrimaryButtonProps } from './Button.types';
 const sizeClasses = {
   small: 'px-5 py-2.5 text-lg',
   medium: 'w-36 h-12 px-3 py-2 text-base',
-  large: 'w-350px h-12 px-3 py-3 text-xl',
+  large: 'w-full h-12 px-3 py-3 text-xl',
 };
 
 const styleClasses = {
@@ -13,7 +13,10 @@ const styleClasses = {
 };
 
 /* 기본 버튼 - 로그인하기, 신청 불가 등 기본적인 형태의 버튼
-   size(small | medium | large), style(dark | bright | diabled), onClick, children 필수 입력
+
+   size, style, onClick, children 필수 입력, disabled 선택 입력
+   size 옵션 - (small | medium | large - width 100%)
+   style 옵션 - (dark-어두운 배경에 흰글씨 | bright - 흰 배경에 어두운 글씨 | disabled - 회색 배경에 흰 글씨)
    사용 예시 <Button size="small" style="dark" onClick={handleClick}>로그인하기</Button> */
 
 export function PrimaryButton({
