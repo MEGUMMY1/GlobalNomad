@@ -1,18 +1,19 @@
 import AuthInputBox from '@/components/AuthInputBox/AuthInputBox';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { FormValues } from '@/components/AuthInputBox/AuthInputBox.types';
+import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
+import InputBox from '@/components/InputBox/InputBox';
 
 export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({ mode: 'onBlur' });
+  } = useForm<loginFormValues>({ mode: 'onBlur' });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: loginFormValues) => {
     console.log(data);
   };
 
@@ -38,7 +39,7 @@ export default function Login() {
         />
         <AuthInputBox
           label="비빌번호"
-          placeholder="이메일을 입력해주세요"
+          placeholder="비밀번호를 입력해주세요"
           name="password"
           type="password"
           validation={loginValidation.password}

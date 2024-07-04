@@ -1,4 +1,4 @@
-import { InputBoxProps } from './AuthInputBox.types';
+import { inputBoxProps } from './AuthInputBox.types';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -11,10 +11,10 @@ export default function AuthInputBox({
   register,
   errors,
   eyeIconActive = false,
-}: InputBoxProps) {
+}: inputBoxProps) {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsEyeOpen(!isEyeOpen);
   };
