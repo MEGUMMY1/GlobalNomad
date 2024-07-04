@@ -1,12 +1,14 @@
-import { PrimaryButtonProps } from './Button.types';
+import Image from 'next/image';
+import closeImageWhite from '@/public/icon/x_white.svg';
+import { PrimaryButtonProps, CircleCloseButtonProps } from './Button.types';
 
-const sizeClasses = {
+const primarySizeClasses = {
   small: 'px-5 py-2.5 text-lg',
   medium: 'w-36 h-12 px-3 py-2 text-base',
   large: 'w-full h-12 px-3 py-3 text-xl',
 };
 
-const styleClasses = {
+const primaryStyleClasses = {
   dark: 'bg-nomad-black text-white',
   bright: 'bg-white text-nomad-black border border-nomad-black',
   disabled: 'bg-var-gray6 text-white',
@@ -28,11 +30,23 @@ export function PrimaryButton({
 }: PrimaryButtonProps) {
   return (
     <button
-      className={`flex items-center justify-center rounded-md ${sizeClasses[size]} ${styleClasses[style]}`}
+      className={`flex items-center justify-center rounded-md ${primarySizeClasses[size]} ${primaryStyleClasses[style]}`}
       onClick={onClick}
       disabled={disabled ?? false}
     >
       {children}
+    </button>
+  );
+}
+
+/* 원형 닫기 버튼 */
+export function CircleCloseButton({ onClick }: CircleCloseButtonProps) {
+  return (
+    <button
+      className="flex items-center justify-center w-10 h-10 rounded-full bg-nomad-black"
+      onClick={onClick}
+    >
+      <Image src={closeImageWhite} alt="닫기" />
     </button>
   );
 }

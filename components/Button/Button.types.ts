@@ -5,3 +5,7 @@ export interface PrimaryButtonProps {
   disabled?: boolean;
   onClick: () => void;
 }
+
+export interface CircleCloseButtonProps {
+  onClick: () => void;
+}
