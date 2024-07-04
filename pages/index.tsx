@@ -1,3 +1,5 @@
+import NavigationBar from '@/components/NavigationBar/NavigationBar';
+
 export default function Home() {
-  return <div>프로젝트 초기 설정</div>;
+  return <NavigationBar />;
 }
