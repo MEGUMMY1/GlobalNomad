@@ -10,9 +10,12 @@ export default function AuthInputBox({
   validation,
   register,
   errors,
+  eyeIconActive = false,
 }: InputBoxProps) {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
-  const handleClick = () => {
+
+  const handleClick = (e: any) => {
+    e.preventDefault();
     setIsEyeOpen(!isEyeOpen);
   };
 
@@ -25,12 +28,14 @@ export default function AuthInputBox({
         placeholder={placeholder}
         {...register(name, validation)}
       />
+      {/* 에러 메세지 */}
       {errors[name] && (
         <span className="text-[12px] text-var-red2">
           {errors[name]?.message}
         </span>
       )}
-      {(name === 'password' || name === 'passwordCheck') && (
+      {/* 비밀번호 보기 버튼 */}
+      {eyeIconActive && (
         <button onClick={handleClick}>
           <Image
             width={24}

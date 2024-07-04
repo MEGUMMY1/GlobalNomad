@@ -44,6 +44,7 @@ export default function Login() {
           validation={loginValidation.password}
           register={register}
           errors={errors}
+          eyeIconActive={true}
         />
         <button type="submit">버튼 추후 공통 컴포넌트로 전환 예정</button>
       </form>

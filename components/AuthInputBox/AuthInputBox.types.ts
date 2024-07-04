@@ -12,5 +12,5 @@ export interface InputBoxProps {
   validation: any; // RegisterOptions 타입으로 수정
   register: any;
   errors: any;
-  passwordIcon?: boolean;
+  eyeIconActive?: boolean;
 }
