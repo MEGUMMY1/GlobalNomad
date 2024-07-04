@@ -7,6 +7,8 @@ import notificationIcon from '@/public/icon/icon_notification.svg';
 import meatballIcon from '@/public/icon/icon_meatball.svg';
 import plusButtonIcon from '@/public/icon/btn_plus.svg';
 import minusButtonIcon from '@/public/icon/btn_minus.svg';
+import arrowCircleIcon from '@/public/icon/btn_arrow_circle.svg';
+import plusIcon from '@/public/icon/icon_plus.svg';
 import paginationLeft from '@/public/icon/btn_pagination_arrow_left.svg';
 import paginationRight from '@/public/icon/btn_pagination_arrow_right.svg';
 import arrowLeftInactive from '@/public/icon/arrow_inactive_left.svg';
@@ -176,6 +178,28 @@ export function MinusButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
       <Image src={minusButtonIcon} alt="제거하기" />
+    </button>
+  );
+}
+
+/* 원형 화살표 버튼 - 오른쪽 방향 */
+export function ArrowCircleButton({ onClick }: SimpleButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={arrowCircleIcon} alt="오른쪽 화살표" />
+    </button>
+  );
+}
+
+/* 이미지 등록하기 버튼 */
+export function ImageUploadButton({ onClick }: SimpleButtonProps) {
+  return (
+    <button
+      className="flex flex-col gap-10 items-center justify-center w-44 h-44 border border-dashed border-var-gray8 rounded-lg"
+      onClick={onClick}
+    >
+      <Image src={plusIcon} alt="추가" />
+      <p className="text-2xl">이미지 등록</p>
     </button>
   );
 }
