@@ -17,7 +17,7 @@ const primaryStyleClasses = {
 /* 기본 버튼 - 로그인하기, 신청 불가 등 기본적인 형태의 버튼
 
    size, style, onClick, children 필수 입력, disabled 선택 입력
-   size 옵션 - small | medium | large - width 100%
+   size 옵션 - small - width auto | medium - width 144px | large - width 100%
    style 옵션 - dark-어두운 배경에 흰글씨 | bright - 흰 배경에 어두운 글씨 | disabled - 회색 배경에 흰 글씨
    사용 예시 <Button size="small" style="dark" onClick={handleClick}>로그인하기</Button> */
 
@@ -39,14 +39,20 @@ export function PrimaryButton({
   );
 }
 
-/* 원형 닫기 버튼 */
+/* 원형 닫기 버튼 
+   onClick 필수 입력
+   사용 예시 - <CircleCloseButton onClick={handleClick}/> */
 export function CircleCloseButton({ onClick }: CircleCloseButtonProps) {
   return (
     <button
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-nomad-black"
+      className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-10 h-10 t:w-8 t:h-8 m:w-6 m:h-6"
       onClick={onClick}
     >
-      <Image src={closeImageWhite} alt="닫기" />
+      <Image
+        className="w-5 h-5 t:w-4 t:h-4 m:w-3 m:h-3"
+        src={closeImageWhite}
+        alt="닫기"
+      />
     </button>
   );
 }
