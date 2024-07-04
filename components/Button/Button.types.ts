@@ -6,6 +6,13 @@ export interface PrimaryButtonProps {
   onClick: () => void;
 }
 
+export interface PaginationButtonProps {
+  onClickPrev: () => void;
+  onClickNext: () => void;
+  isFirstPage?: boolean;
+  isLastPage?: boolean;
+}
+
 export interface SimpleButtonProps {
   onClick: () => void;
 }

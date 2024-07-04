@@ -9,7 +9,11 @@ import plusButtonIcon from '@/public/icon/btn_plus.svg';
 import minusButtonIcon from '@/public/icon/btn_minus.svg';
 import paginationLeft from '@/public/icon/btn_pagination_arrow_left.svg';
 import paginationRight from '@/public/icon/btn_pagination_arrow_right.svg';
-import { PrimaryButtonProps, SimpleButtonProps } from './Button.types';
+import {
+  PaginationButtonProps,
+  PrimaryButtonProps,
+  SimpleButtonProps,
+} from './Button.types';
 
 const primarySizeClasses = {
   small: 'px-5 py-2.5 text-lg',
@@ -44,6 +48,25 @@ export function PrimaryButton({
     >
       {children}
     </button>
+  );
+}
+
+/* 페이지네이션 버튼 - 좌우 버튼(검정색)으로 페이지네이션 하는 경우 
+   onClickPrev, onClickNext 필수 입력 
+   사용 예시 - <PaginationButton onClickPrev={handlePrev} onClickNext={handleNext}/> */
+export function PaginationButton({
+  onClickPrev,
+  onClickNext,
+}: PaginationButtonProps) {
+  return (
+    <div className="flex gap-2">
+      <button onClick={onClickPrev}>
+        <Image src={paginationLeft} alt="이전 페이지" />
+      </button>
+      <button onClick={onClickNext}>
+        <Image src={paginationRight} alt="다음 페이지" />
+      </button>
+    </div>
   );
 }
 
