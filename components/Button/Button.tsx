@@ -5,6 +5,10 @@ import closeIconBold from '@/public/icon/btn_x_medium_bold.svg';
 import closeIconBig from '@/public/icon/btn_x_big.svg';
 import notificationIcon from '@/public/icon/icon_notification.svg';
 import meatballIcon from '@/public/icon/icon_meatball.svg';
+import plusButtonIcon from '@/public/icon/btn_plus.svg';
+import minusButtonIcon from '@/public/icon/btn_minus.svg';
+import paginationLeft from '@/public/icon/btn_pagination_arrow_left.svg';
+import paginationRight from '@/public/icon/btn_pagination_arrow_right.svg';
 import { PrimaryButtonProps, SimpleButtonProps } from './Button.types';
 
 const primarySizeClasses = {
@@ -100,6 +104,24 @@ export function MeatballButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
       <Image src={meatballIcon} alt="더보기" />
+    </button>
+  );
+}
+
+/* 추가하기 버튼 - 항목 추가 시 사용 */
+export function PlusButton({ onClick }: SimpleButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={plusButtonIcon} alt="추가하기" />
+    </button>
+  );
+}
+
+/* 제거하기 버튼 - 항목 제거 시 사용 */
+export function MinusButton({ onClick }: SimpleButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={minusButtonIcon} alt="제거하기" />
     </button>
   );
 }
