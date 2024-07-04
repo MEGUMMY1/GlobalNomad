@@ -9,6 +9,10 @@ import plusButtonIcon from '@/public/icon/btn_plus.svg';
 import minusButtonIcon from '@/public/icon/btn_minus.svg';
 import paginationLeft from '@/public/icon/btn_pagination_arrow_left.svg';
 import paginationRight from '@/public/icon/btn_pagination_arrow_right.svg';
+import arrowLeftInactive from '@/public/icon/arrow_inactive_left.svg';
+import arrowLeftActive from '@/public/icon/arrow_active_left.svg';
+import arrowRightInactive from '@/public/icon/arrow_inactive_right.svg';
+import arrowRightActive from '@/public/icon/arrow_active_right.svg';
 import {
   PaginationButtonProps,
   PrimaryButtonProps,
@@ -65,6 +69,33 @@ export function PaginationButton({
       </button>
       <button onClick={onClickNext}>
         <Image src={paginationRight} alt="다음 페이지" />
+      </button>
+    </div>
+  );
+}
+
+/* 페이지네이션 버튼 - 좌우 화살표 버튼으로 페이지네이션 하는 경우 
+   onClickPrev, onClickNext, isFirstPage, isLastPage 필수 입력 
+   사용 예시 -  <PaginationArrowButton onClickPrev={handlePrev} onClickNext={handleNext} isFirstPage={false} isLastPage/> */
+export function PaginationArrowButton({
+  onClickPrev,
+  onClickNext,
+  isFirstPage,
+  isLastPage,
+}: PaginationButtonProps) {
+  return (
+    <div>
+      <button onClick={onClickPrev} disabled={isFirstPage}>
+        <Image
+          src={isFirstPage ? arrowLeftInactive : arrowLeftActive}
+          alt="이전 페이지"
+        />
+      </button>
+      <button onClick={onClickNext} disabled={isLastPage}>
+        <Image
+          src={isLastPage ? arrowRightInactive : arrowRightActive}
+          alt="다음 페이지"
+        />
       </button>
     </div>
   );
