@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import closeImageWhite from '@/public/icon/x_white.svg';
-import { PrimaryButtonProps, CircleCloseButtonProps } from './Button.types';
+import closeImageNormal from '@/public/icon/btn_x_medium.svg';
+import closeImageBold from '@/public/icon/btn_x_medium_bold.svg';
+import closeImageBig from '@/public/icon/btn_x_big.svg';
+import { PrimaryButtonProps, CloseButtonProps } from './Button.types';
 
 const primarySizeClasses = {
   small: 'px-5 py-2.5 text-lg',
@@ -20,7 +23,6 @@ const primaryStyleClasses = {
    size 옵션 - small - width auto | medium - width 144px | large - width 100%
    style 옵션 - dark-어두운 배경에 흰글씨 | bright - 흰 배경에 어두운 글씨 | disabled - 회색 배경에 흰 글씨
    사용 예시 <Button size="small" style="dark" onClick={handleClick}>로그인하기</Button> */
-
 export function PrimaryButton({
   size,
   style,
@@ -39,10 +41,8 @@ export function PrimaryButton({
   );
 }
 
-/* 원형 닫기 버튼 
-   onClick 필수 입력
-   사용 예시 - <CircleCloseButton onClick={handleClick}/> */
-export function CircleCloseButton({ onClick }: CircleCloseButtonProps) {
+/* 원형 닫기 버튼 */
+export function CircleCloseButton({ onClick }: CloseButtonProps) {
   return (
     <button
       className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-10 h-10 t:w-8 t:h-8 m:w-6 m:h-6"
@@ -53,6 +53,33 @@ export function CircleCloseButton({ onClick }: CircleCloseButtonProps) {
         src={closeImageWhite}
         alt="닫기"
       />
+    </button>
+  );
+}
+
+/* 닫기 버튼 - 기본 버전  */
+export function CloseButton({ onClick }: CloseButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={closeImageNormal} alt="닫기" />
+    </button>
+  );
+}
+
+/* 닫기 버튼 - bold 버전 */
+export function CloseButtonBold({ onClick }: CloseButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={closeImageBold} alt="닫기" />
+    </button>
+  );
+}
+
+/* 닫기 버튼 - 큰 사이즈 버전 */
+export function CloseButtonBig({ onClick }: CloseButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={closeImageBig} alt="닫기" />
     </button>
   );
 }
