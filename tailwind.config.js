@@ -20,7 +20,7 @@ module.exports = {
         'var-gray3': '#dddddd',
         'var-gray2': '#eeeeee',
         'var-gray1': '#fafafa',
-        'var-green2': '#9b3b2d',
+        'var-green2': '#0b3b2d',
         'var-green1': '#ced8d5',
         'var-red2': '#ff472e',
         'var-red1': '#ffe4e0',
