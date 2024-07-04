@@ -6,7 +6,7 @@ import Image from 'next/image';
 function Popup() {
   const [popup, setPopup] = useRecoilState(popupState);
 
-  const closeModal = () => {
+  const closePopup = () => {
     setPopup({ ...popup, isOpen: false });
   };
 
@@ -14,7 +14,7 @@ function Popup() {
     if (popup.callBackFnc) {
       popup.callBackFnc();
     }
-    closeModal();
+    closePopup();
   };
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function Popup() {
               <div className="flex justify-between gap-2">
                 <button
                   className="w-[80px] h-[38px] bg-white text-nomad-black font-bold text-sm py-2 rounded-md border border-nomad-black hover:bg-var-gray3"
-                  onClick={closeModal}
+                  onClick={closePopup}
                 >
                   {popup.btnName[0]}
                 </button>
