@@ -1,9 +1,11 @@
 import Image from 'next/image';
-import closeImageWhite from '@/public/icon/x_white.svg';
-import closeImageNormal from '@/public/icon/btn_x_medium.svg';
-import closeImageBold from '@/public/icon/btn_x_medium_bold.svg';
-import closeImageBig from '@/public/icon/btn_x_big.svg';
-import { PrimaryButtonProps, CloseButtonProps } from './Button.types';
+import closeIconWhite from '@/public/icon/x_white.svg';
+import closeIconNormal from '@/public/icon/btn_x_medium.svg';
+import closeIconBold from '@/public/icon/btn_x_medium_bold.svg';
+import closeIconBig from '@/public/icon/btn_x_big.svg';
+import notificationIcon from '@/public/icon/icon_notification.svg';
+import meatballIcon from '@/public/icon/icon_meatball.svg';
+import { PrimaryButtonProps, SimpleButtonProps } from './Button.types';
 
 const primarySizeClasses = {
   small: 'px-5 py-2.5 text-lg',
@@ -42,7 +44,7 @@ export function PrimaryButton({
 }
 
 /* 원형 닫기 버튼 */
-export function CircleCloseButton({ onClick }: CloseButtonProps) {
+export function CircleCloseButton({ onClick }: SimpleButtonProps) {
   return (
     <button
       className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-10 h-10 t:w-8 t:h-8 m:w-6 m:h-6"
@@ -50,7 +52,7 @@ export function CircleCloseButton({ onClick }: CloseButtonProps) {
     >
       <Image
         className="w-5 h-5 t:w-4 t:h-4 m:w-3 m:h-3"
-        src={closeImageWhite}
+        src={closeIconWhite}
         alt="닫기"
       />
     </button>
@@ -58,28 +60,46 @@ export function CircleCloseButton({ onClick }: CloseButtonProps) {
 }
 
 /* 닫기 버튼 - 기본 버전  */
-export function CloseButton({ onClick }: CloseButtonProps) {
+export function CloseButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={closeImageNormal} alt="닫기" />
+      <Image src={closeIconNormal} alt="닫기" />
     </button>
   );
 }
 
 /* 닫기 버튼 - bold 버전 */
-export function CloseButtonBold({ onClick }: CloseButtonProps) {
+export function CloseButtonBold({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={closeImageBold} alt="닫기" />
+      <Image src={closeIconBold} alt="닫기" />
     </button>
   );
 }
 
 /* 닫기 버튼 - 큰 사이즈 버전 */
-export function CloseButtonBig({ onClick }: CloseButtonProps) {
+export function CloseButtonBig({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={closeImageBig} alt="닫기" />
+      <Image src={closeIconBig} alt="닫기" />
+    </button>
+  );
+}
+
+/* 알림 버튼 */
+export function NotificationButton({ onClick }: SimpleButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={notificationIcon} alt="알림" />
+    </button>
+  );
+}
+
+/* 더보기(미트볼) 버튼 */
+export function MeatballButton({ onClick }: SimpleButtonProps) {
+  return (
+    <button onClick={onClick}>
+      <Image src={meatballIcon} alt="더보기" />
     </button>
   );
 }

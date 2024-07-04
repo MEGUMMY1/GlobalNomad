@@ -6,6 +6,6 @@ export interface PrimaryButtonProps {
   onClick: () => void;
 }
 
-export interface CloseButtonProps {
+export interface SimpleButtonProps {
   onClick: () => void;
 }
