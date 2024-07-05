@@ -5,6 +5,7 @@ import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
+import { useEffect, useState } from 'react';
 
 export const getStaticProps = async () => {
   return {
@@ -15,15 +16,34 @@ export const getStaticProps = async () => {
 };
 
 export default function Login() {
+  const [isError, setIsError] = useState(true);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<loginFormValues>({ mode: 'onBlur' });
+
+  const email = watch('email');
+  const password = watch('password');
 
   const onSubmit = (data: loginFormValues) => {
     console.log(data);
   };
+
+  /* 에러확인 로직 */
+  useEffect(() => {
+    if (email && password) {
+      if (errors.email || errors.password) {
+        setIsError(true);
+      } else {
+        setIsError(false);
+      }
+    } else {
+      setIsError(true);
+    }
+  }, [email, password, errors.email, errors.password]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
@@ -57,7 +77,7 @@ export default function Login() {
         />
         <PrimaryButton
           size="large"
-          style="disabled"
+          style={isError ? 'disabled' : 'enabled'}
           onClick={handleSubmit(onSubmit)}
         >
           로그인하기
