@@ -1,20 +1,4 @@
 import Image from 'next/image';
-import closeIconWhite from '@/public/icon/x_white.svg';
-import closeIconNormal from '@/public/icon/btn_x_medium.svg';
-import closeIconBold from '@/public/icon/btn_x_medium_bold.svg';
-import closeIconBig from '@/public/icon/btn_x_big.svg';
-import notificationIcon from '@/public/icon/icon_notification.svg';
-import meatballIcon from '@/public/icon/icon_meatball.svg';
-import plusButtonIcon from '@/public/icon/btn_plus.svg';
-import minusButtonIcon from '@/public/icon/btn_minus.svg';
-import arrowCircleIcon from '@/public/icon/btn_arrow_circle.svg';
-import plusIcon from '@/public/icon/icon_plus.svg';
-import paginationLeft from '@/public/icon/btn_pagination_arrow_left.svg';
-import paginationRight from '@/public/icon/btn_pagination_arrow_right.svg';
-import arrowLeftInactive from '@/public/icon/arrow_inactive_left.svg';
-import arrowLeftActive from '@/public/icon/arrow_active_left.svg';
-import arrowRightInactive from '@/public/icon/arrow_inactive_right.svg';
-import arrowRightActive from '@/public/icon/arrow_active_right.svg';
 import {
   PaginationButtonProps,
   PrimaryButtonProps,
@@ -67,10 +51,20 @@ export function PaginationButton({
   return (
     <div className="flex gap-[8px]">
       <button onClick={onClickPrev}>
-        <Image src={paginationLeft} alt="이전 페이지" />
+        <Image
+          src="/icon/btn_pagination_arrow_left.svg"
+          width={24}
+          height={47}
+          alt="이전 페이지"
+        />
       </button>
       <button onClick={onClickNext}>
-        <Image src={paginationRight} alt="다음 페이지" />
+        <Image
+          src="/icon/btn_pagination_arrow_right.svg"
+          width={24}
+          height={47}
+          alt="다음 페이지"
+        />
       </button>
     </div>
   );
@@ -89,13 +83,25 @@ export function PaginationArrowButton({
     <div>
       <button onClick={onClickPrev} disabled={isFirstPage}>
         <Image
-          src={isFirstPage ? arrowLeftInactive : arrowLeftActive}
+          src={
+            isFirstPage
+              ? '/icon/arrow_inactive_left.svg'
+              : '/icon/arrow_active_left.svg'
+          }
+          width={32}
+          height={32}
           alt="이전 페이지"
         />
       </button>
       <button onClick={onClickNext} disabled={isLastPage}>
         <Image
-          src={isLastPage ? arrowRightInactive : arrowRightActive}
+          src={
+            isLastPage
+              ? '/icon/arrow_inactive_right.svg'
+              : '/icon/arrow_active_right.svg'
+          }
+          width={32}
+          height={32}
           alt="다음 페이지"
         />
       </button>
@@ -112,7 +118,9 @@ export function CircleCloseButton({ onClick }: SimpleButtonProps) {
     >
       <Image
         className="w-[20px] h-[20px] t:w-[16px] t:h-[16px] m:w-[12px] m:h-[12px]"
-        src={closeIconWhite}
+        src="/icon/x_white.svg"
+        width={20}
+        height={20}
         alt="닫기"
       />
     </button>
@@ -123,7 +131,7 @@ export function CircleCloseButton({ onClick }: SimpleButtonProps) {
 export function CloseButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={closeIconNormal} alt="닫기" />
+      <Image src="/icon/btn_x_medium.svg" width={24} height={24} alt="닫기" />
     </button>
   );
 }
@@ -132,7 +140,12 @@ export function CloseButton({ onClick }: SimpleButtonProps) {
 export function CloseButtonBold({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={closeIconBold} alt="닫기" />
+      <Image
+        src="/icon/btn_x_medium_bold.svg"
+        width={24}
+        height={24}
+        alt="닫기"
+      />
     </button>
   );
 }
@@ -141,7 +154,7 @@ export function CloseButtonBold({ onClick }: SimpleButtonProps) {
 export function CloseButtonBig({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={closeIconBig} alt="닫기" />
+      <Image src="/icon/btn_x_big.svg" width={40} height={40} alt="닫기" />
     </button>
   );
 }
@@ -150,7 +163,12 @@ export function CloseButtonBig({ onClick }: SimpleButtonProps) {
 export function NotificationButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={notificationIcon} alt="알림" />
+      <Image
+        src="/icon/icon_notification.svg"
+        width={24}
+        height={24}
+        alt="알림"
+      />
     </button>
   );
 }
@@ -159,7 +177,12 @@ export function NotificationButton({ onClick }: SimpleButtonProps) {
 export function MeatballButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={meatballIcon} alt="더보기" />
+      <Image
+        src="/icon/icon_meatball.svg"
+        width={40}
+        height={40}
+        alt="더보기"
+      />
     </button>
   );
 }
@@ -168,7 +191,7 @@ export function MeatballButton({ onClick }: SimpleButtonProps) {
 export function PlusButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={plusButtonIcon} alt="추가하기" />
+      <Image src="/icon/btn_plus.svg" width={56} height={56} alt="추가하기" />
     </button>
   );
 }
@@ -177,7 +200,7 @@ export function PlusButton({ onClick }: SimpleButtonProps) {
 export function MinusButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={minusButtonIcon} alt="제거하기" />
+      <Image src="/icon/btn_minus.svg" width={56} height={56} alt="제거하기" />
     </button>
   );
 }
@@ -186,7 +209,12 @@ export function MinusButton({ onClick }: SimpleButtonProps) {
 export function ArrowCircleButton({ onClick }: SimpleButtonProps) {
   return (
     <button onClick={onClick}>
-      <Image src={arrowCircleIcon} alt="오른쪽 화살표" />
+      <Image
+        src="/icon/btn_arrow_circle.svg"
+        width={32}
+        height={32}
+        alt="오른쪽 화살표"
+      />
     </button>
   );
 }
@@ -198,7 +226,7 @@ export function ImageUploadButton({ onClick }: SimpleButtonProps) {
       className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] border border-dashed border-var-gray8 rounded-lg"
       onClick={onClick}
     >
-      <Image src={plusIcon} alt="추가" />
+      <Image src="/icon/icon_plus.svg" width={30} height={30} alt="추가" />
       <p className="text-[24px]">이미지 등록</p>
     </button>
   );
