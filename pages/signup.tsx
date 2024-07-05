@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 export default function Login() {
   const [isError, setIsError] = useState(true);
+  const [isChecked, setIsChecked] = useState(true);
 
   const {
     register,
@@ -27,9 +28,13 @@ export default function Login() {
     console.log(data);
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+  };
+
   /* 버튼 활성화 로직 */
   useEffect(() => {
-    if (email && password && passwordCheck && nickName) {
+    if (email && password && passwordCheck && nickName && isChecked) {
       if (Object.keys(errors).length === 0) {
         setIsError(false);
       } else {
@@ -38,7 +43,14 @@ export default function Login() {
     } else {
       setIsError(true);
     }
-  }, [email, password, passwordCheck, nickName, Object.keys(errors).length]);
+  }, [
+    email,
+    password,
+    passwordCheck,
+    nickName,
+    Object.keys(errors).length,
+    isChecked,
+  ]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
@@ -93,7 +105,13 @@ export default function Login() {
           errors={errors}
         />
         <div className="flex gap-[10px]">
-          <input type="checkbox" name="hi" id="agreement" />
+          <input
+            type="checkbox"
+            name="agreement"
+            id="agreement"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          />
           <label htmlFor="agreement">이용약관에 동의</label>
         </div>
         <PrimaryButton
