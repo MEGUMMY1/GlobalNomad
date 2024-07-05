@@ -40,10 +40,10 @@ export const getMyTimeSchedule = async (params: {
   scheduleId: number;
   status: string;
 }) => {
-  const cursorIdParam = params.cursorId ? `cursorId=${params.cursorId}` : '';
-  const sizeParam = params.size ? `size=${params.size}` : '';
+  const cursorIdParam = params.cursorId ? `cursorId=${params.cursorId}&` : '';
+  const sizeParam = params.size ? `size=${params.size}&` : '';
   const response = await axios.get(
-    `/my-activities/${params.activityId}/reservations?${cursorIdParam}${cursorIdParam && sizeParam ? '&' : ''}${sizeParam}${cursorIdParam || sizeParam ? '&' : ''}scheduleId=${params.scheduleId}&status=${params.status}`
+    `/my-activities/${params.activityId}/reservations?${cursorIdParam}${sizeParam}scheduleId=${params.scheduleId}&status=${params.status}`
   );
   return response;
 };
