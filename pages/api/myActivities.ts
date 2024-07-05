@@ -4,10 +4,10 @@ export const getMyActivityList = async (params: {
   cursorId?: number | null;
   size?: number | null;
 }) => {
-  const cursorIdParam = params.cursorId ? `cursorId=${params.cursorId}` : '';
+  const cursorIdParam = params.cursorId ? `cursorId=${params.cursorId}&` : '';
   const sizeParam = params.size ? `size=${params.size}` : '';
   const response = await axios.get(
-    `/my-activities?${cursorIdParam}${cursorIdParam && sizeParam ? '&' : ''}${sizeParam}`
+    `/my-activities?${cursorIdParam}${sizeParam}`
   );
   return response;
 };
