@@ -15,7 +15,11 @@ export async function apiMyNotificationList(
   if (cursorId !== 0) {
     params.cursorId = cursorId;
   }
-  params.size = size;
+  if (size) {
+    params.size = size;
+  } else {
+    params.size = 10;
+  }
 
   const response = await INSTANCE_URL.get('/my-notifications', { params });
   return response.data;
