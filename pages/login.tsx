@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
-import InputBox from '@/components/InputBox/InputBox';
+import { PrimaryButton } from '@/components/Button/Button';
 
 export const getStaticProps = async () => {
   return {
@@ -26,7 +26,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center w-[500px] m-auto pt-[160px] gap-[40px] px-[20px] ">
+    <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
       <Link href="/main">
         <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
@@ -55,7 +55,13 @@ export default function Login() {
           errors={errors}
           eyeIconActive={true}
         />
-        <button type="submit">버튼 추후 공통 컴포넌트로 전환 예정</button>
+        <PrimaryButton
+          size="large"
+          style="disabled"
+          onClick={handleSubmit(onSubmit)}
+        >
+          로그인하기
+        </PrimaryButton>
       </form>
 
       {/* 회원가입 리다이렉트 */}
