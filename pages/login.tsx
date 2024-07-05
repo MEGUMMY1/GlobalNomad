@@ -6,6 +6,14 @@ import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import InputBox from '@/components/InputBox/InputBox';
 
+export const getStaticProps = async () => {
+  return {
+    props: {
+      layoutType: 'removeLayout',
+    },
+  };
+};
+
 export default function Login() {
   const {
     register,

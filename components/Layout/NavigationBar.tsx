@@ -7,7 +7,7 @@ export default function NavigationBar() {
   const isLoggined = 'y';
 
   return (
-    <div className="flex h-[70px] justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px]">
+    <div className="flex h-[70px] justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px] bg-[#fff] border-b border-var-gray3 border-solid ">
       <div className="flex items-center">
         <Link href="/">
           <Image src={Logo} alt="로고 아이콘" />
