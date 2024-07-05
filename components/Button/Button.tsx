@@ -22,9 +22,9 @@ import {
 } from './Button.types';
 
 const primarySizeClasses = {
-  small: 'px-5 py-2.5 text-lg',
-  medium: 'w-36 h-12 px-3 py-2 text-base',
-  large: 'w-full h-12 px-3 py-3 text-xl',
+  small: 'px-[20px] py-[10px] text-[14px]',
+  medium: 'w-[144px] h-[48px] px-[12px] py-[8px] text-[16px]',
+  large: 'w-full h-[48px] px-[12px] py-[12px] text-[16px]',
 };
 
 const primaryStyleClasses = {
@@ -65,7 +65,7 @@ export function PaginationButton({
   onClickNext,
 }: PaginationButtonProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-[8px]">
       <button onClick={onClickPrev}>
         <Image src={paginationLeft} alt="이전 페이지" />
       </button>
@@ -107,11 +107,11 @@ export function PaginationArrowButton({
 export function CircleCloseButton({ onClick }: SimpleButtonProps) {
   return (
     <button
-      className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-10 h-10 t:w-8 t:h-8 m:w-6 m:h-6"
+      className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-[40px] h-[40px] t:w-[32px] t:h-[32px] m:w-[24px] m:h-[24px]"
       onClick={onClick}
     >
       <Image
-        className="w-5 h-5 t:w-4 t:h-4 m:w-3 m:h-3"
+        className="w-[20px] h-[20px] t:w-[16px] t:h-[16px] m:w-[12px] m:h-[12px]"
         src={closeIconWhite}
         alt="닫기"
       />
@@ -195,11 +195,11 @@ export function ArrowCircleButton({ onClick }: SimpleButtonProps) {
 export function ImageUploadButton({ onClick }: SimpleButtonProps) {
   return (
     <button
-      className="flex flex-col gap-10 items-center justify-center w-44 h-44 border border-dashed border-var-gray8 rounded-lg"
+      className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] border border-dashed border-var-gray8 rounded-lg"
       onClick={onClick}
     >
       <Image src={plusIcon} alt="추가" />
-      <p className="text-2xl">이미지 등록</p>
+      <p className="text-[24px]">이미지 등록</p>
     </button>
   );
 }
