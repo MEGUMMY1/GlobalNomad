@@ -39,7 +39,7 @@ export const getActivitySchedule = async (
   return response;
 };
 
-export const getActivityReview = async (
+export const getActivityReviews = async (
   id: number,
   page: number,
   size: number
