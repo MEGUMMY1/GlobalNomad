@@ -20,7 +20,7 @@ module.exports = {
         'var-gray3': '#dddddd',
         'var-gray2': '#eeeeee',
         'var-gray1': '#fafafa',
-        'var-green2': '#9b3b2d',
+        'var-green2': '#0b3b2d',
         'var-green1': '#ced8d5',
         'var-red2': '#ff472e',
         'var-red1': '#ffe4e0',
@@ -36,6 +36,15 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      keyframes: {
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-10%)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 0.3s ease-in-out forwards',
       },
       screens: {
         m: { max: '743px' },
