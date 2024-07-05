@@ -21,8 +21,9 @@ export default function AuthInputBox({
 
   return (
     <div className="flex flex-col gap-[8px] text-[16px] relative">
-      <label>{label}</label>
+      <label htmlFor={name}>{label}</label>
       <input
+        id={name}
         className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6`}
         type={isEyeOpen ? 'text' : type}
         placeholder={placeholder}

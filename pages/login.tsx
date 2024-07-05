@@ -18,7 +18,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center w-[500px] m-auto pt-[160px] gap-[40px] px-[20px]">
+    <div className="flex flex-col items-center w-[500px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
       <Link href="/main">
         <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
@@ -38,7 +38,7 @@ export default function Login() {
           errors={errors}
         />
         <AuthInputBox
-          label="비빌번호"
+          label="비밀번호"
           placeholder="비밀번호를 입력해주세요"
           name="password"
           type="password"
