@@ -1,5 +1,5 @@
 import CatergoryBtn from '@/components/CatergoryBtn/CatergoryBtn';
-import NavigationBar from '@/components/NavigationBar/NavigationBar';
+import NavigationBar from '@/components/Layout/NavigationBar';
 import PriceFilterBtn from '@/components/PriceFilterBtn/PriceFilterBtn';
 
 export default function Navtest() {
