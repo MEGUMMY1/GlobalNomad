@@ -1,6 +1,6 @@
 export interface PrimaryButtonProps {
   size: 'small' | 'medium' | 'large';
-  style: 'dark' | 'bright' | 'disabled';
+  style: 'dark' | 'bright' | 'disabled' | 'enabled';
   children: string;
   disabled?: boolean;
   onClick: () => void;

@@ -1,6 +1,8 @@
 export interface loginFormValues {
   email: string;
+  nickName: string;
   password: string;
+  passwordCheck: string;
 }
 
 export interface inputBoxProps {
