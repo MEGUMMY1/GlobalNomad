@@ -33,7 +33,7 @@ function SearchBar() {
             alt="검색 아이콘"
           ></Image>
           {inputValue ? (
-            <div className="w-[124px] h-[26px] text-[16px] font-sans font-[400] text-var-gray6 absolute top-[-10px] left-10 bg-white text-center">
+            <div className="w-[124px] m:w-[118px] h-[26px] text-[16px] m:text-[14px] font-sans font-[400] text-var-gray6 absolute top-[-10px] left-10 bg-white text-center">
               내가 원하는 체험은
             </div>
           ) : (
