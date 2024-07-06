@@ -32,7 +32,7 @@ export default function Login() {
     console.log(data);
   };
 
-  /* 에러확인 로직 */
+  /* 버튼 활성화 로직 */
   useEffect(() => {
     if (email && password) {
       if (errors.email || errors.password) {

@@ -131,7 +131,7 @@ export default function Login() {
         </PrimaryButton>
       </form>
 
-      {/* 로그인 리다이렉트 */}
+      {/* 로그인페이지 리다이렉트 */}
       <div className="text-var-gray8 text-[16px]">
         회원이신가요?
         <Link href="/login" className="underline ml-[5px]">
