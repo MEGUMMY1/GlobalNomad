@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 export default function Login() {
   const [isError, setIsError] = useState(true);
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   const {
     register,
