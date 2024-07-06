@@ -15,7 +15,7 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function Login() {
+export default function LoginPage() {
   const [isError, setIsError] = useState(true);
 
   const {
@@ -84,7 +84,7 @@ export default function Login() {
         </PrimaryButton>
       </form>
 
-      {/* 회원가입 리다이렉트 */}
+      {/* 회원가입페이지 리다이렉트 */}
       <div className="text-var-gray8 text-[16px]">
         회원이 아니신가요?
         <Link href="/signup" className="underline ml-[5px]">

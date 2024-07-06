@@ -15,7 +15,7 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function Login() {
+export default function SingUpPage() {
   const [isError, setIsError] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
 
