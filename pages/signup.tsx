@@ -7,6 +7,14 @@ import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
 import { useEffect, useState } from 'react';
 
+export const getStaticProps = async () => {
+  return {
+    props: {
+      layoutType: 'removeLayout',
+    },
+  };
+};
+
 export default function Login() {
   const [isError, setIsError] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
