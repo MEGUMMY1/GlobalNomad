@@ -38,7 +38,7 @@ export default function SingupPage() {
   };
 
   const isAllFieldsValid = () => {
-    const isFormFilled =
+    const isNotError =
       !errors.email &&
       !errors.nickname &&
       !errors.password &&
@@ -46,7 +46,7 @@ export default function SingupPage() {
 
     const { email, nickname, password, passwordCheck } = getValues();
 
-    const isNotError =
+    const isFormFilled =
       email !== '' &&
       nickname !== '' &&
       password !== '' &&
