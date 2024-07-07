@@ -5,6 +5,7 @@ import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
+import useLogin from '@/hooks/useLogin';
 
 export const getStaticProps = async () => {
   return {
@@ -15,24 +16,18 @@ export const getStaticProps = async () => {
 };
 
 export default function LoginPage() {
+  const { postLoginMutation } = useLogin();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<loginFormValues>({ mode: 'onBlur' });
 
   const onSubmit = (data: loginFormValues) => {
-    console.log(data);
+    postLoginMutation.mutate(data);
   };
 
-  const isAllFieldsValid = () => {
-    const isNotError = !errors.email && !errors.password;
-    const { email, password } = getValues();
-    const isFormFilled = !!email && !!password;
-
-    return isFormFilled && isNotError;
-  };
+  const isNotError = !errors.email && !errors.password;
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
@@ -66,9 +61,9 @@ export default function LoginPage() {
         />
         <PrimaryButton
           size="large"
-          style={isAllFieldsValid() ? 'enabled' : 'disabled'}
+          style={isNotError ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isAllFieldsValid()}
+          disabled={!isNotError}
         >
           로그인하기
         </PrimaryButton>

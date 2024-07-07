@@ -46,6 +46,9 @@ export default function SingupPage() {
     const { email, nickname, password, passwordCheck } = getValues();
     const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
 
+    console.log(isFormFilled);
+    console.log(isNotError);
+
     return isFormFilled && isChecked && isNotError;
   };
 
