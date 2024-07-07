@@ -11,6 +11,7 @@ export default function AuthInputBox({
   register,
   errors,
   eyeIconActive = false,
+  handleChange,
 }: inputBoxProps) {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
 
@@ -18,6 +19,15 @@ export default function AuthInputBox({
     e.preventDefault();
     setIsEyeOpen(!isEyeOpen);
   };
+
+  if (type === 'checkbox') {
+    return (
+      <div className="flex gap-[10px]">
+        <input type="checkbox" id={name} onChange={handleChange} />
+        <label htmlFor={name}>{placeholder}</label>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-[8px] text-[16px] relative">

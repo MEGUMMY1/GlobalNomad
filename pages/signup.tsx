@@ -1,11 +1,13 @@
 import AuthInputBox from '@/components/AuthInputBox/AuthInputBox';
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
-import { signinValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
+import useSignup from '@/hooks/useSignup';
+import { useForm } from 'react-hook-form';
+import { signUpFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
+import { signupValidation } from '@/components/AuthInputBox/validation';
 import { PrimaryButton } from '@/components/Button/Button';
-import { useEffect, useState } from 'react';
+import { SignupBody } from './api/users/apiUser.types';
+import { useState } from 'react';
 
 export const getStaticProps = async () => {
   return {
@@ -15,50 +17,43 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function SingUpPage() {
-  const [isError, setIsError] = useState(true);
+export default function SingupPage() {
   const [isChecked, setIsChecked] = useState(false);
-
+  const { postSignupMutation } = useSignup();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     getValues,
-  } = useForm<loginFormValues>({ mode: 'onBlur' });
+  } = useForm<signUpFormValues>({ mode: 'onBlur' });
 
-  const email = watch('email');
-  const password = watch('password');
-  const passwordCheck = watch('passwordCheck');
-  const nickName = watch('nickName');
-
-  const onSubmit = (data: loginFormValues) => {
-    console.log(data);
+  const onSubmit = (data: signUpFormValues) => {
+    const { email, nickname, password } = data;
+    const signUpData: SignupBody = { email, nickname, password };
+    postSignupMutation.mutate(signUpData);
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
   };
 
-  /* 버튼 활성화 로직 */
-  useEffect(() => {
-    if (email && password && passwordCheck && nickName && isChecked) {
-      if (Object.keys(errors).length === 0) {
-        setIsError(false);
-      } else {
-        setIsError(true);
-      }
-    } else {
-      setIsError(true);
-    }
-  }, [
-    email,
-    password,
-    passwordCheck,
-    nickName,
-    Object.keys(errors).length,
-    isChecked,
-  ]);
+  const isAllFieldsValid = () => {
+    const isFormFilled =
+      !errors.email &&
+      !errors.nickname &&
+      !errors.password &&
+      !errors.passwordCheck;
+
+    const { email, nickname, password, passwordCheck } = getValues();
+
+    const isNotError =
+      email !== '' &&
+      nickname !== '' &&
+      password !== '' &&
+      passwordCheck !== '';
+
+    return isFormFilled && isChecked && isNotError;
+  };
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
@@ -68,23 +63,20 @@ export default function SingUpPage() {
       </Link>
 
       {/* 로그인 폼 */}
-      <form
-        className="flex flex-col gap-[28px] w-full"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="flex flex-col gap-[28px] w-full">
         <AuthInputBox
           label="이메일 *"
           placeholder="이메일을 입력해주세요"
           name="email"
-          validation={signinValidation.email}
+          validation={signupValidation.email}
           register={register}
           errors={errors}
         />
         <AuthInputBox
           label="닉네임 *"
           placeholder="닉네임을 입력해주세요"
-          name="nickName"
-          validation={signinValidation.nickName}
+          name="nickname"
+          validation={signupValidation.nickname}
           register={register}
           errors={errors}
         />
@@ -93,7 +85,7 @@ export default function SingUpPage() {
           placeholder="8자 이상 입력해주세요"
           name="password"
           type="password"
-          validation={signinValidation.password}
+          validation={signupValidation.password}
           eyeIconActive={true}
           register={register}
           errors={errors}
@@ -104,7 +96,7 @@ export default function SingUpPage() {
           name="passwordCheck"
           type="password"
           validation={{
-            ...signinValidation.passwordCheck,
+            ...signupValidation.passwordCheck,
             validate: (value: string) =>
               value === getValues().password || '비밀번호가 일치하지 않습니다.',
           }}
@@ -112,20 +104,17 @@ export default function SingUpPage() {
           register={register}
           errors={errors}
         />
-        <div className="flex gap-[10px]">
-          <input
-            type="checkbox"
-            name="agreement"
-            id="agreement"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="agreement">이용약관에 동의</label>
-        </div>
+        <AuthInputBox
+          type="checkbox"
+          placeholder="약관에 동의해주세요"
+          name="agreement"
+          handleChange={handleCheckboxChange}
+        />
         <PrimaryButton
           size="large"
-          style={isError ? 'disabled' : 'enabled'}
+          style={isAllFieldsValid() ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
+          disabled={!isAllFieldsValid()}
         >
           회원가입 하기
         </PrimaryButton>
