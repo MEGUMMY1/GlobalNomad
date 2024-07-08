@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
-import InputBox from '@/components/InputBox/InputBox';
+import { PrimaryButton } from '@/components/Button/Button';
+import useLogin from '@/hooks/useLogin';
 
 export const getStaticProps = async () => {
   return {
@@ -14,7 +15,8 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function Login() {
+export default function LoginPage() {
+  const { postLoginMutation } = useLogin();
   const {
     register,
     handleSubmit,
@@ -22,13 +24,15 @@ export default function Login() {
   } = useForm<loginFormValues>({ mode: 'onBlur' });
 
   const onSubmit = (data: loginFormValues) => {
-    console.log(data);
+    postLoginMutation.mutate(data);
   };
 
+  const isNotError = !errors.email && !errors.password;
+
   return (
-    <div className="flex flex-col items-center w-[500px] m-auto pt-[160px] gap-[40px] px-[20px] ">
+    <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
-      <Link href="/main">
+      <Link href="/">
         <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
       </Link>
 
@@ -55,10 +59,17 @@ export default function Login() {
           errors={errors}
           eyeIconActive={true}
         />
-        <button type="submit">버튼 추후 공통 컴포넌트로 전환 예정</button>
+        <PrimaryButton
+          size="large"
+          style={isNotError ? 'enabled' : 'disabled'}
+          onClick={handleSubmit(onSubmit)}
+          disabled={!isNotError}
+        >
+          로그인하기
+        </PrimaryButton>
       </form>
 
-      {/* 회원가입 리다이렉트 */}
+      {/* 회원가입페이지 리다이렉트 */}
       <div className="text-var-gray8 text-[16px]">
         회원이 아니신가요?
         <Link href="/signup" className="underline ml-[5px]">

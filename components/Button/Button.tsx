@@ -15,6 +15,7 @@ const primaryStyleClasses = {
   dark: 'bg-nomad-black text-white',
   bright: 'bg-white text-nomad-black border border-nomad-black',
   disabled: 'bg-var-gray6 text-white',
+  enabled: 'bg-nomad-black text-white',
 };
 
 /* 기본 버튼 - 로그인하기, 신청 불가 등 기본적인 형태의 버튼
