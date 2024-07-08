@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import testImg from '@/public/image/VR 게임 마스터 하는 법.png';
 import calendarIcon from '@/public/icon/calendar_check_outline.svg';
 import settingIcon from '@/public/icon/cog_outline.svg';
 import reservationIcon from '@/public/icon/text_box_check_outline.svg';
@@ -9,19 +8,58 @@ import graySettingIcon from '@/public/icon/gray-cog-outline.svg';
 import grayReservationIcon from '@/public/icon/gray-text-box-check-outline.svg';
 import grayMyAccountIcon from '@/public/icon/gray-account-check-outline.svg';
 import editProfileIcon from '@/public/image/btn.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { routePaths } from './SideNavigation.types';
+import { apiMyInfo } from '@/pages/api/users/apiUsers';
+import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
+import useUploadProfile from '@/hooks/useUploadProfile';
+import useEditMyInfo from '@/hooks/useEditMyInfo';
+import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
+import { profile } from 'console';
 
 export default function SidenNavigation() {
   const router = useRouter();
   const [activeButton, setActiveButton] = useState<string | null>('myAccount');
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   const buttonPaths: routePaths = {
     reservation: '/reservation',
     setting: '/setting',
     calendar: '/calendar',
   };
+  const { postProfileImgMutation } = useUploadProfile();
+  const { postMyInfoMutation } = useEditMyInfo();
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      postProfileImgMutation.mutate(formData, {
+        onSuccess: (response: ProfileImageResponse) => {
+          setProfileImageUrl(response.profileImageUrl);
+          postMyInfoMutation.mutate({
+            profileImageUrl: response.profileImageUrl,
+          });
+        },
+        onError: (error) => {
+          console.error('데이터를 불러오는데 실패했습니다.', error);
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    apiMyInfo()
+      .then((response) => {
+        setProfileImageUrl(response.profileImageUrl);
+      })
+      .catch((error) => {
+        console.error('데이터를 불러오는데 실패하였습니다.:', error);
+      });
+  }, []);
 
   const handleBtnClick = (buttonName: string | null) => {
     setActiveButton((prevActiveButton) =>
@@ -38,16 +76,27 @@ export default function SidenNavigation() {
   return (
     <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 justify-center gap-[24px] t:w-[251px] m:w-[344px]">
       <div className="w-fill flex justify-center relative">
-        <Image
-          src={testImg}
-          className="rounded-full w-[160px] h-[160px] "
-          alt="유저 프로필 사진"
-        />
-        <Image
-          src={editProfileIcon}
-          className="w-[44px] h-[44px] absolute bottom-[-5px] right-[100px] t:right-[30px] m:right-[75px]"
-          alt="유저 프로필 사진 수정"
-        />
+        <label htmlFor="upload-image" className="cursor-pointer">
+          <Image
+            src={profileImageUrl ? profileImageUrl : profileThumbnail}
+            width={160}
+            height={160}
+            className="rounded-full w-[160px] h-[160px] "
+            alt="유저 프로필 사진"
+          />
+          <Image
+            src={editProfileIcon}
+            className="w-[44px] h-[44px] absolute bottom-[-5px] right-[100px] t:right-[30px] m:right-[75px]"
+            alt="유저 프로필 사진 수정"
+          />
+          <input
+            id="upload-image"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
       </div>
       <div className="flex flex-col gap-[8px] justify-between">
         <button
