@@ -10,12 +10,12 @@ export default function ImageContainer({
   const filledSubImages = [...subImages];
 
   // 빈 자리는 기본 이미지 채워 넣음
-  for (let i = subImages.length; i < 4; i++) {
+  for (let i = subImages.length + 1; i <= 4; i++) {
     filledSubImages.push({ id: i, imageUrl: defaultImage });
   }
 
   return (
-    <div className="flex w-[1200px] h-[500px] gap-2 my-10">
+    <div className="flex w-[1200px] h-[500px] gap-2 my-10 t:w-full t:h-[310px] ">
       <div className="relative w-1/2 h-full">
         <Image
           src={bannerImageUrl}
