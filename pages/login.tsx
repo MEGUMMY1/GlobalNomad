@@ -5,7 +5,7 @@ import { loginFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
-import { useEffect, useState } from 'react';
+import useLogin from '@/hooks/useLogin';
 
 export const getStaticProps = async () => {
   return {
@@ -15,40 +15,24 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function Login() {
-  const [isError, setIsError] = useState(true);
-
+export default function LoginPage() {
+  const { postLoginMutation } = useLogin();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm<loginFormValues>({ mode: 'onBlur' });
 
-  const email = watch('email');
-  const password = watch('password');
-
   const onSubmit = (data: loginFormValues) => {
-    console.log(data);
+    postLoginMutation.mutate(data);
   };
 
-  /* 에러확인 로직 */
-  useEffect(() => {
-    if (email && password) {
-      if (errors.email || errors.password) {
-        setIsError(true);
-      } else {
-        setIsError(false);
-      }
-    } else {
-      setIsError(true);
-    }
-  }, [email, password, errors.email, errors.password]);
+  const isNotError = !errors.email && !errors.password;
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
-      <Link href="/main">
+      <Link href="/">
         <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
       </Link>
 
@@ -77,14 +61,15 @@ export default function Login() {
         />
         <PrimaryButton
           size="large"
-          style={isError ? 'disabled' : 'enabled'}
+          style={isNotError ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
+          disabled={!isNotError}
         >
           로그인하기
         </PrimaryButton>
       </form>
 
-      {/* 회원가입 리다이렉트 */}
+      {/* 회원가입페이지 리다이렉트 */}
       <div className="text-var-gray8 text-[16px]">
         회원이 아니신가요?
         <Link href="/signup" className="underline ml-[5px]">

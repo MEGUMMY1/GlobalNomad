@@ -15,7 +15,7 @@ export const loginValidation = {
   },
 };
 
-export const signinValidation = {
+export const signupValidation = {
   email: {
     required: '이메일을 입력해 주세요',
     pattern: {
@@ -23,7 +23,7 @@ export const signinValidation = {
       message: '이메일 형식으로 작성해 주세요.',
     },
   },
-  nickName: {
+  nickname: {
     required: '닉네임을 입력해 주세요',
     maxLength: {
       value: 10,
@@ -39,5 +39,8 @@ export const signinValidation = {
   },
   passwordCheck: {
     required: '비밀번호 확인란에 입력해 주세요',
+  },
+  agreement: {
+    required: true,
   },
 };
