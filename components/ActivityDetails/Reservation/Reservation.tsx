@@ -4,6 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { format, addDays } from 'date-fns';
 import { ActivityDetailsProps } from '../ActivityDetails.types';
 import { PrimaryButton } from '@/components/Button/Button';
+import { usePopup } from '@/hooks/usePopup';
+import router from 'next/router';
 
 export default function Reservation({ activity }: ActivityDetailsProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -14,6 +16,7 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
 
   const pricePerPerson = activity.price;
   const schedules = activity.schedules;
+  const { openPopup } = usePopup();
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -29,9 +32,12 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
   };
 
   const handleReservation = () => {
-    alert(
-      `예약 완료: 날짜 - ${selectedDate}, 시간 - ${selectedTime}, 인원 - ${participants}`
-    );
+    openPopup({
+      popupType: 'alert',
+      content: '예약이 완료되었습니다.',
+      btnName: ['확인'],
+      callBackFnc: () => router.push(`/`),
+    });
   };
 
   const availableTimes = schedules
@@ -114,9 +120,10 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
       </div>
       <PrimaryButton
         size="large"
-        style="dark"
+        style={selectedTime ? 'dark' : 'disabled'}
         children="예약하기"
         onClick={handleReservation}
+        disabled={!selectedTime}
       />
       <div className="border border-solid border-var-gray2 mt-6" />
       <div className="mt-4 flex items-center justify-between">
