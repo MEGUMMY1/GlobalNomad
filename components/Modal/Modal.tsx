@@ -37,13 +37,15 @@ function Modal() {
             <h2 className="text-[28px] font-bold">{modal.title}</h2>
             <CloseButtonBig onClick={closeModal} />
           </div>
+          <div className="flex-1 w-full overflow-auto">{modal.content}</div>
           {modal.hasButton && (
             <div className="absolute bottom-6 w-full mt-5 px-6">
               <PrimaryButton
                 size="large"
-                style="dark"
-                children="작성하기"
+                style={!modal.disabled ? 'dark' : 'disabled'}
+                children={modal.buttonChildren || '작성하기'}
                 onClick={handleCallback}
+                disabled={modal.disabled}
               />
             </div>
           )}

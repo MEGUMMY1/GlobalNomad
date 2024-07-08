@@ -56,7 +56,7 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
   };
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 t:mt-4">
       <div className="relative flex justify-between">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-nomad-black">{activity.category}</p>
@@ -112,7 +112,7 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
         subImages={activity.subImages}
       />
       <div className="flex gap-4">
-        <div className="w-[800px] mb-20">
+        <div className="w-[800px] mb-20 t:w-[470px]">
           <div className="border-t-2 border-var-gray3 border-solid pt-10" />
           <div className="flex flex-col gap-4">
             <p className="text-nomad-black font-bold text-xl">체험 설명</p>
@@ -173,7 +173,7 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
               </div>
               <div>
                 <div className="flex mb-2">
-                  <p className="font-bold max-w-[500px] overflow-hidden whitespace-nowrap text-ellipsis">
+                  <p className="font-bold max-w-[300px] overflow-hidden whitespace-nowrap text-ellipsis">
                     {review.user.nickname}
                   </p>
                   <p className="mx-2">|</p>

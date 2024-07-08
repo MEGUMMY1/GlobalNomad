@@ -7,6 +7,8 @@ export const modalState = atom<ModalProps>({
     title: '',
     isOpen: false,
     hasButton: true,
+    buttonChildren: '',
     callBackFnc: undefined,
+    content: '',
   },
 });
