@@ -55,7 +55,7 @@ export default function SingupPage() {
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
-      <Link href="/main">
+      <Link href="/">
         <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
       </Link>
 

@@ -33,7 +33,7 @@ export default function useLogin() {
     onSuccess: () => {
       openPopup({
         popupType: 'alert',
-        content: '가입이 완료되었습니다!',
+        content: '환영합니다!',
         btnName: ['확인'],
         callBackFnc: () => router.push(`/`),
       });
