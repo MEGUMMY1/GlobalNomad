@@ -7,7 +7,7 @@ import { signUpFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { signupValidation } from '@/components/AuthInputBox/validation';
 import { PrimaryButton } from '@/components/Button/Button';
 import { SignupBody } from './api/users/apiUser.types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export const getStaticProps = async () => {
   return {
@@ -25,6 +25,7 @@ export default function SingupPage() {
     handleSubmit,
     formState: { errors },
     getValues,
+    watch,
   } = useForm<signUpFormValues>({ mode: 'onBlur' });
 
   const onSubmit = (data: signUpFormValues) => {
@@ -37,7 +38,9 @@ export default function SingupPage() {
     setIsChecked(!isChecked);
   };
 
-  const isAllFieldsValid = () => {
+  const watchFields = watch(['email', 'password', 'passwordCheck', 'nickname']);
+
+  const isAllFieldsValid = useMemo(() => {
     const isNotError =
       !errors.email &&
       !errors.nickname &&
@@ -46,11 +49,14 @@ export default function SingupPage() {
     const { email, nickname, password, passwordCheck } = getValues();
     const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
 
-    console.log(isFormFilled);
-    console.log(isNotError);
-
     return isFormFilled && isChecked && isNotError;
-  };
+  }, [
+    errors.email,
+    errors.password,
+    errors.passwordCheck,
+    errors.nickname,
+    watchFields,
+  ]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
@@ -109,9 +115,9 @@ export default function SingupPage() {
         />
         <PrimaryButton
           size="large"
-          style={isAllFieldsValid() ? 'enabled' : 'disabled'}
+          style={isAllFieldsValid ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isAllFieldsValid()}
+          disabled={!isAllFieldsValid}
         >
           회원가입 하기
         </PrimaryButton>
