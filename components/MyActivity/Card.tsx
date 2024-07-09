@@ -75,7 +75,7 @@ function Card({ activityImage, rating, reviewCount, title, price }: CardProps) {
   const formattedPrice = formatCurrency(price);
 
   return (
-    <div className="flex rounded-[24px] w-[800px] h-[204px] bg-white shadow-card">
+    <div className="flex rounded-[24px] w-[800px] h-[204px] bg-white shadow-card t:w-full m:w-[calc(100vw-50px)]">
       <Image
         className="rounded-l-[24px]"
         src={activityImage}
@@ -83,7 +83,7 @@ function Card({ activityImage, rating, reviewCount, title, price }: CardProps) {
         width={210}
         height={204}
       />
-      <div className="flex flex-col justify-between px-[24px] py-[21px]">
+      <div className="flex flex-col w-full justify-between px-[24px] py-[21px]">
         <div className="flex flex-col gap-[6px]">
           <div className="flex gap-[6px] items-center">
             <Image
@@ -96,7 +96,7 @@ function Card({ activityImage, rating, reviewCount, title, price }: CardProps) {
           </div>
           <div className="text-[20px] font-[700] text-nomad-black">{title}</div>
         </div>
-        <div className="relative flex w-[548px] justify-between items-center py-[5px]">
+        <div className="relative flex w-full justify-between items-center py-[5px]">
           <div className="flex items-center gap-[8px]">
             <span className="text-[24px] font-[500] text-var-gray8">{`₩${formattedPrice}`}</span>
             <span className="font-[500] text-var-gray8">/인</span>
