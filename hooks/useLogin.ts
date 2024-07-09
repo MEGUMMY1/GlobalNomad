@@ -30,13 +30,19 @@ export default function useLogin() {
         });
       }
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       openPopup({
         popupType: 'alert',
         content: '환영합니다!',
         btnName: ['확인'],
         callBackFnc: () => router.push(`/`),
       });
+
+      const { accessToken, refreshToken, user } = data;
+
+      localStorage.setItem('userId', user.id);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
     },
   });
 
