@@ -43,7 +43,7 @@ function BestActivities() {
           <PaginationArrowButton></PaginationArrowButton>
         </div>
       </div>
-      <div className="flex gap-[32px] mt-[34px] overflow-auto scrollbar-hide">
+      <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide">
         <BestActivity></BestActivity>
         <BestActivity></BestActivity>
         <BestActivity></BestActivity>
