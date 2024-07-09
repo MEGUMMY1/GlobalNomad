@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { format, addDays } from 'date-fns';
 import { ActivityDetailsProps } from '../ActivityDetails.types';
 import { PrimaryButton } from '@/components/Button/Button';
@@ -11,6 +9,7 @@ import { modalState } from '@/states/modalState';
 import router from 'next/router';
 import ReservationModal from './ReservationModal';
 import ParticipantSelector from './ParticipantSelector';
+import CustomCalendar from '@/components/CustomCalendar/CustomCalendar';
 
 export default function Reservation({ activity }: ActivityDetailsProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -135,7 +134,7 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
         </div>
         <div className="border border-solid border-var-gray2 mt-2" />
         <div className="my-4 font-extrabold text-nomad-black text-xl">날짜</div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center p:justify-center">
           <button
             onClick={() =>
               openModal({
@@ -160,13 +159,9 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
             {buttonText}
           </button>
           <div className="t:hidden m:hidden">
-            <DatePicker
-              selected={selectedDate}
+            <CustomCalendar
+              selectedDate={selectedDate}
               onChange={handleDateChange}
-              inline
-              dateFormat="yyyy-MM-dd"
-              className="block w-full mt-2 p-2 border rounded bg-white text-gray-700 font-medium"
-              minDate={addDays(new Date(), 1)}
             />
           </div>
         </div>

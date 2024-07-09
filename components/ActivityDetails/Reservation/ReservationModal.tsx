@@ -1,7 +1,6 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
-import { addDays } from 'date-fns';
 import { ReservationModalProps } from './Reservation.types';
+import CustomCalendar from '@/components/CustomCalendar/CustomCalendar';
 
 export default function ReservationModal({
   selectedDate,
@@ -13,13 +12,9 @@ export default function ReservationModal({
   return (
     <>
       <div className="flex justify-center">
-        <DatePicker
-          selected={selectedDate}
+        <CustomCalendar
+          selectedDate={selectedDate}
           onChange={handleDateChange}
-          inline
-          dateFormat="yyyy-MM-dd"
-          className="block w-full mt-2 p-2 border rounded bg-white text-gray-700 font-medium"
-          minDate={addDays(new Date(), 1)}
         />
       </div>
       <div className="mt-6">
