@@ -5,3 +5,12 @@ export interface CardProps {
   title: string;
   price: number;
 }
+
+export interface PopoverButtonProps {
+  children: string;
+  onClick: () => void;
+}
+
+export interface PopoverProps {
+  closePopover: () => void;
+}
