@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { apiMyInfo } from '@/pages/api/users/apiUsers';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 
-export default function MyPage() {
+export default function MyPageInput() {
   const {
     register,
     handleSubmit,
@@ -53,8 +53,8 @@ export default function MyPage() {
   if (isError) return <div>데이터를 불러오는데 실패 했습니다.</div>;
 
   return (
-    <div className="flex flex-col">
-      <form>
+    <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
+      <form className="flex flex-col gap-[24px] t:gap-[16px]">
         <div className="flex justify-between">
           <p className="font-bold text-[32px]">내 정보</p>
           <PrimaryButton
@@ -66,44 +66,52 @@ export default function MyPage() {
             저장하기
           </PrimaryButton>
         </div>
-        <div>
-          <InputBox
-            label="닉네임"
-            placeholder=""
-            name="nickname"
-            validation={validation.nickName}
-            register={register}
-            errors={errors}
-          />
-          <InputBox
-            label="이메일"
-            placeholder=""
-            name="email"
-            register={register}
-            errors={errors}
-            readOnly
-          />
-          <InputBox
-            label="비밀번호"
-            placeholder="8자 이상 입력해 주세요"
-            name="password"
-            validation={validation.password}
-            register={register}
-            errors={errors}
-          />
-          <InputBox
-            label="비밀번호 재입력"
-            placeholder="비밀번호를 한번 더 입력해 주세요"
-            name="passwordCheck"
-            validation={{
-              ...validation.passwordCheck,
-              validate: (value: string) =>
-                value === getValues().password ||
-                '비밀번호가 일치하지 않습니다.',
-            }}
-            register={register}
-            errors={errors}
-          />
+        <div className="flex flex-col gap-[32px]">
+          <div>
+            <InputBox
+              label="닉네임"
+              placeholder=""
+              name="nickname"
+              validation={validation.nickName}
+              register={register}
+              errors={errors}
+            />
+          </div>
+          <div>
+            <InputBox
+              label="이메일"
+              placeholder=""
+              name="email"
+              register={register}
+              errors={errors}
+              readOnly
+            />
+          </div>
+          <div>
+            <InputBox
+              label="비밀번호"
+              placeholder="8자 이상 입력해 주세요"
+              name="password"
+              validation={validation.password}
+              register={register}
+              errors={errors}
+            />
+          </div>
+          <div>
+            <InputBox
+              label="비밀번호 재입력"
+              placeholder="비밀번호를 한번 더 입력해 주세요"
+              name="passwordCheck"
+              validation={{
+                ...validation.passwordCheck,
+                validate: (value: string) =>
+                  value === getValues().password ||
+                  '비밀번호가 일치하지 않습니다.',
+              }}
+              register={register}
+              errors={errors}
+            />
+          </div>
         </div>
       </form>
     </div>

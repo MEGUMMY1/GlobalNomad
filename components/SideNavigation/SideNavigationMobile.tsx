@@ -1,8 +1,4 @@
 import Image from 'next/image';
-import calendarIcon from '@/public/icon/calendar_check_outline.svg';
-import settingIcon from '@/public/icon/cog_outline.svg';
-import reservationIcon from '@/public/icon/text_box_check_outline.svg';
-import myAccountIcon from '@/public/icon/account_check_outline.svg';
 import grayCalendarIcon from '@/public/icon/gray-calendar-check-outline.svg';
 import graySettingIcon from '@/public/icon/gray-cog-outline.svg';
 import grayReservationIcon from '@/public/icon/gray-text-box-check-outline.svg';
@@ -17,26 +13,16 @@ import useUploadProfile from '@/hooks/useUploadProfile';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
 
-export default function SidenNavigation() {
+interface SidenNavigationMobileProps {
+  onNavigate: (section: string) => void;
+}
+
+export default function SidenNavigationMobile({
+  onNavigate,
+}: SidenNavigationMobileProps) {
   const router = useRouter();
-  const [activeButton, setActiveButton] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
-  useEffect(() => {
-    switch (router.pathname) {
-      case '/reservation':
-        setActiveButton('reservation');
-        break;
-      case '/setting':
-        setActiveButton('setting');
-        break;
-      case '/calendar':
-        setActiveButton('calendar');
-        break;
-      case '/mypage':
-        setActiveButton('mypage');
-        break;
-    }
-  }, [router.pathname]);
 
   const buttonPaths: routePaths = {
     mypage: '/mypage',
@@ -78,20 +64,15 @@ export default function SidenNavigation() {
       });
   }, []);
 
-  const handleBtnClick = (buttonName: string | null) => {
-    setActiveButton((prevActiveButton) =>
-      prevActiveButton === buttonName ? prevActiveButton : buttonName
-    );
-
-    if (buttonName && buttonPaths[buttonName]) {
-      router.push(buttonPaths[buttonName]);
-    }
+  const handleBtnClick = (section: string) => {
+    setActiveSection(section);
+    onNavigate(section);
   };
 
-  const sideNavBtnStyle = `font-bold flex gap-[8px] h-[44px] w-fill items-center pl-[16px] text-[16px] `;
+  const sideNavBtnStyle = `font-bold flex gap-[8px] h-[44px] w-fill items-center pl-[16px] text-[16px] text-var-gray6 `;
 
   return (
-    <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 justify-center gap-[24px] t:w-[251px]">
+    <div className="w-[344px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 justify-center gap-[24px]  ">
       <div className="w-fill flex justify-center relative">
         <label htmlFor="upload-image" className="cursor-pointer">
           <Image
@@ -103,7 +84,7 @@ export default function SidenNavigation() {
           />
           <Image
             src={editProfileIcon}
-            className="w-[44px] h-[44px] absolute bottom-[-5px] right-[100px] t:right-[30px] "
+            className="w-[44px] h-[44px] absolute bottom-[-5px] right-[75px]"
             alt="유저 프로필 사진 수정"
           />
           <input
@@ -117,63 +98,31 @@ export default function SidenNavigation() {
       </div>
       <div className="flex flex-col gap-[8px]  justify-between">
         <button
-          className={`${sideNavBtnStyle} ${
-            activeButton === 'mypage'
-              ? 'bg-var-green1  rounded-[12px] text-var-black'
-              : 'text-var-gray6'
-          }`}
+          className={sideNavBtnStyle}
           onClick={() => handleBtnClick('mypage')}
         >
-          <Image
-            src={activeButton === 'mypage' ? myAccountIcon : grayMyAccountIcon}
-            alt="내 정보 아이콘"
-          />
+          <Image src={grayMyAccountIcon} alt="내 정보 아이콘" />
           <p>내 정보</p>
         </button>
         <button
-          className={`${sideNavBtnStyle} ${
-            activeButton === 'reservation'
-              ? 'bg-var-green1 rounded-[12px]  text-var-black'
-              : 'text-var-gray6'
-          }`}
+          className={sideNavBtnStyle}
           onClick={() => handleBtnClick('reservation')}
         >
-          <Image
-            src={
-              activeButton === 'reservation'
-                ? reservationIcon
-                : grayReservationIcon
-            }
-            alt="예약 내역 아이콘"
-          />
+          <Image src={grayReservationIcon} alt="예약 내역 아이콘" />
           <p>예약 내역</p>
         </button>
         <button
-          className={`${sideNavBtnStyle} ${
-            activeButton === 'setting'
-              ? 'bg-var-green1 rounded-[12px] text-var-black'
-              : 'text-var-gray6'
-          }`}
+          className={sideNavBtnStyle}
           onClick={() => handleBtnClick('setting')}
         >
-          <Image
-            src={activeButton === 'setting' ? settingIcon : graySettingIcon}
-            alt="내 체험 관리 아이콘"
-          />
+          <Image src={graySettingIcon} alt="내 체험 관리 아이콘" />
           <p>내 체험 관리</p>
         </button>
         <button
-          className={`${sideNavBtnStyle} ${
-            activeButton === 'calendar'
-              ? 'bg-var-green1 rounded-[12px] text-var-black'
-              : 'text-var-gray6'
-          }`}
+          className={sideNavBtnStyle}
           onClick={() => handleBtnClick('calendar')}
         >
-          <Image
-            src={activeButton === 'calendar' ? calendarIcon : grayCalendarIcon}
-            alt="예약 현황 아이콘"
-          />
+          <Image src={grayCalendarIcon} alt="예약 현황 아이콘" />
           <p>예약 현황</p>
         </button>
       </div>
