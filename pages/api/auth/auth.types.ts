@@ -4,7 +4,7 @@ export interface LoginBody {
 }
 export interface LoginResponse {
   user: {
-    id: number;
+    id: string;
     email: string;
     nickname: string;
     profileImageUrl: string;

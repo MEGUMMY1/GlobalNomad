@@ -102,6 +102,7 @@ function KategorieDropdown() {
       </div>
       {isOpen ? (
         <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center">
+
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}

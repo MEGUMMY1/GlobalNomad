@@ -47,7 +47,7 @@ export default function AuthInputBox({
       )}
       {/* 비밀번호 보기 버튼 */}
       {eyeIconActive && (
-        <button onClick={handleClick}>
+        <button type="button" onClick={handleClick}>
           <Image
             width={24}
             height={24}

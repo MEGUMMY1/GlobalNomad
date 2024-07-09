@@ -6,6 +6,7 @@ import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
 import useLogin from '@/hooks/useLogin';
+import { useMemo } from 'react';
 
 export const getStaticProps = async () => {
   return {
@@ -21,18 +22,28 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
+    watch,
   } = useForm<loginFormValues>({ mode: 'onBlur' });
 
   const onSubmit = (data: loginFormValues) => {
     postLoginMutation.mutate(data);
   };
 
-  const isNotError = !errors.email && !errors.password;
+  const watchFields = watch(['email', 'password']);
+
+  const isAllFieldsValid = useMemo(() => {
+    const isNotError = !errors.email && !errors.password;
+    const { email, password } = getValues();
+    const isFormFilled = !!email && !!password;
+
+    return isFormFilled && isNotError;
+  }, [errors.email, errors.password, watchFields]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
-      <Link href="/">
+      <Link href="/main">
         <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
       </Link>
 
@@ -61,9 +72,9 @@ export default function LoginPage() {
         />
         <PrimaryButton
           size="large"
-          style={isNotError ? 'enabled' : 'disabled'}
+          style={isAllFieldsValid ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isNotError}
+          disabled={!isAllFieldsValid}
         >
           로그인하기
         </PrimaryButton>
