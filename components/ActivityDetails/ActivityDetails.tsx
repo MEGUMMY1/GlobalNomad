@@ -11,6 +11,7 @@ import Map from './Map/Map';
 import reviewData from './review.json';
 import { formatCurrency } from '@/utils/formatCurrency';
 import Reservation from './Reservation/Reservation';
+import { MeatballButton } from '../Button/Button';
 
 export default function ActivityDetails({ activity }: ActivityDetailsProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,11 +57,11 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
   };
 
   return (
-    <div className="mt-16 t:mt-4">
-      <div className="relative flex justify-between">
+    <div className="mt-16 t:mt-4 m:mt-4">
+      <div className="relative flex justify-between m:px-[24px]">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-nomad-black">{activity.category}</p>
-          <h1 className="text-[32px] text-nomad-black font-bold">
+          <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
             {activity.title}
           </h1>
           <div className="flex gap-3">
@@ -71,8 +72,8 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
                 width={16}
                 height={16}
               />
-              <p>{formatNumberToFixed(averageRating)}</p>
-              <p>({formatCurrency(reviews.length)})</p>
+              <p className="m:text-sm">{formatNumberToFixed(averageRating)}</p>
+              <p className="m:text-sm">({formatCurrency(reviews.length)})</p>
             </div>
             <div className="flex gap-1">
               <Image
@@ -81,18 +82,11 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
                 width={18}
                 height={18}
               />
-              <p className="text-nomad-black">{activity.address}</p>
+              <p className="text-nomad-black m:text-sm">{activity.address}</p>
             </div>
           </div>
         </div>
-        <button onClick={toggleMenu} className="relative">
-          <Image
-            src="/icon/kebab.svg"
-            alt="케밥 아이콘"
-            width={40}
-            height={40}
-          />
-        </button>
+        <MeatballButton onClick={toggleMenu} />
         {isOpen && (
           <div
             ref={menuRef}
@@ -111,14 +105,14 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
         bannerImageUrl={activity.bannerImageUrl}
         subImages={activity.subImages}
       />
-      <div className="flex gap-4">
-        <div className="w-[800px] mb-20 t:w-[470px]">
-          <div className="border-t-2 border-var-gray3 border-solid pt-10" />
+      <div className="flex gap-4 m:block m:relative">
+        <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
+          <div className="border-t-2 border-var-gray3 border-solid pt-10 m:pt-6" />
           <div className="flex flex-col gap-4">
             <p className="text-nomad-black font-bold text-xl">체험 설명</p>
             <p className="text-nomad-black">{activity.description}</p>
           </div>
-          <div className="border-t-2 border-var-gray3 border-solid my-10" />
+          <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
           <Map address={activity.address} />
           <div className="flex gap-1 mt-2">
             <Image
@@ -131,8 +125,7 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
               {activity.address}
             </p>
           </div>
-          <div className="border-t-2 border-var-gray3 border-solid my-10" />
-
+          <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
           <div className="flex flex-col gap-4">
             <p className="text-nomad-black font-bold text-xl">후기</p>
             <div className="flex gap-4 items-center">
@@ -173,7 +166,7 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
               </div>
               <div>
                 <div className="flex mb-2">
-                  <p className="font-bold max-w-[300px] overflow-hidden whitespace-nowrap text-ellipsis">
+                  <p className="font-bold max-w-[160px] overflow-hidden whitespace-nowrap text-ellipsis">
                     {review.user.nickname}
                   </p>
                   <p className="mx-2">|</p>

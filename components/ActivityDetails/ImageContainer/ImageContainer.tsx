@@ -60,7 +60,7 @@ export default function ImageContainer({
           </div>
         ))}
       </div>
-      <div className="hidden m:block m:w-[calc(100vw-48px)] m:h-full">
+      <div className="hidden m:block m:w-screen m:h-full">
         <Slider {...settings}>
           {mobileImages.map((image) => (
             <div
