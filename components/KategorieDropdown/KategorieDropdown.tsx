@@ -64,7 +64,7 @@ function KategorieDropdown() {
   };
 
   return (
-    <div className="w-[800px] h-[56px] relative" ref={KateDropdownElement}>
+    <div className="w-[800px] h-[56px] relative z-10" ref={KateDropdownElement}>
       <div
         className={`w-[800px] h-[56px] border-solid border border-var-gray7 rounded flex items-center pl-[16px] text-[16px] font-[400] font-sans ${isSelected} bg-white`}
         onClick={handleOpen}
@@ -89,8 +89,7 @@ function KategorieDropdown() {
         )}
       </div>
       {isOpen ? (
-        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center">
-
+        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center shadow-kategorieDropdown">
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}
