@@ -33,7 +33,7 @@ export function PrimaryButton({
 }: PrimaryButtonProps) {
   return (
     <button
-      className={`flex items-center justify-center rounded-md ${primarySizeClasses[size]} ${primaryStyleClasses[style]}`}
+      className={`flex items-center justify-center rounded-md ${primarySizeClasses[size]} ${primaryStyleClasses[style]} ${disabled ? 'cursor' : ''}`}
       onClick={onClick}
       disabled={disabled ?? false}
     >

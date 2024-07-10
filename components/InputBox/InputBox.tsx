@@ -17,6 +17,7 @@ export default function InputBox({
   validation = {},
   register,
   errors,
+  readOnly = false,
 }: InputBoxProps) {
   return (
     <div className="flex flex-col gap-[16px] relative">
@@ -25,7 +26,8 @@ export default function InputBox({
         className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6`}
         type={type}
         placeholder={placeholder}
-        {...register(name, validation)}
+        {...register(name, { ...validation, readOnly })}
+        readOnly={readOnly}
       />
       {/* 에러 메세지 */}
       {errors[name] && (
