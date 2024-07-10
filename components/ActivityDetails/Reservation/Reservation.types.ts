@@ -1,3 +1,5 @@
+import { getActivityInfoResponse } from '@/pages/api/activities/apiactivities.types';
+
 export interface ReservationModalProps {
   selectedDate: Date | null;
   handleDateChange: (date: Date | null) => void;
@@ -9,4 +11,8 @@ export interface ReservationModalProps {
 export interface ParticipantSelectorProps {
   participants: number;
   onParticipantsChange: (delta: number) => void;
+}
+
+export interface ReservationProps {
+  activity: getActivityInfoResponse;
 }
