@@ -6,4 +6,5 @@ export interface InputBoxProps {
   validation?: any;
   register: any;
   errors: any;
+  readOnly?: boolean;
 }

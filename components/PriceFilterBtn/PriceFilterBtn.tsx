@@ -1,25 +1,13 @@
 import Image from 'next/image';
 import filterIcon from '@/public/icon/filter_arrowdown.svg';
 import React, { useEffect, useRef, useState } from 'react';
+import useClickOutside from '@/hooks/useClickOutside';
 
 export default function PriceFilterBtn() {
   const [showMenuList, setShowMenuList] = useState(false);
-  const dropDownElement = useRef<HTMLButtonElement>(null);
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      dropDownElement.current &&
-      !dropDownElement.current.contains(e.target as Node)
-    ) {
-      setShowMenuList(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  });
+  const dropDownElement = useClickOutside<HTMLButtonElement>(() =>
+    setShowMenuList(false)
+  );
 
   return (
     <div className='relative'>

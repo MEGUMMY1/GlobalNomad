@@ -17,15 +17,15 @@ export interface MyInfoResponse {
   id: number;
   email: string;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface EditMyInfoBody {
-  nickname: string;
-  profileImageUrl: string;
-  newPassword: string;
+  nickname?: string;
+  profileImageUrl?: string | null;
+  newPassword?: string;
 }
 
 export interface EditMyInfoResponse {
@@ -35,10 +35,6 @@ export interface EditMyInfoResponse {
   profileImageUrl: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface ProfileImageBody {
-  image: string;
 }
 
 export interface ProfileImageResponse {
