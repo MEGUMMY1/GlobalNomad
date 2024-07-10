@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import { PaginationProps } from './Pagination.types';
 import { PaginationArrowButton } from '../Button/Button';
 
 /*
-totalItems: 전체 요소 개수, itemsPerPage: 한 페이지에 띄울 요소 개수, baseUrl: 페이지네이션 적용되는 페이지 url 요소
-ex) <Pagination totalItems={reviews.length} itemsPerPage={itemsPerPage} baseUrl={id} />
+totalItems: 전체 요소 개수, itemsPerPage: 한 페이지에 띄울 요소 개수, currentPage: 현재 페이지, onPageChange: 페이지 변경 핸들러
+ex) <Pagination totalItems={reviews.length} itemsPerPage={itemsPerPage} currentPage={currentPage} onPageChange={handlePageChange} />
 */
 export default function Pagination({
   totalItems,
   itemsPerPage,
-  baseUrl,
+  currentPage,
+  onPageChange,
 }: PaginationProps) {
-  const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const router = useRouter();
-
-  useEffect(() => {
-    const page = router.query.page
-      ? parseInt(router.query.page as string, 10)
-      : 1;
-    setCurrentPage(page);
-  }, [router.query.page]);
-
-  const handlePageChange = (page: number) => {
-    if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
-    router.push(`${baseUrl}?page=${page}`);
-  };
 
   const renderPageNumbers = () => {
     const startPage = Math.floor((currentPage - 1) / 5) * 5 + 1;
@@ -38,7 +23,7 @@ export default function Pagination({
       pages.push(
         <button
           key={i}
-          onClick={() => handlePageChange(i)}
+          onClick={() => onPageChange(i)}
           className={`w-[55px] h-[55px] text-lg flex items-center justify-center mx-1 border border-solid border-var-green2 rounded-2xl m:w-[40px] m:h-[40px] ${i === currentPage ? 'bg-var-green2 text-white' : 'bg-white text-var-green2'}`}
         >
           {i}
@@ -53,13 +38,13 @@ export default function Pagination({
 
   const goToPrevPage = () => {
     if (!isFirstPage) {
-      handlePageChange(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
   const goToNextPage = () => {
     if (!isLastPage) {
-      handlePageChange(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
