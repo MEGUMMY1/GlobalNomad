@@ -10,8 +10,6 @@ INSTANCE_URL.interceptors.request.use(
       delete config.headers['exclude-access-token'];
       return config;
     }
-    const accessToken = localStorage.getItem('accessToken');
-    config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
   (error) => {

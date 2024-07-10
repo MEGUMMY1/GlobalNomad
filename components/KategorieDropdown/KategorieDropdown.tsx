@@ -6,6 +6,7 @@ import CheckMark from '@/public/icon/Checkmark.svg';
 import { KategorieDropdownProps } from './KategorieDropdown.type';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { KategoriedDropState } from '@/states/KategorieDropState';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const Kategories: { [key: string]: string } = {
   '문화 예술': '문화 예술',
@@ -13,6 +14,7 @@ const Kategories: { [key: string]: string } = {
   스포츠: '스포츠',
   투어: '투어',
   관광: '관광',
+  웰빙: '웰빙',
 };
 
 function Kategorie({ name, setIsOpen }: KategorieDropdownProps) {
@@ -53,22 +55,9 @@ function KategorieDropdown() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const SelectedKateogorie = useRecoilValue(KategoriedDropState);
   const isSelected = SelectedKateogorie.name ? 'text-black' : 'text-var-gray6';
-  const KateDropdownElement = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      KateDropdownElement.current &&
-      !KateDropdownElement.current.contains(e.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  });
+  const KateDropdownElement = useClickOutside<HTMLDivElement>(() =>
+    setIsOpen(false)
+  );
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
@@ -100,7 +89,8 @@ function KategorieDropdown() {
         )}
       </div>
       {isOpen ? (
-        <ul className="w-[800px] h-[224px] rounded-md bg-white absolute animate-slideDown bottom-[-230px] flex flex-col items-center justify-center">
+        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center">
+
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}

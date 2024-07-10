@@ -14,7 +14,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="p:w-[1200px] t:w-[696px] m:w-[343px] p:h-[178px] t:h-[166px] m:p-[130px] flex flex-col p:gap-[32px] t:gap-[20px] m:gap-[15px] bg-white p-[32px_24px_32px_24px] m:p-[16px_24px_16px_24px] rounded-2xl">
+    <div className="p:w-[1200px] t:w-[696px] m:w-[343px] p:h-[178px] t:h-[166px] m:p-[130px] flex flex-col p:gap-[32px] t:gap-[20px] m:gap-[15px] bg-white p-[32px_24px_32px_24px] m:p-[16px_24px_16px_24px] rounded-2xl shadow-xl">
       <span className="font-sans text-[20px] m:text-[16px] font-[700]">
         무엇을 체험하고 싶으신가요?
       </span>

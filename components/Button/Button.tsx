@@ -42,32 +42,30 @@ export function PrimaryButton({
   );
 }
 
-/* 페이지네이션 버튼 - 좌우 버튼(검정색)으로 페이지네이션 하는 경우 
-   onClickPrev, onClickNext 필수 입력 
-   사용 예시 - <PaginationButton onClickPrev={handlePrev} onClickNext={handleNext}/> */
+/* 이미지 슬라이드 버튼 - 좌우 버튼(검정색)으로 슬라이드 하는 경우 
+   사용 예시 - <PaginationButton direction="next" />,
+              <PaginationButton direction="prev" /> */
 export function PaginationButton({
-  onClickPrev,
-  onClickNext,
-}: PaginationButtonProps) {
+  direction,
+  onClick,
+}: {
+  direction: 'prev' | 'next';
+  onClick?: () => void;
+}) {
+  const isPrev = direction === 'prev';
+  const src = isPrev
+    ? '/icon/btn_pagination_arrow_left.svg'
+    : '/icon/btn_pagination_arrow_right.svg';
+  const alt = isPrev ? '이전 페이지' : '다음 페이지';
+  const leftOrRight = isPrev ? 'left-2' : 'right-2';
+
   return (
-    <div className="flex gap-[8px]">
-      <button onClick={onClickPrev}>
-        <Image
-          src="/icon/btn_pagination_arrow_left.svg"
-          width={24}
-          height={47}
-          alt="이전 페이지"
-        />
-      </button>
-      <button onClick={onClickNext}>
-        <Image
-          src="/icon/btn_pagination_arrow_right.svg"
-          width={24}
-          height={47}
-          alt="다음 페이지"
-        />
-      </button>
-    </div>
+    <button
+      onClick={onClick}
+      className={`absolute top-1/2 transform -translate-y-1/2 z-10 ${leftOrRight}`}
+    >
+      <Image src={src} width={24} height={47} alt={alt} />
+    </button>
   );
 }
 
