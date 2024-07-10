@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { CardProps, PopoverButtonProps, PopoverProps } from './Card.types';
 import { MeatballButton } from '../Button/Button';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatNumberToFixed } from '@/utils/formatNumberToFixed';
 import { usePopup } from '@/hooks/usePopup';
+import useClickOutside from '@/hooks/useClickOutside';
 
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
@@ -19,7 +20,7 @@ function PopoverButton({ children, onClick }: PopoverButtonProps) {
 }
 
 function Popover({ closePopover }: PopoverProps) {
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useClickOutside<HTMLDivElement>(closePopover);
   const router = useRouter();
   const { openPopup } = usePopup();
 
@@ -34,22 +35,6 @@ function Popover({ closePopover }: PopoverProps) {
       callBackFnc: () => alert('체험 삭제 테스트'),
     });
   };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      popoverRef.current &&
-      !popoverRef.current.contains(event.target as Node)
-    ) {
-      closePopover();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
     <div
