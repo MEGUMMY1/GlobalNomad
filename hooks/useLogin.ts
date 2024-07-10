@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import { usePopup } from './usePopup';
 import { LoginBody, LoginResponse } from '@/pages/api/auth/auth.types';
 import { LoginAccess } from '@/pages/api/auth/auth';
+import INSTANCE_URL from '@/pages/api/instance';
 
 export default function useLogin() {
   const router = useRouter();
   const { openPopup } = usePopup();
-
   const postLoginMutation: UseMutationResult<
     LoginResponse,
     AxiosError,
@@ -39,10 +39,11 @@ export default function useLogin() {
       });
 
       const { accessToken, refreshToken, user } = data;
+      INSTANCE_URL.defaults.headers.common['Authorization'] =
+        `Bearer ${accessToken}`;
 
-      localStorage.setItem('userId', user.id);
-      localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('userId', user.id);
     },
   });
 
