@@ -5,4 +5,8 @@ module.exports = {
       'i.pinimg.com',
     ],
   },
+  i18n: {
+    locales: ['en-US', 'ko-KR'],
+    defaultLocale: 'en-US',
+  },
 };

@@ -6,6 +6,7 @@ import CheckMark from '@/public/icon/Checkmark.svg';
 import { KategorieDropdownProps } from './KategorieDropdown.type';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { KategoriedDropState } from '@/states/KategorieDropState';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const Kategories: { [key: string]: string } = {
   '문화 예술': '문화 예술',
@@ -53,22 +54,9 @@ function KategorieDropdown() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const SelectedKateogorie = useRecoilValue(KategoriedDropState);
   const isSelected = SelectedKateogorie.name ? 'text-black' : 'text-var-gray6';
-  const KateDropdownElement = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      KateDropdownElement.current &&
-      !KateDropdownElement.current.contains(e.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  });
+  const KateDropdownElement = useClickOutside<HTMLDivElement>(() =>
+    setIsOpen(false)
+  );
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
