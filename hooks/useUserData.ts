@@ -25,5 +25,5 @@ export const useUserData = () => {
     setUserId(userId);
   }, []);
 
-  return { userData };
+  return userData;
 };
