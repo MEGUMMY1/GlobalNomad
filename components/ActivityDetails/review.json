@@ -8,7 +8,7 @@
         "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
       },
       "activityId": 1,
-      "content": "안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. ",
+      "content": "안녕하세요 후기 내용입니다.",
       "rating": 1,
       "createdAt": "2024-02-14T21:29:51.012Z",
       "updatedAt": "2024-02-14T21:29:51.012Z"
@@ -21,7 +21,7 @@
         "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
       },
       "activityId": 1,
-      "content": "안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. ",
+      "content": "안녕하세요 후기 내용입니다.",
       "rating": 4,
       "createdAt": "2024-02-14T21:29:51.012Z",
       "updatedAt": "2024-02-14T21:29:51.012Z"
@@ -34,12 +34,233 @@
         "profileImageUrl": "https://i.pinimg.com/236x/a9/a4/e6/a9a4e6ae0ffe0d6899b288168d27d43b.jpg"
       },
       "activityId": 1,
-      "content": "안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. ",
+      "content": "안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. 안녕하세요 후기 내용입니다. ",
       "rating": 5,
       "createdAt": "2024-02-14T21:29:51.012Z",
       "updatedAt": "2024-02-14T21:29:51.012Z"
+    },
+    {
+      "id": 4,
+      "user": {
+        "id": 4,
+        "nickname": "김철수",
+        "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
+      },
+      "activityId": 2,
+      "content": "후기 내용입니다.",
+      "rating": 3,
+      "createdAt": "2024-02-15T10:29:51.012Z",
+      "updatedAt": "2024-02-15T10:29:51.012Z"
+    },
+    {
+      "id": 5,
+      "user": {
+        "id": 5,
+        "nickname": "박영희",
+        "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
+      },
+      "activityId": 2,
+      "content": "좋아요!",
+      "rating": 5,
+      "createdAt": "2024-02-15T12:29:51.012Z",
+      "updatedAt": "2024-02-15T12:29:51.012Z"
+    },
+    {
+      "id": 6,
+      "user": {
+        "id": 6,
+        "nickname": "이영수",
+        "profileImageUrl": "https://i.pinimg.com/236x/a9/a4/e6/a9a4e6ae0ffe0d6899b288168d27d43b.jpg"
+      },
+      "activityId": 2,
+      "content": "별로였어요.",
+      "rating": 2,
+      "createdAt": "2024-02-15T14:29:51.012Z",
+      "updatedAt": "2024-02-15T14:29:51.012Z"
+    },
+    {
+      "id": 7,
+      "user": {
+        "id": 7,
+        "nickname": "고길동",
+        "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
+      },
+      "activityId": 3,
+      "content": "재밌었어요!",
+      "rating": 4,
+      "createdAt": "2024-02-15T16:29:51.012Z",
+      "updatedAt": "2024-02-15T16:29:51.012Z"
+    },
+    {
+      "id": 8,
+      "user": {
+        "id": 8,
+        "nickname": "송지현",
+        "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
+      },
+      "activityId": 3,
+      "content": "평범했어요.",
+      "rating": 3,
+      "createdAt": "2024-02-15T18:29:51.012Z",
+      "updatedAt": "2024-02-15T18:29:51.012Z"
+    },
+    {
+      "id": 9,
+      "user": {
+        "id": 9,
+        "nickname": "최수정",
+        "profileImageUrl": "https://i.pinimg.com/236x/a9/a4/e6/a9a4e6ae0ffe0d6899b288168d27d43b.jpg"
+      },
+      "activityId": 3,
+      "content": "만족합니다.",
+      "rating": 4,
+      "createdAt": "2024-02-15T20:29:51.012Z",
+      "updatedAt": "2024-02-15T20:29:51.012Z"
+    },
+    {
+      "id": 10,
+      "user": {
+        "id": 10,
+        "nickname": "백수진",
+        "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
+      },
+      "activityId": 4,
+      "content": "별로였어요.",
+      "rating": 2,
+      "createdAt": "2024-02-15T22:29:51.012Z",
+      "updatedAt": "2024-02-15T22:29:51.012Z"
+    },
+    {
+      "id": 11,
+      "user": {
+        "id": 11,
+        "nickname": "장미화",
+        "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
+      },
+      "activityId": 4,
+      "content": "좋아요!",
+      "rating": 5,
+      "createdAt": "2024-02-16T00:29:51.012Z",
+      "updatedAt": "2024-02-16T00:29:51.012Z"
+    },
+    {
+      "id": 12,
+      "user": {
+        "id": 12,
+        "nickname": "강유진",
+        "profileImageUrl": "https://i.pinimg.com/236x/a9/a4/e6/a9a4e6ae0ffe0d6899b288168d27d43b.jpg"
+      },
+      "activityId": 4,
+      "content": "별로였어요.",
+      "rating": 1,
+      "createdAt": "2024-02-16T02:29:51.012Z",
+      "updatedAt": "2024-02-16T02:29:51.012Z"
+    },
+    {
+      "id": 13,
+      "user": {
+        "id": 13,
+        "nickname": "조수빈",
+        "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
+      },
+      "activityId": 5,
+      "content": "평범했어요.",
+      "rating": 3,
+      "createdAt": "2024-02-16T04:29:51.012Z",
+      "updatedAt": "2024-02-16T04:29:51.012Z"
+    },
+    {
+      "id": 14,
+      "user": {
+        "id": 14,
+        "nickname": "이민준",
+        "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
+      },
+      "activityId": 5,
+      "content": "만족합니다.",
+      "rating": 4,
+      "createdAt": "2024-02-16T06:29:51.012Z",
+      "updatedAt": "2024-02-16T06:29:51.012Z"
+    },
+    {
+      "id": 15,
+      "user": {
+        "id": 15,
+        "nickname": "김하늘",
+        "profileImageUrl": "https://i.pinimg.com/236x/a9/a4/e6/a9a4e6ae0ffe0d6899b288168d27d43b.jpg"
+      },
+      "activityId": 5,
+      "content": "재밌었어요!",
+      "rating": 5,
+      "createdAt": "2024-02-16T08:29:51.012Z",
+      "updatedAt": "2024-02-16T08:29:51.012Z"
+    },
+    {
+      "id": 16,
+      "user": {
+        "id": 16,
+        "nickname": "박준영",
+        "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
+      },
+      "activityId": 6,
+      "content": "별로였어요.",
+      "rating": 1,
+      "createdAt": "2024-02-16T10:29:51.012Z",
+      "updatedAt": "2024-02-16T10:29:51.012Z"
+    },
+    {
+      "id": 17,
+      "user": {
+        "id": 17,
+        "nickname": "오지훈",
+        "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
+      },
+      "activityId": 6,
+      "content": "평범했어요.",
+      "rating": 3,
+      "createdAt": "2024-02-16T12:29:51.012Z",
+      "updatedAt": "2024-02-16T12:29:51.012Z"
+    },
+    {
+      "id": 18,
+      "user": {
+        "id": 18,
+        "nickname": "최지훈",
+        "profileImageUrl": "https://i.pinimg.com/236x/a9/a4/e6/a9a4e6ae0ffe0d6899b288168d27d43b.jpg"
+      },
+      "activityId": 6,
+      "content": "좋아요!",
+      "rating": 4,
+      "createdAt": "2024-02-16T14:29:51.012Z",
+      "updatedAt": "2024-02-16T14:29:51.012Z"
+    },
+    {
+      "id": 19,
+      "user": {
+        "id": 19,
+        "nickname": "김민수",
+        "profileImageUrl": "https://i.pinimg.com/236x/22/d5/fc/22d5fcd0b6ed3e50b4f50bf446632c3a.jpg"
+      },
+      "activityId": 7,
+      "content": "만족합니다.",
+      "rating": 4,
+      "createdAt": "2024-02-16T16:29:51.012Z",
+      "updatedAt": "2024-02-16T16:29:51.012Z"
+    },
+    {
+      "id": 20,
+      "user": {
+        "id": 20,
+        "nickname": "이수지",
+        "profileImageUrl": "https://i.pinimg.com/236x/f4/10/2e/f4102e713854b22e4ff1749e241614ae.jpg"
+      },
+      "activityId": 7,
+      "content": "별로였어요.",
+      "rating": 2,
+      "createdAt": "2024-02-16T18:29:51.012Z",
+      "updatedAt": "2024-02-16T18:29:51.012Z"
     }
   ],
-  "totalCount": 1,
-  "averageRating": 3.33333
+  "totalCount": 20,
+  "averageRating": 3.1
 }

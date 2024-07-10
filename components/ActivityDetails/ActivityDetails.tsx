@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import {
   ActivityDetailsProps,
   Review,
@@ -13,6 +14,7 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import Reservation from './Reservation/Reservation';
 import { MeatballButton } from '../Button/Button';
 import useClickOutside from '@/hooks/useClickOutside';
+import Pagination from '../Pagination/Pagination';
 
 export default function ActivityDetails({ activity }: ActivityDetailsProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +46,15 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
       return '평가 없음';
     }
   };
+
+  const itemsPerPage = 3;
+  const router = useRouter();
+  const currentPage = router.query.page
+    ? parseInt(router.query.page as string, 10)
+    : 1;
+
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const paginatedReviews = reviews.slice(startIdx, startIdx + itemsPerPage);
 
   return (
     <div className="mt-16 t:mt-4 m:mt-4">
@@ -139,10 +150,10 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
               </div>
             </div>
           </div>
-          {reviews.map((review, i) => (
+          {paginatedReviews.map((review, i) => (
             <div
               key={review.id}
-              className={`flex gap-4 py-6 items-start ${i === reviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
+              className={`flex gap-4 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
             >
               <div className="flex-shrink-0">
                 <Image
@@ -155,7 +166,7 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
               </div>
               <div>
                 <div className="flex mb-2">
-                  <p className="font-bold max-w-[160px] overflow-hidden whitespace-nowrap text-ellipsis">
+                  <p className="font-bold max-w-[300px] m:max-w-[160px] overflow-hidden whitespace-nowrap text-ellipsis">
                     {review.user.nickname}
                   </p>
                   <p className="mx-2">|</p>
@@ -167,6 +178,11 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
               </div>
             </div>
           ))}
+          <Pagination
+            totalItems={reviews.length}
+            itemsPerPage={itemsPerPage}
+            baseUrl="activity-details"
+          />
         </div>
         <div>
           <Reservation activity={activity} />
