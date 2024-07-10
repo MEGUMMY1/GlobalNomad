@@ -44,10 +44,11 @@ function Modal() {
               <PrimaryButton
                 size="large"
                 style={!modal.disabled ? 'dark' : 'disabled'}
-                children={modal.buttonChildren || '작성하기'}
                 onClick={handleCallback}
                 disabled={modal.disabled}
-              />
+              >
+                {modal.buttonChildren || '작성하기'}
+              </PrimaryButton>
             </div>
           )}
         </div>
@@ -66,10 +67,11 @@ function Modal() {
               <PrimaryButton
                 size="large"
                 style={!modal.disabled ? 'dark' : 'disabled'}
-                children={modal.buttonChildren || '작성하기'}
                 onClick={handleCallback}
                 disabled={modal.disabled}
-              />
+              >
+                {modal.buttonChildren || '작성하기'}
+              </PrimaryButton>
             </div>
           )}
         </div>

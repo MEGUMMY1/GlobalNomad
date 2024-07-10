@@ -202,10 +202,11 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
         <PrimaryButton
           size="large"
           style={selectedTime ? 'dark' : 'disabled'}
-          children="예약하기"
           onClick={handleReservation}
           disabled={!selectedTime}
-        />
+        >
+          예약하기
+        </PrimaryButton>
         <div className="border border-solid border-var-gray2 mt-6" />
         <div className="mt-4 flex items-center justify-between">
           <p className="font-extrabold text-nomad-black text-xl">총 합계</p>
@@ -273,10 +274,11 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
         <PrimaryButton
           size="small"
           style={selectedTime ? 'dark' : 'disabled'}
-          children="예약하기"
           onClick={handleReservation}
           disabled={!selectedTime}
-        />
+        >
+          예약하기
+        </PrimaryButton>
       </div>
     </div>
   );
