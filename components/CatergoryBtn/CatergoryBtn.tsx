@@ -9,7 +9,7 @@ export default function CatergoryBtn({ categoryName }: CategoryBtnProps) {
   };
   return (
     <button
-      className={`flex items-center justify-center rounded-[15px] border-[1px] border-solid border-var-green2 w-[127px] h-[53px] t:w-[120px]  m:w-[80px] m:h-[41px] ${isActive ? 'bg-nomad-black' : ''}`}
+      className={`flex items-center justify-center rounded-[15px] border-[1px] border-solid border-var-green2 w-[127px] h-[53px] t:min-w-[120px] m:min-w-[80px] m:h-[41px] ${isActive ? 'bg-nomad-black' : 'bg-white'}`}
       onClick={handleClick}
     >
       <p
