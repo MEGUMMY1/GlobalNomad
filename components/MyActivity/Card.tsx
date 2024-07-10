@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CardProps, PopoverButtonProps, PopoverProps } from './Card.types';
 import { MeatballButton } from '../Button/Button';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { formatNumberToFixed } from '@/utils/formatNumberToFixed';
 import { usePopup } from '@/hooks/usePopup';
 
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
@@ -92,7 +93,7 @@ function Card({ activityImage, rating, reviewCount, title, price }: CardProps) {
               width={19}
               height={19}
             />
-            <div className="h-[21px] text-var-black">{`${rating} (${reviewCount})`}</div>
+            <div className="h-[21px] text-var-black">{`${formatNumberToFixed(rating)} (${reviewCount})`}</div>
           </div>
           <div className="text-[20px] font-[700] text-nomad-black">{title}</div>
         </div>
