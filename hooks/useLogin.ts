@@ -33,13 +33,6 @@ export default function useLogin() {
       }
     },
     onSuccess: (data) => {
-      openPopup({
-        popupType: 'alert',
-        content: '환영합니다!',
-        btnName: ['확인'],
-        callBackFnc: () => router.push(`/`),
-      });
-
       const { accessToken, refreshToken, user } = data;
       INSTANCE_URL.defaults.headers.common['Authorization'] =
         `Bearer ${accessToken}`;

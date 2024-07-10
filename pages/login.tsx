@@ -6,18 +6,15 @@ import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
 import useLogin from '@/hooks/useLogin';
-import { useMemo } from 'react';
-
-export const getStaticProps = async () => {
-  return {
-    props: {
-      layoutType: 'removeLayout',
-    },
-  };
-};
+import { useEffect, useMemo } from 'react';
+import useLoginState from '@/hooks/useLoginState';
+import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 
 export default function LoginPage() {
   const { postLoginMutation } = useLogin();
+  const { isLoggedIn } = useLoginState();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -39,6 +36,10 @@ export default function LoginPage() {
 
     return isFormFilled && isNotError;
   }, [errors.email, errors.password, watchFields]);
+
+  useEffect(() => {
+    if (isLoggedIn) router.push('/mypage');
+  });
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
