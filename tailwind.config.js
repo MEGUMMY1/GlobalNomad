@@ -51,6 +51,9 @@ module.exports = {
         t: { min: '744px', max: '1280px' },
         p: { min: '1281px' },
       },
+      boxShadow: {
+        card: '0px 4px 16px 0px rgba(17, 34, 17, 0.05)',
+      },
     },
   },
   plugins: [],
