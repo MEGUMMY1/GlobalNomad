@@ -12,29 +12,18 @@ import reviewData from './review.json';
 import { formatCurrency } from '@/utils/formatCurrency';
 import Reservation from './Reservation/Reservation';
 import { MeatballButton } from '../Button/Button';
+import useClickOutside from '@/hooks/useClickOutside';
 
 export default function ActivityDetails({ activity }: ActivityDetailsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [averageRating, setAverageRating] = useState<number>(0);
-  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
   useEffect(() => {
     const data: ReviewsData = reviewData;
