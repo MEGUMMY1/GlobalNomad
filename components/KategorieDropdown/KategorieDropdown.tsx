@@ -14,6 +14,7 @@ const Kategories: { [key: string]: string } = {
   스포츠: '스포츠',
   투어: '투어',
   관광: '관광',
+  웰빙: '웰빙',
 };
 
 function Kategorie({ name, setIsOpen }: KategorieDropdownProps) {
@@ -88,7 +89,8 @@ function KategorieDropdown() {
         )}
       </div>
       {isOpen ? (
-        <ul className="w-[800px] h-[224px] rounded-md bg-white absolute animate-slideDown bottom-[-230px] flex flex-col items-center justify-center">
+        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center">
+
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}
