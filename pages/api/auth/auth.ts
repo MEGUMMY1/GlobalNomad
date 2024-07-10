@@ -1,3 +1,4 @@
+import { SetterOrUpdater } from 'recoil';
 import INSTANCE_URL from '../instance';
 import { LoginBody, LoginResponse } from './auth.types';
 
@@ -8,7 +9,9 @@ export const LoginAccess = async (body: LoginBody): Promise<LoginResponse> => {
   return response.data;
 };
 
-export const apiRefreshToken = async () => {
+export const apiRefreshToken = async (
+  setIsLoggedIn: SetterOrUpdater<boolean>
+): Promise<LoginResponse | void> => {
   const currentrefreshToken = localStorage.getItem('refreshToken');
   INSTANCE_URL.defaults.headers.common['Authorization'] =
     `Bearer ${currentrefreshToken}`;
@@ -21,6 +24,7 @@ export const apiRefreshToken = async () => {
       `Bearer ${accessToken}`;
 
     localStorage.setItem('refreshToken', refreshToken);
+    setIsLoggedIn(true);
 
     setTimeout(apiRefreshToken, JWT_EXPIRY_TIME - 60000);
 

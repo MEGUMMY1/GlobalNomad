@@ -5,8 +5,10 @@ import { usePopup } from './usePopup';
 import { LoginBody, LoginResponse } from '@/pages/api/auth/auth.types';
 import { LoginAccess } from '@/pages/api/auth/auth';
 import INSTANCE_URL from '@/pages/api/instance';
+import useLoginState from './useLoginState';
 
 export default function useLogin() {
+  const { setIsLoggedIn } = useLoginState();
   const router = useRouter();
   const { openPopup } = usePopup();
   const postLoginMutation: UseMutationResult<
@@ -42,6 +44,7 @@ export default function useLogin() {
       INSTANCE_URL.defaults.headers.common['Authorization'] =
         `Bearer ${accessToken}`;
 
+      setIsLoggedIn(true);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('userId', user.id);
     },
