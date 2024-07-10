@@ -4,8 +4,8 @@ import { PaginationProps } from './Pagination.types';
 import { PaginationArrowButton } from '../Button/Button';
 
 /*
-totalItems: 전체 요소 개수, itemsPerPage: 한 페이지에 띄울 요소 개수, baseUrl: 페이지네이션 적용되는 페이지 url
-ex) <Pagination totalItems={reviews.length} itemsPerPage={itemsPerPage} baseUrl="activity-details" />
+totalItems: 전체 요소 개수, itemsPerPage: 한 페이지에 띄울 요소 개수, baseUrl: 페이지네이션 적용되는 페이지 url 요소
+ex) <Pagination totalItems={reviews.length} itemsPerPage={itemsPerPage} baseUrl={id} />
 */
 export default function Pagination({
   totalItems,
