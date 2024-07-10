@@ -5,7 +5,6 @@ import {
   MyInfoResponse,
   EditMyInfoBody,
   EditMyInfoResponse,
-  ProfileImageBody,
   ProfileImageResponse,
 } from './apiUser.types';
 
@@ -31,9 +30,9 @@ export async function apiEditMyInfo(
 
 // 프로필 이미지 url 생성을 위한 api
 export async function apiProfileImage(
-  body: ProfileImageBody
+  formData: FormData
 ): Promise<ProfileImageResponse> {
-  const response = await INSTANCE_URL.post('/users/me/image', body, {
+  const response = await INSTANCE_URL.post('/users/me/image', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
