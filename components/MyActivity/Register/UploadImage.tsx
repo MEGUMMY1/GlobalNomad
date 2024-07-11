@@ -48,15 +48,14 @@ function UploadImage({
       >
         <div>
           <label
-            htmlFor={`upload-${keys.length}`}
+            htmlFor={`upload-${label}`}
             className={`cursor-pointer ${selectedImages.length === maxImages ? 'pointer-events-none' : ''}`}
           >
             <ImageUploadButton />
           </label>
           <input
-            key={keys.length}
             type="file"
-            id={`upload-${keys.length}`}
+            id={`upload-${label}`}
             className="hidden"
             accept="image/*"
             onChange={handleFileChange}
