@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
 import { ActivityDetailsProps } from './ActivityDetails.types';
 import { formatNumberToFixed } from '@/utils/formatNumberToFixed';
 import ImageContainer from './ImageContainer/ImageContainer';
@@ -22,9 +23,6 @@ import {
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [averageRating, setAverageRating] = useState<number>(0);
-  const [activityData, setActivityData] = useState<getActivityInfoResponse>();
-  const [reviewData, setReviewData] = useState<getActivityReviewsResponse>();
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
@@ -32,30 +30,36 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
 
   const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
-  useEffect(() => {
-    const fetchActivityData = async () => {
-      try {
-        if (id) {
-          const activityResponse = await getActivityInfo({
-            id: id,
-          });
-          const reviewsResponse = await getActivityReviews({
-            id: id,
-            page: currentPage,
-            size: itemsPerPage,
-          });
-          setActivityData(activityResponse);
-          setAverageRating(activityResponse.rating);
-          setReviewData(reviewsResponse);
-        }
-      } catch (error) {
-        console.error('Error fetching activity details:', error);
-        alert('Error fetching activity details');
-      }
-    };
+  const {
+    data: activityData,
+    error: activityError,
+    isLoading: isLoadingActivity,
+  } = useQuery<getActivityInfoResponse>({
+    queryKey: ['activityDetails', id],
+    queryFn: () => getActivityInfo({ id }),
+  });
 
-    fetchActivityData();
-  }, [id, currentPage]);
+  const {
+    data: reviewData,
+    error: reviewError,
+    isLoading: isLoadingReviews,
+  } = useQuery<getActivityReviewsResponse>({
+    queryKey: ['reviewList', id, currentPage],
+    queryFn: () =>
+      getActivityReviews({ id, page: currentPage, size: itemsPerPage }),
+  });
+
+  if (isLoadingActivity || isLoadingReviews) {
+    return <div>Loading...</div>;
+  }
+
+  if (activityError || reviewError) {
+    console.error(
+      'Error fetching activity details:',
+      activityError || reviewError
+    );
+    return <div>Error fetching activity details</div>;
+  }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -80,19 +84,15 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     router.push(`/activity-details/${id}?page=${page}`);
   };
 
-  const paginatedReviews = reviewData?.reviews;
-
-  if (!activityData) {
-    return <div>Loading...</div>;
-  }
+  const paginatedReviews = reviewData?.reviews || [];
 
   return (
     <div className="mt-16 t:mt-4 m:mt-4">
       <div className="relative flex justify-between m:px-[24px]">
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-nomad-black">{activityData.category}</p>
+          <p className="text-sm text-nomad-black">{activityData?.category}</p>
           <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
-            {activityData.title}
+            {activityData?.title}
           </h1>
           <div className="flex gap-3">
             <div className="flex gap-1">
@@ -102,9 +102,11 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 width={16}
                 height={16}
               />
-              <p className="m:text-sm">{formatNumberToFixed(averageRating)}</p>
               <p className="m:text-sm">
-                ({formatCurrency(activityData.reviewCount)})
+                {activityData && formatNumberToFixed(activityData?.rating)}
+              </p>
+              <p className="m:text-sm">
+                ({formatCurrency(activityData?.reviewCount)})
               </p>
             </div>
             <div className="flex gap-1">
@@ -115,7 +117,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 height={18}
               />
               <p className="text-nomad-black m:text-sm">
-                {activityData.address}
+                {activityData?.address}
               </p>
             </div>
           </div>
@@ -135,19 +137,21 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           </div>
         )}
       </div>
-      <ImageContainer
-        bannerImageUrl={activityData.bannerImageUrl}
-        subImages={activityData.subImages}
-      />
+      {activityData && (
+        <ImageContainer
+          bannerImageUrl={activityData.bannerImageUrl}
+          subImages={activityData.subImages}
+        />
+      )}
       <div className="flex gap-4 m:block m:relative">
         <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
           <div className="border-t-2 border-var-gray3 border-solid pt-10 m:pt-6" />
           <div className="flex flex-col gap-4">
             <p className="text-nomad-black font-bold text-xl">체험 설명</p>
-            <p className="text-nomad-black">{activityData.description}</p>
+            <p className="text-nomad-black">{activityData?.description}</p>
           </div>
           <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
-          <Map address={activityData.address} />
+          {activityData && <Map address={activityData.address} />}
           <div className="flex gap-1 mt-2">
             <Image
               src="/icon/location.svg"
@@ -156,7 +160,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               height={18}
             />
             <p className="text-nomad-black text-sm max-w-[700px] overflow-hidden whitespace-nowrap text-ellipsis">
-              {activityData.address}
+              {activityData?.address}
             </p>
           </div>
           <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
@@ -164,11 +168,11 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
             <p className="text-nomad-black font-bold text-xl">후기</p>
             <div className="flex gap-4 items-center">
               <p className="text-[50px] font-bold">
-                {formatNumberToFixed(averageRating)}
+                {activityData && formatNumberToFixed(activityData?.rating)}
               </p>
               <div className="flex flex-col gap-1">
                 <p className="text-lg text-nomad-black">
-                  {getRatingText(averageRating)}
+                  {activityData && getRatingText(activityData?.rating)}
                 </p>
                 <div className="flex items-center gap-1">
                   <Image
@@ -178,7 +182,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                     height={16}
                   />
                   <p className="text-var-black text-sm">
-                    {formatCurrency(activityData.reviewCount)}개 후기
+                    {formatCurrency(activityData?.reviewCount)}개 후기
                   </p>
                 </div>
               </div>
@@ -223,9 +227,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
             </>
           )}
         </div>
-        <div>
-          <Reservation activity={activityData} />
-        </div>
+        <div>{activityData && <Reservation activity={activityData} />}</div>
       </div>
     </div>
   );
