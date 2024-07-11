@@ -14,7 +14,7 @@ import { apiReview } from '@/pages/api/myReservations/apiMyReservations';
 export default function Review({ reservationId }: ReservationId) {
   const { openModal } = useModal();
   const [reviewContent, setReviewContent] = useState<string>('');
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(1);
 
   const mutation = useMutation({
     mutationFn: (data: { id: ReservationId; body: ReviewBody }) =>

@@ -4,7 +4,7 @@ import { RatingProps } from './Review.types';
 
 export default function Rating({ currentRating, onRatingChange }: RatingProps) {
   const [rating, setRating] = useState(currentRating);
-  const [hoverRating, setHoverRating] = useState<number>(0);
+  const [hoverRating, setHoverRating] = useState<number>(1);
   const totalStars = 5;
 
   useEffect(() => {
