@@ -219,14 +219,11 @@ export function ArrowCircleButton({ onClick }: SimpleButtonProps) {
 }
 
 /* 이미지 등록하기 버튼 */
-export function ImageUploadButton({ onClick }: SimpleButtonProps) {
+export function ImageUploadButton() {
   return (
-    <button
-      className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] border border-dashed border-var-gray8 rounded-lg"
-      onClick={onClick}
-    >
+    <div className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] border border-dashed border-var-gray8 rounded-lg">
       <Image src="/icon/icon_plus.svg" width={30} height={30} alt="추가" />
       <p className="text-[24px]">이미지 등록</p>
-    </button>
+    </div>
   );
 }
