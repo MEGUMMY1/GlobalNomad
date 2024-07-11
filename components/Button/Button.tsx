@@ -71,40 +71,36 @@ export function PaginationButton({
 
 /* 페이지네이션 버튼 - 좌우 화살표 버튼으로 페이지네이션 하는 경우 
    onClickPrev, onClickNext, isFirstPage, isLastPage 필수 입력 
-   사용 예시 -  <PaginationArrowButton onClickPrev={handlePrev} onClickNext={handleNext} isFirstPage={false} isLastPage/> */
+   사용 예시 - [이전] <PaginationArrowButton onClick={goToPrevPage} disabled={isFirstPage} direction="prev" />
+              [다음] <PaginationArrowButton onClick={goToNextPage} disabled={isLastPage} direction="next" /> */
 export function PaginationArrowButton({
-  onClickPrev,
-  onClickNext,
-  isFirstPage,
-  isLastPage,
+  onClick,
+  disabled,
+  direction,
 }: PaginationButtonProps) {
+  const iconActiveSrc =
+    direction === 'prev'
+      ? '/icon/arrow_active_left.svg'
+      : '/icon/arrow_active_right.svg';
+  const iconInactiveSrc =
+    direction === 'prev'
+      ? '/icon/arrow_inactive_left.svg'
+      : '/icon/arrow_inactive_right.svg';
+  const altText = direction === 'prev' ? '이전 페이지' : '다음 페이지';
+
   return (
-    <div>
-      <button onClick={onClickPrev} disabled={isFirstPage}>
-        <Image
-          src={
-            isFirstPage
-              ? '/icon/arrow_inactive_left.svg'
-              : '/icon/arrow_active_left.svg'
-          }
-          width={32}
-          height={32}
-          alt="이전 페이지"
-        />
-      </button>
-      <button onClick={onClickNext} disabled={isLastPage}>
-        <Image
-          src={
-            isLastPage
-              ? '/icon/arrow_inactive_right.svg'
-              : '/icon/arrow_active_right.svg'
-          }
-          width={32}
-          height={32}
-          alt="다음 페이지"
-        />
-      </button>
-    </div>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-[55px] h-[55px] flex items-center justify-center bg-white border border-solid ${disabled ? 'border-var-gray3' : 'border-var-green2'} rounded-2xl m:w-[40px] m:h-[40px]`}
+    >
+      <Image
+        src={disabled ? iconInactiveSrc : iconActiveSrc}
+        width={20}
+        height={20}
+        alt={altText}
+      />
+    </button>
   );
 }
 

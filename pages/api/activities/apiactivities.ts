@@ -42,7 +42,7 @@ export const postActivity = async (
 export const getActivityInfo = async (
   params: getActivityInfoParams
 ): Promise<getActivityInfoResponse> => {
-  const response = await axios.get(`/activities/{id}`);
+  const response = await axios.get(`/activities/${params.id}`);
   return response.data;
 };
 

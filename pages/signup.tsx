@@ -7,7 +7,9 @@ import { signUpFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { signupValidation } from '@/components/AuthInputBox/validation';
 import { PrimaryButton } from '@/components/Button/Button';
 import { SignupBody } from './api/users/apiUser.types';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import useLoginState from '@/hooks/useLoginState';
+import { useRouter } from 'next/router';
 
 export const getStaticProps = async () => {
   return {
@@ -19,7 +21,10 @@ export const getStaticProps = async () => {
 
 export default function SingupPage() {
   const [isChecked, setIsChecked] = useState(false);
+  const { isLoggedIn } = useLoginState();
+  const router = useRouter();
   const { postSignupMutation } = useSignup();
+
   const {
     register,
     handleSubmit,
@@ -57,6 +62,12 @@ export default function SingupPage() {
     errors.nickname,
     watchFields,
   ]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/mypage');
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
