@@ -5,8 +5,10 @@ import { usePopup } from './usePopup';
 import { LoginBody, LoginResponse } from '@/pages/api/auth/auth.types';
 import { LoginAccess } from '@/pages/api/auth/auth';
 import INSTANCE_URL from '@/pages/api/instance';
+import useLoginState from './useLoginState';
 
 export default function useLogin() {
+  const { setIsLoggedIn } = useLoginState();
   const router = useRouter();
   const { openPopup } = usePopup();
   const postLoginMutation: UseMutationResult<
@@ -31,17 +33,11 @@ export default function useLogin() {
       }
     },
     onSuccess: (data) => {
-      openPopup({
-        popupType: 'alert',
-        content: '환영합니다!',
-        btnName: ['확인'],
-        callBackFnc: () => router.push(`/`),
-      });
-
       const { accessToken, refreshToken, user } = data;
       INSTANCE_URL.defaults.headers.common['Authorization'] =
         `Bearer ${accessToken}`;
 
+      setIsLoggedIn(true);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('userId', user.id);
     },

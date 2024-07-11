@@ -94,7 +94,7 @@ export interface getActivityInfoResponse {
   price: number;
   address: string;
   bannerImageUrl: string;
-  subImageUrls: [
+  subImages: [
     {
       id: number;
       imageUrl: string;
