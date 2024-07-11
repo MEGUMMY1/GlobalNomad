@@ -10,7 +10,7 @@ export default function NavigationDropdown() {
 
   return (
     <div
-      className="z-99 absolute bottom-[-90px] flex w-[90px] animate-slideDown flex-col justify-center overflow-hidden rounded-md bg-var-gray1 border-var-gray5 border-solid  
+      className="z-30 absolute bottom-[-90px] flex w-[90px] animate-slideDown flex-col justify-center overflow-hidden rounded-md bg-var-gray1 border-var-gray2 border-solid border  
        shadow-lg "
     >
       <Link

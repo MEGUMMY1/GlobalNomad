@@ -1,5 +1,5 @@
 import { CircleCloseButton } from '@/components/Button/Button';
-import MyPageInput from '@/components/MyPage/MyPageInput';
+import MyPageInput from '@/components/MyPageInput/MyPageInput';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import { useRouter } from 'next/router';

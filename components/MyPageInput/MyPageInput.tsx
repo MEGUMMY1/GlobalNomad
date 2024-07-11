@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { apiMyInfo } from '@/pages/api/users/apiUsers';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
+import { useUserData } from '@/hooks/useUserData';
 
 export default function MyPageInput() {
   const {
@@ -16,10 +17,8 @@ export default function MyPageInput() {
     formState: { errors },
   } = useForm<FieldValues>({ mode: 'onChange' });
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['myInfo'],
-    queryFn: apiMyInfo,
-  });
+  const userData = useUserData();
+
   const { postMyInfoMutation } = useEditMyInfo();
 
   const onSubmit = (data: FieldValues) => {
@@ -31,11 +30,11 @@ export default function MyPageInput() {
   };
 
   useEffect(() => {
-    if (data) {
-      setValue('nickname', data.nickname);
-      setValue('email', data.email);
+    if (userData) {
+      setValue('nickname', userData.nickname);
+      setValue('email', userData.email);
     }
-  }, [data, setValue]);
+  }, [userData, setValue]);
 
   const isAllFieldsValid = () => {
     const isNotError =
@@ -48,9 +47,6 @@ export default function MyPageInput() {
 
     return isFormFilled && isNotError;
   };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>데이터를 불러오는데 실패 했습니다.</div>;
 
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
