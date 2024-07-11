@@ -34,7 +34,7 @@ function Date() {
         />
       </div>
       {showCalendar && (
-        <div ref={calendarRef} className="absolute left-[40px] top-[80px] z-10">
+        <div ref={calendarRef} className="absolute left-[40px] top-[67px] z-10">
           <CustomCalendar selectedDate={date} onChange={handleDateSelect} />
         </div>
       )}
