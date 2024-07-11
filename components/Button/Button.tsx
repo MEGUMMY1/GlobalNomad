@@ -189,7 +189,7 @@ export function MeatballButton({ onClick }: SimpleButtonProps) {
 /* 추가하기 버튼 - 항목 추가 시 사용 */
 export function PlusButton({ onClick }: SimpleButtonProps) {
   return (
-    <button onClick={onClick}>
+    <button type="button" onClick={onClick}>
       <Image src="/icon/btn_plus.svg" width={56} height={56} alt="추가하기" />
     </button>
   );
@@ -198,7 +198,7 @@ export function PlusButton({ onClick }: SimpleButtonProps) {
 /* 제거하기 버튼 - 항목 제거 시 사용 */
 export function MinusButton({ onClick }: SimpleButtonProps) {
   return (
-    <button onClick={onClick}>
+    <button type="button" onClick={onClick}>
       <Image src="/icon/btn_minus.svg" width={56} height={56} alt="제거하기" />
     </button>
   );
