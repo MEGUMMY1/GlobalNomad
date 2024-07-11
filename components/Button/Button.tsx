@@ -75,8 +75,8 @@ export function PaginationButton({
 export function PaginationArrowButton({
   onClickPrev,
   onClickNext,
-  isFirstPage,
-  isLastPage,
+  isFirstPage = false,
+  isLastPage = false,
 }: PaginationButtonProps) {
   return (
     <div>
