@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
 import { statusStyle, statusTitles } from './reservationStatusInfo.ts';
 import { MyReservationList } from './mockData';
+import { statusType } from '../ReservationFilter/ReservationFilter.types';
 
 interface ReservationCardProps {
   mockData: MyReservationList;
@@ -9,6 +10,10 @@ interface ReservationCardProps {
 
 const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
   const handleCancelReservation = () => {};
+
+  const isPendingOrAccepted = (status: statusType) => {
+    return status === 'pending' || status === 'accept';
+  };
 
   return (
     <div className="h-[212px] relative flex rounded-3xl shadow-card">
@@ -32,7 +37,7 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
         </p>
         <div className="w-full flex justify-between mt-[16px] items-center">
           <p className="font-medium text-[24px]">₩{mockData.totalPrice}</p>
-          {mockData.status === 'pending' && (
+          {isPendingOrAccepted(mockData.status) && (
             <PrimaryButton
               size="medium"
               style="bright"
@@ -41,7 +46,6 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
               예약 취소
             </PrimaryButton>
           )}
-
           {mockData.reviewSubmitted && (
             <PrimaryButton
               size="medium"

@@ -14,7 +14,7 @@ export default function ReservationFilter({
 }: ReservationFilterProps) {
   const [showMenuList, setShowMenuList] = useState(false);
 
-  const dropDownElement = useClickOutside<HTMLButtonElement>(() =>
+  const dropDownElement = useClickOutside<HTMLDivElement>(() =>
     setShowMenuList(false)
   );
 

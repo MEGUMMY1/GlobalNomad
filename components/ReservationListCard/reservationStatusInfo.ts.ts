@@ -1,5 +1,6 @@
 import { statusType } from '../ReservationFilter/ReservationFilter.types';
 
+/* 아직 status가 어떻게 오는지 몰라서 임의로 정해놓은 key값입니다. */
 export const statusTitles = {
   pending: '예약 신청',
   cancel: '예약 취소',
