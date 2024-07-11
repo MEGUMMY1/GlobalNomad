@@ -45,7 +45,7 @@ export default function NotificationDropdown({
   };
 
   return (
-    <div className="z-30 px-[20px] pt-[15px] pb-[24px] absolute top-[70px] right-[400px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-hidden rounded-md bg-var-green1 ">
+    <div className="z-30 px-[20px] pt-[15px] pb-[24px] absolute top-[70px] right-[400px] t:right-[100px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-hidden rounded-md m:w-full m:h-full m:right-0 m:top-0 bg-var-green1 ">
       <div className="flex text-[20px] font-bold mb-[20px] justify-between">
         알림 {data ? `${data.totalCount}` : '0'}개
         <CloseButton onClick={onClick} />
@@ -55,7 +55,7 @@ export default function NotificationDropdown({
           {notifications.map((notification) => (
             <div
               key={notification.id}
-              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] bg-white border-gray-200 "
+              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] w-[335px] h-[105px] bg-white border-gray-200 "
             >
               <div className="flex justify-between">
                 승인 아이콘
@@ -71,7 +71,7 @@ export default function NotificationDropdown({
           ))}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-[245px] bg-white py-[24px] rounded-[5px]">
+        <div className="flex justify-center items-center h-[245px] bg-white py-[24px] rounded-[5px] m:bg-var-green1 m:px-[20px] m:py-[40px]">
           새로운 알림이 없습니다.
         </div>
       )}

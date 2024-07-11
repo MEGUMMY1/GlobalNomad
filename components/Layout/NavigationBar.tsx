@@ -8,10 +8,12 @@ import NavigationDropdown from '../NavigationDropdown/NavigationDropdown';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
 import NotificationDropdown from '../NavigationDropdown/NotificationDropdown';
+import useLoginState from '@/hooks/useLoginState';
 
 export default function NavigationBar() {
   const userData = useUserData();
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const { isLoggedIn } = useLoginState();
   const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
   const { data, isLoading, isError } = useGetNotification({
     cursorId: 0,
@@ -37,7 +39,7 @@ export default function NavigationBar() {
           <Image src={Logo} alt="로고 아이콘" />
         </Link>
       </div>
-      {userData.id ? (
+      {isLoggedIn ? (
         <div className="flex items-center gap-[25px]">
           <button onClick={toggleNotifyDropdown}>
             <div className="relative">

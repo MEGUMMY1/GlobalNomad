@@ -38,7 +38,7 @@ export default function LoginPage() {
   }, [errors.email, errors.password, watchFields]);
 
   useEffect(() => {
-    if (isLoggedIn) router.push('/mypage');
+    if (isLoggedIn) router.push('/');
   }, [isLoggedIn]);
 
   return (

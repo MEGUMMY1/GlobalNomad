@@ -1,12 +1,8 @@
+import useLogout from '@/hooks/useLogout';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 export default function NavigationDropdown() {
-  const router = useRouter();
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    router.push('/login');
-  };
+  const logout = useLogout();
 
   return (
     <div
@@ -22,7 +18,7 @@ export default function NavigationDropdown() {
       <button
         type="button"
         className="border-t-block w-full rounded-[0.4rem] px-[16px] py-[10px] text-left text-[14px] hover:bg-var-green1"
-        onClick={handleLogout}
+        onClick={logout}
       >
         로그아웃
       </button>
