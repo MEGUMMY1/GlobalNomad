@@ -35,11 +35,11 @@ export default function LoginPage() {
     const isFormFilled = !!email && !!password;
 
     return isFormFilled && isNotError;
-  }, [errors.email, errors.password, watchFields]);
+  }, [errors.email, errors.password, getValues]);
 
   useEffect(() => {
     if (isLoggedIn) router.push('/');
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">

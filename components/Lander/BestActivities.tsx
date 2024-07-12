@@ -40,7 +40,7 @@ function BestActivities() {
           🔥 인기 체험
         </span>
         <div className="t:hidden m:hidden">
-          <PaginationArrowButton></PaginationArrowButton>
+          {/* <PaginationArrowButton></PaginationArrowButton> */}
         </div>
       </div>
       <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide">
