@@ -1,15 +1,13 @@
 import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
 import { statusStyle, statusTitles } from './reservationStatusInfo';
-import {
-  ReservationCardProps,
-  statusType,
-} from '../ReservationFilter/myReservationTypes.types';
+import { ReservationCardProps } from '../ReservationFilter/myReservationTypes.types';
 import { usePopup } from '@/hooks/usePopup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiEditMyReservation } from '@/pages/api/myReservations/apiMyReservations';
 import { useUserData } from '@/hooks/useUserData';
 import { formatCurrency } from '@/utils/formatCurrency';
+import Link from 'next/link';
 
 const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const { openPopup } = usePopup();
@@ -39,22 +37,32 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
 
   return (
     <div className="h-[212px] relative flex rounded-3xl shadow-card overflow-hidden">
-      <Image
-        src={reservationData.activity.bannerImageUrl}
-        alt="액티비티 사진"
-        objectFit="cover"
-        width={204}
-        height={204}
-      />
+      <div className="min-w-[204px] h-[204px] relative">
+        <Link
+          href={`/activity-details/${reservationData.activity.id}`}
+          className="text-[20px] font-bold mt-[8px] hover:underline"
+        >
+          <Image
+            src={reservationData.activity.bannerImageUrl}
+            alt="액티비티 사진"
+            layout="fill"
+            objectFit="cover"
+            className="hover:scale-110"
+          />
+        </Link>
+      </div>
       <div className="w-full p-[24px]">
         <p
           className={`text-[16px] font-bold ${statusStyle[reservationData.status]}`}
         >
           {statusTitles[reservationData.status]}
         </p>
-        <p className="text-[20px] font-bold mt-[8px]">
+        <Link
+          href={`/activity-details/${reservationData.activity.id}`}
+          className="text-[20px] font-bold mt-[8px] hover:underline"
+        >
           {reservationData.activity.title}
-        </p>
+        </Link>
         <p className="mt-[12px] text-[18px]">
           {reservationData.date}&nbsp;&nbsp;·&nbsp;&nbsp;
           {reservationData.startTime}~{reservationData.endTime}
