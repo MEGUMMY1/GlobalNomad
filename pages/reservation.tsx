@@ -33,7 +33,7 @@ export default function myReservationPage() {
   return (
     <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px]">
       <SideNavigation />
-      <div className="flex flex-col w-[792px] gap-[24px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
+      <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
         <div className="flex w-full justify-between">
           <p className="text-[32px] font-bold">예약 내역 </p>
           {reservationListByFilter && (
@@ -43,7 +43,7 @@ export default function myReservationPage() {
             />
           )}
         </div>
-        <div className="animate-slideDown">
+        <div className="animate-slideDown overflow-auto scrollbar-hide h-[calc(100vh-380px)]">
           {reservationListByFilter ? (
             reservationListByFilter.map(
               (reservationData: MyReservationProps) => {
