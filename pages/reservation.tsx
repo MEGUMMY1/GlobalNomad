@@ -5,9 +5,12 @@ import SideNavigation from '@/components/SideNavigation/SideNavigation'; // Corr
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { mockData } from '@/components/ReservationListCard/mockData';
+import { useQuery } from '@tanstack/react-query';
+import { useUserData } from '@/hooks/useUserData';
 
 export default function Reservation() {
   const [filterOption, setFilterOption] = useState<statusType>();
+  const userData = useUserData();
   const [data, setData] = useState(mockData);
 
   useEffect(() => {

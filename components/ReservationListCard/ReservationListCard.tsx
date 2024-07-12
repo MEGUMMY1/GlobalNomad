@@ -12,7 +12,7 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
   const handleCancelReservation = () => {};
 
   const isPendingOrAccepted = (status: statusType) => {
-    return status === 'pending' || status === 'accept';
+    return status === 'pending' || status === 'confirmed';
   };
 
   return (

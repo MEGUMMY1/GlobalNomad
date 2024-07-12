@@ -8,7 +8,7 @@ export interface MyReservationList {
     id: number;
   };
   scheduleId: number;
-  status: 'pending' | 'cancel' | 'decline' | 'end' | 'accept';
+  status: 'pending' | 'canceled' | 'declined' | 'completed' | 'confirmed';
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
@@ -70,7 +70,7 @@ export const mockData: MyReservationList[] = [
       id: 2,
     },
     scheduleId: 2,
-    status: 'cancel',
+    status: 'canceled',
     reviewSubmitted: true,
     totalPrice: 0,
     headCount: 0,
