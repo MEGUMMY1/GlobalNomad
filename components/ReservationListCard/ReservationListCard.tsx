@@ -6,12 +6,7 @@ import {
   statusType,
 } from '../ReservationFilter/myReservationTypes.types';
 import { usePopup } from '@/hooks/usePopup';
-import {
-  QueryClient,
-  UseMutationResult,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiEditMyReservation } from '@/pages/api/myReservations/apiMyReservations';
 import { useUserData } from '@/hooks/useUserData';
 import { formatCurrency } from '@/utils/formatCurrency';
@@ -49,7 +44,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   return (
     <div className="h-[212px] relative flex rounded-3xl shadow-card">
       <Image
-        src="/image/TestImage.jpg"
+        src={reservationData.activity.bannerImageUrl}
         alt="액티비티 사진"
         objectFit="cover"
         width={204}
@@ -88,7 +83,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
               style="dark"
               onClick={handleCancelReservation}
             >
-              후가 작성
+              후기 작성
             </PrimaryButton>
           )}
         </div>
