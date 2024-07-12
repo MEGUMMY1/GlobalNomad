@@ -53,8 +53,9 @@ module.exports = {
       },
       boxShadow: {
         card: '0px 4px 16px 0px rgba(17, 34, 17, 0.05)',
+        kategorieDropdown: '0px 10px 30px 3px rgba(5, 16, 55, 0.15);',
       },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [require('tailwind-scrollbar-hide')],
 };
