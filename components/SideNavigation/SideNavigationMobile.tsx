@@ -5,8 +5,6 @@ import grayReservationIcon from '@/public/icon/gray-text-box-check-outline.svg';
 import grayMyAccountIcon from '@/public/icon/gray-account-check-outline.svg';
 import editProfileIcon from '@/public/image/btn.png';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { routePaths } from './SideNavigation.types';
 import { apiMyInfo } from '@/pages/api/users/apiUsers';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 import useUploadProfile from '@/hooks/useUploadProfile';
@@ -20,16 +18,7 @@ interface SidenNavigationMobileProps {
 export default function SidenNavigationMobile({
   onNavigate,
 }: SidenNavigationMobileProps) {
-  const router = useRouter();
-  const [activeSection, setActiveSection] = useState<string | null>(null);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
-
-  const buttonPaths: routePaths = {
-    mypage: '/mypage',
-    reservation: '/reservation',
-    setting: '/setting',
-    calendar: '/calendar',
-  };
 
   const { postProfileImgMutation } = useUploadProfile();
   const { postMyInfoMutation } = useEditMyInfo();
@@ -65,7 +54,6 @@ export default function SidenNavigationMobile({
   }, []);
 
   const handleBtnClick = (section: string) => {
-    setActiveSection(section);
     onNavigate(section);
   };
 

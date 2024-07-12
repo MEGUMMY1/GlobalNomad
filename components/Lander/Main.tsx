@@ -30,10 +30,10 @@ function Main() {
         <div className="mt-[120px] m:mt-[14px] flex justify-center">
           <SearchBar></SearchBar>
         </div>
-        <div className='mt-[40px]'>
+        <div className="mt-[40px]">
           <BestActivities></BestActivities>
         </div>
-        <div className=' mt-[60px]'>
+        <div className=" mt-[60px]">
           <AllActivities></AllActivities>
         </div>
       </div>

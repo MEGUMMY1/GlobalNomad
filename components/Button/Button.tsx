@@ -125,7 +125,7 @@ export function CircleCloseButton({ onClick }: SimpleButtonProps) {
 /* 닫기 버튼 - 기본 버전  */
 export function CloseButton({ onClick }: SimpleButtonProps) {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} className="cursor-pointer">
       <Image src="/icon/btn_x_medium.svg" width={24} height={24} alt="닫기" />
     </button>
   );
