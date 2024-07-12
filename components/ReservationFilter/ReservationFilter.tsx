@@ -6,7 +6,7 @@ import { ReservationFilterProps, statusType } from './ReservationFilter.types';
 import {
   Status,
   statusTitles,
-} from '../ReservationListCard/reservationStatusInfo.ts';
+} from '../ReservationListCard/reservationStatusInfo';
 
 export default function ReservationFilter({
   setFilterOption,

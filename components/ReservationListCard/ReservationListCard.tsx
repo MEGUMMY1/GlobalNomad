@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
-import { statusStyle, statusTitles } from './reservationStatusInfo.ts';
+import { statusStyle, statusTitles } from './reservationStatusInfo';
 import { MyReservationList } from './mockData';
 import { statusType } from '../ReservationFilter/ReservationFilter.types';
 
