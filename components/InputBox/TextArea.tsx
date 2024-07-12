@@ -9,7 +9,7 @@ import { InputBoxProps } from './InputBox.types';
 	register, errors: 해당 input을 담는 리액트 훅 폼의 register와 errors객체를 넣어주세요.
 */
 
-export default function InputBox({
+export default function TextArea({
   label = '',
   type = 'text',
   placeholder,
@@ -21,14 +21,9 @@ export default function InputBox({
 }: InputBoxProps) {
   return (
     <div className="flex flex-col gap-[16px] relative">
-      {label && (
-        <label className="text-[24px] font-bold" htmlFor={name}>
-          {label}
-        </label>
-      )}
-      <input
-        id={name}
-        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6`}
+      {label && <label className="text-[24px] font-bold">{label}</label>}
+      <textarea
+        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6 w-full h-[346px] resize-none`}
         type={type}
         placeholder={placeholder}
         {...register(name, { ...validation, readOnly })}
