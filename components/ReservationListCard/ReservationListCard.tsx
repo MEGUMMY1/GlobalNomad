@@ -1,15 +1,22 @@
 import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
 import { statusStyle, statusTitles } from './reservationStatusInfo';
-import { MyReservationList } from './mockData';
 import { statusType } from '../ReservationFilter/ReservationFilter.types';
-
-interface ReservationCardProps {
-  mockData: MyReservationList;
-}
+import { useModal } from '@/hooks/useModal';
+import Review from '../Review/Review';
+import { ReservationCardProps } from './ReservationListCard.types';
 
 const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
+  const { openModal, closeModal } = useModal();
+
   const handleCancelReservation = () => {};
+  const handleOpenReviewModal = () => {
+    openModal({
+      title: '후기 작성',
+      hasButton: false,
+      content: <Review reservation={mockData} closeModal={closeModal} />,
+    });
+  };
 
   const isPendingOrAccepted = (status: statusType) => {
     return status === 'pending' || status === 'accept';
@@ -50,9 +57,9 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
             <PrimaryButton
               size="medium"
               style="dark"
-              onClick={handleCancelReservation}
+              onClick={handleOpenReviewModal}
             >
-              후가 작성
+              후기 작성
             </PrimaryButton>
           )}
         </div>
