@@ -12,10 +12,9 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import { EditMyReservationResponse } from '@/pages/api/myReservations/apiMyReservations.types';
-import { AxiosError } from 'axios';
 import { apiEditMyReservation } from '@/pages/api/myReservations/apiMyReservations';
 import { useUserData } from '@/hooks/useUserData';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const { openPopup } = usePopup();
@@ -72,7 +71,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
         </p>
         <div className="w-full flex justify-between mt-[16px] items-center">
           <p className="font-medium text-[24px]">
-            ₩{reservationData.totalPrice}
+            ₩{formatCurrency(reservationData.totalPrice)}
           </p>
           {isPendingOrAccepted(reservationData.status) && (
             <PrimaryButton
