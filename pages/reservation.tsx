@@ -49,7 +49,7 @@ export default function myReservationPage() {
               (reservationData: MyReservationProps) => {
                 return (
                   <div key={reservationData.id}>
-                    <ReservationListCard reservationData={reservationData} />;
+                    <ReservationListCard reservationData={reservationData} />
                   </div>
                 );
               }
