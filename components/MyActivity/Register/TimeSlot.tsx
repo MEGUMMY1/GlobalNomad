@@ -3,20 +3,23 @@ import DateInput from './DateInput';
 import TimeDropdown from './TimeDropdown';
 import { TimeSlotGroupProps } from './TimeSlot.types';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { timeSlotCountState } from '@/states/registerState';
 
 function TimeSlotGroup({
   isDefault = false,
   handleClickPlus = () => {},
   handleClickMinus = (id: number) => {},
   id = -1,
+  index,
 }: TimeSlotGroupProps) {
   return (
     <div className="flex gap-[20px]">
-      <DateInput />
+      <DateInput index={index} />
       <div className="flex gap-[12px] items-center">
-        <TimeDropdown />
+        <TimeDropdown type="start" index={index} />
         <p className="text-[20px] font-[700]">~</p>
-        <TimeDropdown />
+        <TimeDropdown type="end" index={index} />
       </div>
       {isDefault ? (
         <PlusButton onClick={handleClickPlus} />
@@ -33,17 +36,20 @@ function TimeSlotGroup({
 
 function TimeSlot() {
   const [timeSlots, setTimeSlots] = useState<{ id: number }[]>([]);
+  const [timeSlotCount, setTimeSlotCount] = useRecoilState(timeSlotCountState);
 
   const handleClickPlus = () => {
     const newTimeSlot = {
       id: Date.now(),
     };
     setTimeSlots((prevTimeSlots) => [...prevTimeSlots, newTimeSlot]);
+    setTimeSlotCount(timeSlotCount + 1);
   };
   const handleClickMinus = (id: number) => {
     setTimeSlots((prevTimeSlots) =>
       prevTimeSlots.filter((timeSlot) => timeSlot.id !== id)
     );
+    setTimeSlotCount(timeSlotCount - 1);
   };
 
   return (
@@ -62,13 +68,14 @@ function TimeSlot() {
           종료 시간
         </label>
       </div>
-      <TimeSlotGroup isDefault handleClickPlus={handleClickPlus} />
+      <TimeSlotGroup isDefault handleClickPlus={handleClickPlus} index={0} />
       <hr className="mt-[20px] mb-[20px]" />
       <div className="space-y-[20px]">
-        {timeSlots.map((timeSlot) => (
+        {timeSlots.map((timeSlot, index) => (
           <TimeSlotGroup
             key={timeSlot.id}
             id={timeSlot.id}
+            index={index + 1}
             handleClickMinus={() => {
               handleClickMinus(timeSlot.id);
             }}

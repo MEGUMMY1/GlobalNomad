@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { bannerImageState, detailImageState } from '@/states/registerState';
 import {
   CircleCloseButton,
   ImageUploadButton,
 } from '@/components/Button/Button';
 import Image from 'next/image';
 import { UploadImageProps } from './UploadImage.types';
+import { useRecoilState } from 'recoil';
 
 function UploadImage({
   label,
@@ -13,15 +15,19 @@ function UploadImage({
 }: UploadImageProps) {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [keys, setKeys] = useState<number[]>([]);
+  const [bannerImage, setBannerImage] = useRecoilState(bannerImageState);
+  const [detailImage, setDetailImage] = useRecoilState(detailImageState);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (singleImage) {
         setSelectedImages([file]);
+        setBannerImage([file]);
         setKeys([Date.now()]);
       } else if (selectedImages.length < maxImages) {
         setSelectedImages([...selectedImages, file]);
+        setDetailImage([...selectedImages, file]);
         setKeys([...keys, Date.now()]);
       }
     }
@@ -35,6 +41,12 @@ function UploadImage({
     const newKeys = [...keys];
     newKeys.splice(index, 1);
     setKeys(newKeys);
+
+    if (singleImage) {
+      setBannerImage(newImages);
+    } else {
+      setDetailImage(newImages);
+    }
   };
 
   return (
@@ -54,6 +66,7 @@ function UploadImage({
             <ImageUploadButton />
           </label>
           <input
+            key={keys.length}
             type="file"
             id={`upload-${label}`}
             className="hidden"
