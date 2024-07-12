@@ -5,9 +5,43 @@ import {
   ReservationCardProps,
   statusType,
 } from '../ReservationFilter/myReservationTypes.types';
+import { usePopup } from '@/hooks/usePopup';
+import {
+  QueryClient,
+  UseMutationResult,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { EditMyReservationResponse } from '@/pages/api/myReservations/apiMyReservations.types';
+import { AxiosError } from 'axios';
+import { apiEditMyReservation } from '@/pages/api/myReservations/apiMyReservations';
+import { useUserData } from '@/hooks/useUserData';
 
 const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
-  const handleCancelReservation = () => {};
+  const { openPopup } = usePopup();
+  const userData = useUserData();
+  const queryClient = useQueryClient();
+
+  const EditMyReservationMutation = useMutation({
+    mutationFn: apiEditMyReservation,
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['myReservationList', userData.id],
+      }),
+    onError: (error) => {
+      console.error('Error editing reservation:', error);
+    },
+  });
+
+  const handleCancelReservation = () => {
+    openPopup({
+      popupType: 'select',
+      content: '예약을 취소하시겠어요?',
+      btnName: ['아니오', '취소하기'],
+      callBackFnc: () =>
+        EditMyReservationMutation.mutate({ reservationId: reservationData.id }),
+    });
+  };
 
   const isPendingOrAccepted = (status: statusType) => {
     return status === 'pending' || status === 'confirmed';
