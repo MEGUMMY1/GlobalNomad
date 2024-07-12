@@ -8,7 +8,7 @@ export const useUserData = () => {
   const [userId, setUserId] = useState<string>();
   const [userData, setUserData] = useRecoilState(userState);
 
-  const { data: userResponseData } = useQuery({
+  const { data: userResponseData, isError } = useQuery({
     queryKey: ['user', userId],
     queryFn: apiMyInfo,
     enabled: !!userId,
@@ -21,6 +21,7 @@ export const useUserData = () => {
   }, [userResponseData]);
 
   useEffect(() => {
+    console.log('hi');
     const userId = localStorage.getItem('userId') || '';
     setUserId(userId);
   }, []);
