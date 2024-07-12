@@ -50,7 +50,7 @@ export default function MyPage() {
           )}
           {activeSection === 'mypage' && (
             <div className="flex-col justify-center w-full my-[10px] ">
-              <div className="flex justify-end mb-[10px]">
+              <div className="flex justify-end mb-[10px] pr-[16px]">
                 <CircleCloseButton onClick={onCircleClick} />
               </div>
               <MyPageInput />

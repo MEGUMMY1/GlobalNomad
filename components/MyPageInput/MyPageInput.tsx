@@ -49,7 +49,7 @@ export default function MyPageInput() {
   };
 
   return (
-    <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
+    <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px] m:px-[16px]">
       <form className="flex flex-col gap-[24px] t:gap-[16px]">
         <div className="flex justify-between">
           <p className="font-bold text-[32px]">내 정보</p>

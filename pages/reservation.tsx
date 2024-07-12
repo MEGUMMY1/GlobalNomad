@@ -23,6 +23,7 @@ export default function Reservation() {
 
   return (
     <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px]">
+      <div></div>
       <SideNavigation />
       <div className="flex flex-col w-[792px] gap-[24px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
         <div className="flex w-full justify-between">

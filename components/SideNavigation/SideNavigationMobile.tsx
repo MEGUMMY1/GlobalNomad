@@ -10,6 +10,7 @@ import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30h
 import useUploadProfile from '@/hooks/useUploadProfile';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
+import { useUserData } from '@/hooks/useUserData';
 
 interface SidenNavigationMobileProps {
   onNavigate: (section: string) => void;
@@ -18,7 +19,10 @@ interface SidenNavigationMobileProps {
 export default function SidenNavigationMobile({
   onNavigate,
 }: SidenNavigationMobileProps) {
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const userData = useUserData();
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(
+    userData?.profileImageUrl
+  );
 
   const { postProfileImgMutation } = useUploadProfile();
   const { postMyInfoMutation } = useEditMyInfo();
@@ -44,14 +48,10 @@ export default function SidenNavigationMobile({
   };
 
   useEffect(() => {
-    apiMyInfo()
-      .then((response) => {
-        setProfileImageUrl(response.profileImageUrl);
-      })
-      .catch((error) => {
-        console.error('데이터를 불러오는데 실패하였습니다.:', error);
-      });
-  }, []);
+    if (userData?.profileImageUrl) {
+      setProfileImageUrl(userData.profileImageUrl);
+    }
+  }, [userData?.profileImageUrl]);
 
   const handleBtnClick = (section: string) => {
     onNavigate(section);
