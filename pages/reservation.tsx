@@ -43,7 +43,7 @@ export default function myReservationPage() {
             />
           )}
         </div>
-        <div className="animate-slideDown overflow-auto scrollbar-hide h-[calc(100vh-380px)]">
+        <div className="flex flex-col animate-slideDown overflow-auto scrollbar-hide h-[calc(100vh-380px)] gap-[24px] pr-[10px]">
           {reservationListByFilter.length > 0 ? (
             reservationListByFilter.map(
               (reservationData: MyReservationProps) => {

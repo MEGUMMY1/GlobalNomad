@@ -38,7 +38,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   };
 
   return (
-    <div className="h-[212px] relative flex rounded-3xl shadow-card">
+    <div className="h-[212px] relative flex rounded-3xl shadow-card overflow-hidden">
       <Image
         src={reservationData.activity.bannerImageUrl}
         alt="액티비티 사진"
