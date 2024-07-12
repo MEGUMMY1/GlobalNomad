@@ -1,4 +1,4 @@
-import { statusType } from '../ReservationFilter/ReservationFilter.types';
+import { statusType } from '../ReservationFilter/myReservationTypes.types';
 
 export const statusTitles = {
   pending: '예약 신청',

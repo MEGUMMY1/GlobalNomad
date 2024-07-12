@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
 import { statusStyle, statusTitles } from './reservationStatusInfo';
-import { MyReservationList } from './mockData';
-import { statusType } from '../ReservationFilter/ReservationFilter.types';
+import {
+  ReservationCardProps,
+  statusType,
+} from '../ReservationFilter/myReservationTypes.types';
 
-interface ReservationCardProps {
-  mockData: MyReservationList;
-}
-
-const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
+const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const handleCancelReservation = () => {};
 
   const isPendingOrAccepted = (status: statusType) => {
@@ -25,19 +23,24 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
         height={204}
       />
       <div className="w-full p-[24px]">
-        <p className={`text-[16px] font-bold ${statusStyle[mockData.status]}`}>
-          {statusTitles[mockData.status]}
+        <p
+          className={`text-[16px] font-bold ${statusStyle[reservationData.status]}`}
+        >
+          {statusTitles[reservationData.status]}
         </p>
         <p className="text-[20px] font-bold mt-[8px]">
-          {mockData.activity.title}
+          {reservationData.activity.title}
         </p>
         <p className="mt-[12px] text-[18px]">
-          {mockData.date}&nbsp;&nbsp;·&nbsp;&nbsp;{mockData.startTime}~
-          {mockData.endTime}&nbsp;&nbsp;·&nbsp;&nbsp;{mockData.headCount}명
+          {reservationData.date}&nbsp;&nbsp;·&nbsp;&nbsp;
+          {reservationData.startTime}~{reservationData.endTime}
+          &nbsp;&nbsp;·&nbsp;&nbsp;{reservationData.headCount}명
         </p>
         <div className="w-full flex justify-between mt-[16px] items-center">
-          <p className="font-medium text-[24px]">₩{mockData.totalPrice}</p>
-          {isPendingOrAccepted(mockData.status) && (
+          <p className="font-medium text-[24px]">
+            ₩{reservationData.totalPrice}
+          </p>
+          {isPendingOrAccepted(reservationData.status) && (
             <PrimaryButton
               size="medium"
               style="bright"
@@ -46,7 +49,7 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
               예약 취소
             </PrimaryButton>
           )}
-          {mockData.reviewSubmitted && (
+          {reservationData.status === 'completed' && (
             <PrimaryButton
               size="medium"
               style="dark"
@@ -61,4 +64,4 @@ const ReservatioListCard = ({ mockData }: ReservationCardProps) => {
   );
 };
 
-export default ReservatioListCard;
+export default ReservationListCard;
