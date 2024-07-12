@@ -37,10 +37,6 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
     });
   };
 
-  const isPendingOrAccepted = (status: statusType) => {
-    return status === 'pending' || status === 'confirmed';
-  };
-
   return (
     <div className="h-[212px] relative flex rounded-3xl shadow-card">
       <Image
@@ -68,7 +64,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
           <p className="font-medium text-[24px]">
             ₩{formatCurrency(reservationData.totalPrice)}
           </p>
-          {isPendingOrAccepted(reservationData.status) && (
+          {reservationData.status === 'pending' && (
             <PrimaryButton
               size="medium"
               style="bright"
