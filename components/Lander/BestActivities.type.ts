@@ -18,3 +18,10 @@ export interface BestActivitiesProps {
  totalCount: number;
  cursorId: number | null; 
 }
+
+export interface BestActivityProps {
+  title: string;
+  price: number;
+  rating: number;
+  reviewCount: number;
+}

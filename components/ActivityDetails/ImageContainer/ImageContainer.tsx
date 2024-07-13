@@ -34,7 +34,7 @@ export default function ImageContainer({
   ].filter((image) => image.imageUrl !== defaultImage);
 
   return (
-    <div className="flex max-w-[1200px] h-[500px] gap-2 my-10 t:w-full t:h-[310px] m:w-full m:h-[300px] m:my-6 m:justify-center">
+    <div className="flex max-w-[1200px] h-[500px] gap-2 my-10 t:w-full t:h-[310px] m:w-full m:h-[300px] m:my-6 m:justify-center m:relative m:left-0 m:right-0">
       <div className="relative w-1/2 h-full m:hidden">
         <Image
           src={bannerImageUrl}

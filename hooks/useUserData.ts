@@ -2,7 +2,7 @@ import { apiMyInfo } from '@/pages/api/users/apiUsers';
 import { userState } from '@/states/userState';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 export const useUserData = () => {
   const [userId, setUserId] = useState<string>();

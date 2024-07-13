@@ -4,17 +4,28 @@ import CatergoryBtn from '../CatergoryBtn/CatergoryBtn';
 import PriceFilterBtn from '../PriceFilterBtn/PriceFilterBtn';
 import { useState, useEffect } from 'react';
 import { AllActivityProps } from './AllActivities.type';
+import { getActivityList } from '@/pages/api/activities/apiactivities';
+import { getActivityListResponse } from '@/pages/api/activities/apiactivities.types';
+import { getActivityListParams } from '@/pages/api/activities/apiactivities.types';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import Pagination from '../Pagination/Pagination';
 
 const Kategories = ['문화 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
-function AllActivity({title, backgroundImage, price, rating, reviewCount}: AllActivityProps) {
+function AllActivity({
+  title,
+  backgroundImage,
+  price,
+  rating,
+  reviewCount,
+}: AllActivityProps) {
   return (
     <div>
       <div
         className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')]"
         style={{
-          backgroundImage:
-            `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
+          backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
       <div>
@@ -26,7 +37,7 @@ function AllActivity({title, backgroundImage, price, rating, reviewCount}: AllAc
             height={20}
           ></Image>
           <div className="font-sans text-[16px] font-[500] ml-[5px]">
-            {rating ? rating : 0} {' '}
+            {rating ? rating : 0}{' '}
             <span className="font-sans text-[16px] text-[#A1A1A1] font-[500] ">
               ({reviewCount ? reviewCount : 0})
             </span>
@@ -66,38 +77,46 @@ interface MockData {
   totalCount: number;
   cursorId: number | null;
 }
-let Datas: MockData | null = null;
 
 function AllActivities() {
-  const [datas, setDatas] = useState<MockData | null>(null);
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState<number>(
+    router.query.page ? parseInt(router.query.page as string, 10) : 1
+  );
 
-  async function fetchMockData(): Promise<void> {
-    try {
-      const response = await fetch(
-        '/mockData/roadActivitiesData.json'
-      );
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data: MockData = await response.json();
-      setDatas(data);
-    } catch (error) {
-      console.error('Failed to fetch mock data:', error);
-    }
-  }
+  const items_per_page = 8;  
+
+  const params: getActivityListParams = {
+    method: 'offset',
+    cursorId: null, // 처음에는 null로 설정
+    category: null,
+    keyword: null,
+    sort: null,
+    page: currentPage,
+    size: 8, // 최대 9개만 가져오기
+  };
+
+  const { data: allActivitiesData, error, isLoading } = useQuery<getActivityListResponse>(
+    {queryKey : ['AllActivities', currentPage],
+    queryFn :() => getActivityList(params)}
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    //router.push(`/?page=${page}`);
+  };
 
   useEffect(() => {
-    fetchMockData();
-  }, []); // Empty dependency array ensures useEffect runs only once
-
-  useEffect(() => {
-    if (datas) {
-      datas.activities.map((dataa) => {
-        console.log(dataa.title);
-        // You can perform other operations with 'dataa' here
-      });
-    }
-  }, [datas]); // Run this effect whenever 'datas' changes
+    const params: getActivityListParams = {
+      method: 'offset',
+      cursorId: null,
+      category: null,
+      keyword: null,
+      sort: null,
+      page: currentPage,
+      size: items_per_page,
+    };
+  }, [currentPage]);
 
   return (
     <div>
@@ -124,12 +143,19 @@ function AllActivities() {
         <AllActivity></AllActivity>
         <AllActivity></AllActivity>
         <AllActivity></AllActivity> */}
-        {datas?.activities.map((data)=>(
-          <AllActivity key={data.id} title={data.title} backgroundImage={data.bannerImageUrl} price={data.price} rating={data.rating} reviewCount={data.reviewCount} />
+        {allActivitiesData?.activities.map((data) => (
+          <AllActivity
+            key={data.id}
+            title={data.title}
+            backgroundImage={data.bannerImageUrl}
+            price={data.price}
+            rating={data.rating}
+            reviewCount={data.reviewCount}
+          />
         ))}
       </div>
       <div className="text-[30px] font-[700] flex justify-center mb-[342px] mt-[70px]">
-        페이지네이션 버튼
+        {allActivitiesData && allActivitiesData.totalCount > 0 && (<Pagination totalItems={allActivitiesData?.totalCount} itemsPerPage={items_per_page} currentPage={currentPage} onPageChange={handlePageChange}/>)}
       </div>
     </div>
   );

@@ -2,10 +2,19 @@ import Image from 'next/image';
 import { PaginationArrowButton } from '../Button/Button';
 import StarImg from '@/public/icon/Star.svg';
 import { useEffect, useState } from 'react';
-import { ActivityDetail, BestActivitiesProps, BestActivityProps } from './BestActivities.type';
+import {
+  ActivityDetail,
+  BestActivitiesProps,
+  BestActivityProps,
+} from './BestActivities.type';
 import usePagination from '@/hooks/usePagination';
 
-function BestActivity({title, price, rating, reviewCount}: BestActivityProps) {
+function BestActivity({
+  title,
+  price,
+  rating,
+  reviewCount,
+}: BestActivityProps) {
   return (
     <div
       className="relative w-[384px] m:w-[186px] h-[384px] m:h-[186px] rounded-3xl border bg-gray-300 flex flex-col justify-center bg-[url('/image/Testimage.jpg')] cursor-pointer shrink-0 bg-cover bg-center"
@@ -51,10 +60,25 @@ const fetchBestActivities = async (
   }
 };
 
-const ITESM_PER_PAGE = 3;
-
+const ITEMS_PER_PAGE = 3;
 
 function BestActivities() {
+  const [bestActivities, setBestActivities] = useState<BestActivitiesProps>({
+    activities: [],
+    totalCount: 0,
+    cursorId: null,
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchBestActivities(1); // 페이지는 1로 고정하거나 필요에 따라 변경할 수 있음
+      if (data) {
+        setBestActivities(data);
+      }
+    }
+    fetchData();
+  }, []);
+
   const {
     currentItems,
     items,
@@ -66,9 +90,8 @@ function BestActivities() {
     handleNextClick,
   } = usePagination({
     fetchData: fetchBestActivities,
-    itemsPerPage: ITESM_PER_PAGE,
+    itemsPerPage: ITEMS_PER_PAGE,
   });
-
 
   return (
     <div>
@@ -76,25 +99,50 @@ function BestActivities() {
         <span className="text-[36px] m:text-[18px] font-[700]">
           🔥 인기 체험
         </span>
-        <div className="t:hidden m:hidden">
-          <PaginationArrowButton onClickPrev={handlePrevClick} onClickNext={handleNextClick}/>
+        <div className="t:hidden m:hidden flex gap-[10px]">
+          <PaginationArrowButton
+            onClick={handlePrevClick}
+            direction="prev"
+            disabled={isFirstPage}
+          />
+          <PaginationArrowButton
+            onClick={handleNextClick}
+            direction="next"
+            disabled={isLastPage}
+          />
         </div>
       </div>
       {items && items.length > 0 ? (
-          <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide">
-            {currentItems.map((item: ActivityDetail) => (
-              <BestActivity
-                key={item.id}
-                title={item.title}
-                price={item.price}
-                rating={item.rating}
-                reviewCount={item.reviewCount}
-              />
-            ))}
-          </div>
-        ) : (
-          <div>No activities found</div>
-        )}
+        <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide t:hidden m:hidden">
+          {currentItems.map((item: ActivityDetail) => (
+            <BestActivity
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              rating={item.rating}
+              reviewCount={item.reviewCount}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>No activities found</div>
+      )}
+
+      {bestActivities.activities && bestActivities.activities.length > 0 ? (
+        <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden">
+          {bestActivities.activities.map((item: ActivityDetail) => (
+            <BestActivity
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              rating={item.rating}
+              reviewCount={item.reviewCount}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>No activities found</div>
+      )}
     </div>
   );
 }

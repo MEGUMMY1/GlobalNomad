@@ -35,7 +35,7 @@ function usePagination({
         setItems(limitedItems);
         setTotalPage(Math.min(Math.ceil(result.totalCount / itemsPerPage), 3));
         setIsFirstPage(currentPage === 1);
-        setIsLastPage(currentPage >= Math.ceil(result.totalCount / itemsPerPage));
+        setIsLastPage(currentPage >= Math.ceil(result.totalCount / itemsPerPage) || (currentPage === 3));
       }
     }
     loadItems();

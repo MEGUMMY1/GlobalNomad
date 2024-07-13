@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { format, addDays } from 'date-fns';
-import { ActivityDetailsProps } from '../ActivityDetails.types';
 import { PrimaryButton } from '@/components/Button/Button';
 import { usePopup } from '@/hooks/usePopup';
 import { useModal } from '@/hooks/useModal';
@@ -10,8 +9,9 @@ import router from 'next/router';
 import ReservationModal from './ReservationModal';
 import ParticipantSelector from './ParticipantSelector';
 import CustomCalendar from '@/components/CustomCalendar/CustomCalendar';
+import { ReservationProps } from './Reservation.types';
 
-export default function Reservation({ activity }: ActivityDetailsProps) {
+export default function Reservation({ activity }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     addDays(new Date(), 1)
   );
@@ -256,23 +256,49 @@ export default function Reservation({ activity }: ActivityDetailsProps) {
                 callBackFnc: handleModalConfirm,
                 disabled: !selectedTime,
                 content: (
-                  <ReservationModal
-                    selectedDate={selectedDate}
-                    handleDateChange={handleDateChange}
-                    getAvailableTimes={getAvailableTimes}
-                    selectedTime={selectedTime}
-                    handleTimeChange={handleTimeChange}
-                  />
+                  <>
+                    <p className="text-var-gray8 font-xl mb-5">
+                      예약할 날짜를 선택해 주세요.
+                    </p>
+                    <CustomCalendar
+                      selectedDate={selectedDate}
+                      onChange={handleDateChange}
+                    />
+                    <p className="my-4 font-extrabold text-nomad-black text-xl">
+                      예약 가능한 시간
+                    </p>
+                    {getAvailableTimes(selectedDate).length > 0 ? (
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {getAvailableTimes(selectedDate).map((time, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleTimeChange(time)}
+                            className={`w-[117px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                              selectedTime === time
+                                ? 'bg-nomad-black text-white'
+                                : 'bg-white'
+                            }`}
+                          >
+                            {time}
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="mt-2 text-sm text-gray-500">
+                        선택한 날짜에 예약 가능한 시간이 없습니다.
+                      </p>
+                    )}
+                  </>
                 ),
               })
             }
-            className="underline font-bold text-var-green2 mt-2"
+            className="text-nomad-black underline text-xl"
           >
             {buttonText}
           </button>
         </div>
         <PrimaryButton
-          size="small"
+          size="medium"
           style={selectedTime ? 'dark' : 'disabled'}
           onClick={handleReservation}
           disabled={!selectedTime}
