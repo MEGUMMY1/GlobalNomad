@@ -1,4 +1,4 @@
-import { MyReservationList } from '../ReservationListCard/mockData';
+import { MyReservationProps } from '../ReservationFilter/myReservationTypes.types';
 
 export interface RatingProps {
   currentRating: number;
@@ -6,6 +6,6 @@ export interface RatingProps {
 }
 
 export interface ReviewProps {
-  reservation: MyReservationList;
+  reservation: MyReservationProps;
   closeModal: () => void;
 }

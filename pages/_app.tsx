@@ -60,13 +60,13 @@ export default function App({ Component, pageProps }: AppProps) {
       {isLoading ? (
         <Spinner />
       ) : (
-       <QueryClientProvider client={queryClient}>
-        {childContent}
-        <Popup />
-        <Modal />
-        <SidenNavigationMobile />
-        <SilentRefresh />
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {childContent}
+          <Popup />
+          <Modal />
+          <SidenNavigationMobile />
+          <SilentRefresh />
+        </QueryClientProvider>
       )}
     </RecoilRoot>
   );

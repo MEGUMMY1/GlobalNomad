@@ -1,6 +1,6 @@
 import ReservationListCard from '@/components/ReservationListCard/ReservationListCard';
 import ReservationFilter from '@/components/ReservationFilter/ReservationFilter';
-import SideNavigation from '@/components/SideNavigation/SideNavigation'; // Corrected import name
+import SideNavigation from '@/components/SideNavigation/SideNavigation';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useReservationList } from '@/hooks/useReservationList';
@@ -9,7 +9,7 @@ import {
   statusType,
 } from '@/components/ReservationFilter/myReservationTypes.types';
 
-export default function myReservationPage() {
+export default function MyReservationPage() {
   const [filterOption, setFilterOption] = useState<statusType>();
   const [reservationListByFilter, setReservationListByFilter] = useState<
     MyReservationProps[]
