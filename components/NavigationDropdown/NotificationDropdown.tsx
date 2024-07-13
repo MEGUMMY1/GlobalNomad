@@ -55,7 +55,7 @@ export default function NotificationDropdown({
           {notifications.map((notification) => (
             <div
               key={notification.id}
-              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] w-[335px] h-[105px] bg-white border-gray-200 "
+              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] m:w-[335px] m:h-[105px] bg-white border-gray-200 "
             >
               <div className="flex justify-between">
                 승인 아이콘
