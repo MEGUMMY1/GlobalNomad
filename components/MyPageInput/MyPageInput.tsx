@@ -3,7 +3,7 @@ import { PrimaryButton } from '../Button/Button';
 import InputBox from '../InputBox/InputBox';
 import { validation } from './validation';
 import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { useUserData } from '@/hooks/useUserData';
 import Image from 'next/image';
@@ -19,6 +19,7 @@ export default function MyPageInput() {
     handleSubmit,
     getValues,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FieldValues>({ mode: 'onChange' });
 
@@ -72,7 +73,8 @@ export default function MyPageInput() {
     }
   }, [userData, setValue]);
 
-  const isAllFieldsValid = () => {
+  const watchFields = watch(['nickname', 'password', 'passwordCheck']);
+  const isAllFieldsValid = useMemo(() => {
     const isNotError =
       !errors.email &&
       !errors.nickname &&
@@ -82,7 +84,13 @@ export default function MyPageInput() {
     const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
 
     return isFormFilled && isNotError;
-  };
+  }, [
+    errors.email,
+    errors.password,
+    errors.passwordCheck,
+    errors.nickname,
+    watchFields,
+  ]);
 
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
@@ -97,10 +105,10 @@ export default function MyPageInput() {
           <p className="font-bold text-[32px]">내 정보</p>
           <div className="flex items-center m:hidden">
             <PrimaryButton
-              style={isAllFieldsValid() ? 'dark' : 'disabled'}
+              style={isAllFieldsValid ? 'dark' : 'disabled'}
               size="small"
               onClick={handleSubmit(onSubmit)}
-              disabled={!isAllFieldsValid()}
+              disabled={!isAllFieldsValid}
             >
               저장하기
             </PrimaryButton>
@@ -179,10 +187,10 @@ export default function MyPageInput() {
           </div>
           <div className="mt-[30px] flex items-center p:hidden t:hidden">
             <PrimaryButton
-              style={isAllFieldsValid() ? 'dark' : 'disabled'}
+              style={isAllFieldsValid ? 'dark' : 'disabled'}
               size="large"
               onClick={handleSubmit(onSubmit)}
-              disabled={!isAllFieldsValid()}
+              disabled={!isAllFieldsValid}
             >
               저장하기
             </PrimaryButton>
