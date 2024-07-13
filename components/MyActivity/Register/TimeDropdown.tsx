@@ -54,7 +54,7 @@ function TimeDropdown({ type, index }: TimeDropdownProps) {
     <div ref={dropdownRef} className="relative">
       <button
         type="button"
-        className="flex justify-between items-center w-[140px] h-[56px] py-[4px] px-[16px] rounded-md border border-var-gray6 bg-white text-var-gray7 text-left"
+        className="flex justify-between items-center w-[140px] h-[56px] py-[4px] px-[16px] m:px-[7px] rounded-md border border-var-gray6 bg-white text-var-gray7 text-left t:w-[104px] m:w-[79px]"
         onClick={handleClickDropdown}
       >
         <p>{selectedTime}</p>
@@ -71,7 +71,7 @@ function TimeDropdown({ type, index }: TimeDropdownProps) {
             <li
               key={time}
               onClick={() => handleSelectTime(time)}
-              className="h-[56px] text-var-black py-[18px] px-[16px] hover:bg-gray-100 cursor-pointer bg-white"
+              className="h-[56px] text-var-black py-[18px] px-[16px] m:px-[12px] hover:bg-gray-100 cursor-pointer bg-white"
             >
               {time}
             </li>

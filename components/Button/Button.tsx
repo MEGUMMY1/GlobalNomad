@@ -187,7 +187,7 @@ export function MeatballButton({ onClick }: SimpleButtonProps) {
 /* 추가하기 버튼 - 항목 추가 시 사용 */
 export function PlusButton({ onClick }: SimpleButtonProps) {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} className="shrink-0">
       <Image src="/icon/btn_plus.svg" width={56} height={56} alt="추가하기" />
     </button>
   );
@@ -196,7 +196,7 @@ export function PlusButton({ onClick }: SimpleButtonProps) {
 /* 제거하기 버튼 - 항목 제거 시 사용 */
 export function MinusButton({ onClick }: SimpleButtonProps) {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} className="shrink-0">
       <Image src="/icon/btn_minus.svg" width={56} height={56} alt="제거하기" />
     </button>
   );
@@ -219,7 +219,7 @@ export function ArrowCircleButton({ onClick }: SimpleButtonProps) {
 /* 이미지 등록하기 버튼 */
 export function ImageUploadButton() {
   return (
-    <div className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] border border-dashed border-var-gray8 rounded-lg">
+    <div className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] t:w-[206px] t:h-[206px] m:w-[167px] m:h-[167px] border border-dashed border-var-gray8 rounded-lg">
       <Image src="/icon/icon_plus.svg" width={30} height={30} alt="추가" />
       <p className="text-[24px]">이미지 등록</p>
     </div>

@@ -22,6 +22,7 @@ import {
 import useRegisterActivity from '@/hooks/useRegisterActivity';
 import { formatDate } from '@/utils/formatDate';
 import useActivityImage from '@/hooks/useActivityImage';
+import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 
 function RegisterActivity() {
   const {
@@ -103,11 +104,11 @@ function RegisterActivity() {
   };
 
   return (
-    <div className="flex gap-[20px] py-[72px] m:gap-0">
-      <div className="w-[384px] t:w-[251px] h-[432px] bg-var-gray7 flex-shrink-0 m:hidden">
-        프로필
+    <div className="flex gap-[20px] py-[72px] m:gap-0 w-full">
+      <div className="m:hidden">
+        <SidenNavigation />
       </div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="w-full m:p-[16px]">
         <div className="flex flex-col w-full gap-[20px]">
           <div className="flex justify-between items-center">
             <h1 className="text-[32px] font-[700]">내 체험 등록</h1>

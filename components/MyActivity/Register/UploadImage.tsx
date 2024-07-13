@@ -56,7 +56,7 @@ function UploadImage({
       </label>
 
       <div
-        className={`grid ${singleImage ? 'grid-rows-1 grid-cols-4' : 'grid-rows-2 grid-cols-4 '} gap-[24px]`}
+        className={`grid ${singleImage ? 'grid-rows-1 grid-cols-4 t:grid-cols-2 m:grid-cols-2' : 'grid-rows-2 grid-cols-4 t:grid-rows-3 t:grid-cols-2 m:grid-rows-3 m:grid-cols-2'} gap-[24px]`}
       >
         <div>
           <label
@@ -75,15 +75,18 @@ function UploadImage({
           />
         </div>
         {selectedImages.map((image, index) => (
-          <div key={keys[index]} className="relative w-[180px] h-[180px]">
+          <div
+            key={keys[index]}
+            className="relative w-[180px] h-[180px] t:w-[206px] t:h-[206px] m:w-[167px] m:h-[167px]"
+          >
             <Image
               src={URL.createObjectURL(image)}
               alt={`상세 이미지 ${index + 1}`}
               width={180}
               height={180}
-              className="w-[180px] h-[180px] object-cover rounded-[24px]"
+              className="w-[180px] h-[180px] t:w-[206px] t:h-[206px] m:w-[167px] m:h-[167px] object-cover rounded-[24px]"
             />
-            <div className="absolute -top-[20px] -right-[20px]">
+            <div className="absolute -top-[20px] -right-[20px] t:-top-[12px] t:-right-[12px] m:-top-[7px] m:-right-[7px]">
               <CircleCloseButton onClick={() => handleRemoveFile(index)} />
             </div>
           </div>
