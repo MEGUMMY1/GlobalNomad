@@ -2,7 +2,7 @@ import Image from 'next/image';
 import filterIcon from '@/public/icon/filter_arrowdown.svg';
 import React, { useState } from 'react';
 import useClickOutside from '@/hooks/useClickOutside';
-import { ReservationFilterProps, statusType } from './ReservationFilter.types';
+import { ReservationFilterProps, statusType } from './myReservationTypes.types';
 import {
   Status,
   statusTitles,
