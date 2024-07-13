@@ -11,6 +11,14 @@ import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      layoutType: 'removeLayout',
+    },
+  };
+};
+
 export default function LoginPage() {
   const { postLoginMutation } = useLogin();
   const { isLoggedIn } = useLoginState();

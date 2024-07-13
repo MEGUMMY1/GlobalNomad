@@ -10,8 +10,9 @@ import { SignupBody } from './api/users/apiUser.types';
 import { useEffect, useMemo, useState } from 'react';
 import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 
-export const getStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       layoutType: 'removeLayout',

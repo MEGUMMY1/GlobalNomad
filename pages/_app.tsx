@@ -11,6 +11,7 @@ import SilentRefresh from '@/hooks/useSilentRefresh';
 import Spinner from '@/components/Spinner/Spinner';
 import { useEffect, useState } from 'react';
 import { Router } from 'next/router';
+import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 
 const queryClient = new QueryClient();
 
@@ -59,12 +60,13 @@ export default function App({ Component, pageProps }: AppProps) {
       {isLoading ? (
         <Spinner />
       ) : (
-        <QueryClientProvider client={queryClient}>
-          {childContent}
-          <Popup />
-          <Modal />
-          <SilentRefresh />
-        </QueryClientProvider>
+       <QueryClientProvider client={queryClient}>
+        {childContent}
+        <Popup />
+        <Modal />
+        <SidenNavigationMobile />
+        <SilentRefresh />
+      </QueryClientProvider>
       )}
     </RecoilRoot>
   );
