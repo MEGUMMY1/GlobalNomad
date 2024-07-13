@@ -21,7 +21,7 @@ export interface MyReservationListResponse {
         id: number;
       };
       scheduleId: number;
-      status: string;
+      status: 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
       reviewSubmitted: boolean;
       totalPrice: number;
       headCount: number;

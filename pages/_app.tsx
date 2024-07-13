@@ -8,6 +8,7 @@ import Layout from '@/components/Layout/Layout';
 import Modal from '@/components/Modal/Modal';
 import LayoutMobile from '@/components/Layout/LayoutMobile';
 import SilentRefresh from '@/hooks/useSilentRefresh';
+import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
         {childContent}
         <Popup />
         <Modal />
+        <SidenNavigationMobile />
         <SilentRefresh />
       </QueryClientProvider>
     </RecoilRoot>
