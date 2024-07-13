@@ -19,13 +19,15 @@ import {
   startTimeState,
   timeSlotCountState,
 } from '@/states/registerState';
+import useRegisterActivity from '@/hooks/useRegisterActivity';
+import { formatDate } from '@/utils/formatDate';
+import useActivityImage from '@/hooks/useActivityImage';
 
 function RegisterActivity() {
   const {
     register,
     handleSubmit,
     getValues,
-    setValue,
     formState: { errors },
   } = useForm<FieldValues>({ mode: 'onChange' });
   const selectedKateogorie = useRecoilValue(KategoriedDropState);
@@ -36,40 +38,67 @@ function RegisterActivity() {
   const startTime = useRecoilValue(startTimeState);
   const endTime = useRecoilValue(endTimeState);
 
-  const onSubmit = () => {
-    console.log('제출');
+  const { postActivityMutation } = useRegisterActivity();
+  const { postActivityImageMutation } = useActivityImage();
+
+  const formatSchedules = () =>
+    Array.from({ length: timeSlotCount }, (_, i) => ({
+      endTime: endTime[i],
+      startTime: startTime[i],
+      date: formatDate(selectedDate[i]),
+    }));
+
+  const uploadImage = async (image: File) => {
+    try {
+      const response = await postActivityImageMutation.mutateAsync(image);
+      return response.activityImageUrl;
+    } catch (error) {
+      console.error('Failed to upload image:', error);
+      return '';
+    }
   };
 
-  const isTimeFieldVaild = () => {
-    for (let i = 0; i < timeSlotCount; i++) {
-      if (endTime[i] === '00:00') {
-        return false;
-      }
-      if (startTime[i] > endTime[i]) {
-        return false;
-      }
-      if (selectedDate[i] === '') {
-        return false;
-      }
-    }
-    return true;
+  const onSubmit = async (data: FieldValues) => {
+    const { title, description, price, address } = data;
+    const schedules = formatSchedules();
+    const bannerUrl = bannerImage[0] ? await uploadImage(bannerImage[0]) : '';
+    const detailUrls = await Promise.all(detailImage.map(uploadImage));
+
+    postActivityMutation.mutate({
+      title,
+      category: selectedKateogorie.name,
+      description,
+      address,
+      price: Number(price),
+      schedules,
+      bannerImageUrl: bannerUrl,
+      subImageUrls: detailUrls,
+    });
   };
+
+  const isTimeFieldValid = () =>
+    Array.from({ length: timeSlotCount }).every(
+      (_, i) =>
+        endTime[i] !== '00:00' &&
+        startTime[i] <= endTime[i] &&
+        selectedDate[i] !== ''
+    );
 
   const isAllFieldsValid = () => {
-    const isNotError =
-      !errors.title && !errors.description && !errors.price && !errors.address;
     const { title, description, price, address } = getValues();
-    const isInputFilled = !!title && !!description && !!price && !!address;
-    const isKategorieSelected = selectedKateogorie.name !== '';
-    const isTimeValid = isTimeFieldVaild();
-
     return (
-      isInputFilled &&
-      isNotError &&
-      isKategorieSelected &&
+      !!title &&
+      !!description &&
+      !!price &&
+      !!address &&
+      !errors.title &&
+      !errors.description &&
+      !errors.price &&
+      !errors.address &&
+      selectedKateogorie.name !== '' &&
       bannerImage.length !== 0 &&
       detailImage.length !== 0 &&
-      isTimeValid
+      isTimeFieldValid()
     );
   };
 
