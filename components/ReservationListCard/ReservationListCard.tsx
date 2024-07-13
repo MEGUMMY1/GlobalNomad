@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
 import { statusStyle, statusTitles } from './reservationStatusInfo';
-import { statusType } from '../ReservationFilter/ReservationFilter.types';
 import { useModal } from '@/hooks/useModal';
 import Review from '../Review/Review';
-import { ReservationCardProps } from './ReservationListCard.types';
 import { ReservationCardProps } from '../ReservationFilter/myReservationTypes.types';
 import { usePopup } from '@/hooks/usePopup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -13,10 +11,9 @@ import { useUserData } from '@/hooks/useUserData';
 import { formatCurrency } from '@/utils/formatCurrency';
 import Link from 'next/link';
 
-const ReservatioListCard = ({ reservationData }: ReservationCardProps) => {
+const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const { openModal, closeModal } = useModal();
 
-  const handleCancelReservation = () => {};
   const handleOpenReviewModal = () => {
     openModal({
       title: '후기 작성',
@@ -25,7 +22,6 @@ const ReservatioListCard = ({ reservationData }: ReservationCardProps) => {
     });
   };
 
-const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const { openPopup } = usePopup();
   const userData = useUserData();
   const queryClient = useQueryClient();
