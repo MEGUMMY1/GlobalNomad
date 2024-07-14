@@ -10,6 +10,8 @@ import { getActivityListParams } from '@/pages/api/activities/apiactivities.type
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import Pagination from '../Pagination/Pagination';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { mainPageState } from '@/states/mainPageState';
 
 const Kategories = ['문화 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
@@ -19,9 +21,16 @@ function AllActivity({
   price,
   rating,
   reviewCount,
+  id,
 }: AllActivityProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/activity-details/${id}`);
+  };
+
   return (
-    <div>
+    <div onClick={handleClick} className="cursor-pointer">
       <div
         className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')]"
         style={{
@@ -57,49 +66,69 @@ function AllActivity({
   );
 }
 
-interface ActivityDetail {
-  id: number;
-  userId: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  address: string;
-  bannerImageUrl: string;
-  rating: number;
-  reviewCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface MockData {
-  activities: ActivityDetail[];
-  totalCount: number;
-  cursorId: number | null;
-}
-
 function AllActivities() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
+  const [MainPageState, setMainPageState] = useRecoilState(mainPageState);
 
-  const items_per_page = 8;  
+  const { itemsPerPage: items_per_page, selectedSorted } =
+    useRecoilValue(mainPageState);
+
+  const setItemsPerPage = () => {
+    if (typeof window !== 'undefined') {
+      // 브라우저 환경에서만 실행
+      const width = window.innerWidth;
+
+      let itemsPerPage;
+      if (width >= 1281) {
+        itemsPerPage = 8;
+      } else if (width > 744) {
+        itemsPerPage = 9;
+      } else {
+        itemsPerPage = 6;
+      }
+
+      setMainPageState((prevState) => ({
+        ...prevState,
+        itemsPerPage,
+      }));
+
+      console.log(`Current items per page: ${itemsPerPage}`);
+    }
+  };
+
+  useEffect(() => {
+    setItemsPerPage();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', setItemsPerPage);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', setItemsPerPage);
+      }
+    };
+  }, []);
 
   const params: getActivityListParams = {
     method: 'offset',
-    cursorId: null, // 처음에는 null로 설정
+    cursorId: null,
     category: null,
     keyword: null,
-    sort: null,
+    sort: selectedSorted,
     page: currentPage,
-    size: 8, // 최대 9개만 가져오기
+    size: items_per_page,
   };
 
-  const { data: allActivitiesData, error, isLoading } = useQuery<getActivityListResponse>(
-    {queryKey : ['AllActivities', currentPage],
-    queryFn :() => getActivityList(params)}
-  );
+  const {
+    data: allActivitiesData,
+    error,
+    isLoading,
+  } = useQuery<getActivityListResponse>({
+    queryKey: ['AllActivities', params],
+    queryFn: () => getActivityList(params),
+  });
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -112,11 +141,11 @@ function AllActivities() {
       cursorId: null,
       category: null,
       keyword: null,
-      sort: null,
+      sort: selectedSorted,
       page: currentPage,
       size: items_per_page,
     };
-  }, [currentPage]);
+  }, [currentPage, items_per_page, selectedSorted]);
 
   return (
     <div>
@@ -135,14 +164,6 @@ function AllActivities() {
         🛼 모든 체험
       </div>
       <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
-        {/* <AllActivity></AllActivity>
-        <AllActivity></AllActivity>
-        <AllActivity></AllActivity>
-        <AllActivity></AllActivity>
-        <AllActivity></AllActivity>
-        <AllActivity></AllActivity>
-        <AllActivity></AllActivity>
-        <AllActivity></AllActivity> */}
         {allActivitiesData?.activities.map((data) => (
           <AllActivity
             key={data.id}
@@ -151,11 +172,19 @@ function AllActivities() {
             price={data.price}
             rating={data.rating}
             reviewCount={data.reviewCount}
+            id={data.id}
           />
         ))}
       </div>
       <div className="text-[30px] font-[700] flex justify-center mb-[342px] mt-[70px]">
-        {allActivitiesData && allActivitiesData.totalCount > 0 && (<Pagination totalItems={allActivitiesData?.totalCount} itemsPerPage={items_per_page} currentPage={currentPage} onPageChange={handlePageChange}/>)}
+        {allActivitiesData && allActivitiesData.totalCount > 0 && (
+          <Pagination
+            totalItems={allActivitiesData?.totalCount}
+            itemsPerPage={items_per_page}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ export const mainPageState = atom<mainPageStateProps>({
   key: 'mainPageState',
   default : {
     currentPage: 1,
-    itemsPerPage: 9,
+    itemsPerPage: 8,
     selectedKategorie: '',
     selectedSorted: '',
   }

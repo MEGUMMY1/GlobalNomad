@@ -14,6 +14,7 @@ function BestActivity({
   price,
   rating,
   reviewCount,
+  id,
 }: BestActivityProps) {
   return (
     <div
@@ -121,6 +122,7 @@ function BestActivities() {
               price={item.price}
               rating={item.rating}
               reviewCount={item.reviewCount}
+              id= {item.id}
             />
           ))}
         </div>
@@ -137,6 +139,7 @@ function BestActivities() {
               price={item.price}
               rating={item.rating}
               reviewCount={item.reviewCount}
+              id= {item.id}
             />
           ))}
         </div>

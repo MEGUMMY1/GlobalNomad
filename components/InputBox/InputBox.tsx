@@ -21,8 +21,13 @@ export default function InputBox({
 }: InputBoxProps) {
   return (
     <div className="flex flex-col gap-[16px] relative">
-      {label && <label className="text-[24px] font-bold">{label}</label>}
+      {label && (
+        <label className="text-[24px] font-bold" htmlFor={name}>
+          {label}
+        </label>
+      )}
       <input
+        id={name}
         className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6`}
         type={type}
         placeholder={placeholder}

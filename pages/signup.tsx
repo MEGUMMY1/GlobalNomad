@@ -10,8 +10,9 @@ import { SignupBody } from './api/users/apiUser.types';
 import { useEffect, useMemo, useState } from 'react';
 import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 
-export const getStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       layoutType: 'removeLayout',
@@ -60,14 +61,15 @@ export default function SingupPage() {
     errors.password,
     errors.passwordCheck,
     errors.nickname,
-    watchFields,
+    getValues,
+    isChecked,
   ]);
 
   useEffect(() => {
     if (isLoggedIn) {
       router.push('/mypage');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   return (
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">

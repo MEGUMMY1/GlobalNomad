@@ -24,4 +24,5 @@ export interface BestActivityProps {
   price: number;
   rating: number;
   reviewCount: number;
+  id: number;
 }

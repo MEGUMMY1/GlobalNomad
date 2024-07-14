@@ -11,16 +11,19 @@ import editProfileIcon from '@/public/image/btn.png';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { routePaths } from './SideNavigation.types';
-import { apiMyInfo } from '@/pages/api/users/apiUsers';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 import useUploadProfile from '@/hooks/useUploadProfile';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
+import { useUserData } from '@/hooks/useUserData';
 
 export default function SidenNavigation() {
   const router = useRouter();
+  const userData = useUserData();
   const [activeButton, setActiveButton] = useState<string | null>(null);
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(
+    userData?.profileImageUrl
+  );
   useEffect(() => {
     switch (router.pathname) {
       case '/reservation':
@@ -69,14 +72,10 @@ export default function SidenNavigation() {
   };
 
   useEffect(() => {
-    apiMyInfo()
-      .then((response) => {
-        setProfileImageUrl(response.profileImageUrl);
-      })
-      .catch((error) => {
-        console.error('데이터를 불러오는데 실패하였습니다.:', error);
-      });
-  }, []);
+    if (userData?.profileImageUrl) {
+      setProfileImageUrl(userData.profileImageUrl);
+    }
+  }, [userData?.profileImageUrl]);
 
   const handleBtnClick = (buttonName: string | null) => {
     setActiveButton((prevActiveButton) =>

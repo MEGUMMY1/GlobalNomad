@@ -4,5 +4,5 @@ export interface AllActivityProps {
   price: number;
   rating: number;
   reviewCount: number;
+  id: number;
 }
-

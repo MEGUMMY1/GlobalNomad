@@ -9,7 +9,6 @@ import useLoginState from './useLoginState';
 
 export default function useLogin() {
   const { setIsLoggedIn } = useLoginState();
-  const router = useRouter();
   const { openPopup } = usePopup();
   const postLoginMutation: UseMutationResult<
     LoginResponse,

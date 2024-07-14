@@ -19,6 +19,7 @@ import {
   getActivityInfoResponse,
   getActivityReviewsResponse,
 } from '@/pages/api/activities/apiactivities.types';
+import Spinner from '../Spinner/Spinner';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   });
 
   if (isLoadingActivity || isLoadingReviews) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (activityError || reviewError) {
