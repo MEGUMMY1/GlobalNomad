@@ -28,7 +28,8 @@ function BestActivity({
   };
 
   return (
-    <div onClick={handleClick}
+    <div
+      onClick={handleClick}
       className="relative w-[384px] m:w-[186px] h-[384px] m:h-[186px] rounded-3xl border bg-gray-300 flex flex-col justify-center bg-[url('/image/Testimage.jpg')] cursor-pointer shrink-0 bg-cover bg-center"
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 33.33%, rgba(0, 0, 0, 0.80) 91.67%), url(${bannerImageUrl})`,
@@ -76,7 +77,7 @@ function BestActivities() {
     sort: 'most_reviewed',
     page: 1,
     size: 9,
-  }
+  };
 
   const {
     data: bestActivitiesData,
@@ -148,7 +149,8 @@ function BestActivities() {
       ) : (
         <div>No activities found</div>
       )}
-      {bestActivitiesDataNotPc?.activities && bestActivitiesDataNotPc.activities.length > 0 ? (
+      {bestActivitiesDataNotPc?.activities &&
+      bestActivitiesDataNotPc.activities.length > 0 ? (
         <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden">
           {bestActivitiesDataNotPc.activities.map((item: ActivityDetail) => (
             <BestActivity

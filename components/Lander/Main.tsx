@@ -4,7 +4,10 @@ import SearchBar from '../SearchBar/Searchbar';
 import BestActivities from './BestActivities';
 import AllActivities from './AllActivities';
 import { useQuery } from '@tanstack/react-query';
-import { getActivityListParams, getActivityListResponse } from '@/pages/api/activities/apiactivities.types';
+import {
+  getActivityListParams,
+  getActivityListResponse,
+} from '@/pages/api/activities/apiactivities.types';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import Spinner from '../Spinner/Spinner';
 
@@ -31,18 +34,16 @@ function Main() {
     queryFn: () => getActivityList(params),
   });
 
-  if(isLoading) {
-    return (<Spinner />)
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (
-
     <main className="flex flex-col justift-center items-center h-auto">
       <section
         className="z-0 w-screen h-[550px] m:h-[240px] overflow-hidden absolute left-0 top-[70px] bg-cover bg-center bg-[url('/image/Testimage.jpg')] flex items-center "
         style={{
-          backgroundImage:
-            `linear-gradient(90deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.40) 100%), url(${BestOfmonth?.activities[0].bannerImageUrl})`,
+          backgroundImage: `linear-gradient(90deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.40) 100%), url(${BestOfmonth?.activities[0].bannerImageUrl})`,
         }}
       ></section>
       <div className="z-10 t:w-[696px] m:w-[343px]">

@@ -3,4 +3,5 @@ export interface mainPageStateProps {
   itemsPerPage: number;
   selectedKategorie: string;
   selectedSorted: string;
+  sortedName: string;
 }

@@ -56,7 +56,7 @@ function AllActivity({
           {title}
         </div>
         <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
-          ₩ {price} {' '}
+          ₩{price}{' '}
           <span className="font-sans text-[20px] text-[16px] font-[400]">
             / 인
           </span>

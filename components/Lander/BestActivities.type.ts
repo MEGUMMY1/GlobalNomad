@@ -14,9 +14,9 @@ export interface ActivityDetail {
 }
 
 export interface BestActivitiesProps {
- activities: ActivityDetail[];
- totalCount: number;
- cursorId: number | null; 
+  activities: ActivityDetail[];
+  totalCount: number;
+  cursorId: number | null;
 }
 
 export interface BestActivityProps {
@@ -25,4 +25,5 @@ export interface BestActivityProps {
   rating: number;
   reviewCount: number;
   id: number;
+  bannerImageUrl: string;
 }

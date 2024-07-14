@@ -26,7 +26,6 @@ export default function PriceFilterBtn() {
       sortedName: sortedName,
     }));
     setShowMenuList(false);
-    console.log(selectedPriceSorted);
   };
 
   return (
@@ -68,7 +67,9 @@ export default function PriceFilterBtn() {
             </button>
             <button
               className="flex justify-center items-center text-[18px] m:text-[14px] border border-solid border-var-gray3 border-t-0 w-[147px] t:w-[120px] m:w-[90px] h-[58px] m:h-[41px] rounded-b-[8px] bg-white hover:bg-var-gray2"
-              onClick={() => changeSelectedSort('most_reviewed', '리뷰 많은 순')}
+              onClick={() =>
+                changeSelectedSort('most_reviewed', '리뷰 많은 순')
+              }
             >
               리뷰 많은 순
             </button>
