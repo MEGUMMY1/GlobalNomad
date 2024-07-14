@@ -3,21 +3,23 @@ import { apiMyReservationList } from '@/pages/api/myReservations/apiMyReservatio
 import { useUserData } from './useUserData';
 import { MyReservationListResponse } from '@/pages/api/myReservations/apiMyReservations.types';
 import { useMemo } from 'react';
+import { statusType } from '@/components/ReservationFilter/myReservationTypes.types';
 
 const INITIAL_SIZE = 4;
 const REFETCH_SIZE = 1;
 
-export const useReservationList = () => {
+export const useReservationList = (filterOption: statusType | undefined) => {
   const userData = useUserData();
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useInfiniteQuery<MyReservationListResponse>({
-      queryKey: ['myReservationList', userData.id],
+      queryKey: ['myReservationList', userData.id, filterOption],
       queryFn: ({ pageParam = undefined }) => {
         const size = pageParam === undefined ? INITIAL_SIZE : REFETCH_SIZE;
         return apiMyReservationList({
           size: size,
           cursorId: pageParam as number | undefined,
+          status: filterOption ?? undefined,
         });
       },
       enabled: !!userData.id,

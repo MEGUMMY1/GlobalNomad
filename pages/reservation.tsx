@@ -11,13 +11,13 @@ import {
 import { useInView } from 'react-intersection-observer';
 
 export default function MyReservationPage() {
-  const [filterOption, setFilterOption] = useState<statusType>();
+  const [filterOption, setFilterOption] = useState<statusType | undefined>();
   const [reservationListByFilter, setReservationListByFilter] = useState<
     MyReservationProps[]
   >([]);
   const { ref, inView } = useInView();
   const { fetchNextPage, myReservationList, hasNextPage } =
-    useReservationList();
+    useReservationList(filterOption);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -27,17 +27,9 @@ export default function MyReservationPage() {
 
   useEffect(() => {
     if (myReservationList) {
-      const reservationList = myReservationList;
-      if (filterOption) {
-        const filteredData = reservationList.filter(
-          (card) => card.status === filterOption
-        );
-        setReservationListByFilter(filteredData);
-      } else {
-        setReservationListByFilter(reservationList);
-      }
+      setReservationListByFilter(myReservationList);
     }
-  }, [myReservationList, filterOption]);
+  }, [myReservationList]);
 
   return (
     <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px]">
