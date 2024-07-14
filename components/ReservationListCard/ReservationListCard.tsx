@@ -93,15 +93,16 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
               예약 취소
             </PrimaryButton>
           )}
-          {reservationData.status === 'completed' && (
-            <PrimaryButton
-              size="medium"
-              style="dark"
-              onClick={handleOpenReviewModal}
-            >
-              후기 작성
-            </PrimaryButton>
-          )}
+          {reservationData.status === 'completed' &&
+            !reservationData.reviewSubmitted && (
+              <PrimaryButton
+                size="medium"
+                style="dark"
+                onClick={handleOpenReviewModal}
+              >
+                후기 작성
+              </PrimaryButton>
+            )}
         </div>
       </div>
     </div>
