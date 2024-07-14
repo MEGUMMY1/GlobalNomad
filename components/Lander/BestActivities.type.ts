@@ -9,8 +9,8 @@ export interface ActivityDetail {
   bannerImageUrl: string;
   rating: number;
   reviewCount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface BestActivitiesProps {

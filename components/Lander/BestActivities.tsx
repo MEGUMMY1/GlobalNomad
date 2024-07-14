@@ -2,26 +2,36 @@ import Image from 'next/image';
 import { PaginationArrowButton } from '../Button/Button';
 import StarImg from '@/public/icon/Star.svg';
 import { useEffect, useState } from 'react';
-import {
-  ActivityDetail,
-  BestActivitiesProps,
-  BestActivityProps,
-} from './BestActivities.type';
+import { ActivityDetail, BestActivityProps } from './BestActivities.type';
 import usePagination from '@/hooks/usePagination';
+import {
+  getActivityListParams,
+  getActivityListResponse,
+} from '@/pages/api/activities/apiactivities.types';
+import { useQuery } from '@tanstack/react-query';
+import { getActivityList } from '@/pages/api/activities/apiactivities';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
 
 function BestActivity({
   title,
   price,
   rating,
   reviewCount,
+  bannerImageUrl,
   id,
 }: BestActivityProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/activity-details/${id}`);
+  };
+
   return (
-    <div
+    <div onClick={handleClick}
       className="relative w-[384px] m:w-[186px] h-[384px] m:h-[186px] rounded-3xl border bg-gray-300 flex flex-col justify-center bg-[url('/image/Testimage.jpg')] cursor-pointer shrink-0 bg-cover bg-center"
       style={{
-        backgroundImage:
-          'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 33.33%, rgba(0, 0, 0, 0.80) 91.67%), url("/image/Testimage.jpg")',
+        backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 33.33%, rgba(0, 0, 0, 0.80) 91.67%), url(${bannerImageUrl})`,
       }}
     >
       <div className="flex gap-[5px] absolute left-[20px] bottom-[166px] m:bottom-[98px]">
@@ -45,54 +55,62 @@ function BestActivity({
   );
 }
 
-const fetchBestActivities = async (
-  page: number
-): Promise<BestActivitiesProps | null> => {
-  try {
-    const response = await fetch('/mockData/roadActivitiesData.json');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data: BestActivitiesProps = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Failed to fetch mock data:', error);
-    return { activities: [], totalCount: 0, cursorId: null };
-  }
-};
-
-const ITEMS_PER_PAGE = 3;
-
 function BestActivities() {
-  const [bestActivities, setBestActivities] = useState<BestActivitiesProps>({
-    activities: [],
-    totalCount: 0,
-    cursorId: null,
-  });
+  const [bestCurrentPage, setBestCurrentPage] = useState(1);
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetchBestActivities(1); // 페이지는 1로 고정하거나 필요에 따라 변경할 수 있음
-      if (data) {
-        setBestActivities(data);
-      }
-    }
-    fetchData();
-  }, []);
+  const params: getActivityListParams = {
+    method: 'offset',
+    cursorId: null,
+    category: null,
+    keyword: null,
+    sort: 'most_reviewed',
+    page: bestCurrentPage,
+    size: 3,
+  };
+
+  const paramsNotPc: getActivityListParams = {
+    method: 'offset',
+    cursorId: null,
+    category: null,
+    keyword: null,
+    sort: 'most_reviewed',
+    page: 1,
+    size: 9,
+  }
 
   const {
-    currentItems,
+    data: bestActivitiesData,
+    error,
+    isLoading,
+  } = useQuery<getActivityListResponse>({
+    queryKey: ['BestActivities', params],
+    queryFn: () => getActivityList(params),
+  });
+
+  const {
+    data: bestActivitiesDataNotPc,
+    error: errorNotPc,
+    isLoading: isLoadingNotPc,
+  } = useQuery<getActivityListResponse>({
+    queryKey: ['BestActivitiesNotPc', paramsNotPc],
+    queryFn: () => getActivityList(paramsNotPc),
+  });
+
+  const {
     items,
     currentPage,
-    totalPages,
     isFirstPage,
     isLastPage,
     handlePrevClick,
     handleNextClick,
   } = usePagination({
-    fetchData: fetchBestActivities,
-    itemsPerPage: ITEMS_PER_PAGE,
+    data: bestActivitiesData,
+    itemsPerPage: 3,
   });
+
+  useEffect(() => {
+    setBestCurrentPage(currentPage);
+  }, [currentPage]);
 
   return (
     <div>
@@ -115,31 +133,32 @@ function BestActivities() {
       </div>
       {items && items.length > 0 ? (
         <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide t:hidden m:hidden">
-          {currentItems.map((item: ActivityDetail) => (
+          {items.map((item: ActivityDetail) => (
             <BestActivity
               key={item.id}
               title={item.title}
               price={item.price}
               rating={item.rating}
               reviewCount={item.reviewCount}
-              id= {item.id}
+              id={item.id}
+              bannerImageUrl={item.bannerImageUrl}
             />
           ))}
         </div>
       ) : (
         <div>No activities found</div>
       )}
-
-      {bestActivities.activities && bestActivities.activities.length > 0 ? (
+      {bestActivitiesDataNotPc?.activities && bestActivitiesDataNotPc.activities.length > 0 ? (
         <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden">
-          {bestActivities.activities.map((item: ActivityDetail) => (
+          {bestActivitiesDataNotPc.activities.map((item: ActivityDetail) => (
             <BestActivity
               key={item.id}
               title={item.title}
               price={item.price}
               rating={item.rating}
               reviewCount={item.reviewCount}
-              id= {item.id}
+              id={item.id}
+              bannerImageUrl={item.bannerImageUrl}
             />
           ))}
         </div>

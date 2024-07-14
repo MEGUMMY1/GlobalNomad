@@ -52,11 +52,11 @@ function AllActivity({
             </span>
           </div>
         </div>
-        <div className="t:h-[50px] m:h-[30px] m:w-[160px] font-sans text-[24px] m:text-[18px] font-[600] mt-[10px]">
+        <div className="h-[70px] t:h-[50px] m:h-[30px] m:w-[160px] font-sans text-[24px] m:text-[18px] font-[600] mt-[10px]">
           {title}
         </div>
-        <div className="font-sans text-[28px] text-[20px] font-[700] mt-[15px]">
-          ₩ {price}
+        <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
+          ₩ {price} {' '}
           <span className="font-sans text-[20px] text-[16px] font-[400]">
             / 인
           </span>
@@ -68,13 +68,16 @@ function AllActivity({
 
 function AllActivities() {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(
-    router.query.page ? parseInt(router.query.page as string, 10) : 1
-  );
+  // const [currentPage, setCurrentPage] = useState<number>(
+  //   router.query.page ? parseInt(router.query.page as string, 10) : 1
+  // );
   const [MainPageState, setMainPageState] = useRecoilState(mainPageState);
 
-  const { itemsPerPage: items_per_page, selectedSorted } =
-    useRecoilValue(mainPageState);
+  const {
+    itemsPerPage: items_per_page,
+    selectedSorted,
+    currentPage,
+  } = useRecoilValue(mainPageState);
 
   const setItemsPerPage = () => {
     if (typeof window !== 'undefined') {
@@ -94,22 +97,8 @@ function AllActivities() {
         ...prevState,
         itemsPerPage,
       }));
-
-      console.log(`Current items per page: ${itemsPerPage}`);
     }
   };
-
-  useEffect(() => {
-    setItemsPerPage();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', setItemsPerPage);
-    }
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', setItemsPerPage);
-      }
-    };
-  }, []);
 
   const params: getActivityListParams = {
     method: 'offset',
@@ -131,9 +120,25 @@ function AllActivities() {
   });
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    //setCurrentPage(page);
+    setMainPageState((prevState) => ({
+      ...prevState,
+      currentPage: page,
+    }));
     //router.push(`/?page=${page}`);
   };
+
+  useEffect(() => {
+    setItemsPerPage();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', setItemsPerPage);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', setItemsPerPage);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const params: getActivityListParams = {
@@ -152,8 +157,8 @@ function AllActivities() {
       <div className="flex justify-between">
         <div className="relative t:w-[520px] m:w-[230px]">
           <div className="flex gap-[24px] t:gap-[14px] m:gap-[8px] t:w-[520px] m:w-[230px] overflow-auto scrollbar-hide">
-            {Kategories.map((Kategorie) => (
-              <CatergoryBtn categoryName={Kategorie} />
+            {Kategories.map((Kategorie, index) => (
+              <CatergoryBtn key={index} categoryName={Kategorie} />
             ))}
           </div>
           <div className="p:hidden absolute top-0 right-0 w-20 m:w-3 h-full pointer-events-none bg-gradient-to-l from-white to-transparent"></div>

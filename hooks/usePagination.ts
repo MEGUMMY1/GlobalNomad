@@ -1,8 +1,9 @@
-import { BestActivitiesProps, ActivityDetail } from '@/components/Lander/BestActivities.type';
 import { useEffect, useState } from 'react';
+import { ActivityDetail } from '@/components/Lander/BestActivities.type';
+import { getActivityListResponse } from '@/pages/api/activities/apiactivities.types';
 
 interface UsePaginationProps {
-  fetchData: (page: number) => Promise<BestActivitiesProps | null>;
+  data: getActivityListResponse | undefined; // useQuery에서 가져온 데이터 타입으로 수정
   itemsPerPage: number;
 }
 
@@ -18,28 +19,24 @@ interface UsePaginationResult {
 }
 
 function usePagination({
-  fetchData,
+  data,
   itemsPerPage,
 }: UsePaginationProps): UsePaginationResult {
   const [items, setItems] = useState<ActivityDetail[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
-    async function loadItems() {
-      const result = await fetchData(currentPage);
-      if (result) {
-        const limitedItems = result.activities.slice(0, 9);
-        setItems(limitedItems);
-        setTotalPage(Math.min(Math.ceil(result.totalCount / itemsPerPage), 3));
-        setIsFirstPage(currentPage === 1);
-        setIsLastPage(currentPage >= Math.ceil(result.totalCount / itemsPerPage) || (currentPage === 3));
-      }
+    if (data) {
+      const totalItems = data.activities;
+      setTotalPages(Math.ceil(data.totalCount / itemsPerPage));
+      setItems(totalItems.slice(0, itemsPerPage));
+      setIsFirstPage(currentPage === 1);
+      setIsLastPage(currentPage >= 3);
     }
-    loadItems();
-  }, [currentPage, fetchData, itemsPerPage]);
+  }, [data, itemsPerPage, currentPage]);
 
   const handlePrevClick = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
