@@ -23,10 +23,7 @@ export default function MyReservationPage() {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-    console.log(myReservationList);
   }, [inView]);
-
-  console.log(hasNextPage);
 
   useEffect(() => {
     if (myReservationList) {

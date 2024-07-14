@@ -23,7 +23,6 @@ export const useUserData = () => {
   }, [userResponseData]);
 
   useEffect(() => {
-    console.log('hi');
     const userId = localStorage.getItem('userId') || '';
     setUserId(userId);
   }, []);
