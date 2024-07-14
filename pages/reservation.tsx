@@ -8,17 +8,29 @@ import {
   MyReservationProps,
   statusType,
 } from '@/components/ReservationFilter/myReservationTypes.types';
+import { useInView } from 'react-intersection-observer';
 
 export default function MyReservationPage() {
   const [filterOption, setFilterOption] = useState<statusType>();
   const [reservationListByFilter, setReservationListByFilter] = useState<
     MyReservationProps[]
   >([]);
-  const myReservationList = useReservationList();
+  const { ref, inView } = useInView();
+  const { fetchNextPage, myReservationList, hasNextPage } =
+    useReservationList();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+    console.log(myReservationList);
+  }, [inView]);
+
+  console.log(hasNextPage);
 
   useEffect(() => {
     if (myReservationList) {
-      const reservationList = myReservationList.reservations;
+      const reservationList = myReservationList;
       if (filterOption) {
         const filteredData = reservationList.filter(
           (card) => card.status === filterOption
@@ -43,9 +55,9 @@ export default function MyReservationPage() {
             />
           )}
         </div>
-        <div className="flex flex-col animate-slideDown overflow-auto scrollbar-hide h-[calc(100vh-380px)] gap-[24px] pr-[10px]">
-          {reservationListByFilter.length > 0 ? (
-            reservationListByFilter.map(
+        {reservationListByFilter.length > 0 ? (
+          <div className="flex flex-col animate-slideDown gap-[24px] overflow-auto scrollbar-hide h-[calc(100vh-220px)] pr-[10px]">
+            {reservationListByFilter.map(
               (reservationData: MyReservationProps) => {
                 return (
                   <div key={reservationData.id}>
@@ -53,23 +65,28 @@ export default function MyReservationPage() {
                   </div>
                 );
               }
-            )
-          ) : (
-            <div className="flex flex-col h-[500px] items-center justify-center">
-              <div>
-                <Image
-                  src="/icon/empty_reservation.svg"
-                  alt="등록된 체험이 없어요"
-                  width={240}
-                  height={240}
-                />
+            )}
+            {hasNextPage && (
+              <div className="text-[35px] font-bold text-center" ref={ref}>
+                ...
               </div>
-              <span className="text-var-gray7 text-[24px]">
-                등록된 체험이 없어요
-              </span>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col h-[500px] items-center justify-center">
+            <div>
+              <Image
+                src="/icon/empty_reservation.svg"
+                alt="등록된 체험이 없어요"
+                width={240}
+                height={240}
+              />
             </div>
-          )}
-        </div>
+            <span className="text-var-gray7 text-[24px]">
+              등록된 체험이 없어요
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
