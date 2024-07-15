@@ -44,26 +44,17 @@ export default function SingupPage() {
     setIsChecked(!isChecked);
   };
 
-  const watchFields = watch(['email', 'password', 'passwordCheck', 'nickname']);
+  const isNotError =
+    !errors.email &&
+    !errors.nickname &&
+    !errors.password &&
+    !errors.passwordCheck;
 
-  const isAllFieldsValid = useMemo(() => {
-    const isNotError =
-      !errors.email &&
-      !errors.nickname &&
-      !errors.password &&
-      !errors.passwordCheck;
-    const { email, nickname, password, passwordCheck } = getValues();
-    const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+  const { email, nickname, password, passwordCheck } = watch();
 
-    return isFormFilled && isChecked && isNotError;
-  }, [
-    errors.email,
-    errors.password,
-    errors.passwordCheck,
-    errors.nickname,
-    getValues,
-    isChecked,
-  ]);
+  const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+
+  const IsAllFieldsValid = isFormFilled && isChecked && isNotError;
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -114,7 +105,7 @@ export default function SingupPage() {
           validation={{
             ...signupValidation.passwordCheck,
             validate: (value: string) =>
-              value === getValues().password || '비밀번호가 일치하지 않습니다.',
+              value === watch().password || '비밀번호가 일치하지 않습니다.',
           }}
           eyeIconActive={true}
           register={register}
@@ -128,9 +119,9 @@ export default function SingupPage() {
         />
         <PrimaryButton
           size="large"
-          style={isAllFieldsValid ? 'enabled' : 'disabled'}
+          style={IsAllFieldsValid ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isAllFieldsValid}
+          disabled={!IsAllFieldsValid}
         >
           회원가입 하기
         </PrimaryButton>

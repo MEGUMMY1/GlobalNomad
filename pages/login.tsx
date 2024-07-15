@@ -35,15 +35,12 @@ export default function LoginPage() {
     postLoginMutation.mutate(data);
   };
 
-  const watchFields = watch(['email', 'password']);
+  const { email, password } = watch();
 
-  const isAllFieldsValid = useMemo(() => {
-    const isNotError = !errors.email && !errors.password;
-    const { email, password } = getValues();
-    const isFormFilled = !!email && !!password;
+  const isNotError = !errors.email && !errors.password;
+  const isFormFilled = !!email && !!password;
 
-    return isFormFilled && isNotError;
-  }, [errors.email, errors.password, getValues]);
+  const IsAllFieldsValid = isFormFilled && isNotError;
 
   useEffect(() => {
     if (isLoggedIn) router.push('/');
@@ -81,9 +78,9 @@ export default function LoginPage() {
         />
         <PrimaryButton
           size="large"
-          style={isAllFieldsValid ? 'enabled' : 'disabled'}
+          style={IsAllFieldsValid ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isAllFieldsValid}
+          disabled={!IsAllFieldsValid}
         >
           로그인하기
         </PrimaryButton>
