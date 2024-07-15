@@ -29,8 +29,8 @@ export default function SidenNavigation() {
       case '/reservation':
         setActiveButton('reservation');
         break;
-      case '/setting':
-        setActiveButton('setting');
+      case '/myActivity':
+        setActiveButton('myActivity');
         break;
       case '/calendar':
         setActiveButton('calendar');
@@ -44,7 +44,7 @@ export default function SidenNavigation() {
   const buttonPaths: routePaths = {
     mypage: '/mypage',
     reservation: '/reservation',
-    setting: '/setting',
+    myActivity: '/myActivity',
     calendar: '/calendar',
   };
 
@@ -149,14 +149,14 @@ export default function SidenNavigation() {
         </button>
         <button
           className={`${sideNavBtnStyle} ${
-            activeButton === 'setting'
+            activeButton === 'myActivity'
               ? 'bg-var-green1 rounded-[12px] text-var-black'
               : 'text-var-gray6'
           }`}
-          onClick={() => handleBtnClick('setting')}
+          onClick={() => handleBtnClick('myActivity')}
         >
           <Image
-            src={activeButton === 'setting' ? settingIcon : graySettingIcon}
+            src={activeButton === 'myActivity' ? settingIcon : graySettingIcon}
             alt="내 체험 관리 아이콘"
           />
           <p>내 체험 관리</p>
