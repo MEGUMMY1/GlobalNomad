@@ -42,7 +42,7 @@ function Popover({ activityId, closePopover }: PopoverProps) {
 
   return (
     <div
-      className="flex flex-col absolute rounded-[6px] border border-solid border-var-gray3 right-0 top-[50px] bg-white"
+      className="flex flex-col absolute rounded-[6px] border border-solid border-var-gray3 right-0 top-[50px] bg-white z-10"
       ref={popoverRef}
     >
       <PopoverButton onClick={handleClickEdit}>수정하기</PopoverButton>
