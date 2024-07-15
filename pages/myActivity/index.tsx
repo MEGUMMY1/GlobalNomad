@@ -3,8 +3,8 @@ import { PrimaryButton } from '@/components/Button/Button';
 import Card from '@/components/MyActivity/Card';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import { useInView } from 'react-intersection-observer';
-import { useMyActivityList } from '@/hooks/useMyActivityList';
-import { useEffect, useState } from 'react';
+import { useMyActivityList } from '@/hooks/myActivity/useMyActivityList';
+import { useEffect } from 'react';
 
 function MyActivity() {
   const router = useRouter();
