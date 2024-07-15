@@ -20,7 +20,7 @@ export interface getActivityListResponse {
 }
 
 export interface getActivityListParams {
-  method: 'cursor';
+  method: 'offset';
   cursorId?: number | null;
   category?: string | null;
   keyword?: string | null;
