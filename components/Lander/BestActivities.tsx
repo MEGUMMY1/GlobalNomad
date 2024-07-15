@@ -43,7 +43,7 @@ function BestActivity({
           height={18}
         ></Image>
         <span className="font-sans text-[14px] font-[600] text-white">
-          {rating} ({reviewCount})
+          {rating.toFixed(1)} ({reviewCount})
         </span>
       </div>
       <div className="font-sans text-[30px] m:text-[18px] font-[700] absolute left-[20px] bottom-[74px] m:bottom-[50px] text-white">

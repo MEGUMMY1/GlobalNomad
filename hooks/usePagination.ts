@@ -8,7 +8,6 @@ interface UsePaginationProps {
 }
 
 interface UsePaginationResult {
-  currentItems: ActivityDetail[];
   items: ActivityDetail[];
   currentPage: number;
   totalPages: number;
@@ -46,12 +45,7 @@ function usePagination({
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, items.length); // 현재 페이지에 표시할 항목의 끝 인덱스
-  const currentItems = items.slice(startIndex, endIndex); // 현재 페이지에 표시할 항목들
-
   return {
-    currentItems,
     items,
     currentPage,
     totalPages,

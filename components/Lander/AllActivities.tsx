@@ -37,7 +37,7 @@ function AllActivity({
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
-      <div>
+      <div className='hover:bg-gray-200 rounded px-[4px]'>
         <div className="flex items-center mt-[16.5px]">
           <Image
             src={StarImg}
@@ -46,7 +46,7 @@ function AllActivity({
             height={20}
           ></Image>
           <div className="font-sans text-[16px] font-[500] ml-[5px]">
-            {rating ? rating : 0}{' '}
+            {rating ? rating.toFixed(1) : 0}{' '}
             <span className="font-sans text-[16px] text-[#A1A1A1] font-[500] ">
               ({reviewCount ? reviewCount : 0})
             </span>
