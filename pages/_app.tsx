@@ -8,11 +8,31 @@ import Layout from '@/components/Layout/Layout';
 import Modal from '@/components/Modal/Modal';
 import LayoutMobile from '@/components/Layout/LayoutMobile';
 import SilentRefresh from '@/hooks/useSilentRefresh';
+import Spinner from '@/components/Spinner/Spinner';
+import { useEffect, useState } from 'react';
+import { Router } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const start = () => setIsLoading(true);
+    const end = () => setIsLoading(false);
+
+    Router.events.on('routeChangeStart', start);
+    Router.events.on('routeChangeComplete', end);
+    Router.events.on('routeChangeError', end);
+
+    return () => {
+      Router.events.off('routeChangeStart', start);
+      Router.events.off('routeChangeComplete', end);
+      Router.events.off('routeChangeError', end);
+    };
+  }, []);
+
   let childContent: React.ReactNode;
 
   switch (pageProps.layoutType) {
@@ -37,13 +57,17 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        {childContent}
-        <Popup />
-        <Modal />
-        <SidenNavigationMobile />
-        <SilentRefresh />
-      </QueryClientProvider>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <QueryClientProvider client={queryClient}>
+          {childContent}
+          <Popup />
+          <Modal />
+          <SidenNavigationMobile />
+          <SilentRefresh />
+        </QueryClientProvider>
+      )}
     </RecoilRoot>
   );
 }
