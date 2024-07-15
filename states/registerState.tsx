@@ -33,3 +33,8 @@ export const endTimeState = atom<string[]>({
   key: 'endTimeState',
   default: initialTimeArray,
 });
+
+export const addressState = atom<string>({
+  key: 'addressState',
+  default: '',
+});

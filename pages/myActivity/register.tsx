@@ -12,6 +12,7 @@ import { validation } from '@/components/MyActivity/Register/validation';
 import { useRecoilValue } from 'recoil';
 import { KategoriedDropState } from '@/states/KategorieDropState';
 import {
+  addressState,
   bannerImageState,
   detailImageState,
   endTimeState,
@@ -23,6 +24,7 @@ import useRegisterActivity from '@/hooks/myActivity/useRegisterActivity';
 import { formatDate } from '@/utils/formatDate';
 import useActivityImage from '@/hooks/myActivity/useActivityImage';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
+import AddressInput from '@/components/MyActivity/Register/AddressInput';
 
 function RegisterActivity() {
   const {
@@ -38,6 +40,7 @@ function RegisterActivity() {
   const timeSlotCount = useRecoilValue(timeSlotCountState);
   const startTime = useRecoilValue(startTimeState);
   const endTime = useRecoilValue(endTimeState);
+  const address = useRecoilValue(addressState);
 
   const { postActivityMutation } = useRegisterActivity();
   const { postActivityImageMutation } = useActivityImage();
@@ -60,7 +63,7 @@ function RegisterActivity() {
   };
 
   const onSubmit = async (data: FieldValues) => {
-    const { title, description, price, address } = data;
+    const { title, description, price } = data;
     const schedules = formatSchedules();
     const bannerUrl = bannerImage[0] ? await uploadImage(bannerImage[0]) : '';
     const detailUrls = await Promise.all(detailImage.map(uploadImage));
@@ -86,17 +89,16 @@ function RegisterActivity() {
     );
 
   const isAllFieldsValid = () => {
-    const { title, description, price, address } = getValues();
+    const { title, description, price } = getValues();
     return (
       !!title &&
       !!description &&
       !!price &&
-      !!address &&
       !errors.title &&
       !errors.description &&
       !errors.price &&
-      !errors.address &&
       selectedKateogorie.name !== '' &&
+      address !== '' &&
       bannerImage.length !== 0 &&
       detailImage.length !== 0 &&
       isTimeFieldValid()
@@ -146,14 +148,7 @@ function RegisterActivity() {
               register={register}
               errors={errors}
             />
-            <InputBox
-              label="주소"
-              placeholder="주소"
-              name="address"
-              validation={validation.address}
-              register={register}
-              errors={errors}
-            />
+            <AddressInput />
             <TimeSlot />
             <UploadBannerImage />
             <UploadDetailImage />

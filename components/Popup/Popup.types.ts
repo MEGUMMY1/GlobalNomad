@@ -5,3 +5,7 @@ export interface PopupProps {
   btnName: [string, string?];
   callBackFnc?: () => void;
 }
+
+export interface AddressPopupProps {
+  closePopup: () => void;
+}
