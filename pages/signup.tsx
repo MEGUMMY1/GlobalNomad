@@ -44,6 +44,12 @@ export default function SingupPage() {
     setIsChecked(!isChecked);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit(onSubmit)();
+    }
+  };
+
   const isNotError =
     !errors.email &&
     !errors.nickname &&
@@ -70,7 +76,11 @@ export default function SingupPage() {
       </Link>
 
       {/* 로그인 폼 */}
-      <form className="flex flex-col gap-[28px] w-full">
+      <form
+        className="flex flex-col gap-[28px] w-full"
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={handleKeyDown}
+      >
         <AuthInputBox
           label="이메일 *"
           placeholder="이메일을 입력해주세요"

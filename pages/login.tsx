@@ -27,12 +27,17 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     watch,
   } = useForm<loginFormValues>({ mode: 'onBlur' });
 
   const onSubmit = (data: loginFormValues) => {
     postLoginMutation.mutate(data);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit(onSubmit)();
+    }
   };
 
   const { email, password } = watch();
@@ -57,6 +62,7 @@ export default function LoginPage() {
       <form
         className="flex flex-col gap-[28px] w-full"
         onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={handleKeyDown}
       >
         <AuthInputBox
           label="이메일"
