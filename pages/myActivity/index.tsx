@@ -37,6 +37,8 @@ function MyActivity() {
           {myActivityList?.map((activity) => {
             return (
               <Card
+                key={activity.id}
+                activityId={activity.id}
                 activityImage={activity.bannerImageUrl}
                 rating={activity.rating}
                 reviewCount={activity.reviewCount}

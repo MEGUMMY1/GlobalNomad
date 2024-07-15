@@ -7,6 +7,7 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import { formatNumberToFixed } from '@/utils/formatNumberToFixed';
 import { usePopup } from '@/hooks/usePopup';
 import useClickOutside from '@/hooks/useClickOutside';
+import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
@@ -19,10 +20,11 @@ function PopoverButton({ children, onClick }: PopoverButtonProps) {
   );
 }
 
-function Popover({ closePopover }: PopoverProps) {
+function Popover({ activityId, closePopover }: PopoverProps) {
   const popoverRef = useClickOutside<HTMLDivElement>(closePopover);
   const router = useRouter();
   const { openPopup } = usePopup();
+  const { deleteMyActivityMutation } = useDeleteActivity();
 
   const handleClickEdit = () => {
     router.push('/myActivity/edit');
@@ -32,7 +34,9 @@ function Popover({ closePopover }: PopoverProps) {
       popupType: 'select',
       content: '체험을 삭제하시겠어요?',
       btnName: ['아니오', '삭제하기'],
-      callBackFnc: () => alert('체험 삭제 테스트'),
+      callBackFnc: () => {
+        deleteMyActivityMutation.mutate(activityId);
+      },
     });
   };
 
@@ -48,7 +52,14 @@ function Popover({ closePopover }: PopoverProps) {
   );
 }
 
-function Card({ activityImage, rating, reviewCount, title, price }: CardProps) {
+function Card({
+  activityId,
+  activityImage,
+  rating,
+  reviewCount,
+  title,
+  price,
+}: CardProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const handleClickMeatball = () => {
@@ -88,7 +99,12 @@ function Card({ activityImage, rating, reviewCount, title, price }: CardProps) {
             <span className="font-[500] text-var-gray8">/인</span>
           </div>
           <MeatballButton onClick={handleClickMeatball} />
-          {isPopoverOpen ? <Popover closePopover={handleClosePopover} /> : null}
+          {isPopoverOpen ? (
+            <Popover
+              activityId={activityId}
+              closePopover={handleClosePopover}
+            />
+          ) : null}
         </div>
       </div>
     </div>
