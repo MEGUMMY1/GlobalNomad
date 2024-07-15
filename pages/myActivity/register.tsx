@@ -19,9 +19,9 @@ import {
   startTimeState,
   timeSlotCountState,
 } from '@/states/registerState';
-import useRegisterActivity from '@/hooks/useRegisterActivity';
+import useRegisterActivity from '@/hooks/myActivity/useRegisterActivity';
 import { formatDate } from '@/utils/formatDate';
-import useActivityImage from '@/hooks/useActivityImage';
+import useActivityImage from '@/hooks/myActivity/useActivityImage';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 
 function RegisterActivity() {
