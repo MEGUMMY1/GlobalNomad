@@ -1,9 +1,25 @@
+import { useRouter } from 'next/router';
 import { PrimaryButton } from '@/components/Button/Button';
 import Card from '@/components/MyActivity/Card';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
+import { useInView } from 'react-intersection-observer';
+import { useMyActivityList } from '@/hooks/useMyActivityList';
+import { useEffect, useState } from 'react';
 
 function MyActivity() {
-  const handleClickAdd = () => {};
+  const router = useRouter();
+  const { ref, inView } = useInView();
+  const { fetchNextPage, myActivityList, hasNextPage } = useMyActivityList();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  const handleClickAdd = () => {
+    router.push('myActivity/register');
+  };
 
   return (
     <div className="flex gap-[20px] py-[72px] m:gap-0">
@@ -18,34 +34,22 @@ function MyActivity() {
           </PrimaryButton>
         </div>
         <div className="flex flex-col gap-[20px] overflow-y-auto">
-          <Card
-            activityImage="/image/VR 게임 마스터 하는 법.png"
-            rating={4.9}
-            reviewCount={249}
-            title="VR 게임 마스터 하는 법"
-            price={10000}
-          />
-          <Card
-            activityImage="/image/VR 게임 마스터 하는 법.png"
-            rating={4.9}
-            reviewCount={249}
-            title="VR 게임 마스터 하는 법"
-            price={10000}
-          />
-          <Card
-            activityImage="/image/VR 게임 마스터 하는 법.png"
-            rating={4.9}
-            reviewCount={249}
-            title="VR 게임 마스터 하는 법"
-            price={10000}
-          />
-          <Card
-            activityImage="/image/VR 게임 마스터 하는 법.png"
-            rating={4.9}
-            reviewCount={249}
-            title="VR 게임 마스터 하는 법"
-            price={10000}
-          />
+          {myActivityList?.map((activity) => {
+            return (
+              <Card
+                activityImage={activity.bannerImageUrl}
+                rating={activity.rating}
+                reviewCount={activity.reviewCount}
+                title={activity.title}
+                price={activity.price}
+              />
+            );
+          })}
+          {hasNextPage && (
+            <div className="text-[35px] font-bold text-center" ref={ref}>
+              ...
+            </div>
+          )}
         </div>
       </div>
     </div>
