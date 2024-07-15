@@ -12,6 +12,7 @@ import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 import editProfileIcon from '@/public/image/btn.png';
 import { useSideNavigation } from '@/hooks/useSideNavigation';
+import Spinner from '../Spinner/Spinner';
 
 export default function MyPageInput() {
   const {
@@ -24,7 +25,8 @@ export default function MyPageInput() {
 
   const { openSideNavigation } = useSideNavigation();
 
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
+
   const { postProfileImgMutation } = useUploadProfile();
   const { postMyInfoMutation } = useEditMyInfo();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(
@@ -84,6 +86,9 @@ export default function MyPageInput() {
 
   const isAllFieldsValid = isFormFilled && isNotError;
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
       <form className="flex flex-col gap-[24px] t:gap-[16px]">

@@ -9,13 +9,14 @@ import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
 import NotificationDropdown from '../NavigationDropdown/NotificationDropdown';
 import useLoginState from '@/hooks/useLoginState';
+import Spinner from '../Spinner/Spinner';
 
 export default function NavigationBar() {
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const { isLoggedIn } = useLoginState();
   const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
-  const { data, isLoading, isError } = useGetNotification({
+  const { data, isNotifyCountLoading } = useGetNotification({
     cursorId: 0,
     size: 2,
   });
@@ -31,6 +32,10 @@ export default function NavigationBar() {
   };
 
   const dropdownRef = useClickOutside<HTMLDivElement>(closeProfileDropdown);
+
+  if (isLoading || isNotifyCountLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="sticky top-0 flex h-[70px] z-30 justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px]  border-b bg-white border-var-gray3 border-solid ">

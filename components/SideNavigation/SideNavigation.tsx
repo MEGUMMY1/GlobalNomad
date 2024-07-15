@@ -16,10 +16,11 @@ import useUploadProfile from '@/hooks/useUploadProfile';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
 import { useUserData } from '@/hooks/useUserData';
+import Spinner from '../Spinner/Spinner';
 
 export default function SidenNavigation() {
   const router = useRouter();
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(
     userData?.profileImageUrl
@@ -47,7 +48,6 @@ export default function SidenNavigation() {
     setting: '/setting',
     calendar: '/calendar',
   };
-
   const { postProfileImgMutation } = useUploadProfile();
   const { postMyInfoMutation } = useEditMyInfo();
 
@@ -88,6 +88,10 @@ export default function SidenNavigation() {
   };
 
   const sideNavBtnStyle = `font-bold flex gap-[8px] h-[44px] w-fill items-center pl-[16px] text-[16px] `;
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 justify-center gap-[24px] t:w-[251px]">

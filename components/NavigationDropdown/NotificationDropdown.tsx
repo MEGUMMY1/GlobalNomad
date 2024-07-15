@@ -1,9 +1,8 @@
 import { CloseButton } from '../Button/Button';
 import { NotificationDropdownProps } from './NotificationDropdown.types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import useDeleteNotification from '@/hooks/useDeleteNotification';
-import { NotificationId } from '@/pages/api/myNotifications/apiMyNotifications.types';
 import { useInView } from 'react-intersection-observer';
 import useGetNotificationList from '@/hooks/useGetNotificationList';
 
@@ -11,7 +10,6 @@ export default function NotificationDropdown({
   data,
   onClick,
 }: NotificationDropdownProps) {
-  const [notifications, setNotifications] = useState<any[]>([]);
   const { deleteNotificationMutation } = useDeleteNotification();
 
   const handleDelete = async (id: number) => {
@@ -79,7 +77,7 @@ export default function NotificationDropdown({
         알림 {data ? `${data.totalCount}` : '0'}개
         <CloseButton onClick={onClick} />
       </div>
-      {notificationList ? (
+      {notificationList && data?.totalCount ? (
         <div className="flex flex-col items-center gap-[15px]">
           {notificationList.map((notification) => (
             <div
