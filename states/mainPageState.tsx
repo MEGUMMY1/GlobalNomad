@@ -16,3 +16,15 @@ export const mainPageState = atom<mainPageStateProps>({
   },
   effects_UNSTABLE: [persistAtom],
 })
+
+interface mainPageKategorieStateProps {
+  KategorieName: string;
+}
+
+export const mainPageKategorieState = atom<mainPageKategorieStateProps>({
+  key: 'mainPageKategorieState',
+  default: {
+    KategorieName: '',
+  },
+  effects_UNSTABLE: [persistAtom],
+})

@@ -14,7 +14,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { mainPageState } from '@/states/mainPageState';
 import Spinner from '../Spinner/Spinner';
 
-const Kategories = ['문화 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+const Kategories = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
 function AllActivity({
   title,
@@ -33,7 +33,7 @@ function AllActivity({
   return (
     <div onClick={handleClick} className="cursor-pointer">
       <div
-        className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')]"
+        className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')] bg-cover"
         style={{
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
