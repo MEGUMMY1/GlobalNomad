@@ -17,7 +17,7 @@ export default function NavigationBar() {
   const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
   const { data, isLoading, isError } = useGetNotification({
     cursorId: 0,
-    size: 10,
+    size: 2,
   });
 
   const toggleDropdown = () => {

@@ -17,11 +17,10 @@ export default function MyPageInput() {
   const {
     register,
     handleSubmit,
-    getValues,
-    setValue,
     watch,
+    setValue,
     formState: { errors },
-  } = useForm<FieldValues>({ mode: 'onChange' });
+  } = useForm<FieldValues>({ mode: 'all' });
 
   const { openSideNavigation } = useSideNavigation();
 
@@ -73,24 +72,17 @@ export default function MyPageInput() {
     }
   }, [userData, setValue]);
 
-  const watchFields = watch(['nickname', 'password', 'passwordCheck']);
-  const isAllFieldsValid = useMemo(() => {
-    const isNotError =
-      !errors.email &&
-      !errors.nickname &&
-      !errors.password &&
-      !errors.passwordCheck;
-    const { email, nickname, password, passwordCheck } = getValues();
-    const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+  const { email, nickname, password, passwordCheck } = watch();
 
-    return isFormFilled && isNotError;
-  }, [
-    errors.email,
-    errors.password,
-    errors.passwordCheck,
-    errors.nickname,
-    watchFields,
-  ]);
+  const isNotError =
+    !errors.email &&
+    !errors.nickname &&
+    !errors.password &&
+    !errors.passwordCheck;
+
+  const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+
+  const isAllFieldsValid = isFormFilled && isNotError;
 
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
@@ -178,8 +170,7 @@ export default function MyPageInput() {
               validation={{
                 ...validation.passwordCheck,
                 validate: (value: string) =>
-                  value === getValues().password ||
-                  '비밀번호가 일치하지 않습니다.',
+                  value === watch().password || '비밀번호가 일치하지 않습니다.',
               }}
               register={register}
               errors={errors}
