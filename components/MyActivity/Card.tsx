@@ -74,7 +74,7 @@ function Card({
   return (
     <div className="flex rounded-[24px] w-[800px] h-[204px] bg-white shadow-card t:w-full m:w-[calc(100vw-50px)]">
       <Image
-        className="rounded-l-[24px]"
+        className="rounded-l-[24px] shrink-0"
         src={activityImage}
         alt={title}
         width={210}
