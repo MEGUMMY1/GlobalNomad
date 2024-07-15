@@ -91,14 +91,12 @@ function KategorieDropdown() {
           ></Image>
         )}
       </div>
-      {isOpen ? (
+      {isOpen && (
         <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center shadow-kategorieDropdown t:w-full m:w-full">
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}
         </ul>
-      ) : (
-        <div></div>
       )}
     </div>
   );
