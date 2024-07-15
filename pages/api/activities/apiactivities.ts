@@ -32,9 +32,9 @@ export const getActivityList = async (
 
 //체험 등록
 export const postActivity = async (
-  params: postActivityParams
+  body: postActivityParams
 ): Promise<postActivityResponse> => {
-  const response = await axios.post(`/my-activities, ${params}`);
+  const response = await axios.post(`/activities`, body);
   return response.data;
 };
 
@@ -78,10 +78,14 @@ export const postActivityRequest = async (
 
 //체험 이미지 url 생성
 export const postActivityImage = async (
-  params: postActivityImageParams
+  file: File
 ): Promise<posttActivityImageResponse> => {
-  const response = await axios.post(`/activities/image`, {
-    image: params.image,
+  const formData = new FormData();
+  formData.append('image', file);
+  const response = await axios.post(`/activities/image`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
   return response.data;
 };

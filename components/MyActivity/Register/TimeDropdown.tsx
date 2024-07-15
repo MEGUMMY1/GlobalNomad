@@ -1,23 +1,38 @@
 import useClickOutside from '@/hooks/useClickOutside';
 import Image from 'next/image';
 import { useState } from 'react';
+import { TimeDropdownProps } from './TimeSlot.types';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { endTimeState, startTimeState } from '@/states/registerState';
 
-function generateTimeOptions() {
+function generateTimeOptions(startTime = 0, type: 'start' | 'end') {
   const times = [];
-  for (let hour = 0; hour <= 24; hour++) {
-    const timeString = `${hour}:00`;
+  const endTime = type === 'start' ? 23 : 24;
+  for (let hour = startTime; hour <= endTime; hour++) {
+    const timeString = `${hour < 10 ? '0' + hour : hour}:00`;
     times.push(timeString);
   }
   return times;
 }
 
-function TimeDropdown() {
+function TimeDropdown({ type, index }: TimeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTime, setSelectedTime] = useState<string | null>('0:00');
+  const [selectedTime, setSelectedTime] = useState<string>('00:00');
+  const [startTime, setStartTime] = useRecoilState(startTimeState);
+  const [endTime, setEndTime] = useRecoilState(endTimeState);
 
-  const handleSelectTime = (time: string | null) => {
+  const handleSelectTime = (time: string) => {
     setSelectedTime(time);
     setIsOpen(false);
+    if (type === 'start') {
+      const updatedStartTime = [...startTime];
+      updatedStartTime[index] = time;
+      setStartTime(updatedStartTime);
+    } else {
+      const updatedEndTime = [...endTime];
+      updatedEndTime[index] = time;
+      setEndTime(updatedEndTime);
+    }
   };
 
   const handleClickDropdown = () => {
@@ -29,13 +44,17 @@ function TimeDropdown() {
   };
 
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown);
-  const times = generateTimeOptions();
+  let timeLimit = 0;
+  if (type === 'end') {
+    timeLimit = Number(startTime[index].substring(0, 2)) + 1;
+  }
+  const times = generateTimeOptions(timeLimit, type);
 
   return (
     <div ref={dropdownRef} className="relative">
       <button
         type="button"
-        className="flex justify-between items-center w-[140px] h-[56px] py-[4px] px-[16px] rounded-md border border-var-gray6 bg-white text-var-gray7 text-left"
+        className="flex justify-between items-center w-[140px] h-[56px] py-[4px] px-[16px] m:px-[7px] rounded-md border border-var-gray6 bg-white text-var-gray7 text-left t:w-[104px] m:w-[79px]"
         onClick={handleClickDropdown}
       >
         <p>{selectedTime}</p>
@@ -52,7 +71,7 @@ function TimeDropdown() {
             <li
               key={time}
               onClick={() => handleSelectTime(time)}
-              className="h-[56px] text-var-black py-[18px] px-[16px] hover:bg-gray-100 cursor-pointer bg-white"
+              className="h-[56px] text-var-black py-[18px] px-[16px] m:px-[12px] hover:bg-gray-100 cursor-pointer bg-white"
             >
               {time}
             </li>
