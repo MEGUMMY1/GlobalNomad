@@ -35,21 +35,13 @@ export interface postActivityParams {
   description: string;
   address: string;
   price: number;
-  schedules: [
-    {
-      endTime: string;
-      startTime: string;
-      date: string;
-      id: number;
-    },
-  ];
+  schedules: {
+    endTime: string;
+    startTime: string;
+    date: string;
+  }[];
   bannerImageUrl: string;
-  subImageUrls: [
-    {
-      id: number;
-      imageUrl: string;
-    },
-  ];
+  subImageUrls: string[];
 }
 
 export interface postActivityResponse {

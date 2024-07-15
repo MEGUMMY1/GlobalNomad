@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { bannerImageState, detailImageState } from '@/states/registerState';
 import {
   CircleCloseButton,
   ImageUploadButton,
 } from '@/components/Button/Button';
 import Image from 'next/image';
 import { UploadImageProps } from './UploadImage.types';
+import { useRecoilState } from 'recoil';
 
 function UploadImage({
   label,
@@ -13,15 +15,19 @@ function UploadImage({
 }: UploadImageProps) {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [keys, setKeys] = useState<number[]>([]);
+  const [bannerImage, setBannerImage] = useRecoilState(bannerImageState);
+  const [detailImage, setDetailImage] = useRecoilState(detailImageState);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (singleImage) {
         setSelectedImages([file]);
+        setBannerImage([file]);
         setKeys([Date.now()]);
       } else if (selectedImages.length < maxImages) {
         setSelectedImages([...selectedImages, file]);
+        setDetailImage([...selectedImages, file]);
         setKeys([...keys, Date.now()]);
       }
     }
@@ -35,6 +41,12 @@ function UploadImage({
     const newKeys = [...keys];
     newKeys.splice(index, 1);
     setKeys(newKeys);
+
+    if (singleImage) {
+      setBannerImage(newImages);
+    } else {
+      setDetailImage(newImages);
+    }
   };
 
   return (
@@ -44,7 +56,7 @@ function UploadImage({
       </label>
 
       <div
-        className={`grid ${singleImage ? 'grid-rows-1 grid-cols-4' : 'grid-rows-2 grid-cols-4 '} gap-[24px]`}
+        className={`grid ${singleImage ? 'grid-rows-1 grid-cols-4 t:grid-cols-2 m:grid-cols-2' : 'grid-rows-2 grid-cols-4 t:grid-rows-3 t:grid-cols-2 m:grid-rows-3 m:grid-cols-2'} gap-[24px]`}
       >
         <div>
           <label
@@ -54,6 +66,7 @@ function UploadImage({
             <ImageUploadButton />
           </label>
           <input
+            key={keys.length}
             type="file"
             id={`upload-${label}`}
             className="hidden"
@@ -62,15 +75,18 @@ function UploadImage({
           />
         </div>
         {selectedImages.map((image, index) => (
-          <div key={keys[index]} className="relative w-[180px] h-[180px]">
+          <div
+            key={keys[index]}
+            className="relative w-[180px] h-[180px] t:w-[206px] t:h-[206px] m:w-[167px] m:h-[167px]"
+          >
             <Image
               src={URL.createObjectURL(image)}
               alt={`상세 이미지 ${index + 1}`}
               width={180}
               height={180}
-              className="w-[180px] h-[180px] object-cover rounded-[24px]"
+              className="w-[180px] h-[180px] t:w-[206px] t:h-[206px] m:w-[167px] m:h-[167px] object-cover rounded-[24px]"
             />
-            <div className="absolute -top-[20px] -right-[20px]">
+            <div className="absolute -top-[20px] -right-[20px] t:-top-[12px] t:-right-[12px] m:-top-[7px] m:-right-[7px]">
               <CircleCloseButton onClick={() => handleRemoveFile(index)} />
             </div>
           </div>
