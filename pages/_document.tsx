@@ -9,7 +9,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
         <script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing &autoload=false`}
         ></script>
         <meta property="og:title" content="GlobalNomad" />
         <meta

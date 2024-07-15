@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import CustomCalendar from '@/components/CustomCalendar/CustomCalendar';
 import useClickOutside from '@/hooks/useClickOutside';
+import { useRecoilState } from 'recoil';
+import { selectedDateState } from '@/states/registerState';
+import { TimeSlotGroupProps } from './TimeSlot.types';
 
-function Date() {
+function Date({ index }: TimeSlotGroupProps) {
   const [date, setDate] = useState<Date | null>(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
 
   const handleInputClick = () => {
     setShowCalendar(true);
@@ -13,6 +17,12 @@ function Date() {
   const handleDateSelect = (date: Date | null) => {
     setDate(date);
     setShowCalendar(false);
+
+    if (date) {
+      const updatedDate = [...selectedDate];
+      updatedDate[index] = date.toString();
+      setSelectedDate(updatedDate);
+    }
   };
 
   const closeCalendar = () => {
@@ -23,7 +33,7 @@ function Date() {
 
   return (
     <div className="relative">
-      <div className="w-[374px]">
+      <div className="w-[374px] t:w-[149px] m:w-[130px]">
         <input
           type="text"
           value={date ? date.toDateString() : ''}
