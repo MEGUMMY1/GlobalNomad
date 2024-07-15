@@ -11,12 +11,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import Pagination from '../Pagination/Pagination';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { mainPageState } from '@/states/mainPageState';
+import { mainPageKategorieState, mainPageState } from '@/states/mainPageState';
 import Spinner from '../Spinner/Spinner';
 
 const Kategories = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
-function AllActivity({
+export function AllActivity({
   title,
   backgroundImage,
   price,
@@ -68,10 +68,6 @@ function AllActivity({
 }
 
 function AllActivities() {
-  const router = useRouter();
-  // const [currentPage, setCurrentPage] = useState<number>(
-  //   router.query.page ? parseInt(router.query.page as string, 10) : 1
-  // );
   const [MainPageState, setMainPageState] = useRecoilState(mainPageState);
 
   const {
@@ -79,6 +75,8 @@ function AllActivities() {
     selectedSorted,
     currentPage,
   } = useRecoilValue(mainPageState);
+
+  const { KategorieName } = useRecoilValue(mainPageKategorieState);
 
   const setItemsPerPage = () => {
     if (typeof window !== 'undefined') {
@@ -97,6 +95,7 @@ function AllActivities() {
       setMainPageState((prevState) => ({
         ...prevState,
         itemsPerPage,
+        currentPage: 1,
       }));
     }
   };
@@ -104,7 +103,7 @@ function AllActivities() {
   const params: getActivityListParams = {
     method: 'offset',
     cursorId: null,
-    category: null,
+    category: KategorieName,
     keyword: null,
     sort: selectedSorted,
     page: currentPage,
@@ -121,12 +120,10 @@ function AllActivities() {
   });
 
   const handlePageChange = (page: number) => {
-    //setCurrentPage(page);
     setMainPageState((prevState) => ({
       ...prevState,
       currentPage: page,
     }));
-    //router.push(`/?page=${page}`);
   };
 
   useEffect(() => {
@@ -145,7 +142,7 @@ function AllActivities() {
     const params: getActivityListParams = {
       method: 'offset',
       cursorId: null,
-      category: null,
+      category: KategorieName,
       keyword: null,
       sort: selectedSorted,
       page: currentPage,
@@ -155,7 +152,7 @@ function AllActivities() {
 
   return (
     <div>
-      <div className="flex justify-between mb-[38px]">
+      <div className="flex justify-between">
         <div className="relative t:w-[520px] m:w-[230px]">
           <div className="flex gap-[24px] t:gap-[14px] m:gap-[8px] t:w-[520px] m:w-[230px] overflow-auto scrollbar-hide">
             {Kategories.map((Kategorie, index) => (
@@ -166,8 +163,13 @@ function AllActivities() {
         </div>
         <PriceFilterBtn />
       </div>
+      <div className="font-sans text-[36px] font-[700] mt-[40px] mb-[30px]">
+        {KategorieName ? KategorieName : '🛼 모든 체험'}
+      </div>
       {isLoading ? (
-        <Spinner />
+        <div className='mt-[-300px]'>
+          <Spinner />
+        </div>
       ) : (
         <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
           {allActivitiesData?.activities.map((data) => (
