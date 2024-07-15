@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
-import ModalTabs from './ModalTabs';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Down from '@/public/icon/chevron_down.svg';
 import Up from '@/public/icon/chevron_up.svg';
 import CheckMark from '@/public/icon/Checkmark.svg';
 import Spinner from '../Spinner/Spinner';
-import { useQuery } from '@tanstack/react-query';
-import {
-  getMyDateScheduleParams,
-  getMyTimeScheduleParams,
-} from '@/pages/api/myActivities/apimyActivities.types';
 import {
   getMyDateSchedule,
   getMyTimeSchedule,
+  updataMyReservation,
 } from '@/pages/api/myActivities/apimyActivities';
-import { ReservationModalContentProps } from './Calendar.types';
+import {
+  getMyDateScheduleParams,
+  getMyTimeScheduleParams,
+  updataMyReservationParams,
+} from '@/pages/api/myActivities/apimyActivities.types';
 import useClickOutside from '@/hooks/useClickOutside';
+import ModalTabs from './ModalTabs';
+import { PrimaryButton } from '../Button/Button';
 
 export const useMyDateSchedule = (params: getMyDateScheduleParams) => {
   return useQuery({
@@ -31,11 +33,11 @@ export const useMyTimeSchedule = (params: getMyTimeScheduleParams) => {
   });
 };
 
-const ReservationDateTime: React.FC<ReservationModalContentProps> = ({
-  selectedDate,
-  activityId,
-  onSelectTime,
-}) => {
+const ReservationDateTime: React.FC<{
+  selectedDate: Date;
+  activityId: number;
+  onSelectTime: (scheduleId: number) => void;
+}> = ({ selectedDate, activityId, onSelectTime }) => {
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropDownElement = useClickOutside<HTMLDivElement>(() =>
@@ -47,6 +49,7 @@ const ReservationDateTime: React.FC<ReservationModalContentProps> = ({
     setIsOpen(false);
     onSelectTime(scheduleId);
   };
+
   const { data: dateSchedule, isLoading: isDateScheduleLoading } =
     useMyDateSchedule({
       activityId,
@@ -86,7 +89,7 @@ const ReservationDateTime: React.FC<ReservationModalContentProps> = ({
         {isOpen && (
           <ul className="z-10 p-2 w-full absolute bg-white border border-solid border-gray-300 rounded-md mt-1 shadow-lg animate-slideDown flex flex-col">
             {dateSchedule?.map((schedule) => {
-              const timeRange = `${schedule.startTime}~${schedule.endTime}`;
+              const timeRange = `${schedule.startTime} ~ ${schedule.endTime}`;
               return (
                 <li
                   key={schedule.scheduleId}
@@ -129,6 +132,33 @@ const ApplicationList: React.FC<{
       status,
     });
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({
+      reservationId,
+      status,
+    }: {
+      reservationId: number;
+      status: updataMyReservationParams['status'];
+    }) => updataMyReservation(activityId, reservationId, { status }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['myReservations', activityId],
+      });
+    },
+    onError: (error) => {
+      console.error('Error updating reservation:', error);
+    },
+  });
+
+  const handleReservation = (
+    reservationId: number,
+    status: 'pending' | 'confirmed' | 'declined'
+  ) => {
+    mutation.mutate({ reservationId, status: status });
+  };
+
   if (isTimeScheduleLoading) {
     return <Spinner />;
   }
@@ -155,18 +185,34 @@ const ApplicationList: React.FC<{
             <div className="flex justify-end items-end">
               {status === 'pending' && (
                 <>
-                  <button className="mr-2 px-2 py-1 bg-green-500 text-white rounded">
+                  <PrimaryButton
+                    size="small"
+                    style="dark"
+                    onClick={() =>
+                      handleReservation(reservation.id, 'confirmed')
+                    }
+                  >
                     승인하기
-                  </button>
-                  <button className="px-2 py-1 bg-red-500 text-white rounded">
+                  </PrimaryButton>
+                  <PrimaryButton
+                    size="small"
+                    style="bright"
+                    onClick={() =>
+                      handleReservation(reservation.id, 'declined')
+                    }
+                  >
                     거절하기
-                  </button>
+                  </PrimaryButton>
                 </>
               )}
               {status === 'confirmed' && (
-                <button className="px-2 py-1 bg-gray-500 text-white rounded">
+                <PrimaryButton
+                  size="small"
+                  style="dark"
+                  onClick={() => handleReservation(reservation.id, 'pending')}
+                >
                   취소하기
-                </button>
+                </PrimaryButton>
               )}
             </div>
           </div>
@@ -176,10 +222,10 @@ const ApplicationList: React.FC<{
   );
 };
 
-const ReservationModalContent: React.FC<ReservationModalContentProps> = ({
-  selectedDate,
-  activityId,
-}) => {
+const ReservationModalContent: React.FC<{
+  selectedDate: Date;
+  activityId: number;
+}> = ({ selectedDate, activityId }) => {
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(
     null
   );
