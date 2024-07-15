@@ -1,13 +1,14 @@
 import { PrimaryButton } from '@/components/Button/Button';
 import Card from '@/components/MyActivity/Card';
+import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 
 function MyActivity() {
   const handleClickAdd = () => {};
 
   return (
     <div className="flex gap-[20px] py-[72px] m:gap-0">
-      <div className="w-[384px] t:w-[251px] h-[432px] bg-var-gray7 flex-shrink-0 m:hidden">
-        프로필
+      <div className="m:hidden">
+        <SidenNavigation />
       </div>
       <div className="flex flex-col gap-[20px] t:w-full m:w-[calc(100vw-50px)] flex-shrink">
         <div className="flex justify-between">
