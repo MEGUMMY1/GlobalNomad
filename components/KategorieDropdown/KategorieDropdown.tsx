@@ -9,7 +9,7 @@ import { KategoriedDropState } from '@/states/KategorieDropState';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const Kategories: { [key: string]: string } = {
-  '문화 예술': '문화 예술',
+  '문화 예술': '문화 · 예술',
   식음료: '식음료',
   스포츠: '스포츠',
   투어: '투어',
@@ -31,7 +31,7 @@ function Kategorie({ name, setIsOpen }: KategorieDropdownProps) {
   const textColor = isSelected ? 'text-white' : 'text-black';
   return (
     <li
-      className={`w-[784px] h-[40px] flex items-center pl-[36px] ${backgroundColor} ${textColor} relative rounded-md hover:bg-gray-100`}
+      className={`w-[784px] h-[40px] flex items-center pl-[36px] ${backgroundColor} ${textColor} relative rounded-md hover:bg-gray-100 t:w-full m:w-full`}
       onClick={changeKateogireInfo}
       style={{ pointerEvents: isSelected ? 'none' : 'auto' }}
     >
@@ -64,9 +64,12 @@ function KategorieDropdown() {
   };
 
   return (
-    <div className="w-[800px] h-[56px] relative z-10" ref={KateDropdownElement}>
+    <div
+      className="w-[800px] h-[56px] relative z-10 t:w-full m:w-full"
+      ref={KateDropdownElement}
+    >
       <div
-        className={`w-[800px] h-[56px] border-solid border border-var-gray7 rounded flex items-center pl-[16px] text-[16px] font-[400] font-sans ${isSelected} bg-white`}
+        className={`w-[800px] h-[56px] border-solid border border-var-gray7 rounded flex items-center pl-[16px] text-[16px] font-[400] font-sans ${isSelected} bg-white t:w-full m:w-full`}
         onClick={handleOpen}
       >
         {SelectedKateogorie.name ? SelectedKateogorie.name : '카테고리'}
@@ -88,14 +91,12 @@ function KategorieDropdown() {
           ></Image>
         )}
       </div>
-      {isOpen ? (
-        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center shadow-kategorieDropdown">
+      {isOpen && (
+        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center shadow-kategorieDropdown t:w-full m:w-full">
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}
         </ul>
-      ) : (
-        <div></div>
       )}
     </div>
   );

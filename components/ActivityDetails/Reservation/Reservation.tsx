@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { format, addDays } from 'date-fns';
 import { PrimaryButton } from '@/components/Button/Button';
 import { usePopup } from '@/hooks/usePopup';
@@ -25,21 +25,47 @@ export default function Reservation({ activity }: ReservationProps) {
   const { openPopup } = usePopup();
   const { openModal, closeModal } = useModal();
 
-  useEffect(() => {
-    if (selectedDate) {
-      updateModal(selectedDate, selectedTime);
-    }
-  }, [selectedDate]);
+  const getAvailableTimes = useCallback(
+    (date: Date | null) => {
+      if (!date) return [];
+      return schedules
+        .filter(
+          (schedule) =>
+            format(new Date(schedule.date), 'yyyy-MM-dd') ===
+            format(date, 'yyyy-MM-dd')
+        )
+        .map((schedule) => `${schedule.startTime} ~ ${schedule.endTime}`);
+    },
+    [schedules]
+  );
+
+  const updateModal = useCallback(
+    (date: Date | null, time: string | null) => {
+      setModal((prevModal) => ({
+        ...prevModal,
+        content: (
+          <ReservationModal
+            selectedDate={date}
+            handleDateChange={handleDateChange}
+            getAvailableTimes={getAvailableTimes}
+            selectedTime={time}
+            handleTimeChange={handleTimeChange}
+          />
+        ),
+      }));
+    },
+    [getAvailableTimes, setModal]
+  );
 
   useEffect(() => {
-    if (selectedTime) {
+    if (selectedDate) {
       updateModal(selectedDate, selectedTime);
     }
 
     if (selectedDate && selectedTime) {
       setButtonText(`${format(selectedDate, 'yy/MM/dd')} ${selectedTime}`);
     }
-  }, [selectedTime]);
+  }, [selectedDate, selectedTime, updateModal]);
 
   useEffect(() => {
     const isDisabled = !selectedTime;
@@ -78,32 +104,6 @@ export default function Reservation({ activity }: ReservationProps) {
   };
 
   const totalPrice = pricePerPerson * participants;
-
-  const updateModal = (date: Date | null, time: string | null) => {
-    setModal((prevModal) => ({
-      ...prevModal,
-      content: (
-        <ReservationModal
-          selectedDate={date}
-          handleDateChange={handleDateChange}
-          getAvailableTimes={getAvailableTimes}
-          selectedTime={time}
-          handleTimeChange={handleTimeChange}
-        />
-      ),
-    }));
-  };
-
-  const getAvailableTimes = (date: Date | null) => {
-    if (!date) return [];
-    return schedules
-      .filter(
-        (schedule) =>
-          format(new Date(schedule.date), 'yyyy-MM-dd') ===
-          format(date, 'yyyy-MM-dd')
-      )
-      .map((schedule) => `${schedule.startTime} ~ ${schedule.endTime}`);
-  };
 
   useEffect(() => {
     setModal((prevModal) => ({

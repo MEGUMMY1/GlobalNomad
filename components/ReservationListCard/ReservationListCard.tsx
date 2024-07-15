@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { PrimaryButton } from '../Button/Button';
 import { statusStyle, statusTitles } from './reservationStatusInfo';
+import { useModal } from '@/hooks/useModal';
+import Review from '../Review/Review';
 import { ReservationCardProps } from '../ReservationFilter/myReservationTypes.types';
 import { usePopup } from '@/hooks/usePopup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -10,6 +12,16 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import Link from 'next/link';
 
 const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
+  const { openModal, closeModal } = useModal();
+
+  const handleOpenReviewModal = () => {
+    openModal({
+      title: '후기 작성',
+      hasButton: false,
+      content: <Review reservation={reservationData} closeModal={closeModal} />,
+    });
+  };
+
   const { openPopup } = usePopup();
   const userData = useUserData();
   const queryClient = useQueryClient();
@@ -85,7 +97,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
             <PrimaryButton
               size="medium"
               style="dark"
-              onClick={handleCancelReservation}
+              onClick={handleOpenReviewModal}
             >
               후기 작성
             </PrimaryButton>

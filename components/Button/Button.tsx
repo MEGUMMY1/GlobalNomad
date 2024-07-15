@@ -20,19 +20,21 @@ const primaryStyleClasses = {
 
 /* 기본 버튼 - 로그인하기, 신청 불가 등 기본적인 형태의 버튼
 
-   size, style, onClick, children 필수 입력, disabled 선택 입력
+   size, style 필수 입력 onClick, children, disabled 선택 입력
    size 옵션 - small - width auto | medium - width 144px | large - width 100%
    style 옵션 - dark-어두운 배경에 흰글씨 | bright - 흰 배경에 어두운 글씨 | disabled - 회색 배경에 흰 글씨
    사용 예시 <Button size="small" style="dark" onClick={handleClick}>로그인하기</Button> */
 export function PrimaryButton({
+  type = 'button',
   size,
   style,
   children,
-  onClick,
+  onClick = () => {},
   disabled,
 }: PrimaryButtonProps) {
   return (
     <button
+      type={type}
       className={`flex items-center justify-center rounded-md ${primarySizeClasses[size]} ${primaryStyleClasses[style]} ${disabled ? 'cursor' : ''}`}
       onClick={onClick}
       disabled={disabled ?? false}
@@ -185,7 +187,7 @@ export function MeatballButton({ onClick }: SimpleButtonProps) {
 /* 추가하기 버튼 - 항목 추가 시 사용 */
 export function PlusButton({ onClick }: SimpleButtonProps) {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} className="shrink-0">
       <Image src="/icon/btn_plus.svg" width={56} height={56} alt="추가하기" />
     </button>
   );
@@ -194,7 +196,7 @@ export function PlusButton({ onClick }: SimpleButtonProps) {
 /* 제거하기 버튼 - 항목 제거 시 사용 */
 export function MinusButton({ onClick }: SimpleButtonProps) {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} className="shrink-0">
       <Image src="/icon/btn_minus.svg" width={56} height={56} alt="제거하기" />
     </button>
   );
@@ -217,7 +219,7 @@ export function ArrowCircleButton({ onClick }: SimpleButtonProps) {
 /* 이미지 등록하기 버튼 */
 export function ImageUploadButton() {
   return (
-    <div className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] border border-dashed border-var-gray8 rounded-lg">
+    <div className="flex flex-col gap-[40px] items-center justify-center w-[180px] h-[180px] t:w-[206px] t:h-[206px] m:w-[167px] m:h-[167px] border border-dashed border-var-gray8 rounded-lg">
       <Image src="/icon/icon_plus.svg" width={30} height={30} alt="추가" />
       <p className="text-[24px]">이미지 등록</p>
     </div>
