@@ -5,40 +5,22 @@ import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import useDeleteNotification from '@/hooks/useDeleteNotification';
 import { useInView } from 'react-intersection-observer';
 import useGetNotificationList from '@/hooks/useGetNotificationList';
+import getTimeAgoString from '@/hooks/useGetTimeAgo';
 
 export default function NotificationDropdown({
   data,
   onClick,
 }: NotificationDropdownProps) {
   const { deleteNotificationMutation } = useDeleteNotification();
+  const { ref, inView } = useInView();
+  const { fetchNextPage, notificationList, hasNextPage, isFetchingNextPage } =
+    useGetNotificationList();
 
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteNotificationMutation.mutateAsync(id);
-    } catch (error) {
-      console.error('Error deleting notification:', error);
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  };
-
-  const getTimeAgoString = (updatedAt: string): string => {
-    const updatedAtUTC = Date.parse(updatedAt);
-    const now = new Date();
-    const diff = now.getTime() - updatedAtUTC;
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      return `${days}일 전`;
-    } else if (hours > 0) {
-      return `${hours}시간 전`;
-    } else if (minutes > 0) {
-      return `${minutes}분 전`;
-    } else {
-      return `방금 전`;
-    }
-  };
+  }, [inView, fetchNextPage, isFetchingNextPage, hasNextPage]);
 
   const ContentWithHighlights = (content: string): JSX.Element[] => {
     const parts = content.split(/(승인|거절)/gi);
@@ -60,19 +42,24 @@ export default function NotificationDropdown({
       }
     });
   };
-
-  const { ref, inView } = useInView();
-  const { fetchNextPage, notificationList, hasNextPage, isFetchingNextPage } =
-    useGetNotificationList();
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteNotificationMutation.mutateAsync(id);
+    } catch (error) {
+      console.error('알림 삭제에 실패했습니다', error);
+    }
+  };
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, isFetchingNextPage, hasNextPage]);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   return (
-    <div className="z-50 px-[20px] pt-[17px] pb-[24px] absolute top-[70px] right-[400px] t:right-[100px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 m:overflow-y-hidden ">
+    <div className="z-50 px-[20px] pt-[17px] pb-[24px] absolute top-[60px] right-[400px] t:right-[100px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 m:overflow-y-hidden ">
       <div className="flex text-[20px] font-bold mb-[25px] justify-between ">
         알림 {data ? `${data.totalCount}` : '0'}개
         <CloseButton onClick={onClick} />

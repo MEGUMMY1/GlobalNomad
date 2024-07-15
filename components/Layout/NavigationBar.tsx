@@ -30,8 +30,15 @@ export default function NavigationBar() {
   const closeProfileDropdown = () => {
     setIsDropdownOpen(false);
   };
+  const closeNotificationDropdown = () => {
+    setIsNotificationOpen(false);
+  };
 
-  const dropdownRef = useClickOutside<HTMLDivElement>(closeProfileDropdown);
+  const profiledropdownRef =
+    useClickOutside<HTMLDivElement>(closeProfileDropdown);
+  const notificationdropdownRef = useClickOutside<HTMLDivElement>(
+    closeNotificationDropdown
+  );
 
   if (isLoading || isNotifyCountLoading) {
     return <Spinner />;
@@ -45,7 +52,7 @@ export default function NavigationBar() {
         </Link>
       </div>
       {isLoggedIn ? (
-        <div className="flex items-center gap-[25px]">
+        <div className="flex items-center gap-[15px]">
           <button onClick={toggleNotifyDropdown}>
             <div className="relative">
               <Image src={notificationIcon} alt="알림 아이콘" />
@@ -56,12 +63,17 @@ export default function NavigationBar() {
               )}
             </div>
           </button>
-          {isNotificationOpen && (
-            <NotificationDropdown data={data} onClick={toggleNotifyDropdown} />
-          )}
+          <div ref={notificationdropdownRef}>
+            {isNotificationOpen && (
+              <NotificationDropdown
+                data={data}
+                onClick={toggleNotifyDropdown}
+              />
+            )}
+          </div>
           <div
             className="flex relative items-center gap-[10px] border-l-2 cursor-pointer border-var-gray3 border-solid pl-[25px] m:pl-[12px]"
-            ref={dropdownRef}
+            ref={profiledropdownRef}
             onClick={toggleDropdown}
           >
             {isDropdownOpen && <NavigationDropdown />}
