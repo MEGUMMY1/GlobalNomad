@@ -9,7 +9,7 @@ import { KategoriedDropState } from '@/states/KategorieDropState';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const Kategories: { [key: string]: string } = {
-  '문화 예술': '문화 예술',
+  '문화 예술': '문화 · 예술',
   식음료: '식음료',
   스포츠: '스포츠',
   투어: '투어',
