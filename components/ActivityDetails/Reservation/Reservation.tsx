@@ -10,6 +10,9 @@ import ReservationModal from './ReservationModal';
 import ParticipantSelector from './ParticipantSelector';
 import CustomCalendar from '@/components/CustomCalendar/CustomCalendar';
 import { ReservationProps } from './Reservation.types';
+import { useMutation } from '@tanstack/react-query';
+import { postActivityRequestParams } from '@/pages/api/activities/apiactivities.types';
+import { postActivityRequest } from '@/pages/api/activities/apiactivities';
 
 export default function Reservation({ activity }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -94,12 +97,49 @@ export default function Reservation({ activity }: ReservationProps) {
     closeModal();
   };
 
+  const { mutate: createReservation } = useMutation({
+    mutationFn: (data: postActivityRequestParams) =>
+      postActivityRequest(activity.id, data),
+    onSuccess: () => {
+      openPopup({
+        popupType: 'alert',
+        content: '예약이 완료되었습니다.',
+        btnName: ['확인'],
+        callBackFnc: () => router.push(`/`),
+      });
+    },
+    onError: (error) => {
+      console.error('예약 중 오류 발생:', error);
+      openPopup({
+        popupType: 'alert',
+        content: '예약 중 오류가 발생했습니다. 다시 시도해 주세요.',
+        btnName: ['확인'],
+      });
+    },
+  });
+
   const handleReservation = () => {
-    openPopup({
-      popupType: 'alert',
-      content: '예약이 완료되었습니다.',
-      btnName: ['확인'],
-      callBackFnc: () => router.push(`/`),
+    if (!selectedDate || !selectedTime) return;
+
+    const selectedSchedule = schedules.find(
+      (schedule) =>
+        schedule.startTime === selectedTime.split(' ~ ')[0] &&
+        format(new Date(schedule.date), 'yyyy-MM-dd') ===
+          format(selectedDate, 'yyyy-MM-dd')
+    );
+
+    if (!selectedSchedule) {
+      openPopup({
+        popupType: 'alert',
+        content: '선택된 시간에 대한 예약 정보가 없습니다.',
+        btnName: ['확인'],
+      });
+      return;
+    }
+
+    createReservation({
+      scheduleId: selectedSchedule.id,
+      headCount: participants,
     });
   };
 
