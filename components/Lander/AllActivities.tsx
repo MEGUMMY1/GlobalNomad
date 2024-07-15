@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import Pagination from '../Pagination/Pagination';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { mainPageState } from '@/states/mainPageState';
+import Spinner from '../Spinner/Spinner';
 
 const Kategories = ['문화 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
@@ -37,7 +38,7 @@ function AllActivity({
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
-      <div className='hover:bg-gray-200 rounded px-[4px]'>
+      <div className="hover:bg-gray-200 rounded px-[4px]">
         <div className="flex items-center mt-[16.5px]">
           <Image
             src={StarImg}
@@ -154,7 +155,7 @@ function AllActivities() {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-[38px]">
         <div className="relative t:w-[520px] m:w-[230px]">
           <div className="flex gap-[24px] t:gap-[14px] m:gap-[8px] t:w-[520px] m:w-[230px] overflow-auto scrollbar-hide">
             {Kategories.map((Kategorie, index) => (
@@ -165,22 +166,23 @@ function AllActivities() {
         </div>
         <PriceFilterBtn />
       </div>
-      <div className="font-sans text-[36px] font-[700] mt-[40px]">
-        🛼 모든 체험
-      </div>
-      <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
-        {allActivitiesData?.activities.map((data) => (
-          <AllActivity
-            key={data.id}
-            title={data.title}
-            backgroundImage={data.bannerImageUrl}
-            price={data.price}
-            rating={data.rating}
-            reviewCount={data.reviewCount}
-            id={data.id}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
+          {allActivitiesData?.activities.map((data) => (
+            <AllActivity
+              key={data.id}
+              title={data.title}
+              backgroundImage={data.bannerImageUrl}
+              price={data.price}
+              rating={data.rating}
+              reviewCount={data.reviewCount}
+              id={data.id}
+            />
+          ))}
+        </div>
+      )}
       <div className="text-[30px] font-[700] flex justify-center mb-[342px] mt-[70px]">
         {allActivitiesData && allActivitiesData.totalCount > 0 && (
           <Pagination
