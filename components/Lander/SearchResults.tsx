@@ -91,9 +91,10 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
   return (
     <div className="mt-[40px]">
       <div className="font-sans text-[32px] font-[400] mb-[12px]">
-        "
-        <span className="font-sans text-[32px] font-[700]">{resultsValue}</span>
-        "으로 검색한 결과입니다.
+        <span className="font-sans text-[32px] font-[700]">
+          {`"${resultsValue}"`}
+        </span>
+        으로 검색한 결과입니다.
       </div>
       <div className="font-sans text-[16px] font-[400] mb-[24px]">
         총 {SearchResultsData?.totalCount}개의 결과

@@ -3,9 +3,7 @@ import { CategoryBtnProps } from './CategoryBtn.types';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { mainPageKategorieState, mainPageState } from '@/states/mainPageState';
 
-export default function CatergoryBtn({
-  categoryName,
-}: CategoryBtnProps) {
+export default function CatergoryBtn({ categoryName }: CategoryBtnProps) {
   const [selectedKategorie, setSelectedKategorie] = useRecoilState(
     mainPageKategorieState
   );
@@ -19,13 +17,13 @@ export default function CatergoryBtn({
       setCurrentPage((prev) => ({
         ...prev,
         currentPage: 1,
-      }))
+      }));
     } else {
       setSelectedKategorie({ KategorieName: categoryName });
       setCurrentPage((prev) => ({
         ...prev,
         currentPage: 1,
-      }))
+      }));
     }
   };
 

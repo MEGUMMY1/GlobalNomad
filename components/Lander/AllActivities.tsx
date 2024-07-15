@@ -167,7 +167,7 @@ function AllActivities() {
         {KategorieName ? KategorieName : '🛼 모든 체험'}
       </div>
       {isLoading ? (
-        <div className='mt-[-300px]'>
+        <div className="mt-[-300px]">
           <Spinner />
         </div>
       ) : (
