@@ -16,7 +16,7 @@ export default function useRegisterActivity() {
   > = useMutation({
     mutationFn: postActivity,
     onSuccess: () => {
-      router.push('/myActivity');
+      router.push('/myactivity');
     },
   });
 
