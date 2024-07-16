@@ -9,7 +9,7 @@ import {
   UploadDetailImage,
 } from '@/components/MyActivity/Register/UploadImage';
 import { validation } from '@/components/MyActivity/Register/validation';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { KategoriedDropState } from '@/states/KategorieDropState';
 import {
   addressState,
@@ -25,6 +25,7 @@ import { formatDate } from '@/utils/formatDate';
 import useActivityImage from '@/hooks/myActivity/useActivityImage';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import AddressInput from '@/components/MyActivity/Register/AddressInput';
+import { useEffect } from 'react';
 
 function RegisterActivity() {
   const {
@@ -44,6 +45,9 @@ function RegisterActivity() {
 
   const { postActivityMutation } = useRegisterActivity();
   const { postActivityImageMutation } = useActivityImage();
+
+  const resetKategorie = useResetRecoilState(KategoriedDropState);
+  const resetAddress = useResetRecoilState(addressState);
 
   const formatSchedules = () =>
     Array.from({ length: timeSlotCount }, (_, i) => ({
@@ -104,6 +108,13 @@ function RegisterActivity() {
       isTimeFieldValid()
     );
   };
+
+  useEffect(() => {
+    return () => {
+      resetKategorie();
+      resetAddress();
+    };
+  }, []);
 
   return (
     <div className="flex gap-[20px] py-[72px] m:gap-0 w-full">
