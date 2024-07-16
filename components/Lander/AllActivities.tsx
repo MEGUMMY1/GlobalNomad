@@ -2,7 +2,7 @@ import Image from 'next/image';
 import StarImg from '@/public/icon/Star.svg';
 import CatergoryBtn from '../CatergoryBtn/CatergoryBtn';
 import PriceFilterBtn from '../PriceFilterBtn/PriceFilterBtn';
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { AllActivityProps } from './AllActivities.type';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { getActivityListResponse } from '@/pages/api/activities/apiactivities.types';
@@ -56,8 +56,8 @@ export function AllActivity({
         <div className="h-[70px] t:h-[50px] m:h-[30px] m:w-[160px] font-sans text-[24px] m:text-[18px] font-[600] mt-[10px]">
           {title}
         </div>
-        <div className="font-sans text-[28px] m:text-[20px] font-[700] p:mt-[0px] mt-[15px]">
-          ₩{price}{' '}
+        <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
+          ₩ {price.toLocaleString()}{' '}
           <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
       </div>
@@ -76,27 +76,32 @@ function AllActivities() {
 
   const { KategorieName } = useRecoilValue(mainPageKategorieState);
 
-  const setItemsPerPage = () => {
+  const setItemsPerPage = useCallback(() => {
     if (typeof window !== 'undefined') {
-      // 브라우저 환경에서만 실행
       const width = window.innerWidth;
 
-      let itemsPerPage;
+      let newItemsPerPage;
       if (width >= 1281) {
-        itemsPerPage = 8;
+        newItemsPerPage = 8;
       } else if (width > 744) {
-        itemsPerPage = 9;
+        newItemsPerPage = 9;
       } else {
-        itemsPerPage = 6;
+        newItemsPerPage = 6;
       }
 
-      setMainPageState((prevState) => ({
-        ...prevState,
-        itemsPerPage,
-        currentPage: 1,
-      }));
+      // 상태 변경이 필요할 때만 setState 호출
+      setMainPageState((prevState) => {
+        if (prevState.itemsPerPage !== newItemsPerPage) {
+          return {
+            ...prevState,
+            itemsPerPage: newItemsPerPage,
+            currentPage: 1,
+          };
+        }
+        return prevState;
+      });
     }
-  };
+  }, []);
 
   const params: getActivityListParams = {
     method: 'offset',
