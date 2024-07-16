@@ -40,7 +40,7 @@ export default function Review({ reservation, closeModal }: ReviewProps) {
 
   return (
     <>
-      <div className="flex gap-6 m:gap-4">
+      <div className="flex gap-6 h-[125px] m:gap-4">
         <Image
           src={reservation.activity.bannerImageUrl}
           width={125}

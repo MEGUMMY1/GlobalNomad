@@ -8,7 +8,6 @@ export default function Document() {
         <title>GlobalNomad</title>
         <link rel="icon" href="/favicon.ico" />
         <script
-          async
           type="text/javascript"
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing &autoload=false`}
         ></script>

@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.51.1",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@tanstack/react-query": "^5.49.2",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "next": "14.2.4",
@@ -23,6 +26,7 @@
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.11",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
@@ -30,6 +34,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-slick": "^0.23.13",
+    "@types/styled-components": "^5.1.34",
     "autoprefixer": "^10.4.19",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",

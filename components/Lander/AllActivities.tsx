@@ -134,7 +134,7 @@ function AllActivities() {
         window.removeEventListener('resize', setItemsPerPage);
       }
     };
-  }, []);
+  }, [setItemsPerPage]);
 
   useEffect(() => {
     const params: getActivityListParams = {
