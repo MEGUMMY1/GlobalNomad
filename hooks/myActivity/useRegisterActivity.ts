@@ -5,9 +5,11 @@ import {
 } from '@/pages/api/activities/apiactivities.types';
 import { postActivity } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
+import { usePopup } from '../usePopup';
 
 export default function useRegisterActivity() {
   const router = useRouter();
+  const { openPopup } = usePopup();
 
   const postActivityMutation: UseMutationResult<
     postActivityResponse,
@@ -16,7 +18,14 @@ export default function useRegisterActivity() {
   > = useMutation({
     mutationFn: postActivity,
     onSuccess: () => {
-      router.push('/myactivity');
+      openPopup({
+        popupType: 'alert',
+        content: '체험 등록이 완료되었습니다.',
+        btnName: ['확인'],
+        callBackFnc: () => {
+          router.push('/myactivity');
+        },
+      });
     },
   });
 
