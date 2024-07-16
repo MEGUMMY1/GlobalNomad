@@ -37,7 +37,7 @@ function AllActivity({
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
-      <div className='hover:bg-gray-200 rounded px-[4px]'>
+      <div className="hover:bg-gray-200 rounded px-[4px]">
         <div className="flex items-center mt-[16.5px]">
           <Image
             src={StarImg}
@@ -55,9 +55,9 @@ function AllActivity({
         <div className="h-[70px] t:h-[50px] m:h-[30px] m:w-[160px] font-sans text-[24px] m:text-[18px] font-[600] mt-[10px]">
           {title}
         </div>
-        <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
+        <div className="font-sans text-[28px] m:text-[20px] font-[700] p:mt-[0px] mt-[15px]">
           ₩{price}{' '}
-          <span className="font-sans text-[20px] text-[16px] font-[400]">
+          <span className="font-sans text-[20px] m:text-[16px] font-[400]">
             / 인
           </span>
         </div>
@@ -138,7 +138,7 @@ function AllActivities() {
         window.removeEventListener('resize', setItemsPerPage);
       }
     };
-  }, []);
+  }, [setItemsPerPage]);
 
   useEffect(() => {
     const params: getActivityListParams = {

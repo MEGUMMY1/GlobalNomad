@@ -190,7 +190,7 @@ const ApplicationList: React.FC<{
     if (!isTimeScheduleLoading) {
       refetch();
     }
-  }, [mutation.isSuccess]);
+  }, [mutation.isSuccess, isTimeScheduleLoading, refetch]);
 
   if (isTimeScheduleLoading) {
     return <Spinner />;
@@ -295,7 +295,7 @@ const ReservationModalContent: React.FC<{
       refetchConfirmed();
       refetchDeclined();
     }
-  }, [selectedScheduleId]);
+  }, [selectedScheduleId, refetchPending, refetchConfirmed, refetchDeclined]);
 
   useEffect(() => {
     setPendingCount(pendingData?.reservations.length || 0);
