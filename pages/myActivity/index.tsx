@@ -18,7 +18,7 @@ function MyActivity() {
   }, [inView]);
 
   const handleClickAdd = () => {
-    router.push('myActivity/register');
+    router.push('myactivity/register');
   };
 
   return (
