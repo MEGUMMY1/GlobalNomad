@@ -37,7 +37,7 @@ function AllActivity({
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
-      <div className='hover:bg-gray-200 rounded px-[4px]'>
+      <div className="hover:bg-gray-200 rounded px-[4px]">
         <div className="flex items-center mt-[16.5px]">
           <Image
             src={StarImg}
