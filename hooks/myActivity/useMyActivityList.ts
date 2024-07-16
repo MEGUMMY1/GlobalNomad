@@ -12,7 +12,7 @@ export const useMyActivityList = () => {
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useInfiniteQuery<getMyActivityListResponse>({
-      queryKey: ['myActivityList'],
+      queryKey: ['myActivityListInfinite'],
       queryFn: ({ pageParam = undefined }) => {
         const size = pageParam === undefined ? INITIAL_SIZE : REFETCH_SIZE;
         return getMyActivityList({
