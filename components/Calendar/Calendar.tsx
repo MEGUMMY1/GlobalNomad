@@ -38,9 +38,6 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
         <ReservationModalContent
           selectedDate={modalDate}
           activityId={activityId}
-          onSelectTime={(scheduleId) => {
-            console.log('기능 추가 필요 Selected schedule ID', scheduleId);
-          }}
         />
       ),
     });

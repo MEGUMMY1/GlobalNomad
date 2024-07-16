@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Down from '@/public/icon/chevron_down.svg';
@@ -12,6 +12,7 @@ import {
 } from '@/pages/api/myActivities/apimyActivities';
 import {
   getMyDateScheduleParams,
+  getMyDateScheduleResponse,
   getMyTimeScheduleParams,
   updataMyReservationParams,
 } from '@/pages/api/myActivities/apimyActivities.types';
@@ -19,17 +20,18 @@ import useClickOutside from '@/hooks/useClickOutside';
 import ModalTabs from './ModalTabs';
 import { PrimaryButton } from '../Button/Button';
 
-export const useMyDateSchedule = (params: getMyDateScheduleParams) => {
+const useMyDateSchedule = (params: getMyDateScheduleParams) => {
   return useQuery({
     queryKey: ['myDateSchedule', params],
     queryFn: () => getMyDateSchedule(params),
   });
 };
 
-export const useMyTimeSchedule = (params: getMyTimeScheduleParams) => {
+const useMyTimeSchedule = (params: getMyTimeScheduleParams) => {
   return useQuery({
     queryKey: ['myTimeSchedule', params],
     queryFn: () => getMyTimeSchedule(params),
+    enabled: !!params.scheduleId,
   });
 };
 
@@ -88,31 +90,37 @@ const ReservationDateTime: React.FC<{
         </div>
         {isOpen && (
           <ul className="z-10 p-2 w-full absolute bg-white border border-solid border-gray-300 rounded-md mt-1 shadow-lg animate-slideDown flex flex-col">
-            {dateSchedule?.map((schedule) => {
-              const timeRange = `${schedule.startTime} ~ ${schedule.endTime}`;
-              return (
-                <li
-                  key={schedule.scheduleId}
-                  className={`p-2 h-[40px] hover:bg-gray-200 ${selectedTime === timeRange ? 'bg-black text-white' : 'bg-white text-black'} rounded-md cursor-pointer flex items-center`}
-                  onClick={() =>
-                    handleTimeChange(timeRange, schedule.scheduleId)
-                  }
-                >
-                  {selectedTime === timeRange ? (
-                    <Image
-                      src={CheckMark}
-                      alt="체크 마크 아이콘"
-                      width={20}
-                      height={20}
-                      className="mr-2"
-                    />
-                  ) : (
-                    <div className="w-[20px] mr-2" />
-                  )}
-                  {timeRange}
-                </li>
-              );
-            })}
+            {dateSchedule?.length === 0 ? (
+              <li className="p-2 h-[40px] flex items-center justify-center text-gray-500">
+                예약이 없습니다.
+              </li>
+            ) : (
+              dateSchedule?.map((schedule: getMyDateScheduleResponse) => {
+                const timeRange = `${schedule.startTime} ~ ${schedule.endTime}`;
+                return (
+                  <li
+                    key={schedule.scheduleId}
+                    className={`p-2 h-[40px] hover:bg-gray-200 ${selectedTime === timeRange ? 'bg-black text-white' : 'bg-white text-black'} rounded-md cursor-pointer flex items-center`}
+                    onClick={() =>
+                      handleTimeChange(timeRange, schedule.scheduleId)
+                    }
+                  >
+                    {selectedTime === timeRange ? (
+                      <Image
+                        src={CheckMark}
+                        alt="체크 마크 아이콘"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
+                    ) : (
+                      <div className="w-[20px] mr-2" />
+                    )}
+                    {timeRange}
+                  </li>
+                );
+              })
+            )}
           </ul>
         )}
       </div>
@@ -125,23 +133,42 @@ const ApplicationList: React.FC<{
   scheduleId: number;
   status: string;
 }> = ({ activityId, scheduleId, status }) => {
-  const { data: timeSchedule, isLoading: isTimeScheduleLoading } =
-    useMyTimeSchedule({
-      activityId,
-      scheduleId,
-      status,
-    });
+  const {
+    data: timeSchedule,
+    isLoading: isTimeScheduleLoading,
+    refetch,
+  } = useMyTimeSchedule({
+    activityId,
+    scheduleId,
+    status,
+  });
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       reservationId,
       status,
     }: {
       reservationId: number;
       status: updataMyReservationParams['status'];
-    }) => updataMyReservation(activityId, reservationId, { status }),
+    }) => {
+      await updataMyReservation(activityId, reservationId, { status });
+      if (status === 'confirmed') {
+        const reservations = timeSchedule?.reservations.filter(
+          (reservation) => reservation.id !== reservationId
+        );
+        if (reservations) {
+          await Promise.all(
+            reservations.map((reservation) =>
+              updataMyReservation(activityId, reservation.id, {
+                status: 'declined',
+              })
+            )
+          );
+        }
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['myReservations', activityId],
@@ -156,8 +183,14 @@ const ApplicationList: React.FC<{
     reservationId: number,
     status: 'pending' | 'confirmed' | 'declined'
   ) => {
-    mutation.mutate({ reservationId, status: status });
+    mutation.mutate({ reservationId, status });
   };
+
+  useEffect(() => {
+    if (!isTimeScheduleLoading) {
+      refetch();
+    }
+  }, [mutation.isSuccess]);
 
   if (isTimeScheduleLoading) {
     return <Spinner />;
@@ -170,9 +203,9 @@ const ApplicationList: React.FC<{
         {timeSchedule?.reservations.map((reservation) => (
           <div
             key={reservation.id}
-            className="flex h-[115px] p-4 items-start border border-solid border-var-gray3 rounded"
+            className="flex p-4 mb-2 border border-solid border-var-gray3 rounded"
           >
-            <div className="flex flex-col justify-start mr-auto">
+            <div className="flex flex-col mr-auto">
               <div className="flex gap-2">
                 <p className="text-var-gray7">닉네임</p>
                 <p>{reservation.nickname}</p>
@@ -182,7 +215,7 @@ const ApplicationList: React.FC<{
                 <p>{reservation.headCount}명</p>
               </div>
             </div>
-            <div className="flex justify-end items-end">
+            <div className="flex gap-2 items-center justify-center">
               {status === 'pending' && (
                 <>
                   <PrimaryButton
@@ -206,13 +239,14 @@ const ApplicationList: React.FC<{
                 </>
               )}
               {status === 'confirmed' && (
-                <PrimaryButton
-                  size="small"
-                  style="dark"
-                  onClick={() => handleReservation(reservation.id, 'pending')}
-                >
-                  취소하기
-                </PrimaryButton>
+                <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-orange1 text-var-orange2">
+                  예약 승인
+                </div>
+              )}
+              {status === 'declined' && (
+                <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-red1 text-var-red2">
+                  예약 거절
+                </div>
               )}
             </div>
           </div>
@@ -229,14 +263,55 @@ const ReservationModalContent: React.FC<{
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(
     null
   );
+  const [pendingCount, setPendingCount] = useState(0);
+  const [confirmedCount, setConfirmedCount] = useState(0);
+  const [declinedCount, setDeclinedCount] = useState(0);
 
   const handleSelectTime = (scheduleId: number) => {
     setSelectedScheduleId(scheduleId);
   };
 
+  const { data: pendingData, refetch: refetchPending } = useMyTimeSchedule({
+    activityId,
+    scheduleId: selectedScheduleId || 0,
+    status: 'pending',
+  });
+
+  const { data: confirmedData, refetch: refetchConfirmed } = useMyTimeSchedule({
+    activityId,
+    scheduleId: selectedScheduleId || 0,
+    status: 'confirmed',
+  });
+
+  const { data: declinedData, refetch: refetchDeclined } = useMyTimeSchedule({
+    activityId,
+    scheduleId: selectedScheduleId || 0,
+    status: 'declined',
+  });
+
+  useEffect(() => {
+    if (selectedScheduleId) {
+      refetchPending();
+      refetchConfirmed();
+      refetchDeclined();
+    }
+  }, [selectedScheduleId]);
+
+  useEffect(() => {
+    setPendingCount(pendingData?.reservations.length || 0);
+    setConfirmedCount(confirmedData?.reservations.length || 0);
+    setDeclinedCount(declinedData?.reservations.length || 0);
+  }, [pendingData, confirmedData, declinedData]);
+
   return (
     <div>
-      <ModalTabs labels={['신청', '승인', '거절']}>
+      <ModalTabs
+        labels={[
+          `신청(${pendingCount})`,
+          `승인(${confirmedCount})`,
+          `거절(${declinedCount})`,
+        ]}
+      >
         <div>
           <ReservationDateTime
             selectedDate={selectedDate}
