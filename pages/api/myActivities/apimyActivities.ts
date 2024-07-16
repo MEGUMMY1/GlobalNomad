@@ -29,7 +29,7 @@ export const getMyActivityList = async (
 //내 체험 월별 예약 현황 조회
 export const getMyMonthSchedule = async (
   params: getMyMonthScheduleParams
-): Promise<getMyMonthScheduleResponse> => {
+): Promise<getMyMonthScheduleResponse[]> => {
   const response = await axios.get(
     `/my-activities/${params.activityId}/reservation-dashboard?year=${params.year}&month=${params.month}`
   );
@@ -39,7 +39,7 @@ export const getMyMonthSchedule = async (
 //내 체험 날짜별 예약 정보(신청, 승인, 거절)가 있는 스케줄 조회
 export const getMyDateSchedule = async (
   params: getMyDateScheduleParams
-): Promise<getMyDateScheduleResponse> => {
+): Promise<getMyDateScheduleResponse[]> => {
   const response = await axios.get(
     `/my-activities/${params.activityId}/reserved-schedule?date=${params.date}`
   );

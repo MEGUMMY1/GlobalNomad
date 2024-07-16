@@ -56,7 +56,7 @@ export function AllActivity({
         <div className="h-[70px] t:h-[50px] m:h-[30px] m:w-[160px] font-sans text-[24px] m:text-[18px] font-[600] mt-[10px]">
           {title}
         </div>
-        <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
+        <div className="font-sans text-[28px] m:text-[20px] font-[700] p:mt-[0px] mt-[15px]">
           ₩{price}{' '}
           <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
@@ -134,7 +134,7 @@ function AllActivities() {
         window.removeEventListener('resize', setItemsPerPage);
       }
     };
-  }, []);
+  }, [setItemsPerPage]);
 
   useEffect(() => {
     const params: getActivityListParams = {

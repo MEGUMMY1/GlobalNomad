@@ -20,6 +20,8 @@ import {
   getActivityReviewsResponse,
 } from '@/pages/api/activities/apiactivities.types';
 import Spinner from '../Spinner/Spinner';
+import { userState } from '@/states/userState';
+import { useRecoilValue } from 'recoil';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -30,6 +32,8 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const itemsPerPage = 3;
 
   const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
+
+  const userData = useRecoilValue(userState);
 
   const {
     data: activityData,
@@ -86,6 +90,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   };
 
   const paginatedReviews = reviewData?.reviews || [];
+  const isAuthor = activityData?.userId === userData?.id;
 
   return (
     <div className="mt-16 t:mt-4 m:mt-4">
@@ -123,19 +128,23 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
             </div>
           </div>
         </div>
-        <MeatballButton onClick={toggleMenu} />
-        {isOpen && (
-          <div
-            ref={menuRef}
-            className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white border border-var-gray3 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
-          >
-            <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-t-lg border-b border-var-gray3 border-solid">
-              수정하기
-            </button>
-            <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-b-lg">
-              삭제하기
-            </button>
-          </div>
+        {isAuthor && (
+          <>
+            <MeatballButton onClick={toggleMenu} />
+            {isOpen && (
+              <div
+                ref={menuRef}
+                className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white border border-var-gray3 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
+              >
+                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-t-lg border-b border-var-gray3 border-solid">
+                  수정하기
+                </button>
+                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-b-lg">
+                  삭제하기
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
       {activityData && (

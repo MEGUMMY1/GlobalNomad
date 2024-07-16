@@ -32,7 +32,7 @@ export default function MyReservationPage() {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage]);
 
   useEffect(() => {
     if (myReservationList) {
