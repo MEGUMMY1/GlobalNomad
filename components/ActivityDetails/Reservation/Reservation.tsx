@@ -13,6 +13,7 @@ import { ReservationProps } from './Reservation.types';
 import { useMutation } from '@tanstack/react-query';
 import { postActivityRequestParams } from '@/pages/api/activities/apiactivities.types';
 import { postActivityRequest } from '@/pages/api/activities/apiactivities';
+import { AxiosError } from 'axios';
 
 export default function Reservation({ activity }: ReservationProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -108,11 +109,35 @@ export default function Reservation({ activity }: ReservationProps) {
         callBackFnc: () => router.push(`/activity-details/${activity.id}`),
       });
     },
-    onError: (error) => {
+    onError: (error: AxiosError) => {
       console.error('예약 중 오류 발생:', error);
+      let errorMessage = '알 수 없는 오류가 발생했습니다.';
+
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            errorMessage = '이미 지난 일정은 예약할 수 없습니다.';
+            break;
+          case 401:
+            errorMessage =
+              '인증되지 않은 사용자입니다. 로그인 후 다시 시도해 주세요.';
+            break;
+          case 404:
+            errorMessage = '존재하지 않는 체험입니다.';
+            break;
+          case 409:
+            errorMessage =
+              '이미 예약된 활동이거나 확정 예약이 있는 체험입니다.';
+            break;
+          default:
+            errorMessage = error.message;
+            break;
+        }
+      }
+
       openPopup({
         popupType: 'alert',
-        content: '예약 중 오류가 발생했습니다. 다시 시도해 주세요.',
+        content: errorMessage,
         btnName: ['확인'],
       });
     },
