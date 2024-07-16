@@ -27,7 +27,6 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     watch,
   } = useForm<loginFormValues>({ mode: 'onBlur' });
 
@@ -35,15 +34,18 @@ export default function LoginPage() {
     postLoginMutation.mutate(data);
   };
 
-  const watchFields = watch(['email', 'password']);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit(onSubmit)();
+    }
+  };
 
-  const isAllFieldsValid = useMemo(() => {
-    const isNotError = !errors.email && !errors.password;
-    const { email, password } = getValues();
-    const isFormFilled = !!email && !!password;
+  const { email, password } = watch();
 
-    return isFormFilled && isNotError;
-  }, [errors.email, errors.password, getValues]);
+  const isNotError = !errors.email && !errors.password;
+  const isFormFilled = !!email && !!password;
+
+  const IsAllFieldsValid = isFormFilled && isNotError;
 
   useEffect(() => {
     if (isLoggedIn) router.push('/');
@@ -60,6 +62,7 @@ export default function LoginPage() {
       <form
         className="flex flex-col gap-[28px] w-full"
         onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={handleKeyDown}
       >
         <AuthInputBox
           label="이메일"
@@ -81,9 +84,9 @@ export default function LoginPage() {
         />
         <PrimaryButton
           size="large"
-          style={isAllFieldsValid ? 'enabled' : 'disabled'}
+          style={IsAllFieldsValid ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isAllFieldsValid}
+          disabled={!IsAllFieldsValid}
         >
           로그인하기
         </PrimaryButton>

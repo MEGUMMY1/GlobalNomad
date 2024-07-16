@@ -1,4 +1,5 @@
 export interface CardProps {
+  activityId: number;
   activityImage: string;
   rating: number;
   reviewCount: number;
@@ -12,5 +13,6 @@ export interface PopoverButtonProps {
 }
 
 export interface PopoverProps {
+  activityId: number;
   closePopover: () => void;
 }

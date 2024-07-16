@@ -5,11 +5,11 @@ import { MyReservationListResponse } from '@/pages/api/myReservations/apiMyReser
 import { useMemo } from 'react';
 import { statusType } from '@/components/ReservationFilter/myReservationTypes.types';
 
-const INITIAL_SIZE = 4;
+const INITIAL_SIZE = 10;
 const REFETCH_SIZE = 1;
 
 export const useReservationList = (filterOption: statusType | undefined) => {
-  const userData = useUserData();
+  const { userData } = useUserData();
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useInfiniteQuery<MyReservationListResponse>({

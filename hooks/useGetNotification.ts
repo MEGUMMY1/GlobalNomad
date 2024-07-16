@@ -10,14 +10,15 @@ export default function useGetNotification(query: MyNotificationListQuery) {
   const { cursorId = undefined, size = 10 } = query;
   const { isLoggedIn } = useLoginState();
 
-  const { data, isLoading, isError } = useQuery<
-    MyNotificationListResponse,
-    Error
-  >({
+  const {
+    data,
+    isLoading: isNotifyCountLoading,
+    isError,
+  } = useQuery<MyNotificationListResponse, Error>({
     queryKey: ['myNotification', query],
     queryFn: () => apiMyNotificationList({ cursorId, size }),
     enabled: !!isLoggedIn,
   });
 
-  return { data, isLoading, isError };
+  return { data, isNotifyCountLoading, isError };
 }

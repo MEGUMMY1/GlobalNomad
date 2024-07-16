@@ -10,7 +10,7 @@ export const useUserData = () => {
   const [userData, setUserData] = useRecoilState(userState);
   const { isLoggedIn } = useLoginState();
 
-  const { data: userResponseData } = useQuery({
+  const { data: userResponseData, isLoading } = useQuery({
     queryKey: ['user', userId],
     queryFn: apiMyInfo,
     enabled: !!isLoggedIn,
@@ -27,5 +27,5 @@ export const useUserData = () => {
     setUserId(userId);
   }, []);
 
-  return userData;
+  return { userData, isLoading };
 };

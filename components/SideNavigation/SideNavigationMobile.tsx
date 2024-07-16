@@ -15,10 +15,11 @@ import { useUserData } from '@/hooks/useUserData';
 import { useRecoilState } from 'recoil';
 import { sideNavigationState } from '@/states/sideNavigationState';
 import { CloseButton } from '../Button/Button';
+import Spinner from '../Spinner/Spinner';
 
 export default function SidenNavigationMobile() {
   const router = useRouter();
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
   const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
@@ -62,9 +63,12 @@ export default function SidenNavigationMobile() {
 
   const sideNavBtnStyle = `font-bold flex gap-[8px] h-[44px] w-fill items-center pl-[16px] text-[16px] `;
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     isOpen && (
-      <div className="fixed inset-0 bg-black bg-opacity-60 mt-[70px] overflow-hidden ">
+      <div className="fixed inset-0 bg-black bg-opacity-70 mt-[70px] overflow-hidden ">
         <div className="fixed left-0 top-0 z-20 w-4/5 h-full p-[24px] flex flex-col mt-[70px] border border-solid border-var-gray3 gap-[24px] bg-white">
           <div className="flex justify-end">
             <CloseButton onClick={handleCloseSideNav} />

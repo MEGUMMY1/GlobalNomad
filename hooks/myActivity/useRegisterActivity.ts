@@ -4,8 +4,11 @@ import {
   postActivityParams,
 } from '@/pages/api/activities/apiactivities.types';
 import { postActivity } from '@/pages/api/activities/apiactivities';
+import { useRouter } from 'next/router';
 
 export default function useRegisterActivity() {
+  const router = useRouter();
+
   const postActivityMutation: UseMutationResult<
     postActivityResponse,
     unknown,
@@ -13,7 +16,7 @@ export default function useRegisterActivity() {
   > = useMutation({
     mutationFn: postActivity,
     onSuccess: () => {
-      window.location.reload();
+      router.push('/myActivity');
     },
   });
 

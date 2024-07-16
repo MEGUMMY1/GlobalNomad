@@ -3,7 +3,7 @@ import { PrimaryButton } from '../Button/Button';
 import InputBox from '../InputBox/InputBox';
 import { validation } from './validation';
 import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { useUserData } from '@/hooks/useUserData';
 import Image from 'next/image';
@@ -12,19 +12,21 @@ import { ProfileImageResponse } from '@/pages/api/users/apiUser.types';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 import editProfileIcon from '@/public/image/btn.png';
 import { useSideNavigation } from '@/hooks/useSideNavigation';
+import Spinner from '../Spinner/Spinner';
 
 export default function MyPageInput() {
   const {
     register,
     handleSubmit,
-    getValues,
+    watch,
     setValue,
     formState: { errors },
-  } = useForm<FieldValues>({ mode: 'onChange' });
+  } = useForm<FieldValues>({ mode: 'all' });
 
   const { openSideNavigation } = useSideNavigation();
 
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
+
   const { postProfileImgMutation } = useUploadProfile();
   const { postMyInfoMutation } = useEditMyInfo();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(
@@ -72,18 +74,21 @@ export default function MyPageInput() {
     }
   }, [userData, setValue]);
 
-  const isAllFieldsValid = () => {
-    const isNotError =
-      !errors.email &&
-      !errors.nickname &&
-      !errors.password &&
-      !errors.passwordCheck;
-    const { email, nickname, password, passwordCheck } = getValues();
-    const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+  const { email, nickname, password, passwordCheck } = watch();
 
-    return isFormFilled && isNotError;
-  };
+  const isNotError =
+    !errors.email &&
+    !errors.nickname &&
+    !errors.password &&
+    !errors.passwordCheck;
 
+  const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+
+  const isAllFieldsValid = isFormFilled && isNotError;
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
       <form className="flex flex-col gap-[24px] t:gap-[16px]">
@@ -97,10 +102,10 @@ export default function MyPageInput() {
           <p className="font-bold text-[32px]">내 정보</p>
           <div className="flex items-center m:hidden">
             <PrimaryButton
-              style={isAllFieldsValid() ? 'dark' : 'disabled'}
+              style={isAllFieldsValid ? 'dark' : 'disabled'}
               size="small"
               onClick={handleSubmit(onSubmit)}
-              disabled={!isAllFieldsValid()}
+              disabled={!isAllFieldsValid}
             >
               저장하기
             </PrimaryButton>
@@ -170,8 +175,7 @@ export default function MyPageInput() {
               validation={{
                 ...validation.passwordCheck,
                 validate: (value: string) =>
-                  value === getValues().password ||
-                  '비밀번호가 일치하지 않습니다.',
+                  value === watch().password || '비밀번호가 일치하지 않습니다.',
               }}
               register={register}
               errors={errors}
@@ -179,10 +183,10 @@ export default function MyPageInput() {
           </div>
           <div className="mt-[30px] flex items-center p:hidden t:hidden">
             <PrimaryButton
-              style={isAllFieldsValid() ? 'dark' : 'disabled'}
+              style={isAllFieldsValid ? 'dark' : 'disabled'}
               size="large"
               onClick={handleSubmit(onSubmit)}
-              disabled={!isAllFieldsValid()}
+              disabled={!isAllFieldsValid}
             >
               저장하기
             </PrimaryButton>

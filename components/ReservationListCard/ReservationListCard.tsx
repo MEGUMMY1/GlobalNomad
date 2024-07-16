@@ -10,20 +10,12 @@ import { apiEditMyReservation } from '@/pages/api/myReservations/apiMyReservatio
 import { useUserData } from '@/hooks/useUserData';
 import { formatCurrency } from '@/utils/formatCurrency';
 import Link from 'next/link';
+import Spinner from '../Spinner/Spinner';
 
 const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const { openModal, closeModal } = useModal();
-
-  const handleOpenReviewModal = () => {
-    openModal({
-      title: '후기 작성',
-      hasButton: false,
-      content: <Review reservation={reservationData} closeModal={closeModal} />,
-    });
-  };
-
   const { openPopup } = usePopup();
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
   const queryClient = useQueryClient();
 
   const EditMyReservationMutation = useMutation({
@@ -37,6 +29,14 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
     },
   });
 
+  const handleOpenReviewModal = () => {
+    openModal({
+      title: '후기 작성',
+      hasButton: false,
+      content: <Review reservation={reservationData} closeModal={closeModal} />,
+    });
+  };
+
   const handleCancelReservation = () => {
     openPopup({
       popupType: 'select',
@@ -47,9 +47,13 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
     });
   };
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
-    <div className="h-[212px] relative flex rounded-3xl shadow-card overflow-hidden">
-      <div className="min-w-[204px] h-[204px] relative">
+    <div className="h-[204px] relative flex rounded-3xl shadow-card overflow-hidden t:h-[156px] m:h-[128px]">
+      <div className="min-w-[204px] h-[204px] relative t:min-w-[156px] t:h-[156px] m:min-w-[128px] m:h-[128px]">
         <Link
           href={`/activity-details/${reservationData.activity.id}`}
           className="text-[20px] font-bold mt-[8px] hover:underline"
@@ -63,50 +67,55 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
           />
         </Link>
       </div>
-      <div className="w-full p-[24px]">
+      <div className="w-full p-[24px] t:p-[12px] m:p-[9px]">
         <p
-          className={`text-[16px] font-bold ${statusStyle[reservationData.status]}`}
+          className={`text-[16px] font-bold ${statusStyle[reservationData.status]} m:text-[14px] m:py-[2px]`}
         >
           {statusTitles[reservationData.status]}
         </p>
-        <Link
-          href={`/activity-details/${reservationData.activity.id}`}
-          className="text-[20px] font-bold mt-[8px] hover:underline"
-        >
-          {reservationData.activity.title}
+        <Link href={`/activity-details/${reservationData.activity.id}`}>
+          <p className="text-[20px] mt-[8px] font-bold hover:underline t:text-[18px] t:mt-[0] m:text-[14px] m:mt-[0] m:py-[2px]">
+            {reservationData.activity.title}
+          </p>
         </Link>
-        <p className="mt-[12px] text-[18px]">
+        <p className="mt-[12px] text-[18px] t:text-[14px] t:mt-[5px] m:text-[12px] m:mt-[0] m:py-[2px] ">
           {reservationData.date}&nbsp;&nbsp;·&nbsp;&nbsp;
           {reservationData.startTime}~{reservationData.endTime}
           &nbsp;&nbsp;·&nbsp;&nbsp;{reservationData.headCount}명
         </p>
-        <div className="w-full flex justify-between mt-[16px] items-center">
-          <p className="font-medium text-[24px]">
+        <div className="w-full flex justify-between mt-[16px] h-[40px] items-center t:mt-[11px] m:mt-[0]">
+          <p className="font-medium text-[24px] t:text-[20px] m:text-[16px]">
             ₩{formatCurrency(reservationData.totalPrice)}
           </p>
-          {reservationData.status === 'pending' && (
-            <PrimaryButton
-              size="medium"
-              style="bright"
-              onClick={handleCancelReservation}
-            >
-              예약 취소
-            </PrimaryButton>
-          )}
-          {reservationData.status === 'completed' &&
-            !reservationData.reviewSubmitted && (
-              <PrimaryButton
-                size="medium"
-                style="dark"
-                onClick={handleOpenReviewModal}
+          <div className="min-w-[144px] t:min-w-[112px] m:min-w-[80px]">
+            {reservationData.status === 'pending' && (
+              <button
+                className={`bg-white text-nomad-black ${buttonStyle}`}
+                onClick={handleCancelReservation}
               >
-                후기 작성
-              </PrimaryButton>
+                예약 취소
+              </button>
             )}
+            {reservationData.status === 'completed' &&
+              !reservationData.reviewSubmitted && (
+                <button className={buttonStyle} onClick={handleOpenReviewModal}>
+                  후기 작성
+                </button>
+              )}
+            {reservationData.status === 'completed' &&
+              reservationData.reviewSubmitted && (
+                <div className={`bg-var-gray6 text-white ${buttonStyle}`}>
+                  후기 작성 완료
+                </div>
+              )}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+export const buttonStyle =
+  'border border-nomad-black w-full h-[40px] flex items-center justify-center rounded-md text-[16px] py-[12px] px-[10px] m:h-[32px] m:text-[14px]';
 
 export default ReservationListCard;

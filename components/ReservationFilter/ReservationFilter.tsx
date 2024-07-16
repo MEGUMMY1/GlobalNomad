@@ -31,10 +31,10 @@ export default function ReservationFilter({
   return (
     <div className="relative">
       <button
-        className="flex justify-between items-center w-[160px] h-[53px] border-solid border-[1px] rounded-[15px] t:w-[120px] m:w-[90px] m:h-[41px] border-var-green2 px-[20px] bg-white"
+        className="flex justify-between items-center w-[160px] h-[53px] border-solid border-[1px] rounded-[15px] border-var-green2 px-[20px] bg-white m:w-[110px] m:h-[40px] m:px-[10px]"
         onClick={() => setShowMenuList((prev) => !prev)}
       >
-        <p className="text-[18px] text-var-green2">
+        <p className="text-[18px] text-var-green2 m:text-[14px]">
           {filterOption ? statusTitles[filterOption] : '필터'}
         </p>
         <Image
@@ -46,7 +46,7 @@ export default function ReservationFilter({
 
       {showMenuList && (
         <div className="absolute" ref={dropDownElement}>
-          <div className="relative left-0 bottom-[-8px] z-50 bg-white flex w-[160px] t:w-[120px] m:w-[90px] flex-col rounded-lg animate-slideDown overflow-hidden border border-solid border-var-gray3">
+          <div className="relative left-0 bottom-[-8px] z-50 bg-white flex w-[160px] flex-col rounded-lg animate-slideDown overflow-hidden border border-solid border-var-gray3 m:w-[110px]">
             {filterOption && (
               <button className={buttonStyle} onClick={handleOnClickAll}>
                 ALL
@@ -69,4 +69,4 @@ export default function ReservationFilter({
 }
 
 const buttonStyle: string =
-  'flex justify-center items-center border-b border-solid text-[18px] m:text-[14px] t:w-[120px] m:w-[90px] h-[58px] m:h-[41px] bg-white hover:bg-var-gray2';
+  'flex justify-center items-center border-b border-solid text-[18px] h-[58px] bg-white hover:bg-var-gray2 m:text-[14px] m:h-[40px]';

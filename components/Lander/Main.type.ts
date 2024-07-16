@@ -5,3 +5,13 @@ export interface mainPageStateProps {
   selectedSorted: string;
   sortedName: string;
 }
+
+export interface mainPageKategorieStateProps {
+  KategorieName: string;
+}
+
+export interface mainSearchValueStateProps {
+  SearchValue: string;
+  currentPage: number;
+  itemsPerPage: number;
+}
