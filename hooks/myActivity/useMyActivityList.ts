@@ -29,6 +29,8 @@ export const useMyActivityList = () => {
       enabled: loginState.isLoggedIn,
     });
 
+  const totalCount = data?.pages[0].totalCount;
+
   const myActivityList = useMemo(() => {
     if (data) {
       return data.pages.flatMap((page) => page.activities);
@@ -37,6 +39,7 @@ export const useMyActivityList = () => {
 
   return {
     myActivityList,
+    totalCount,
     fetchNextPage,
     hasNextPage,
     isLoading,
