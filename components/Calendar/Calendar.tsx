@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useQuery } from '@tanstack/react-query';
 import { getMyMonthSchedule } from '@/pages/api/myActivities/apimyActivities';
-import Spinner from '../Spinner/Spinner';
 import { CalendarProps } from './Calendar.types';
 import { getMyMonthScheduleResponse } from '@/pages/api/myActivities/apimyActivities.types';
 import { StyleWrapper } from './StyleWrapper';
@@ -24,28 +23,23 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
     queryFn: () => getMyMonthSchedule({ activityId, year, month }),
   });
 
-  const { openModal, closeModal } = useModal();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openModal } = useModal();
   const [modalDate, setModalDate] = useState<Date | null>(null);
 
   const handleDateClick = (arg: DateClickArg) => {
-    setModalDate(new Date(arg.dateStr));
-    setIsModalOpen(true);
+    const newDate = new Date(arg.dateStr);
+    setModalDate(newDate);
     openModal({
       title: '예약 정보',
       hasButton: false,
-      content: modalDate && (
+      content: (
         <ReservationModalContent
-          selectedDate={modalDate}
+          selectedDate={newDate}
           activityId={activityId}
         />
       ),
     });
   };
-
-  if (isLoading) {
-    return <Spinner />;
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>;

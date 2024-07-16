@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Down from '@/public/icon/chevron_down.svg';
 import Up from '@/public/icon/chevron_up.svg';
 import CheckMark from '@/public/icon/Checkmark.svg';
-import Spinner from '../Spinner/Spinner';
 import {
   getMyDateSchedule,
   getMyTimeSchedule,
@@ -52,15 +51,10 @@ const ReservationDateTime: React.FC<{
     onSelectTime(scheduleId);
   };
 
-  const { data: dateSchedule, isLoading: isDateScheduleLoading } =
-    useMyDateSchedule({
-      activityId,
-      date: selectedDate.toISOString().split('T')[0],
-    });
-
-  if (isDateScheduleLoading) {
-    return <Spinner />;
-  }
+  const { data: dateSchedule } = useMyDateSchedule({
+    activityId,
+    date: selectedDate.toISOString().split('T')[0],
+  });
 
   return (
     <>
@@ -173,6 +167,7 @@ const ApplicationList: React.FC<{
       queryClient.invalidateQueries({
         queryKey: ['myReservations', activityId],
       });
+      refetch();
     },
     onError: (error) => {
       console.error('Error updating reservation:', error);
@@ -181,9 +176,9 @@ const ApplicationList: React.FC<{
 
   const handleReservation = (
     reservationId: number,
-    status: 'pending' | 'confirmed' | 'declined'
+    newStatus: 'pending' | 'confirmed' | 'declined'
   ) => {
-    mutation.mutate({ reservationId, status });
+    mutation.mutate({ reservationId, status: newStatus });
   };
 
   useEffect(() => {
@@ -192,14 +187,10 @@ const ApplicationList: React.FC<{
     }
   }, [mutation.isSuccess, isTimeScheduleLoading, refetch]);
 
-  if (isTimeScheduleLoading) {
-    return <Spinner />;
-  }
-
   return (
     <>
       <span className="font-bold">예약 내역</span>
-      <div className="mt-2">
+      <div className="mt-2 h-[250px] overflow-auto ">
         {timeSchedule?.reservations.map((reservation) => (
           <div
             key={reservation.id}
@@ -216,7 +207,7 @@ const ApplicationList: React.FC<{
               </div>
             </div>
             <div className="flex gap-2 items-center justify-center">
-              {status === 'pending' && (
+              {reservation.status === 'pending' && (
                 <>
                   <PrimaryButton
                     size="small"
@@ -238,12 +229,12 @@ const ApplicationList: React.FC<{
                   </PrimaryButton>
                 </>
               )}
-              {status === 'confirmed' && (
+              {reservation.status === 'confirmed' && (
                 <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-orange1 text-var-orange2">
                   예약 승인
                 </div>
               )}
-              {status === 'declined' && (
+              {reservation.status === 'declined' && (
                 <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-red1 text-var-red2">
                   예약 거절
                 </div>

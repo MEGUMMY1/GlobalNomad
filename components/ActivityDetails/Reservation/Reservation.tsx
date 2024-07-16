@@ -105,7 +105,7 @@ export default function Reservation({ activity }: ReservationProps) {
         popupType: 'alert',
         content: '예약이 완료되었습니다.',
         btnName: ['확인'],
-        callBackFnc: () => router.push(`/`),
+        callBackFnc: () => router.push(`/activity-details/${activity.id}`),
       });
     },
     onError: (error) => {
