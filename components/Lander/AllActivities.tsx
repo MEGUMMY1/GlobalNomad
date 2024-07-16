@@ -2,7 +2,7 @@ import Image from 'next/image';
 import StarImg from '@/public/icon/Star.svg';
 import CatergoryBtn from '../CatergoryBtn/CatergoryBtn';
 import PriceFilterBtn from '../PriceFilterBtn/PriceFilterBtn';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { AllActivityProps } from './AllActivities.type';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { getActivityListResponse } from '@/pages/api/activities/apiactivities.types';
@@ -57,7 +57,7 @@ export function AllActivity({
           {title}
         </div>
         <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
-          ₩{price}{' '}
+          ₩ {price.toLocaleString()}{' '}
           <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
       </div>
