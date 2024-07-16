@@ -9,6 +9,10 @@ import {
   statusType,
 } from '@/components/ReservationFilter/myReservationTypes.types';
 import { useInView } from 'react-intersection-observer';
+import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
+import { useRecoilState } from 'recoil';
+import { sideNavigationState } from '@/states/sideNavigationState';
+import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
 
 export default function MyReservationPage() {
   const [filterOption, setFilterOption] = useState<statusType | undefined>();
@@ -18,6 +22,11 @@ export default function MyReservationPage() {
   const { ref, inView } = useInView();
   const { fetchNextPage, myReservationList, hasNextPage } =
     useReservationList(filterOption);
+  const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
+
+  const openSideNavigation = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -32,11 +41,22 @@ export default function MyReservationPage() {
   }, [myReservationList]);
 
   return (
-    <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px]">
-      <SideNavigation />
-      <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-[556px] m:w-full m:h-[492px] m:pb-[210px]">
-        <div className="flex w-full justify-between">
-          <p className="text-[32px] font-bold">예약 내역 </p>
+    <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px m:mt-[26px]">
+      <div className="m:hidden">
+        <SideNavigation />
+      </div>
+      {isOpen && <SidenNavigationMobile />}
+      <div className="flex flex-col w-[792px] gap-[24px] t:w-[430px] m:w-[344px]">
+        <div className="flex w-full justify-between items-center">
+          <div className="flex m:gap-[15px]">
+            <Image
+              src={hamburgerIcon}
+              alt="햄버거 메뉴 아이콘"
+              className="p:hidden t:hidden"
+              onClick={() => openSideNavigation()}
+            />
+            <p className="text-[32px] font-bold">예약 내역 </p>
+          </div>
           {reservationListByFilter && (
             <ReservationFilter
               setFilterOption={setFilterOption}
@@ -45,7 +65,7 @@ export default function MyReservationPage() {
           )}
         </div>
         {reservationListByFilter.length > 0 ? (
-          <div className="flex flex-col animate-slideDown gap-[24px] overflow-auto scrollbar-hide h-[calc(100vh-220px)] pr-[10px]">
+          <div className="flex flex-col animate-slideDown gap-[24px] overflow-auto scrollbar-hide pb-[20px] h-[calc(100vh-220px)] pr-[10px] t:h-[calc(100vh-160px)] t:gap-[16px] m:h-[calc(100vh-100px)]">
             {reservationListByFilter.map(
               (reservationData: MyReservationProps) => {
                 return (

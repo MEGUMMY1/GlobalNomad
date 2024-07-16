@@ -44,26 +44,23 @@ export default function SingupPage() {
     setIsChecked(!isChecked);
   };
 
-  const watchFields = watch(['email', 'password', 'passwordCheck', 'nickname']);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit(onSubmit)();
+    }
+  };
 
-  const isAllFieldsValid = useMemo(() => {
-    const isNotError =
-      !errors.email &&
-      !errors.nickname &&
-      !errors.password &&
-      !errors.passwordCheck;
-    const { email, nickname, password, passwordCheck } = getValues();
-    const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+  const isNotError =
+    !errors.email &&
+    !errors.nickname &&
+    !errors.password &&
+    !errors.passwordCheck;
 
-    return isFormFilled && isChecked && isNotError;
-  }, [
-    errors.email,
-    errors.password,
-    errors.passwordCheck,
-    errors.nickname,
-    getValues,
-    isChecked,
-  ]);
+  const { email, nickname, password, passwordCheck } = watch();
+
+  const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
+
+  const IsAllFieldsValid = isFormFilled && isChecked && isNotError;
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -79,7 +76,11 @@ export default function SingupPage() {
       </Link>
 
       {/* 로그인 폼 */}
-      <form className="flex flex-col gap-[28px] w-full">
+      <form
+        className="flex flex-col gap-[28px] w-full"
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={handleKeyDown}
+      >
         <AuthInputBox
           label="이메일 *"
           placeholder="이메일을 입력해주세요"
@@ -114,7 +115,7 @@ export default function SingupPage() {
           validation={{
             ...signupValidation.passwordCheck,
             validate: (value: string) =>
-              value === getValues().password || '비밀번호가 일치하지 않습니다.',
+              value === watch().password || '비밀번호가 일치하지 않습니다.',
           }}
           eyeIconActive={true}
           register={register}
@@ -128,9 +129,9 @@ export default function SingupPage() {
         />
         <PrimaryButton
           size="large"
-          style={isAllFieldsValid ? 'enabled' : 'disabled'}
+          style={IsAllFieldsValid ? 'enabled' : 'disabled'}
           onClick={handleSubmit(onSubmit)}
-          disabled={!isAllFieldsValid}
+          disabled={!IsAllFieldsValid}
         >
           회원가입 하기
         </PrimaryButton>
