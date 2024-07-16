@@ -11,11 +11,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import Pagination from '../Pagination/Pagination';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { mainPageState } from '@/states/mainPageState';
+import { mainPageKategorieState, mainPageState } from '@/states/mainPageState';
+import Spinner from '../Spinner/Spinner';
 
-const Kategories = ['문화 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+const Kategories = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
-function AllActivity({
+export function AllActivity({
   title,
   backgroundImage,
   price,
@@ -32,12 +33,12 @@ function AllActivity({
   return (
     <div onClick={handleClick} className="cursor-pointer">
       <div
-        className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')]"
+        className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')] bg-cover"
         style={{
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
-      <div className='hover:bg-gray-200 rounded px-[4px]'>
+      <div className="hover:bg-gray-200 rounded px-[4px]">
         <div className="flex items-center mt-[16.5px]">
           <Image
             src={StarImg}
@@ -57,9 +58,7 @@ function AllActivity({
         </div>
         <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
           ₩{price}{' '}
-          <span className="font-sans text-[20px] text-[16px] font-[400]">
-            / 인
-          </span>
+          <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
       </div>
     </div>
@@ -67,10 +66,6 @@ function AllActivity({
 }
 
 function AllActivities() {
-  const router = useRouter();
-  // const [currentPage, setCurrentPage] = useState<number>(
-  //   router.query.page ? parseInt(router.query.page as string, 10) : 1
-  // );
   const [MainPageState, setMainPageState] = useRecoilState(mainPageState);
 
   const {
@@ -78,6 +73,8 @@ function AllActivities() {
     selectedSorted,
     currentPage,
   } = useRecoilValue(mainPageState);
+
+  const { KategorieName } = useRecoilValue(mainPageKategorieState);
 
   const setItemsPerPage = () => {
     if (typeof window !== 'undefined') {
@@ -96,6 +93,7 @@ function AllActivities() {
       setMainPageState((prevState) => ({
         ...prevState,
         itemsPerPage,
+        currentPage: 1,
       }));
     }
   };
@@ -103,7 +101,7 @@ function AllActivities() {
   const params: getActivityListParams = {
     method: 'offset',
     cursorId: null,
-    category: null,
+    category: KategorieName,
     keyword: null,
     sort: selectedSorted,
     page: currentPage,
@@ -120,12 +118,10 @@ function AllActivities() {
   });
 
   const handlePageChange = (page: number) => {
-    //setCurrentPage(page);
     setMainPageState((prevState) => ({
       ...prevState,
       currentPage: page,
     }));
-    //router.push(`/?page=${page}`);
   };
 
   useEffect(() => {
@@ -144,7 +140,7 @@ function AllActivities() {
     const params: getActivityListParams = {
       method: 'offset',
       cursorId: null,
-      category: null,
+      category: KategorieName,
       keyword: null,
       sort: selectedSorted,
       page: currentPage,
@@ -165,22 +161,28 @@ function AllActivities() {
         </div>
         <PriceFilterBtn />
       </div>
-      <div className="font-sans text-[36px] font-[700] mt-[40px]">
-        🛼 모든 체험
+      <div className="font-sans text-[36px] font-[700] mt-[40px] mb-[30px]">
+        {KategorieName ? KategorieName : '🛼 모든 체험'}
       </div>
-      <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
-        {allActivitiesData?.activities.map((data) => (
-          <AllActivity
-            key={data.id}
-            title={data.title}
-            backgroundImage={data.bannerImageUrl}
-            price={data.price}
-            rating={data.rating}
-            reviewCount={data.reviewCount}
-            id={data.id}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="mt-[-300px]">
+          <Spinner />
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
+          {allActivitiesData?.activities.map((data) => (
+            <AllActivity
+              key={data.id}
+              title={data.title}
+              backgroundImage={data.bannerImageUrl}
+              price={data.price}
+              rating={data.rating}
+              reviewCount={data.reviewCount}
+              id={data.id}
+            />
+          ))}
+        </div>
+      )}
       <div className="text-[30px] font-[700] flex justify-center mb-[342px] mt-[70px]">
         {allActivitiesData && allActivitiesData.totalCount > 0 && (
           <Pagination

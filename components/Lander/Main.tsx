@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import Testimgae from './TestImage.jpg';
 import SearchBar from '../SearchBar/Searchbar';
 import BestActivities from './BestActivities';
 import AllActivities from './AllActivities';
@@ -10,8 +8,14 @@ import {
 } from '@/pages/api/activities/apiactivities.types';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import Spinner from '../Spinner/Spinner';
+import { useState } from 'react';
+import SearchResults from './SearchResults';
+import { useRecoilValue } from 'recoil';
+import { mainSearchValueState } from '@/states/mainPageState';
 
 function Main() {
+  const [isSearch, setIsSearch] = useState(false);
+  const { SearchValue } = useRecoilValue(mainSearchValueState);
   const date = new Date();
   const month = date.getMonth() + 1;
   //const {id, title, bannerImageUrl} = useRecoilValue(BestOfmonth);
@@ -56,14 +60,20 @@ function Main() {
           </span>
         </div>
         <div className="mt-[120px] m:mt-[14px] flex justify-center">
-          <SearchBar></SearchBar>
+          <SearchBar setIsSearch={setIsSearch}></SearchBar>
         </div>
-        <div className="mt-[40px]">
-          <BestActivities></BestActivities>
-        </div>
-        <div className=" mt-[60px]">
-          <AllActivities></AllActivities>
-        </div>
+        {isSearch ? (
+          <SearchResults SearchValue={SearchValue} />
+        ) : (
+          <div>
+            <div className="mt-[40px]">
+              <BestActivities></BestActivities>
+            </div>
+            <div className=" mt-[60px]">
+              <AllActivities></AllActivities>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   );

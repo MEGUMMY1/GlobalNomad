@@ -1,5 +1,5 @@
 import { ActivityDetail } from '@/components/Lander/BestActivities.type';
-import { mainPageStateProps } from '@/components/Lander/Main.type';
+import { mainPageStateProps, mainPageKategorieStateProps, mainSearchValueStateProps } from '@/components/Lander/Main.type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
@@ -15,4 +15,22 @@ export const mainPageState = atom<mainPageStateProps>({
     sortedName: '',
   },
   effects_UNSTABLE: [persistAtom],
+})
+
+
+export const mainPageKategorieState = atom<mainPageKategorieStateProps>({
+  key: 'mainPageKategorieState',
+  default: {
+    KategorieName: '',
+  },
+  effects_UNSTABLE: [persistAtom],
+})
+
+export const mainSearchValueState = atom<mainSearchValueStateProps>({
+  key: 'mainSearchValueState',
+  default: {
+    SearchValue: '',
+    currentPage: 1,
+    itemsPerPage: 16,
+  }
 })
