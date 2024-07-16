@@ -5,7 +5,7 @@ import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import useDeleteNotification from '@/hooks/useDeleteNotification';
 import { useInView } from 'react-intersection-observer';
 import useGetNotificationList from '@/hooks/useGetNotificationList';
-import getTimeAgoString from '@/hooks/useGetTimeAgo';
+import formatTimeAgo from '@/utils/formatTimeAgo';
 
 export default function NotificationDropdown({
   data,
@@ -87,7 +87,7 @@ export default function NotificationDropdown({
               <div className="w-[298px] h-[44px] mb-[4px]">
                 <p>{ContentWithHighlights(notification.content)}</p>
               </div>
-              <p>{getTimeAgoString(notification.updatedAt)}</p>
+              <p>{formatTimeAgo(notification.updatedAt)}</p>
             </div>
           ))}
           {hasNextPage && <div ref={ref} />}

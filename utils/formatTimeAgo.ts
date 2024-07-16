@@ -1,4 +1,4 @@
-export default function getTimeAgoString(updatedAt: string): string {
+export default function formatTimeAgo(updatedAt: string): string {
   const updatedAtUTC = Date.parse(updatedAt);
   const now = new Date();
   const diff = now.getTime() - updatedAtUTC;

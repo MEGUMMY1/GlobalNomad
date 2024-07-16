@@ -9,7 +9,7 @@ const INITIAL_SIZE = 4;
 const REFETCH_SIZE = 1;
 
 export const useReservationList = (filterOption: statusType | undefined) => {
-  const userData = useUserData();
+  const { userData } = useUserData();
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useInfiniteQuery<MyReservationListResponse>({
