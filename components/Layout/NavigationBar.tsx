@@ -9,15 +9,16 @@ import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
 import NotificationDropdown from '../NavigationDropdown/NotificationDropdown';
 import useLoginState from '@/hooks/useLoginState';
+import Spinner from '../Spinner/Spinner';
 
 export default function NavigationBar() {
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const { isLoggedIn } = useLoginState();
   const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
-  const { data, isLoading, isError } = useGetNotification({
+  const { data, isNotifyCountLoading } = useGetNotification({
     cursorId: 0,
-    size: 10,
+    size: 2,
   });
 
   const toggleDropdown = () => {
@@ -29,8 +30,19 @@ export default function NavigationBar() {
   const closeProfileDropdown = () => {
     setIsDropdownOpen(false);
   };
+  const closeNotificationDropdown = () => {
+    setIsNotificationOpen(false);
+  };
 
-  const dropdownRef = useClickOutside<HTMLDivElement>(closeProfileDropdown);
+  const profiledropdownRef =
+    useClickOutside<HTMLDivElement>(closeProfileDropdown);
+  const notificationdropdownRef = useClickOutside<HTMLDivElement>(
+    closeNotificationDropdown
+  );
+
+  if (isLoading || isNotifyCountLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="sticky top-0 flex h-[70px] z-30 justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px]  border-b bg-white border-var-gray3 border-solid ">
@@ -40,7 +52,7 @@ export default function NavigationBar() {
         </Link>
       </div>
       {isLoggedIn ? (
-        <div className="flex items-center gap-[25px]">
+        <div className="flex items-center gap-[15px]">
           <button onClick={toggleNotifyDropdown}>
             <div className="relative">
               <Image src={notificationIcon} alt="알림 아이콘" />
@@ -51,12 +63,17 @@ export default function NavigationBar() {
               )}
             </div>
           </button>
-          {isNotificationOpen && (
-            <NotificationDropdown data={data} onClick={toggleNotifyDropdown} />
-          )}
+          <div ref={notificationdropdownRef}>
+            {isNotificationOpen && (
+              <NotificationDropdown
+                data={data}
+                onClick={toggleNotifyDropdown}
+              />
+            )}
+          </div>
           <div
             className="flex relative items-center gap-[10px] border-l-2 cursor-pointer border-var-gray3 border-solid pl-[25px] m:pl-[12px]"
-            ref={dropdownRef}
+            ref={profiledropdownRef}
             onClick={toggleDropdown}
           >
             {isDropdownOpen && <NavigationDropdown />}

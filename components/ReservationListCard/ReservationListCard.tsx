@@ -10,6 +10,7 @@ import { apiEditMyReservation } from '@/pages/api/myReservations/apiMyReservatio
 import { useUserData } from '@/hooks/useUserData';
 import { formatCurrency } from '@/utils/formatCurrency';
 import Link from 'next/link';
+import Spinner from '../Spinner/Spinner';
 
 const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   const { openModal, closeModal } = useModal();
@@ -23,7 +24,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   };
 
   const { openPopup } = usePopup();
-  const userData = useUserData();
+  const { userData, isLoading } = useUserData();
   const queryClient = useQueryClient();
 
   const EditMyReservationMutation = useMutation({
@@ -46,6 +47,10 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
         EditMyReservationMutation.mutate({ reservationId: reservationData.id }),
     });
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="h-[212px] relative flex rounded-3xl shadow-card overflow-hidden">

@@ -26,9 +26,7 @@ export async function apiMyNotificationList(
 }
 
 // 내 알림 삭제를 위한 api
-export async function apiDeleteMyNotification(id: NotificationId) {
-  const response = await INSTANCE_URL.delete(
-    `my-notifications/${id.notificationId}`
-  );
+export async function apiDeleteMyNotification(id: number) {
+  const response = await INSTANCE_URL.delete(`my-notifications/${id}`);
   return response.data;
 }
