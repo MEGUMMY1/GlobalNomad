@@ -6,6 +6,7 @@ import {
 import { postActivity } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
 import { usePopup } from '../usePopup';
+import { AxiosError } from 'axios';
 
 export default function useRegisterActivity() {
   const router = useRouter();
@@ -26,6 +27,16 @@ export default function useRegisterActivity() {
           router.push('/myactivity');
         },
       });
+    },
+    onError: (err: AxiosError) => {
+      if (err.response) {
+        const errorMessage = (err.response.data as { message: string }).message;
+        openPopup({
+          popupType: 'alert',
+          content: errorMessage,
+          btnName: ['확인'],
+        });
+      }
     },
   });
 
