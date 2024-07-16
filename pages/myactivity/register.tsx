@@ -104,7 +104,6 @@ function RegisterActivity() {
       selectedKateogorie.name !== '' &&
       address !== '' &&
       bannerImage.length !== 0 &&
-      detailImage.length !== 0 &&
       isTimeFieldValid()
     );
   };
