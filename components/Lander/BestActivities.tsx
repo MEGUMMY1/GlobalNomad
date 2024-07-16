@@ -11,7 +11,6 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
 
 function BestActivity({
   title,
@@ -50,7 +49,7 @@ function BestActivity({
         {title}
       </div>
       <div className="font-sans text-[20px] m:text-[16px] font-[700] absolute left-[20px] bottom-[39px] m:bottom-[24px] text-white">
-        {price} / 인
+        ₩ {price.toLocaleString()} / 인
       </div>
     </div>
   );
