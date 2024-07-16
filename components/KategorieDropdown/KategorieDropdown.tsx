@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Down from '@/public/icon/chevron_down.svg';
 import Up from '@/public/icon/chevron_up.svg';
