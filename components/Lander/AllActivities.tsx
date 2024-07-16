@@ -58,9 +58,7 @@ export function AllActivity({
         </div>
         <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
           ₩{price}{' '}
-          <span className="font-sans text-[16px] font-[400]">
-            / 인
-          </span>
+          <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
       </div>
     </div>
