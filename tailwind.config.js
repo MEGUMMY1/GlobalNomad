@@ -42,9 +42,14 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateY(-10%)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        slideRight: {
+          '0%': { opacity: '0', transform: 'translateX(-10%)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
       },
       animation: {
         slideDown: 'slideDown 0.3s ease-in-out forwards',
+        slideRight: 'slideRight 0.3s ease-in-out forwards',
       },
       screens: {
         m: { max: '743px' },
