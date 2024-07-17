@@ -64,7 +64,7 @@ export default function ActivitySelector({
         />
       </div>
       {isOpen && (
-        <ul className="z-10 p-2 w-full absolute bg-white border border-solid border-var-gray3 rounded-md mt-1 shadow-lg max-h-[300px] overflow-y-auto animate-slideDown flex flex-col">
+        <ul className="z-10 p-2 w-full absolute bg-white border border-solid border-var-gray3 rounded-md mt-1 shadow-lg max-h-[300px] overflow-y-auto flex flex-col">
           {data?.activities.map((activity) => {
             const isSelected = selectedActivityId === activity.id;
             const backgroundColor = isSelected ? 'bg-nomad-black' : 'bg-white';
