@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react';
 import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
+import useEnterSubmit from '@/hooks/useEnterSubmit';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
@@ -24,13 +25,12 @@ export default function SingupPage() {
   const [isChecked, setIsChecked] = useState(false);
   const { isLoggedIn } = useLoginState();
   const router = useRouter();
-  const { postSignupMutation } = useSignup();
+  const { postSignupMutation, isLoading } = useSignup();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     watch,
   } = useForm<signUpFormValues>({ mode: 'onBlur' });
 
@@ -40,14 +40,10 @@ export default function SingupPage() {
     postSignupMutation.mutate(signUpData);
   };
 
+  const handleKeyDown = useEnterSubmit(handleSubmit(onSubmit));
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
-    if (event.key === 'Enter') {
-      handleSubmit(onSubmit)();
-    }
   };
 
   const isNotError =
@@ -55,11 +51,8 @@ export default function SingupPage() {
     !errors.nickname &&
     !errors.password &&
     !errors.passwordCheck;
-
   const { email, nickname, password, passwordCheck } = watch();
-
   const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
-
   const IsAllFieldsValid = isFormFilled && isChecked && isNotError;
 
   useEffect(() => {
@@ -133,7 +126,7 @@ export default function SingupPage() {
           onClick={handleSubmit(onSubmit)}
           disabled={!IsAllFieldsValid}
         >
-          회원가입 하기
+          {isLoading ? '회원가입중...' : '회원가입 하기'}
         </PrimaryButton>
       </form>
 
