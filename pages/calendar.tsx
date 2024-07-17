@@ -42,7 +42,7 @@ export default function CalendarPage() {
   const hasActivities = data && data.activities.length > 0;
 
   return (
-    <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0">
+    <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0 min-h-screen">
       <div className="m:hidden">
         <SideNavigation />
       </div>
