@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import { EventClickArg } from '@fullcalendar/core';
 import { useQuery } from '@tanstack/react-query';
 import { getMyMonthSchedule } from '@/pages/api/myActivities/apimyActivities';
 import { CalendarProps } from './Calendar.types';
@@ -9,7 +10,6 @@ import { getMyMonthScheduleResponse } from '@/pages/api/myActivities/apimyActivi
 import { StyleWrapper } from './StyleWrapper';
 import { useModal } from '@/hooks/useModal';
 import ReservationModalContent from './ReservationModalContent';
-import { DateClickArg } from '@fullcalendar/interaction';
 
 const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
   const year = new Date().getFullYear().toString();
@@ -26,8 +26,8 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
   const { openModal } = useModal();
   const [modalDate, setModalDate] = useState<Date | null>(null);
 
-  const handleDateClick = (arg: DateClickArg) => {
-    const newDate = new Date(arg.dateStr);
+  const openReservationModal = (date: string) => {
+    const newDate = new Date(date);
     setModalDate(newDate);
     openModal({
       title: '예약 정보',
@@ -39,6 +39,14 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
         />
       ),
     });
+  };
+
+  const handleDateClick = (arg: DateClickArg) => {
+    openReservationModal(arg.dateStr);
+  };
+
+  const handleEventClick = (arg: EventClickArg) => {
+    openReservationModal(arg.event.startStr);
   };
 
   if (error) {
@@ -91,6 +99,7 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
           end: 'next',
         }}
         dateClick={handleDateClick}
+        eventClick={handleEventClick}
       />
     </StyleWrapper>
   );

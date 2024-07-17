@@ -288,7 +288,7 @@ export default function Reservation({ activity }: ReservationProps) {
               ₩ {totalPrice.toLocaleString()} |
             </p>
             <button
-              className="font-bold text-xl underline text-var-green2"
+              className="font-bold text-lg underline text-var-green2"
               onClick={() =>
                 openModal({
                   title: '인원',
@@ -325,10 +325,12 @@ export default function Reservation({ activity }: ReservationProps) {
                     <p className="text-var-gray8 font-xl mb-5">
                       예약할 날짜를 선택해 주세요.
                     </p>
-                    <CustomCalendar
-                      selectedDate={selectedDate}
-                      onChange={handleDateChange}
-                    />
+                    <div className="flex justify-center">
+                      <CustomCalendar
+                        selectedDate={selectedDate}
+                        onChange={handleDateChange}
+                      />
+                    </div>
                     <p className="my-4 font-extrabold text-nomad-black text-xl">
                       예약 가능한 시간
                     </p>
@@ -357,7 +359,7 @@ export default function Reservation({ activity }: ReservationProps) {
                 ),
               })
             }
-            className="text-nomad-black underline text-xl"
+            className="text-nomad-black underline text-sm"
           >
             {buttonText}
           </button>

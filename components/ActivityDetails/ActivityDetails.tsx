@@ -97,11 +97,11 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
       <div className="relative flex justify-between m:px-[24px]">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-nomad-black">{activityData?.category}</p>
-          <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
+          <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[350px] tracking-tight m:leading-7">
             {activityData?.title}
           </h1>
-          <div className="flex gap-3">
-            <div className="flex gap-1">
+          <div className="flex gap-3 m:items-start">
+            <div className="flex gap-1 items-center justify-center">
               <Image
                 src="/icon/icon_star_on.svg"
                 alt="별점 아이콘"
@@ -115,14 +115,14 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 ({formatCurrency(activityData?.reviewCount)})
               </p>
             </div>
-            <div className="flex gap-1">
+            <div className="flex gap-1 items-center justify-center m:items-start">
               <Image
                 src="/icon/location.svg"
                 alt="위치 아이콘"
                 width={18}
                 height={18}
               />
-              <p className="text-nomad-black m:text-sm">
+              <p className="text-nomad-black m:text-sm m:max-w-[200px] tracking-tight">
                 {activityData?.address}
               </p>
             </div>
@@ -169,7 +169,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               width={18}
               height={18}
             />
-            <p className="text-nomad-black text-sm max-w-[700px] overflow-hidden whitespace-nowrap text-ellipsis">
+            <p className="text-nomad-black text-sm max-w-[700px] tracking-tight">
               {activityData?.address}
             </p>
           </div>

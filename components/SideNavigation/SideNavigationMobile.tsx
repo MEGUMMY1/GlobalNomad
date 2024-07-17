@@ -28,8 +28,8 @@ export default function SidenNavigationMobile() {
       case '/reservation':
         setActiveButton('reservation');
         break;
-      case '/setting':
-        setActiveButton('setting');
+      case '/myactivity':
+        setActiveButton('myactivity');
         break;
       case '/calendar':
         setActiveButton('calendar');
@@ -43,7 +43,7 @@ export default function SidenNavigationMobile() {
   const buttonPaths: routePaths = {
     mypage: '/mypage',
     reservation: '/reservation',
-    setting: '/setting',
+    myactivity: '/myactivity',
     calendar: '/calendar',
   };
 
@@ -124,11 +124,11 @@ export default function SidenNavigationMobile() {
             </button>
             <button
               className={`${sideNavBtnStyle} ${
-                activeButton === 'setting'
+                activeButton === 'myactivity'
                   ? 'bg-var-green1 rounded-[12px] text-var-black'
                   : 'text-var-gray6'
               }`}
-              onClick={() => handleBtnClick('setting')}
+              onClick={() => handleBtnClick('myactivity')}
             >
               <Image
                 src={activeButton === 'setting' ? settingIcon : graySettingIcon}

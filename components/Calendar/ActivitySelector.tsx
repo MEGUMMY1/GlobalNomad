@@ -47,10 +47,14 @@ export default function ActivitySelector({
   return (
     <div className="relative w-full" ref={dropDownElement}>
       <div
-        className={`w-full h-[56px] border-solid border border-var-gray7 rounded flex items-center px-[20px] text-[16px] font-[400] font-sans bg-white cursor-pointer ${selectedActivity ? 'text-black' : 'text-var-gray6'}`}
+        className={`w-full h-[56px] border-solid border border-var-gray7 rounded flex items-center px-[20px] bg-white cursor-pointer`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedActivity}
+        <p
+          className={`text-[16px] font-[400] font-sans ${selectedActivity ? 'text-black' : 'text-var-gray6'} m:w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis`}
+        >
+          {selectedActivity}
+        </p>
         <Image
           src={isOpen ? Up : Down}
           alt="화살표 아이콘"
@@ -69,7 +73,7 @@ export default function ActivitySelector({
             return (
               <li
                 key={activity.id}
-                className={`p-2 h-[40px] hover:bg-var-gray2 ${backgroundColor} ${textColor} rounded-md cursor-pointer flex items-center`}
+                className={`p-2 hover:bg-var-gray2 ${backgroundColor} ${textColor} rounded-md cursor-pointer flex items-center`}
                 onClick={() => handleOnClick(activity.id)}
               >
                 {isSelected ? (
