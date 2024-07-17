@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react';
 import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
+import useEnterSubmit from '@/hooks/useEnterSubmit';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
@@ -30,7 +31,6 @@ export default function SingupPage() {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     watch,
   } = useForm<signUpFormValues>({ mode: 'onBlur' });
 
@@ -40,14 +40,10 @@ export default function SingupPage() {
     postSignupMutation.mutate(signUpData);
   };
 
+  const handleKeyDown = useEnterSubmit(handleSubmit(onSubmit));
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
-    if (event.key === 'Enter') {
-      handleSubmit(onSubmit)();
-    }
   };
 
   const isNotError =
