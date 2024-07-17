@@ -189,7 +189,7 @@ export default function Reservation({ activity }: ReservationProps) {
   }, [participants, setModal]);
 
   return (
-    <div className="w-[384px] h-auto p-4 border border-solid border-var-gray3 rounded-xl shadow-sm bg-white t:w-[250px] t:min-h-[423px] m:w-full m:h-[83px] m:rounded-none m:fixed m:bottom-0 m:z-10 m:border-b-0 m:border-x-0 m:p-0 m:flex m:justify-between m:items-center">
+    <div className="w-[384px] h-auto p-4 p:mb-[50px] border border-solid border-var-gray3 rounded-xl shadow-sm bg-white t:w-[250px] t:min-h-[423px] m:w-full m:h-[83px] m:rounded-none m:fixed m:bottom-0 m:z-10 m:border-b-0 m:border-x-0 m:p-0 m:flex m:justify-between m:items-center">
       <div className="m:hidden">
         <div className="flex items-center gap-2">
           <p className="text-[28px] font-bold">
@@ -235,12 +235,12 @@ export default function Reservation({ activity }: ReservationProps) {
         </p>
         <div className="t:hidden">
           {getAvailableTimes(selectedDate).length > 0 ? (
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-6 justify-center">
               {getAvailableTimes(selectedDate).map((time, index) => (
                 <button
                   key={index}
                   onClick={() => handleTimeChange(time)}
-                  className={`w-[117px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                  className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
                     selectedTime === time
                       ? 'bg-nomad-black text-white'
                       : 'bg-white'
@@ -335,12 +335,12 @@ export default function Reservation({ activity }: ReservationProps) {
                       예약 가능한 시간
                     </p>
                     {getAvailableTimes(selectedDate).length > 0 ? (
-                      <div className="flex flex-wrap gap-2 mb-6">
+                      <div className="flex flex-wrap gap-2 mb-20 justify-center">
                         {getAvailableTimes(selectedDate).map((time, index) => (
                           <button
                             key={index}
                             onClick={() => handleTimeChange(time)}
-                            className={`w-[117px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                            className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
                               selectedTime === time
                                 ? 'bg-nomad-black text-white'
                                 : 'bg-white'

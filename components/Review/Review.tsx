@@ -46,20 +46,22 @@ export default function Review({ reservation, closeModal }: ReviewProps) {
           width={125}
           height={125}
           alt="체험 사진"
-          className="object-cover rounded-xl m:w-[100px] m:h-[100px]"
+          className="object-cover rounded-xl m:w-[100px] m:h-[125px]"
         />
         <div className="text-nomad-black flex flex-col justify-between">
-          <p className="font-bold text-xl m:text-base max-w-[290px] m:max-w-[220px] overflow-hidden whitespace-nowrap text-ellipsis">
-            {reservation.activity.title}
-          </p>
-          <div className="flex gap-2 m:text-sm m:gap-1">
-            <p>{reservation.date}</p>
-            <p>·</p>
-            <p>
-              {reservation.startTime} - {reservation.endTime}
+          <div>
+            <p className="font-bold text-xl max-w-[290px] m:max-w-[220px] tracking-tight overflow-hidden whitespace-nowrap text-ellipsis">
+              {reservation.activity.title}
             </p>
-            <p>·</p>
-            <p>{reservation.headCount}명</p>
+            <div className="flex gap-2 m:text-sm m:gap-1">
+              <p>{reservation.date}</p>
+              <p>·</p>
+              <p>
+                {reservation.startTime} - {reservation.endTime}
+              </p>
+              <p>·</p>
+              <p>{reservation.headCount}명</p>
+            </div>
           </div>
           <div className="border border-solid border-var-gray2" />
           <p className="font-bold text-[32px] m:text-xl">

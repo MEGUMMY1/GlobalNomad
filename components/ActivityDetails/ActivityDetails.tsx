@@ -203,7 +203,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               {paginatedReviews?.map((review, i) => (
                 <div
                   key={review.id}
-                  className={`flex gap-4 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
+                  className={`flex gap-4 m:gap-3 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
                 >
                   <div className="flex-shrink-0">
                     <Image
@@ -215,7 +215,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                     />
                   </div>
                   <div>
-                    <div className="flex mb-2">
+                    <div className="flex mb-2 items-center">
                       <p className="font-bold max-w-[300px] m:max-w-[160px] overflow-hidden whitespace-nowrap text-ellipsis">
                         {review.user.nickname}
                       </p>
@@ -224,7 +224,9 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                         {new Date(review.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <p className="text-nomad-black">{review.content}</p>
+                    <p className="text-nomad-black tracking-tight">
+                      {review.content}
+                    </p>
                   </div>
                 </div>
               ))}

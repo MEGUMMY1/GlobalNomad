@@ -22,12 +22,12 @@ export default function ReservationModal({
           예약 가능한 시간
         </p>
         {getAvailableTimes(selectedDate).length > 0 ? (
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-20 justify-center t:max-h-[100px] t:overflow-auto">
             {getAvailableTimes(selectedDate).map((time, index) => (
               <button
                 key={index}
                 onClick={() => handleTimeChange(time)}
-                className={`w-[117px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
                   selectedTime === time
                     ? 'bg-nomad-black text-white'
                     : 'bg-white'
