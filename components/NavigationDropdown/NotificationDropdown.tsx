@@ -69,9 +69,9 @@ export default function NotificationDropdown({
           {notificationList.map((notification) => (
             <div
               key={notification.id}
-              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] m:w-[335px] m:h-[105px] bg-white border-gray-200  "
+              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] m:w-[335px] bg-white border-gray-200  "
             >
-              <div className="flex justify-between m:mb-[5px]">
+              <div className="flex justify-between">
                 <StatusIndicator
                   size="small"
                   status={
@@ -80,7 +80,7 @@ export default function NotificationDropdown({
                       : 'denied'
                   }
                 />
-                <div className="m:hidden h-[24px]">
+                <div className="h-[24px]">
                   <CloseButton onClick={() => handleDelete(notification.id)} />
                 </div>
               </div>
