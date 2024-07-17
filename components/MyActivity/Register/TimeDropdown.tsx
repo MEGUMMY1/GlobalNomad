@@ -2,8 +2,6 @@ import useClickOutside from '@/hooks/useClickOutside';
 import Image from 'next/image';
 import { useState } from 'react';
 import { TimeDropdownProps } from './TimeSlot.types';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { endTimeState, startTimeState } from '@/states/registerState';
 
 function generateTimeOptions(startTime = 0, type: 'start' | 'end') {
   const times = [];
@@ -15,24 +13,17 @@ function generateTimeOptions(startTime = 0, type: 'start' | 'end') {
   return times;
 }
 
-function TimeDropdown({ type, index }: TimeDropdownProps) {
+function TimeDropdown({
+  type,
+  handleChange,
+  startTime,
+  selectedTime,
+}: TimeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTime, setSelectedTime] = useState<string>('00:00');
-  const [startTime, setStartTime] = useRecoilState(startTimeState);
-  const [endTime, setEndTime] = useRecoilState(endTimeState);
 
   const handleSelectTime = (time: string) => {
-    setSelectedTime(time);
     setIsOpen(false);
-    if (type === 'start') {
-      const updatedStartTime = [...startTime];
-      updatedStartTime[index] = time;
-      setStartTime(updatedStartTime);
-    } else {
-      const updatedEndTime = [...endTime];
-      updatedEndTime[index] = time;
-      setEndTime(updatedEndTime);
-    }
+    handleChange(type, time);
   };
 
   const handleClickDropdown = () => {
@@ -44,9 +35,10 @@ function TimeDropdown({ type, index }: TimeDropdownProps) {
   };
 
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown);
+
   let timeLimit = 0;
   if (type === 'end') {
-    timeLimit = Number(startTime[index].substring(0, 2)) + 1;
+    timeLimit = Number(startTime.substring(0, 2)) + 1;
   }
   const times = generateTimeOptions(timeLimit, type);
 

@@ -51,14 +51,14 @@ function UploadImage({
 
   return (
     <div>
-      <label className="text-[24px] font-[700] text-var-black block mb-[24px]">
-        {label}
-      </label>
-
+      <label className="text-[24px] font-[700] text-var-black">{label}</label>
+      {label === '소개 이미지' ? (
+        <span className="text-var-gray7">{`\u00A0\u00A0\u00A0\u00A0*이미지는 최대 4개까지 등록 가능합니다.`}</span>
+      ) : null}
       <div
         className={`grid ${singleImage ? 'grid-rows-1 grid-cols-4 t:grid-cols-2 m:grid-cols-2' : 'grid-rows-2 grid-cols-4 t:grid-rows-3 t:grid-cols-2 m:grid-rows-3 m:grid-cols-2'} gap-[24px]`}
       >
-        <div>
+        <div className="mt-[24px]">
           <label
             htmlFor={`upload-${label}`}
             className={`cursor-pointer ${selectedImages.length === maxImages ? 'pointer-events-none' : ''}`}
