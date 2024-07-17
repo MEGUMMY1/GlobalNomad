@@ -36,5 +36,8 @@ export default function useSignup() {
     },
   });
 
-  return { postSignupMutation };
+  return {
+    postSignupMutation,
+    isLoading: postSignupMutation.isPending,
+  };
 }

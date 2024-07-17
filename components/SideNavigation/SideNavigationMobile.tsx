@@ -68,8 +68,8 @@ export default function SidenNavigationMobile() {
   }
   return (
     isOpen && (
-      <div className="fixed inset-0 bg-black bg-opacity-70 mt-[70px] overflow-hidden ">
-        <div className="fixed left-0 top-0 z-20 w-4/5 h-full p-[24px] flex flex-col mt-[70px] border border-solid border-var-gray3 gap-[24px] bg-white">
+      <div className="fixed inset-0 bg-black bg-opacity-70 mt-[70px] overflow-hidden p:hidden t:hidden">
+        <div className="fixed left-0 top-0 z-20 w-4/5 h-full p-[24px] flex flex-col mt-[70px] border border-solid border-var-gray3 gap-[24px] bg-white animate-slideRight">
           <div className="flex justify-end">
             <CloseButton onClick={handleCloseSideNav} />
           </div>
@@ -131,7 +131,9 @@ export default function SidenNavigationMobile() {
               onClick={() => handleBtnClick('myactivity')}
             >
               <Image
-                src={activeButton === 'setting' ? settingIcon : graySettingIcon}
+                src={
+                  activeButton === 'myactivity' ? settingIcon : graySettingIcon
+                }
                 alt="내 체험 관리 아이콘"
               />
               <p>내 체험 관리</p>

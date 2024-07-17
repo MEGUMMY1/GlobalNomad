@@ -42,5 +42,5 @@ export default function useLogin() {
     },
   });
 
-  return { postLoginMutation };
+  return { postLoginMutation, isLoading: postLoginMutation.isPending };
 }

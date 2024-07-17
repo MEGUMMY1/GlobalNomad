@@ -12,13 +12,17 @@ import { useState } from 'react';
 import SearchResults from './SearchResults';
 import { useRecoilValue } from 'recoil';
 import { mainSearchValueState } from '@/states/mainPageState';
+import { useUserData } from '@/hooks/useUserData';
 
 function Main() {
   const [isSearch, setIsSearch] = useState(false);
+  const { userData } = useUserData();
   const { SearchValue } = useRecoilValue(mainSearchValueState);
   const date = new Date();
   const month = date.getMonth() + 1;
   //const {id, title, bannerImageUrl} = useRecoilValue(BestOfmonth);
+
+  console.log(userData);
 
   const params: getActivityListParams = {
     method: 'offset',
