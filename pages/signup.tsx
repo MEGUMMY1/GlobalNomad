@@ -25,7 +25,7 @@ export default function SingupPage() {
   const [isChecked, setIsChecked] = useState(false);
   const { isLoggedIn } = useLoginState();
   const router = useRouter();
-  const { postSignupMutation } = useSignup();
+  const { postSignupMutation, isLoading } = useSignup();
 
   const {
     register,
@@ -51,11 +51,8 @@ export default function SingupPage() {
     !errors.nickname &&
     !errors.password &&
     !errors.passwordCheck;
-
   const { email, nickname, password, passwordCheck } = watch();
-
   const isFormFilled = !!email && !!nickname && !!password && !!passwordCheck;
-
   const IsAllFieldsValid = isFormFilled && isChecked && isNotError;
 
   useEffect(() => {
@@ -129,7 +126,7 @@ export default function SingupPage() {
           onClick={handleSubmit(onSubmit)}
           disabled={!IsAllFieldsValid}
         >
-          회원가입 하기
+          {isLoading ? '회원가입중...' : '회원가입 하기'}
         </PrimaryButton>
       </form>
 
