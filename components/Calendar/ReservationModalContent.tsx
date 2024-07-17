@@ -190,55 +190,57 @@ const ApplicationList: React.FC<{
   return (
     <>
       <span className="font-bold">예약 내역</span>
-      <div className="mt-2 h-[250px] overflow-auto ">
+      <div className="mt-2 p:h-[250px] t:h-[250px] m:h-1/2 overflow-auto ">
         {timeSchedule?.reservations.map((reservation) => (
           <div
             key={reservation.id}
             className="flex p-4 mb-2 border border-solid border-var-gray3 rounded"
           >
-            <div className="flex flex-col mr-auto">
-              <div className="flex gap-2">
-                <p className="text-var-gray7">닉네임</p>
-                <p>{reservation.nickname}</p>
-              </div>
-              <div className="flex gap-2">
-                <p className="text-var-gray7">인원</p>
-                <p>{reservation.headCount}명</p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center justify-center">
-              {reservation.status === 'pending' && (
-                <>
-                  <PrimaryButton
-                    size="small"
-                    style="dark"
-                    onClick={() =>
-                      handleReservation(reservation.id, 'confirmed')
-                    }
-                  >
-                    승인하기
-                  </PrimaryButton>
-                  <PrimaryButton
-                    size="small"
-                    style="bright"
-                    onClick={() =>
-                      handleReservation(reservation.id, 'declined')
-                    }
-                  >
-                    거절하기
-                  </PrimaryButton>
-                </>
-              )}
-              {reservation.status === 'confirmed' && (
-                <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-orange1 text-var-orange2">
-                  예약 승인
+            <div className="w-full flex m:flex-col justify-between">
+              <div>
+                <div className="flex flex-col mr-auto">
+                  <div className="flex gap-2 items-center">
+                    <p className="text-var-gray7 m:text-sm">닉네임</p>
+                    <p>{reservation.nickname}</p>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <p className="text-var-gray7 m:text-sm">인원</p>
+                    <p>{reservation.headCount}명</p>
+                  </div>
                 </div>
-              )}
-              {reservation.status === 'declined' && (
-                <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-red1 text-var-red2">
-                  예약 거절
-                </div>
-              )}
+              </div>
+              <div className="flex gap-2 items-center justify-center m:justify-end">
+                {reservation.status === 'pending' && (
+                  <>
+                    <button
+                      className="w-[82px] h-[38px] bg-nomad-black text-white rounded-md text-sm font-bold"
+                      onClick={() =>
+                        handleReservation(reservation.id, 'confirmed')
+                      }
+                    >
+                      승인하기
+                    </button>
+                    <button
+                      className="w-[82px] h-[38px] bg-white text-nomad-black border border-nomad-black rounded-md text-sm font-bold"
+                      onClick={() =>
+                        handleReservation(reservation.id, 'declined')
+                      }
+                    >
+                      거절하기
+                    </button>
+                  </>
+                )}
+                {reservation.status === 'confirmed' && (
+                  <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-orange1 text-var-orange2">
+                    예약 승인
+                  </div>
+                )}
+                {reservation.status === 'declined' && (
+                  <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-red1 text-var-red2">
+                    예약 거절
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}
