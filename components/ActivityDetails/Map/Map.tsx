@@ -40,5 +40,10 @@ export default function Map({ address }: MapProps) {
     };
   }, [address]);
 
-  return <div id="map" className="w-[800px] h-[500px] rounded-2xl" />;
+  return (
+    <div
+      id="map"
+      className="w-[800px] h-[500px] rounded-2xl t:w-full t:h-[276px] m:w-full m:h-[450px]"
+    />
+  );
 }
