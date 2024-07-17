@@ -69,7 +69,7 @@ export default function NotificationDropdown({
           {notificationList.map((notification) => (
             <div
               key={notification.id}
-              className="flex flex-col text-[14px] px-[10px] justify-between py-[10px] rounded-[5px] border-b w-[328px] h-[125px] m:w-[335px] bg-white border-gray-200  "
+              className="flex flex-col text-[14px] px-[10px] justify-between pt-[15px] pb-[5px] rounded-[5px] border-b w-[328px] h-[125px] m:w-[335px] bg-white border-gray-200  "
             >
               <div className="flex justify-between">
                 <StatusIndicator
