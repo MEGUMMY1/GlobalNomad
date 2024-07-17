@@ -4,7 +4,19 @@ import TimeDropdown from './TimeDropdown';
 import { TimeSlotGroupProps } from './TimeSlot.types';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { timeSlotCountState } from '@/states/registerState';
+import {
+  startTimeState,
+  endTimeState,
+  timeSlotCountState,
+} from '@/states/registerState';
+
+function autoSelectedTime(time: string) {
+  const tempTime = Number(time.substring(0, 2)) + 1;
+  if (tempTime < 10) {
+    return `0${tempTime}:00`;
+  }
+  return `${tempTime}:00`;
+}
 
 function TimeSlotGroup({
   isDefault = false,
@@ -13,14 +25,48 @@ function TimeSlotGroup({
   id = -1,
   index,
 }: TimeSlotGroupProps) {
+  const [selectedStartTime, setSelectedStartTime] = useState<string>('00:00');
+  const [selectedEndTime, setSelectedEndTime] = useState<string>('00:00');
+  const [startTime, setStartTime] = useRecoilState(startTimeState);
+  const [endTime, setEndTime] = useRecoilState(endTimeState);
+
+  const handleChange = (type: string, time: string) => {
+    if (type === 'start') {
+      setSelectedStartTime(time);
+      setSelectedEndTime(autoSelectedTime(time));
+      const updatedStartTime = [...startTime];
+      updatedStartTime[index] = time;
+      setStartTime(updatedStartTime);
+
+      const updatedEndTime = [...endTime];
+      updatedEndTime[index] = autoSelectedTime(time);
+      setEndTime(updatedEndTime);
+    } else {
+      setSelectedEndTime(time);
+      const updatedEndTime = [...endTime];
+      updatedEndTime[index] = time;
+      setEndTime(updatedEndTime);
+    }
+  };
+
   return (
     <div className="flex items-center t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[4px]">
       <div className="flex items-center gap-[20px] t:gap-[4px] m:gap-[4px]">
         <DateInput index={index} />
         <div className="flex gap-[12px] items-center t:gap-[4px] m:gap-[4px]">
-          <TimeDropdown type="start" index={index} />
+          <TimeDropdown
+            type="start"
+            handleChange={handleChange}
+            startTime={startTime[index]}
+            selectedTime={selectedStartTime}
+          />
           <p className="text-[20px] font-[700] t:hidden m:hidden">~</p>
-          <TimeDropdown type="end" index={index} />
+          <TimeDropdown
+            type="end"
+            handleChange={handleChange}
+            startTime={startTime[index]}
+            selectedTime={selectedEndTime}
+          />
         </div>
       </div>
       <div className="flex items-center">

@@ -8,5 +8,7 @@ export interface TimeSlotGroupProps {
 
 export interface TimeDropdownProps {
   type: 'start' | 'end';
-  index: number;
+  handleChange: (type: string, time: string) => void;
+  startTime: string;
+  selectedTime: string;
 }

@@ -10,6 +10,8 @@ import { useEffect, useMemo } from 'react';
 import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
+import useEnterSubmit from '@/hooks/useEnterSubmit';
+import Spinner from '@/components/Spinner/Spinner';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
@@ -20,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function LoginPage() {
-  const { postLoginMutation } = useLogin();
+  const { postLoginMutation, isLoading } = useLogin();
   const { isLoggedIn } = useLoginState();
   const router = useRouter();
   const {
@@ -34,17 +36,11 @@ export default function LoginPage() {
     postLoginMutation.mutate(data);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
-    if (event.key === 'Enter') {
-      handleSubmit(onSubmit)();
-    }
-  };
+  const handleKeyDown = useEnterSubmit(handleSubmit(onSubmit));
 
   const { email, password } = watch();
-
   const isNotError = !errors.email && !errors.password;
   const isFormFilled = !!email && !!password;
-
   const IsAllFieldsValid = isFormFilled && isNotError;
 
   useEffect(() => {
@@ -88,7 +84,7 @@ export default function LoginPage() {
           onClick={handleSubmit(onSubmit)}
           disabled={!IsAllFieldsValid}
         >
-          로그인하기
+          {isLoading ? '로그인중...' : '로그인하기'}
         </PrimaryButton>
       </form>
 

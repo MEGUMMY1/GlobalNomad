@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import { useRecoilState } from 'recoil';
 import { AddressPopupProps } from './Popup.types';
+import { CloseButtonBold } from '../Button/Button';
 
 const style = {
   width: '400px',
@@ -27,12 +28,21 @@ const AddressPopup = ({ closePopup }: AddressPopupProps) => {
 
   return (
     <div className="flex items-center justify-center bg-black bg-opacity-70 fixed inset-0 z-50">
-      <DaumPostcode
-        style={style}
-        autoClose
-        onComplete={handleComplete}
-        onClose={handleClose}
-      />
+      <div className="flex flex-col items-end bg-var-gray2">
+        <div className="flex items-center h-[30px]">
+          <CloseButtonBold
+            onClick={() => {
+              handleClose('FORCE_CLOSE');
+            }}
+          />
+        </div>
+        <DaumPostcode
+          style={style}
+          autoClose
+          onComplete={handleComplete}
+          onClose={handleClose}
+        />
+      </div>
     </div>
   );
 };
