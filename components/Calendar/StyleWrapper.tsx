@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StyleWrapper = styled.div`
   .fc {
@@ -6,12 +6,18 @@ export const StyleWrapper = styled.div`
     flex-direction: column;
     height: 800px;
     overflow: hidden;
+    z-index: 0;
   }
 
   .fc-daygrid-day {
     height: auto;
     overflow: hidden;
     position: relative;
+  }
+  .fc-scroller-harness {
+    @media (max-width: 768px) {
+      z-index: 0;
+    }
   }
 
   .fc-daygrid-day-events {
@@ -20,6 +26,10 @@ export const StyleWrapper = styled.div`
     justify-content: flex-end;
     height: 80px;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+      height: 50px;
+    }
   }
 
   .fc-daygrid-day-top {
@@ -34,6 +44,10 @@ export const StyleWrapper = styled.div`
     padding-left: 8px;
     height: 24px;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+      padding-left: 4px;
+    }
   }
 
   .fc-event-inner {

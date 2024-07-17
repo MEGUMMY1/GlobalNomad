@@ -32,7 +32,7 @@ function Modal() {
   return modal.isOpen ? (
     <>
       {/* 모바일에서는 화면 전체 크기로 띄우기 */}
-      <div className="hidden m:fixed m:inset-0 m:flex m:justify-center bg-white m:z-20">
+      <div className="hidden m:fixed m:inset-0 m:flex m:justify-center bg-white m:z-20 m:mt-[70px]">
         <div className="bg-white rounded-lg border border-nomad-black w-[480px] min-h-[600px] text-lg flex flex-col items-center p-6 relative">
           <div className="w-full flex justify-between items-center mb-5">
             <h2 className="text-[28px] font-bold">{modal.title}</h2>
