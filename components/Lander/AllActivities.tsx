@@ -53,11 +53,11 @@ export function AllActivity({
             </span>
           </div>
         </div>
-        <div className="h-[70px] t:h-[50px] m:h-[30px] m:w-[160px] font-sans text-[24px] m:text-[18px] font-[600] mt-[10px]">
+        <div className="h-[70px] t:h-[30px] m:h-[20px] m:w-[160px] font-sans text-[24px] m:text-[16px] font-[600] mt-[10px] overfolow-hidden t:truncate ... m:truncate ...">
           {title}
         </div>
-        <div className="font-sans text-[28px] text-[20px] font-[700] p:mt-[0px] mt-[15px]">
-          ₩ {price.toLocaleString()}{' '}
+        <div className="font-sans text-[28px] text-[20px] m:text-[18px] font-[700] p:mt-[0px] mt-[10px]">
+          ₩{price.toLocaleString()}{' '}
           <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
       </div>

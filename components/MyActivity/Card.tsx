@@ -12,7 +12,7 @@ import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
     <button
-      className="px-[46px] py-[18px] w-[160px] text-[18px] font-[500]"
+      className="px-[46px] py-[18px] w-auto text-[18px] font-[500]"
       onClick={onClick}
     >
       {children}

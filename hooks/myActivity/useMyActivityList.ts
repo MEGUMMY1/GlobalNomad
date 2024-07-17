@@ -12,7 +12,7 @@ export const useMyActivityList = () => {
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useInfiniteQuery<getMyActivityListResponse>({
-      queryKey: ['myActivityList'],
+      queryKey: ['myActivityListInfinite'],
       queryFn: ({ pageParam = undefined }) => {
         const size = pageParam === undefined ? INITIAL_SIZE : REFETCH_SIZE;
         return getMyActivityList({
@@ -29,6 +29,8 @@ export const useMyActivityList = () => {
       enabled: loginState.isLoggedIn,
     });
 
+  const totalCount = data?.pages[0].totalCount;
+
   const myActivityList = useMemo(() => {
     if (data) {
       return data.pages.flatMap((page) => page.activities);
@@ -37,6 +39,7 @@ export const useMyActivityList = () => {
 
   return {
     myActivityList,
+    totalCount,
     fetchNextPage,
     hasNextPage,
     isLoading,

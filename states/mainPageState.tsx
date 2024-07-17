@@ -1,13 +1,21 @@
-import { ActivityDetail } from '@/components/Lander/BestActivities.type';
-import { mainPageStateProps, mainPageKategorieStateProps, mainSearchValueStateProps } from '@/components/Lander/Main.type';
+import {
+  mainPageStateProps,
+  mainPageKategorieStateProps,
+  mainSearchValueStateProps,
+} from '@/components/Lander/Main.type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
-const { persistAtom } = recoilPersist();
+const storage = typeof window !== 'undefined' ? sessionStorage : undefined;
+
+const { persistAtom } = recoilPersist({
+  key: 'sessionStorage', // 고유한 key 값
+  storage: storage,
+});
 
 export const mainPageState = atom<mainPageStateProps>({
   key: 'mainPageState',
-  default : {
+  default: {
     currentPage: 1,
     itemsPerPage: 8,
     selectedKategorie: '',
@@ -15,8 +23,7 @@ export const mainPageState = atom<mainPageStateProps>({
     sortedName: '',
   },
   effects_UNSTABLE: [persistAtom],
-})
-
+});
 
 export const mainPageKategorieState = atom<mainPageKategorieStateProps>({
   key: 'mainPageKategorieState',
@@ -24,7 +31,7 @@ export const mainPageKategorieState = atom<mainPageKategorieStateProps>({
     KategorieName: '',
   },
   effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const mainSearchValueState = atom<mainSearchValueStateProps>({
   key: 'mainSearchValueState',
@@ -32,5 +39,5 @@ export const mainSearchValueState = atom<mainSearchValueStateProps>({
     SearchValue: '',
     currentPage: 1,
     itemsPerPage: 16,
-  }
-})
+  },
+});
