@@ -98,7 +98,10 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
             )}
             {reservationData.status === 'completed' &&
               !reservationData.reviewSubmitted && (
-                <button className={buttonStyle} onClick={handleOpenReviewModal}>
+                <button
+                  className={`bg-nomad-black text-white ${buttonStyle}`}
+                  onClick={handleOpenReviewModal}
+                >
                   후기 작성
                 </button>
               )}

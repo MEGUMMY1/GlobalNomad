@@ -10,11 +10,14 @@ import Spinner from '@/components/Spinner/Spinner';
 import { sideNavigationState } from '@/states/sideNavigationState';
 import { useRecoilState } from 'recoil';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
-import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
+import hamburgerIcon from '@/public/icon/hamburger_black.svg';
+import hamburgerWhiteIcon from '@/public/icon/hamburger_white.svg';
+import { darkModeState } from '@/states/themeState';
 
 export default function CalendarPage() {
   const [activityId, setActivityId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
+  const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
 
   const openSideNavigation = () => {
     setIsOpen(!isOpen);
@@ -52,7 +55,7 @@ export default function CalendarPage() {
       <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-full m:w-full m:h-full m:px-[15px]">
         <div className="flex m:gap-[15px]">
           <Image
-            src={hamburgerIcon}
+            src={isDarkMode ? hamburgerWhiteIcon : hamburgerIcon}
             alt="햄버거 메뉴 아이콘"
             className="p:hidden t:hidden"
             onClick={() => openSideNavigation()}

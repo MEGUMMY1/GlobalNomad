@@ -17,7 +17,6 @@ import {
 } from '@/pages/api/myActivities/apimyActivities.types';
 import useClickOutside from '@/hooks/useClickOutside';
 import ModalTabs from './ModalTabs';
-import { PrimaryButton } from '../Button/Button';
 
 const useMyDateSchedule = (params: getMyDateScheduleParams) => {
   return useQuery({
@@ -185,12 +184,12 @@ const ApplicationList: React.FC<{
     if (!isTimeScheduleLoading) {
       refetch();
     }
-  }, [mutation.isSuccess, isTimeScheduleLoading, refetch]);
+  }, [refetch, isTimeScheduleLoading]);
 
   return (
     <>
       <span className="font-bold">예약 내역</span>
-      <div className="mt-2 p:h-[250px] t:h-[250px] m:h-1/2 overflow-auto ">
+      <div className="mt-2 p:h-[250px] t:h-[250px] m:h-1/2 overflow-auto">
         {timeSchedule?.reservations.map((reservation) => (
           <div
             key={reservation.id}

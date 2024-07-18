@@ -198,7 +198,9 @@ export default function Reservation({ activity }: ReservationProps) {
           <p className="text-xl"> / 인</p>
         </div>
         <div className="border border-solid border-var-gray2 dark:border-var-dark4 mt-2" />
-        <div className="my-4 font-extrabold text-nomad-black text-xl">날짜</div>
+        <div className="my-4 font-extrabold text-nomad-black text-xl dark:text-var-gray2">
+          날짜
+        </div>
         <div className="flex items-center p:justify-center">
           <button
             onClick={() =>
@@ -230,7 +232,7 @@ export default function Reservation({ activity }: ReservationProps) {
             />
           </div>
         </div>
-        <p className="my-4 font-extrabold text-nomad-black text-xl t:hidden">
+        <p className="my-4 font-extrabold text-nomad-black text-xl t:hidden dark:text-var-gray2">
           예약 가능한 시간
         </p>
         <div className="t:hidden">
@@ -251,13 +253,13 @@ export default function Reservation({ activity }: ReservationProps) {
               ))}
             </div>
           ) : (
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-gray-500 dark:text-var-gray2">
               선택한 날짜에 예약 가능한 시간이 없습니다.
             </p>
           )}
         </div>
         <div className="border border-solid border-var-gray2 dark:border-var-dark4 mt-2 t:hidden" />
-        <p className="my-4 font-extrabold text-nomad-black text-xl">
+        <p className="my-4 font-extrabold text-nomad-black text-xl dark:text-var-gray2">
           참여 인원 수
         </p>
         <ParticipantSelector
@@ -274,7 +276,9 @@ export default function Reservation({ activity }: ReservationProps) {
         </PrimaryButton>
         <div className="border border-solid border-var-gray2 dark:border-var-dark4 mt-6" />
         <div className="mt-4 flex items-center justify-between">
-          <p className="font-extrabold text-nomad-black text-xl">총 합계</p>
+          <p className="font-extrabold text-nomad-black text-xl dark:text-var-gray2">
+            총 합계
+          </p>
           <p className="font-extrabold text-nomad-black text-xl">
             ₩ {totalPrice.toLocaleString()}
           </p>

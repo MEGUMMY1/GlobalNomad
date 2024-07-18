@@ -131,12 +131,12 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           </div>
         </div>
         {isAuthor && (
-          <>
+          <div className="m:flex m:items-start m:pt-6">
             <MeatballButton onClick={toggleMenu} />
             {isOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white dark:bg-var-dark3 border border-var-gray3 dark:border-var-gray7 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
+                className="absolute top-10 right-0 m:top-16 m:right-6 mt-2 w-40 h-[114px] m:w-24 m:h-20 bg-white dark:bg-var-dark3 border border-var-gray3 dark:border-var-gray7 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10 m:text-sm"
               >
                 <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-t-lg border-b dark:border-var-gray7 border-var-gray3 border-solid">
                   수정하기
@@ -146,7 +146,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 </button>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
       {activityData && (
