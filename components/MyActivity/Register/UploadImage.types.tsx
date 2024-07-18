@@ -3,3 +3,8 @@ export interface UploadImageProps {
   maxImages: number;
   singleImage?: boolean;
 }
+
+export interface DetailImageProps {
+  id: number;
+  imageUrl: string;
+}

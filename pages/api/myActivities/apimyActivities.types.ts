@@ -106,7 +106,7 @@ export interface updataMyReservationResponse {
 
 export interface updataMyActivitiesParams {
   title: string;
-  category: ['문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙'];
+  category: string;
   description: string;
   price: number;
   address: string;
@@ -114,7 +114,7 @@ export interface updataMyActivitiesParams {
   subImageIdsToRemove: number[];
   subImageUrlsToAdd: string[];
   scheduleIdsToRemove: number[];
-  schedulesToAdd: [{ date: string; startTime: string; endTime: string }];
+  schedulesToAdd: { date: string; startTime: string; endTime: string }[];
 }
 
 export interface updataMyActivitiesResponse {

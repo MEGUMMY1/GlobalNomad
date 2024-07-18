@@ -40,7 +40,9 @@ function Date({ index }: TimeSlotGroupProps) {
           onClick={handleInputClick}
           readOnly
           className="w-full h-[56px] py-[8px] px-[16px] rounded-md border border-var-gray6 bg-white"
-          placeholder="YY/MM/DD"
+          placeholder={
+            selectedDate[index] !== '' ? selectedDate[index] : 'YY/MM/DD'
+          }
         />
       </div>
       {showCalendar && (
