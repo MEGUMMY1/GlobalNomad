@@ -9,7 +9,6 @@ export function ShareButton({
   description,
 }: ShareButtonProps) {
   const { openModal } = useModal();
-  const router = useRouter();
 
   const handleKaKaoShare = () => {
     const { Kakao } = window;
@@ -27,7 +26,22 @@ export function ShareButton({
     });
   };
 
-  const handleFacebookShare = () => {};
+  const url = `https://globalnomad-5-8.netlify.app/activity-details/${activityId}`;
+  const text = `${title}\n\n${description}`;
+  const encodedUrl = encodeURIComponent(url);
+  const encodedText = encodeURIComponent(text);
+
+  const handleFacebookShare = () => {
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+    window.open(facebookShareUrl, '_blank');
+  };
+
+  const handleXShare = () => {
+    const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+    window.open(twitterShareUrl, '_blank');
+  };
+
+  const handlePasteURL = () => {};
 
   const handleOnClick = (e: any) => {
     e.stopPropagation();
@@ -60,17 +74,14 @@ export function ShareButton({
               onClick={handleKaKaoShare}
             />
             <SNSShareBUtton
+              imageUrl="/icon/twitter.png"
+              title="X로 공유하기"
+              onClick={handleXShare}
+            />
+            <SNSShareBUtton
               imageUrl="/icon/facebookIconforShare.png"
               title="페이스북으로 공유하기"
               onClick={handleFacebookShare}
-            />
-            <SNSShareBUtton
-              imageUrl="/icon/instagramIconForShare.png"
-              title="인스타그램으로 공유하기"
-            />
-            <SNSShareBUtton
-              imageUrl="/icon/instagramIconForShare.png"
-              title="트위터로 공유하기"
             />
           </div>
         </div>
