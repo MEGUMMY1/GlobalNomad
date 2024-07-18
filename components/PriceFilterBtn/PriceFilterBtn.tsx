@@ -35,7 +35,7 @@ export default function PriceFilterBtn() {
         onClick={() => setShowMenuList((prev) => !prev)}
       >
         <p className="text-[18px] t:text-[12px] m:text-[10px] text-var-green2 dark:text-var-gray2">
-          {isClient ? sortedName : '정렬'}
+          {isClient && !showMenuList ? sortedName || '정렬' : sortedName}
         </p>
         <Image
           src={filterIcon}
@@ -49,9 +49,9 @@ export default function PriceFilterBtn() {
           <div className="relative left-0 bottom-[-8px] z-50 flex w-[147px] t:w-[120px] m:w-[90px] flex-col shadow-lg rounded-[8px] animate-slideDown">
             <button
               className="flex justify-center items-center text-[18px] m:text-[14px] border border-solid border-var-gray3 w-[147px] t:w-[120px] m:w-[90px] h-[58px] m:h-[41px] rounded-t-[8px] bg-white dark:bg-var-dark2 dark:border-var-dark4 hover:bg-var-gray2 dark:hover:bg-var-dark3"
-              onClick={() => changeSelectedSort('', '기본 정렬')}
+              onClick={() => changeSelectedSort('', '최신 순')}
             >
-              기본 정렬
+              최신 순
             </button>
             <button
               className="flex justify-center items-center text-[18px] m:text-[14px] border border-solid border-var-gray3 w-[147px] t:w-[120px] m:w-[90px] h-[58px] m:h-[41px] bg-white dark:bg-var-dark2 dark:border-var-dark4 hover:bg-var-gray2 dark:hover:bg-var-dark3"

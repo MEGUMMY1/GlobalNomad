@@ -34,7 +34,7 @@ export default function AuthInputBox({
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
-        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6`}
+        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6 outline-none dark:bg-var-dark3 dark:border-none`}
         type={isEyeOpen ? 'text' : type}
         placeholder={placeholder}
         {...register(name, validation)}

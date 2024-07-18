@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import '@/styles/calendar.css';
 import type { AppProps } from 'next/app';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Popup from '@/components/Popup/Popup';
 import Layout from '@/components/Layout/Layout';
@@ -11,23 +11,9 @@ import Spinner from '@/components/Spinner/Spinner';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
-import { darkModeState } from '@/states/themeState';
+import Theme from '@/components/Theme/Theme';
 
 const queryClient = new QueryClient();
-
-function DarkModeEffect() {
-  const darkMode = useRecoilValue(darkModeState);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
-  return null;
-}
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -65,11 +51,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <RecoilRoot>
-      <DarkModeEffect />
       {isLoading ? (
         <Spinner />
       ) : (
         <QueryClientProvider client={queryClient}>
+          <Theme />
           {childContent}
           <Popup />
           <Modal />

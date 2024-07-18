@@ -4,6 +4,8 @@ import {
   PrimaryButtonProps,
   SimpleButtonProps,
 } from './Button.types';
+import { useRecoilValue } from 'recoil';
+import { darkModeState } from '@/states/themeState';
 
 const primarySizeClasses = {
   small: 'px-[20px] py-[10px] text-[14px]',
@@ -80,6 +82,8 @@ export function PaginationArrowButton({
   disabled,
   direction,
 }: PaginationButtonProps) {
+  const darkMode = useRecoilValue(darkModeState);
+
   const iconActiveSrc =
     direction === 'prev'
       ? '/icon/arrow_active_left.svg'
@@ -88,20 +92,37 @@ export function PaginationArrowButton({
     direction === 'prev'
       ? '/icon/arrow_inactive_left.svg'
       : '/icon/arrow_inactive_right.svg';
+
+  const darkModeActiveSrc =
+    direction === 'prev'
+      ? '/icon/arrow_inactive_left.svg'
+      : '/icon/arrow_inactive_right.svg';
+  const darkModeInactiveSrc =
+    direction === 'prev'
+      ? '/icon/arrow_active_left.svg'
+      : '/icon/arrow_active_right.svg';
+
   const altText = direction === 'prev' ? '이전 페이지' : '다음 페이지';
+
+  const iconSrc = darkMode
+    ? disabled
+      ? darkModeInactiveSrc
+      : darkModeActiveSrc
+    : disabled
+      ? iconInactiveSrc
+      : iconActiveSrc;
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-[55px] h-[55px] flex items-center justify-center bg-white dark:bg-var-dark2 border border-solid ${disabled ? 'border-var-gray3 dark:border-var-gray8' : 'border-var-green2 dark:border-var-gray8'} rounded-2xl m:w-[40px] m:h-[40px]`}
+      className={`w-[55px] h-[55px] flex items-center justify-center bg-white dark:bg-var-dark2 border border-solid ${
+        disabled
+          ? 'border-var-gray3 dark:border-var-gray8'
+          : 'border-var-green2 dark:border-var-gray8'
+      } rounded-2xl m:w-[40px] m:h-[40px]`}
     >
-      <Image
-        src={disabled ? iconInactiveSrc : iconActiveSrc}
-        width={20}
-        height={20}
-        alt={altText}
-      />
+      <Image src={iconSrc} width={20} height={20} alt={altText} />
     </button>
   );
 }
