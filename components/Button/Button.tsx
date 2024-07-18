@@ -94,7 +94,7 @@ export function PaginationArrowButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-[55px] h-[55px] flex items-center justify-center bg-white border border-solid ${disabled ? 'border-var-gray3' : 'border-var-green2'} rounded-2xl m:w-[40px] m:h-[40px]`}
+      className={`w-[55px] h-[55px] flex items-center justify-center bg-white dark:bg-var-dark2 border border-solid ${disabled ? 'border-var-gray3 dark:border-var-gray8' : 'border-var-green2 dark:border-var-gray8'} rounded-2xl m:w-[40px] m:h-[40px]`}
     >
       <Image
         src={disabled ? iconInactiveSrc : iconActiveSrc}

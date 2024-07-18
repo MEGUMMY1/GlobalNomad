@@ -4,6 +4,8 @@ import { CalendarProps } from 'react-calendar';
 import { addDays } from 'date-fns';
 import 'react-calendar/dist/Calendar.css';
 import { CustomCalendarProps } from './CustomCalendar.types';
+import { useRecoilValue } from 'recoil';
+import { darkModeState } from '@/states/themeState';
 
 const DynamicCalendar = dynamic(() => import('react-calendar'), { ssr: false });
 
@@ -19,8 +21,10 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
     }
   };
 
+  const darkMode = useRecoilValue(darkModeState);
+
   return (
-    <div className="calendar-container">
+    <div className={`calendar-container ${darkMode ? 'dark' : ''}`}>
       <DynamicCalendar
         onChange={handleDateChange}
         value={selectedDate}

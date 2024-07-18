@@ -69,7 +69,7 @@ export default function SidenNavigationMobile() {
   return (
     isOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-70 mt-[70px] overflow-hidden p:hidden t:hidden">
-        <div className="fixed left-0 top-0 z-20 w-4/5 h-full p-[24px] flex flex-col mt-[70px] border border-solid border-var-gray3 gap-[24px] bg-white animate-slideRight">
+        <div className="fixed left-0 top-0 z-20 w-4/5 h-full p-[24px] flex flex-col mt-[70px] gap-[24px] bg-white dark:bg-var-dark2 animate-slideRight">
           <div className="flex justify-end">
             <CloseButton onClick={handleCloseSideNav} />
           </div>
@@ -91,7 +91,7 @@ export default function SidenNavigationMobile() {
             <button
               className={`${sideNavBtnStyle} ${
                 activeButton === 'mypage'
-                  ? 'bg-var-green1  rounded-[12px] text-var-black'
+                  ? 'bg-var-green1  rounded-[12px] text-var-black dark:bg-var-dark4'
                   : 'text-var-gray6'
               }`}
               onClick={() => handleBtnClick('mypage')}
@@ -107,7 +107,7 @@ export default function SidenNavigationMobile() {
             <button
               className={`${sideNavBtnStyle} ${
                 activeButton === 'reservation'
-                  ? 'bg-var-green1 rounded-[12px]  text-var-black'
+                  ? 'bg-var-green1 rounded-[12px]  text-var-black dark:bg-var-dark4'
                   : 'text-var-gray6'
               }`}
               onClick={() => handleBtnClick('reservation')}
@@ -125,7 +125,7 @@ export default function SidenNavigationMobile() {
             <button
               className={`${sideNavBtnStyle} ${
                 activeButton === 'myactivity'
-                  ? 'bg-var-green1 rounded-[12px] text-var-black'
+                  ? 'bg-var-green1 rounded-[12px] text-var-black dark:bg-var-dark4'
                   : 'text-var-gray6'
               }`}
               onClick={() => handleBtnClick('myactivity')}
@@ -141,7 +141,7 @@ export default function SidenNavigationMobile() {
             <button
               className={`${sideNavBtnStyle} ${
                 activeButton === 'calendar'
-                  ? 'bg-var-green1 rounded-[12px] text-var-black'
+                  ? 'bg-var-green1 rounded-[12px] text-var-black dark:bg-var-dark4'
                   : 'text-var-gray6'
               }`}
               onClick={() => handleBtnClick('calendar')}

@@ -94,7 +94,7 @@ export default function SidenNavigation() {
   }
 
   return (
-    <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 bg-white justify-center gap-[24px] t:w-[251px]">
+    <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 bg-white dark:bg-var-dark2 dark:border-none justify-center gap-[24px] t:w-[251px]">
       <div className="w-fill flex justify-center relative">
         <label htmlFor="upload-image" className="cursor-pointer">
           <Image
@@ -122,7 +122,7 @@ export default function SidenNavigation() {
         <button
           className={`${sideNavBtnStyle} ${
             activeButton === 'mypage'
-              ? 'bg-var-green1  rounded-[12px] text-var-black'
+              ? 'bg-var-green1 rounded-[12px] text-var-black dark:bg-var-dark4'
               : 'text-var-gray6'
           }`}
           onClick={() => handleBtnClick('mypage')}
@@ -136,7 +136,7 @@ export default function SidenNavigation() {
         <button
           className={`${sideNavBtnStyle} ${
             activeButton === 'reservation'
-              ? 'bg-var-green1 rounded-[12px]  text-var-black'
+              ? 'bg-var-green1 rounded-[12px]  text-var-black dark:bg-var-dark4'
               : 'text-var-gray6'
           }`}
           onClick={() => handleBtnClick('reservation')}
@@ -154,7 +154,7 @@ export default function SidenNavigation() {
         <button
           className={`${sideNavBtnStyle} ${
             activeButton === 'myactivity'
-              ? 'bg-var-green1 rounded-[12px] text-var-black'
+              ? 'bg-var-green1 rounded-[12px] text-var-black dark:bg-var-dark4'
               : 'text-var-gray6'
           }`}
           onClick={() => handleBtnClick('myactivity')}
@@ -168,7 +168,7 @@ export default function SidenNavigation() {
         <button
           className={`${sideNavBtnStyle} ${
             activeButton === 'calendar'
-              ? 'bg-var-green1 rounded-[12px] text-var-black'
+              ? 'bg-var-green1 rounded-[12px] text-var-black dark:bg-var-dark4'
               : 'text-var-gray6'
           }`}
           onClick={() => handleBtnClick('calendar')}

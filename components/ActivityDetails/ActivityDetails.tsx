@@ -96,8 +96,10 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     <div className="mt-16 t:mt-4 m:mt-4">
       <div className="relative flex justify-between m:px-[24px]">
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-nomad-black">{activityData?.category}</p>
-          <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[350px] tracking-tight m:leading-7">
+          <p className="text-sm text-nomad-black dark:text-var-gray2">
+            {activityData?.category}
+          </p>
+          <h1 className="text-[32px] text-nomad-black dark:text-var-gray2 font-bold m:text-[24px] m:max-w-[350px] tracking-tight m:leading-7">
             {activityData?.title}
           </h1>
           <div className="flex gap-3 m:items-start">
@@ -122,7 +124,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 width={18}
                 height={18}
               />
-              <p className="text-nomad-black m:text-sm m:max-w-[200px] tracking-tight">
+              <p className="text-nomad-black dark:text-var-gray2 m:text-sm m:max-w-[200px] tracking-tight">
                 {activityData?.address}
               </p>
             </div>
@@ -134,12 +136,12 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
             {isOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white border border-var-gray3 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
+                className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white dark:bg-var-dark3 border border-var-gray3 dark:border-var-gray7 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
               >
-                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-t-lg border-b border-var-gray3 border-solid">
+                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-t-lg border-b dark:border-var-gray7 border-var-gray3 border-solid">
                   수정하기
                 </button>
-                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-b-lg">
+                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-b-lg">
                   삭제하기
                 </button>
               </div>
@@ -155,12 +157,16 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
       )}
       <div className="flex gap-4 m:block m:relative">
         <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
-          <div className="border-t-2 border-var-gray3 border-solid pt-10 m:pt-6" />
+          <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid pt-10 m:pt-6" />
           <div className="flex flex-col gap-4">
-            <p className="text-nomad-black font-bold text-xl">체험 설명</p>
-            <p className="text-nomad-black">{activityData?.description}</p>
+            <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
+              체험 설명
+            </p>
+            <p className="text-nomad-black dark:text-var-gray2">
+              {activityData?.description}
+            </p>
           </div>
-          <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
+          <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
           {activityData && <Map address={activityData.address} />}
           <div className="flex gap-1 mt-2">
             <Image
@@ -169,19 +175,21 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               width={18}
               height={18}
             />
-            <p className="text-nomad-black text-sm max-w-[700px] tracking-tight">
+            <p className="text-nomad-black dark:text-var-gray2 text-sm max-w-[700px] tracking-tight">
               {activityData?.address}
             </p>
           </div>
-          <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
+          <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
           <div className="flex flex-col gap-4">
-            <p className="text-nomad-black font-bold text-xl">후기</p>
+            <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
+              후기
+            </p>
             <div className="flex gap-4 items-center">
               <p className="text-[50px] font-bold">
                 {activityData && formatNumberToFixed(activityData?.rating)}
               </p>
               <div className="flex flex-col gap-1">
-                <p className="text-lg text-nomad-black">
+                <p className="text-lg text-nomad-black dark:text-var-gray2">
                   {activityData && getRatingText(activityData?.rating)}
                 </p>
                 <div className="flex items-center gap-1">
@@ -191,7 +199,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                     width={16}
                     height={16}
                   />
-                  <p className="text-var-black text-sm">
+                  <p className="text-var-black dark:text-var-gray2 text-sm">
                     {formatCurrency(activityData?.reviewCount)}개 후기
                   </p>
                 </div>
@@ -203,7 +211,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               {paginatedReviews?.map((review, i) => (
                 <div
                   key={review.id}
-                  className={`flex gap-4 m:gap-3 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
+                  className={`flex gap-4 m:gap-3 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 dark:border-var-dark4 border-solid'}`}
                 >
                   <div className="flex-shrink-0">
                     <Image
@@ -224,7 +232,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                         {new Date(review.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <p className="text-nomad-black tracking-tight">
+                    <p className="text-nomad-black tracking-tight dark:text-var-gray2">
                       {review.content}
                     </p>
                   </div>

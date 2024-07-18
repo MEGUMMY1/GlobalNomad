@@ -11,6 +11,8 @@ import NotificationDropdown from '../NavigationDropdown/NotificationDropdown';
 import useLoginState from '@/hooks/useLoginState';
 import Spinner from '../Spinner/Spinner';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
+import { useRecoilState } from 'recoil';
+import { darkModeState } from '@/states/themeState';
 
 export default function NavigationBar() {
   const { userData, isLoading } = useUserData();
@@ -21,6 +23,11 @@ export default function NavigationBar() {
     cursorId: 0,
     size: 2,
   });
+  const [darkMode, setDarkMode] = useRecoilState(darkModeState);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -46,12 +53,18 @@ export default function NavigationBar() {
   }
 
   return (
-    <div className="sticky top-0 flex h-[70px] z-30 justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px]  border-b bg-white border-var-gray3 border-solid ">
+    <div className="sticky top-0 flex h-[70px] z-30 justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px]  border-b bg-white dark:bg-var-dark1 border-var-gray3 dark:border-none border-solid ">
       <div className="flex items-center">
         <Link href="/">
           <Image src={Logo} alt="로고 아이콘" />
         </Link>
       </div>
+      <button
+        onClick={toggleDarkMode}
+        className="w-[50px] p-2 bg-var-gray8 text-white rounded"
+      >
+        {darkMode ? 'Light' : 'Dark'}
+      </button>
       {isLoggedIn ? (
         <div className="flex items-center gap-[15px]">
           <button onClick={toggleNotifyDropdown}>

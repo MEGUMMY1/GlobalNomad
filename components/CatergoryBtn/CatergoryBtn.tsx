@@ -28,12 +28,16 @@ export default function CatergoryBtn({ categoryName }: CategoryBtnProps) {
   };
 
   const isSelected = categoryName === KategorieName;
-  const backgroundColor = isSelected ? 'bg-black' : 'bg-white';
-  const textColor = isSelected ? 'text-white' : 'text-black';
+  const backgroundColor = isSelected
+    ? 'bg-black dark:bg-var-gray6'
+    : 'bg-white dark:bg-var-dark2';
+  const textColor = isSelected
+    ? 'text-white dark:text-var-gray2'
+    : 'text-black dark:text-var-gray2';
 
   return (
     <button
-      className={`flex items-center justify-center rounded-[15px] border-[1px] border-solid border-var-green2 w-[127px] h-[53px] t:min-w-[120px] m:min-w-[80px] m:h-[41px] ${backgroundColor}`}
+      className={`flex items-center justify-center rounded-[15px] border-[1px] border-solid border-var-green2 dark:border-none w-[127px] h-[53px] t:min-w-[120px] m:min-w-[80px] m:h-[41px] ${backgroundColor}`}
       onClick={handleClick}
     >
       <p className={`text-[18px] m:text-[14px] ${textColor}`}>{categoryName}</p>

@@ -10,10 +10,10 @@ export default function ParticipantSelector({
   };
 
   return (
-    <div className="w-[120px] h-[40px] flex items-center mt-2 mb-6 rounded border border-var-gray2 border-solid">
+    <div className="w-[120px] h-[40px] flex items-center mt-2 mb-6 rounded border dark:bg-var-dark4 border-var-gray2 dark:border-none border-solid">
       <button
         onClick={() => handleParticipantsChange(-1)}
-        className="px-4 py-2 hover:bg-var-gray2"
+        className="px-4 py-2 hover:bg-var-gray2 dark:hover:bg-var-gray7"
       >
         -
       </button>
@@ -24,11 +24,11 @@ export default function ParticipantSelector({
           onParticipantsChange(Math.max(1, parseInt(e.target.value)))
         }
         min="1"
-        className="w-full h-full p-2 outline-none text-center"
+        className="w-full h-full p-2 outline-none text-center dark:bg-var-dark4"
       />
       <button
         onClick={() => handleParticipantsChange(1)}
-        className="px-4 py-2 hover:bg-var-gray2"
+        className="px-4 py-2 hover:bg-var-gray2 dark:hover:bg-var-gray7"
       >
         +
       </button>

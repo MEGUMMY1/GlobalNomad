@@ -52,7 +52,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   }
 
   return (
-    <div className="h-[204px] relative flex rounded-3xl shadow-card overflow-hidden t:h-[156px] m:h-[128px]">
+    <div className="h-[204px] relative flex rounded-3xl shadow-card dark:shadow-none overflow-hidden t:h-[156px] m:h-[128px]">
       <div className="min-w-[204px] h-[204px] relative t:min-w-[156px] t:h-[156px] m:min-w-[110px] m:h-[128px]">
         <Link
           href={`/activity-details/${reservationData.activity.id}`}
@@ -67,7 +67,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
           />
         </Link>
       </div>
-      <div className="w-full p-[24px] t:p-[12px] m:p-[9px]">
+      <div className="w-full p-[24px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2">
         <p
           className={`text-[16px] font-bold ${statusStyle[reservationData.status]} m:text-[14px] m:py-[2px]`}
         >

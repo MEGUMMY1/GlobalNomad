@@ -10,8 +10,11 @@ import { getMyMonthScheduleResponse } from '@/pages/api/myActivities/apimyActivi
 import { StyleWrapper } from './StyleWrapper';
 import { useModal } from '@/hooks/useModal';
 import ReservationModalContent from './ReservationModalContent';
+import { darkModeState } from '@/states/themeState';
+import { useRecoilValue } from 'recoil';
 
 const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
+  const darkMode = useRecoilValue(darkModeState);
   const year = new Date().getFullYear().toString();
   const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
 
@@ -87,7 +90,7 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
     }) || [];
 
   return (
-    <StyleWrapper>
+    <StyleWrapper darkMode={darkMode}>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"

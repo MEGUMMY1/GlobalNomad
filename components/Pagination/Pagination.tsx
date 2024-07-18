@@ -24,7 +24,7 @@ export default function Pagination({
         <button
           key={i}
           onClick={() => onPageChange(i)}
-          className={`w-[55px] h-[55px] text-lg flex items-center justify-center mx-1 border border-solid border-var-green2 rounded-2xl m:w-[40px] m:h-[40px] ${i === currentPage ? 'bg-var-green2 text-white' : 'bg-white text-var-green2'}`}
+          className={`w-[55px] h-[55px] text-lg flex items-center justify-center mx-1 border border-solid border-var-green2 dark:border-var-gray8 rounded-2xl m:w-[40px] m:h-[40px] ${i === currentPage ? 'bg-var-green2 text-white dark:bg-var-dark4 dark:text-var-gray2' : 'bg-white text-var-green2 dark:bg-var-dark2 dark:text-var-gray2'}`}
         >
           {i}
         </button>

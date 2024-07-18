@@ -175,7 +175,7 @@ export default function Reservation({ activity }: ReservationProps) {
       ...prevModal,
       content: (
         <>
-          <p className="text-var-gray8 font-xl mb-5">
+          <p className="text-var-gray8 dark:text-var-gray2 font-xl mb-5">
             예약할 인원을 선택해 주세요.
           </p>
           <ParticipantSelector
@@ -189,7 +189,7 @@ export default function Reservation({ activity }: ReservationProps) {
   }, [participants, setModal]);
 
   return (
-    <div className="w-[384px] h-auto p-4 p:mb-[50px] border border-solid border-var-gray3 rounded-xl shadow-sm bg-white t:w-[250px] t:min-h-[423px] m:w-full m:h-[83px] m:rounded-none m:fixed m:bottom-0 m:z-10 m:border-b-0 m:border-x-0 m:p-0 m:flex m:justify-between m:items-center">
+    <div className="w-[384px] h-auto p-4 p:mb-[50px] border border-solid border-var-gray3 rounded-xl shadow-sm bg-white dark:bg-var-dark3 dark:border-none t:w-[250px] t:min-h-[423px] m:w-full m:h-[83px] m:rounded-none m:fixed m:bottom-0 m:z-10 m:border-b-0 m:border-x-0 m:p-0 m:flex m:justify-between m:items-center">
       <div className="m:hidden">
         <div className="flex items-center gap-2">
           <p className="text-[28px] font-bold">
@@ -197,7 +197,7 @@ export default function Reservation({ activity }: ReservationProps) {
           </p>
           <p className="text-xl"> / 인</p>
         </div>
-        <div className="border border-solid border-var-gray2 mt-2" />
+        <div className="border border-solid border-var-gray2 dark:border-var-dark4 mt-2" />
         <div className="my-4 font-extrabold text-nomad-black text-xl">날짜</div>
         <div className="flex items-center p:justify-center">
           <button
@@ -240,10 +240,10 @@ export default function Reservation({ activity }: ReservationProps) {
                 <button
                   key={index}
                   onClick={() => handleTimeChange(time)}
-                  className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                  className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black dark:border-none rounded-lg ${
                     selectedTime === time
                       ? 'bg-nomad-black text-white'
-                      : 'bg-white'
+                      : 'bg-white dark:bg-var-dark4'
                   }`}
                 >
                   {time}
@@ -256,7 +256,7 @@ export default function Reservation({ activity }: ReservationProps) {
             </p>
           )}
         </div>
-        <div className="border border-solid border-var-gray2 mt-2 t:hidden" />
+        <div className="border border-solid border-var-gray2 dark:border-var-dark4 mt-2 t:hidden" />
         <p className="my-4 font-extrabold text-nomad-black text-xl">
           참여 인원 수
         </p>
@@ -272,7 +272,7 @@ export default function Reservation({ activity }: ReservationProps) {
         >
           예약하기
         </PrimaryButton>
-        <div className="border border-solid border-var-gray2 mt-6" />
+        <div className="border border-solid border-var-gray2 dark:border-var-dark4 mt-6" />
         <div className="mt-4 flex items-center justify-between">
           <p className="font-extrabold text-nomad-black text-xl">총 합계</p>
           <p className="font-extrabold text-nomad-black text-xl">
@@ -288,7 +288,7 @@ export default function Reservation({ activity }: ReservationProps) {
               ₩ {totalPrice.toLocaleString()} |
             </p>
             <button
-              className="font-bold text-lg underline text-var-green2"
+              className="font-bold text-lg underline text-var-green2 dark:text-var-gray4"
               onClick={() =>
                 openModal({
                   title: '인원',
@@ -297,7 +297,7 @@ export default function Reservation({ activity }: ReservationProps) {
                   callBackFnc: handleModalConfirm,
                   content: (
                     <>
-                      <p className="text-var-gray8 font-xl mb-5">
+                      <p className="text-var-gray8 dark:text-var-gray2 font-xl mb-5">
                         예약할 인원을 선택해 주세요.
                       </p>
                       <ParticipantSelector
@@ -331,7 +331,7 @@ export default function Reservation({ activity }: ReservationProps) {
                         onChange={handleDateChange}
                       />
                     </div>
-                    <p className="my-4 font-extrabold text-nomad-black text-xl">
+                    <p className="my-4 font-extrabold text-nomad-black dark:text-var-gray2 text-xl">
                       예약 가능한 시간
                     </p>
                     {getAvailableTimes(selectedDate).length > 0 ? (
@@ -340,10 +340,10 @@ export default function Reservation({ activity }: ReservationProps) {
                           <button
                             key={index}
                             onClick={() => handleTimeChange(time)}
-                            className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                            className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black dark:border-none rounded-lg ${
                               selectedTime === time
                                 ? 'bg-nomad-black text-white'
-                                : 'bg-white'
+                                : 'bg-white dark:bg-var-dark4'
                             }`}
                           >
                             {time}
@@ -359,7 +359,7 @@ export default function Reservation({ activity }: ReservationProps) {
                 ),
               })
             }
-            className="text-nomad-black underline text-sm"
+            className="text-nomad-black underline text-sm dark:text-var-gray2"
           >
             {buttonText}
           </button>
