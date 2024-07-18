@@ -19,6 +19,7 @@ function BestActivity({
   rating,
   reviewCount,
   bannerImageUrl,
+  description,
   id,
 }: BestActivityProps) {
   const router = useRouter();
@@ -46,7 +47,12 @@ function BestActivity({
           {rating.toFixed(1)} ({reviewCount})
         </span>
       </div>
-      <ShareButton title={title} bannerImageUrl={bannerImageUrl} />
+      <ShareButton
+        title={title}
+        bannerImageUrl={bannerImageUrl}
+        description={description}
+        activityId={id}
+      />
       <div className="font-sans text-[30px] m:text-[18px] font-[700] absolute left-[20px] bottom-[74px] m:bottom-[50px] text-white">
         {title}
       </div>
@@ -141,6 +147,7 @@ function BestActivities() {
               title={item.title}
               price={item.price}
               rating={item.rating}
+              description={item.description}
               reviewCount={item.reviewCount}
               id={item.id}
               bannerImageUrl={item.bannerImageUrl}
@@ -160,6 +167,7 @@ function BestActivities() {
               price={item.price}
               rating={item.rating}
               reviewCount={item.reviewCount}
+              description={item.description}
               id={item.id}
               bannerImageUrl={item.bannerImageUrl}
             />

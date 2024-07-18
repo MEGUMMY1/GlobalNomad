@@ -1,13 +1,33 @@
 import { useModal } from '@/hooks/useModal';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
-interface SNSShareBUttonProps {
-  imageUrl: string;
-  title: string;
-}
-
-export function ShareButton({ title, bannerImageUrl }: ShareButtonProps) {
+export function ShareButton({
+  activityId,
+  title,
+  bannerImageUrl,
+  description,
+}: ShareButtonProps) {
   const { openModal } = useModal();
+  const router = useRouter();
+
+  const handleKaKaoShare = () => {
+    const { Kakao } = window;
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: title,
+        description: description,
+        imageUrl: bannerImageUrl,
+        link: {
+          mobileWebUrl: `https://globalnomad-5-8.netlify.app/activity-details/${activityId}`,
+          webUrl: `https://globalnomad-5-8.netlify.app/activity-details/${activityId}`,
+        },
+      },
+    });
+  };
+
+  const handleFacebookShare = () => {};
 
   const handleOnClick = (e: any) => {
     e.stopPropagation();
@@ -29,22 +49,28 @@ export function ShareButton({ title, bannerImageUrl }: ShareButtonProps) {
           </div>
           <p>{title}</p>
           <div className="grid grid-cols-2 grid-rows-2 gap-y-[30px] gap-x-[15px] mt-[10px]">
-            <SNSShareBUtton imageUrl="/icon/link.png" title="URL로 공유하기" />
             <SNSShareBUtton
               imageUrl="/icon/link.png"
-              title="이메일로 공유하기"
+              title="URL 복사하기"
+              description={description}
             />
             <SNSShareBUtton
               imageUrl="/image/kakao.png"
               title="카카오로 공유하기"
+              onClick={handleKaKaoShare}
             />
             <SNSShareBUtton
               imageUrl="/icon/facebookIconforShare.png"
               title="페이스북으로 공유하기"
+              onClick={handleFacebookShare}
             />
             <SNSShareBUtton
               imageUrl="/icon/instagramIconForShare.png"
               title="인스타그램으로 공유하기"
+            />
+            <SNSShareBUtton
+              imageUrl="/icon/instagramIconForShare.png"
+              title="트위터로 공유하기"
             />
           </div>
         </div>
@@ -65,9 +91,9 @@ export function ShareButton({ title, bannerImageUrl }: ShareButtonProps) {
   );
 }
 
-function SNSShareBUtton({ imageUrl, title }: SNSShareBUttonProps) {
+function SNSShareBUtton({ imageUrl, title, onClick }: SNSShareBUttonProps) {
   return (
-    <button className={ShareButtonStyle}>
+    <button className={ShareButtonStyle} onClick={onClick}>
       <div className="w-[20px] h-[20px] relative">
         <Image
           src={imageUrl}
@@ -85,9 +111,17 @@ const shareButtonStyle = {
   true: '',
 };
 
+interface SNSShareBUttonProps {
+  imageUrl: string;
+  title: string;
+  description?: string;
+  onClick?: () => void;
+}
 interface ShareButtonProps {
   title: string;
   bannerImageUrl: string;
+  description: string;
+  activityId: number;
 }
 
 const ShareButtonStyle =

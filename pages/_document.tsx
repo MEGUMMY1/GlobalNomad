@@ -15,6 +15,10 @@ export default function Document() {
           type="text/javascript"
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing &autoload=false`}
         ></script>
+        <script
+          defer
+          src="https://developers.kakao.com/sdk/js/kakao.min.js"
+        ></script>
         <meta property="og:title" content="GlobalNomad" />
         <meta
           property="og:description"

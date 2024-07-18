@@ -13,6 +13,12 @@ import { useEffect, useState } from 'react';
 import { Router } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -54,6 +60,10 @@ export default function App({ Component, pageProps }: AppProps) {
       );
       break;
   }
+
+  useEffect(() => {
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+  }, []);
 
   return (
     <RecoilRoot>
