@@ -1,14 +1,40 @@
 import { useModal } from '@/hooks/useModal';
+import { usePopup } from '@/hooks/usePopup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 export function ShareButton({
+  type,
   activityId,
   title,
   bannerImageUrl,
   description,
 }: ShareButtonProps) {
   const { openModal } = useModal();
+  const { openPopup } = usePopup();
+
+  const url = `https://globalnomad-5-8.netlify.app/activity-details/${activityId}`;
+  const text = `${title}\n\n${description}`;
+  const encodedUrl = encodeURIComponent(url);
+  const encodedText = encodeURIComponent(text);
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('클립보드에 복사되었습니다.');
+    } catch (error) {
+      console.error(error);
+      openPopup({
+        popupType: 'alert',
+        content: '클립 보드 복사에 실패하였습니다.',
+        btnName: ['확인'],
+      });
+    }
+  };
+
+  const handlePasteURL = () => {
+    copyToClipboard(url);
+  };
 
   const handleKaKaoShare = () => {
     const { Kakao } = window;
@@ -26,11 +52,6 @@ export function ShareButton({
     });
   };
 
-  const url = `https://globalnomad-5-8.netlify.app/activity-details/${activityId}`;
-  const text = `${title}\n\n${description}`;
-  const encodedUrl = encodeURIComponent(url);
-  const encodedText = encodeURIComponent(text);
-
   const handleFacebookShare = () => {
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
     window.open(facebookShareUrl, '_blank');
@@ -40,8 +61,6 @@ export function ShareButton({
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
     window.open(twitterShareUrl, '_blank');
   };
-
-  const handlePasteURL = () => {};
 
   const handleOnClick = (e: any) => {
     e.stopPropagation();
@@ -53,7 +72,7 @@ export function ShareButton({
         <div className="flex flex-col items-center gap-[30px]">
           <div className="w-[200px] h-[200px] relative border rounded-lg overflow-hidden">
             <Image
-              src={bannerImageUrl}
+              src={bannerImageUrl ?? ''}
               alt="체험 배너 이미지"
               fill
               layout="fill"
@@ -63,22 +82,22 @@ export function ShareButton({
           </div>
           <p>{title}</p>
           <div className="grid grid-cols-2 grid-rows-2 gap-y-[30px] gap-x-[15px] mt-[10px]">
-            <SNSShareBUtton
+            <SNSShareButton
               imageUrl="/icon/link.png"
               title="URL 복사하기"
-              description={description}
+              onClick={handlePasteURL}
             />
-            <SNSShareBUtton
+            <SNSShareButton
               imageUrl="/image/kakao.png"
               title="카카오로 공유하기"
               onClick={handleKaKaoShare}
             />
-            <SNSShareBUtton
+            <SNSShareButton
               imageUrl="/icon/twitter.png"
               title="X로 공유하기"
               onClick={handleXShare}
             />
-            <SNSShareBUtton
+            <SNSShareButton
               imageUrl="/icon/facebookIconforShare.png"
               title="페이스북으로 공유하기"
               onClick={handleFacebookShare}
@@ -92,19 +111,27 @@ export function ShareButton({
   return (
     <button
       type="button"
-      className="h-[40px] w-[40px] absolute bg-[#fafafa] z-1001 right-[20px] bottom-[20px] opacity-50 flex items-center justify-center border rounded-full p-[5px] hover:scale-110"
+      className={type === 'initial' ? InitialButtonStyle : NoneBgButtonStyle}
       onClick={handleOnClick}
     >
-      <div className="h-[22px] w-[20px] relative">
+      <div
+        className={
+          type === 'initial'
+            ? 'h-[22px] w-[20px] relative m:h-[17px] m:w-[15px]'
+            : 'h-[30px] w-[30px] relative'
+        }
+      >
         <Image src="/icon/share.png" alt="공유 버튼" layout="fill" />
       </div>
     </button>
   );
 }
 
-function SNSShareBUtton({ imageUrl, title, onClick }: SNSShareBUttonProps) {
+// 분리 못한 컴포넌트들입니다
+
+function SNSShareButton({ imageUrl, title, onClick }: SNSShareBUttonProps) {
   return (
-    <button className={ShareButtonStyle} onClick={onClick}>
+    <button className={SNSShareButtonStyle} onClick={onClick}>
       <div className="w-[20px] h-[20px] relative">
         <Image
           src={imageUrl}
@@ -117,11 +144,6 @@ function SNSShareBUtton({ imageUrl, title, onClick }: SNSShareBUttonProps) {
     </button>
   );
 }
-
-const shareButtonStyle = {
-  true: '',
-};
-
 interface SNSShareBUttonProps {
   imageUrl: string;
   title: string;
@@ -129,11 +151,16 @@ interface SNSShareBUttonProps {
   onClick?: () => void;
 }
 interface ShareButtonProps {
-  title: string;
-  bannerImageUrl: string;
-  description: string;
-  activityId: number;
+  type: 'initial' | 'none-bg';
+  title: string | undefined;
+  bannerImageUrl: string | undefined;
+  description: string | undefined;
+  activityId: number | undefined;
 }
 
-const ShareButtonStyle =
-  'min-w-[200px] border border-black rounded-lg text-[16px] text-left py-[5px] px-[10px] flex items-center gap-[8px]';
+const SNSShareButtonStyle =
+  'min-w-[150px] border border-black rounded-lg text-[16px] text-left py-[5px] px-[10px] flex items-center gap-[8px]';
+
+const InitialButtonStyle =
+  'h-[40px] w-[40px] absolute bg-[#fafafa] z-1001 right-[20px] bottom-[20px] opacity-50 flex items-center justify-center border rounded-full p-[5px] hover:scale-110 m:w-[25px] m:h-[25px] m:right-[15px] m:bottom-[15px]';
+const NoneBgButtonStyle = '';

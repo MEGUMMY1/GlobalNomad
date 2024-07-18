@@ -23,6 +23,7 @@ import Spinner from '../Spinner/Spinner';
 import { userState } from '@/states/userState';
 import { useRecoilValue } from 'recoil';
 import Head from 'next/head';
+import { ShareButton } from '../ ShareButton/ShareButton';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -145,6 +146,13 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
             </div>
           </div>
+          <ShareButton
+            type="none-bg"
+            title={activityData?.title}
+            bannerImageUrl={activityData?.bannerImageUrl}
+            description={activityData?.description}
+            activityId={id}
+          />
           {isAuthor && (
             <>
               <MeatballButton onClick={toggleMenu} />

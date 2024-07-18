@@ -48,6 +48,7 @@ function BestActivity({
         </span>
       </div>
       <ShareButton
+        type="initial"
         title={title}
         bannerImageUrl={bannerImageUrl}
         description={description}
