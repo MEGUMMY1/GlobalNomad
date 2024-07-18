@@ -1,5 +1,5 @@
 import { apiMyInfo } from '@/pages/api/users/apiUsers';
-import { userState } from '@/states/userState';
+import { userDefaultState, userState } from '@/states/userState';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -13,9 +13,8 @@ export const useUserData = () => {
   const { data: userResponseData, isLoading } = useQuery({
     queryKey: ['user', userId],
     queryFn: apiMyInfo,
-    enabled: !!isLoggedIn,
+    enabled: !!isLoggedIn && !!userId,
   });
-
   useEffect(() => {
     if (userResponseData) {
       setUserData(userResponseData);
@@ -24,8 +23,8 @@ export const useUserData = () => {
 
   useEffect(() => {
     const userId = localStorage.getItem('userId') || '';
-    setUserId(userId);
-  }, []);
+    if (userId) setUserId(userId);
+  }, [userId]);
 
   return { userData, isLoading };
 };

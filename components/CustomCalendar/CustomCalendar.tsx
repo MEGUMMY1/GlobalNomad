@@ -25,8 +25,9 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
         onChange={handleDateChange}
         value={selectedDate}
         minDate={addDays(new Date(), 1)}
-        locale="en-US"
+        locale="ko"
         className="custom-calendar"
+        formatDay={(locale, date) => date.getDate().toString()}
       />
     </div>
   );

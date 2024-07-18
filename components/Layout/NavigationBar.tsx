@@ -10,6 +10,7 @@ import useGetNotification from '@/hooks/useGetNotification';
 import NotificationDropdown from '../NavigationDropdown/NotificationDropdown';
 import useLoginState from '@/hooks/useLoginState';
 import Spinner from '../Spinner/Spinner';
+import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 
 export default function NavigationBar() {
   const { userData, isLoading } = useUserData();
@@ -77,16 +78,18 @@ export default function NavigationBar() {
             onClick={toggleDropdown}
           >
             {isDropdownOpen && <NavigationDropdown />}
-            {userData.profileImageUrl ? (
+            {userData && (
               <Image
-                src={userData.profileImageUrl}
+                src={
+                  userData.profileImageUrl
+                    ? userData.profileImageUrl
+                    : profileThumbnail
+                }
                 width={32}
                 height={32}
                 className="h-[32px] w-[32px] rounded-full bg-var-gray3"
                 alt="유저 프로필사진"
               />
-            ) : (
-              <div className="h-[32px] w-[32px] rounded-full bg-var-gray3" />
             )}
             <p className="text-[14px]">{userData.nickname}</p>
           </div>
