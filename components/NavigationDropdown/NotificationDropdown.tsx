@@ -69,7 +69,7 @@ export default function NotificationDropdown({
           {notificationList.map((notification) => (
             <div
               key={notification.id}
-              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] m:w-[335px] m:h-[105px] bg-white border-gray-200  "
+              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] min-h-[120px] m:w-[335px] m:h-[105px] bg-white border-gray-200  "
             >
               <div className="flex justify-between m:mb-[5px]">
                 <StatusIndicator
@@ -84,7 +84,7 @@ export default function NotificationDropdown({
                   <CloseButton onClick={() => handleDelete(notification.id)} />
                 </div>
               </div>
-              <div className="w-[298px] h-[44px] mb-[4px]">
+              <div className="w-[298px] min-h-[44px] mb-[4px]">
                 <p>{ContentWithHighlights(notification.content)}</p>
               </div>
               <p>{formatTimeAgo(notification.updatedAt)}</p>

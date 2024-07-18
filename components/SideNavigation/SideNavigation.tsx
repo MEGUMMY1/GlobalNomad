@@ -94,7 +94,7 @@ export default function SidenNavigation() {
   }
 
   return (
-    <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 justify-center gap-[24px] t:w-[251px]">
+    <div className="w-[384px] h-[432px] p-[24px] flex flex-col rounded-[12px] border border-solid border-var-gray3 bg-white justify-center gap-[24px] t:w-[251px]">
       <div className="w-fill flex justify-center relative">
         <label htmlFor="upload-image" className="cursor-pointer">
           <Image
