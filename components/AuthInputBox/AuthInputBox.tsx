@@ -37,7 +37,7 @@ export default function AuthInputBox({
       >
         <input
           id={name}
-          className="w-full border-none outline-none"
+          className="w-full border-none outline-none  dark:border-var-gray8 dark:bg-var-dark1"
           type={isEyeOpen ? 'text' : type}
           placeholder={placeholder}
           {...register(name, validation)}

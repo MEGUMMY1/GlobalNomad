@@ -24,7 +24,7 @@ export default function MyPage() {
   return (
     <>
       <div
-        className={`flex justify-center w-full min-h-[1080px] mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] ${isOpen ? 'fixed' : ''}`}
+        className={`flex justify-center w-full min-h-screen mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] ${isOpen ? 'fixed' : ''}`}
       >
         <div className="m:hidden">
           <SidenNavigation />

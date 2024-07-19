@@ -15,3 +15,8 @@ html {
 body::-webkit-scrollbar {
   display: none;
 }
+
+body {
+  @apply bg-var-gray1 dark:bg-var-dark1;
+  @apply text-var-black dark:text-var-gray2;
+}

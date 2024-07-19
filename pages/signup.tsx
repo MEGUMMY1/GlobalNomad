@@ -131,7 +131,7 @@ export default function SingupPage() {
       </form>
 
       {/* 로그인페이지 리다이렉트 */}
-      <div className="text-var-gray8 text-[16px]">
+      <div className="text-var-gray8 text-[16px] dark:text-var-gray2">
         회원이신가요?
         <Link href="/login" className="underline ml-[5px]">
           로그인하기

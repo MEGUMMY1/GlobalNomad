@@ -28,7 +28,7 @@ export default function InputBox({
       )}
       <input
         id={name}
-        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6`}
+        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6 outline-none dark:border-var-gray8 dark:bg-var-dark2`}
         type={type}
         placeholder={placeholder}
         {...register(name, { ...validation, readOnly })}

@@ -47,10 +47,14 @@ export default function ActivitySelector({
   return (
     <div className="relative w-full" ref={dropDownElement}>
       <div
-        className={`w-full h-[56px] border-solid border border-var-gray7 rounded flex items-center px-[20px] text-[16px] font-[400] font-sans bg-white cursor-pointer ${selectedActivity ? 'text-black' : 'text-var-gray6'}`}
+        className={`w-full h-[56px] border-solid border border-var-gray7 rounded flex items-center px-[20px] bg-white dark:bg-var-dark2 dark:border-none cursor-pointer`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedActivity}
+        <p
+          className={`text-[16px] font-[400] font-sans ${selectedActivity ? 'text-black dark:text-var-gray2' : 'text-var-gray6'} m:w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis`}
+        >
+          {selectedActivity}
+        </p>
         <Image
           src={isOpen ? Up : Down}
           alt="화살표 아이콘"
@@ -60,16 +64,20 @@ export default function ActivitySelector({
         />
       </div>
       {isOpen && (
-        <ul className="z-10 p-2 w-full absolute bg-white border border-solid border-var-gray3 rounded-md mt-1 shadow-lg animate-slideDown flex flex-col">
+        <ul className="z-10 p-2 w-full absolute bg-white dark:bg-var-dark2 border border-solid border-var-gray3 dark:border-none rounded-md mt-1 shadow-lg dark:shadow-none max-h-[300px] overflow-y-auto flex flex-col">
           {data?.activities.map((activity) => {
             const isSelected = selectedActivityId === activity.id;
-            const backgroundColor = isSelected ? 'bg-nomad-black' : 'bg-white';
-            const textColor = isSelected ? 'text-white' : 'text-nomad-black';
+            const backgroundColor = isSelected
+              ? 'bg-nomad-black'
+              : 'bg-white dark:bg-var-dark2';
+            const textColor = isSelected
+              ? 'text-white'
+              : 'text-nomad-black dark:text-var-gray2';
 
             return (
               <li
                 key={activity.id}
-                className={`p-2 h-[40px] hover:bg-var-gray2 ${backgroundColor} ${textColor} rounded-md cursor-pointer flex items-center`}
+                className={`p-2 hover:bg-var-gray2 dark:hover:bg-var-dark4 ${backgroundColor} ${textColor} rounded-md cursor-pointer flex items-center`}
                 onClick={() => handleOnClick(activity.id)}
               >
                 {isSelected ? (

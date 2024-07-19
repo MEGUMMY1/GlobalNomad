@@ -2,21 +2,28 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { PrimaryButton } from '@/components/Button/Button';
 import Card from '@/components/MyActivity/Card';
-import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import { useInView } from 'react-intersection-observer';
 import { useMyActivityList } from '@/hooks/myActivity/useMyActivityList';
 import Image from 'next/image';
+import hamburgerIcon from '@/public/icon/hamburger_black.svg';
+import hamburgerWhiteIcon from '@/public/icon/hamburger_white.svg';
+import SideNavigation from '@/components/SideNavigation/SideNavigation';
+import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import { useRecoilState } from 'recoil';
 import { sideNavigationState } from '@/states/sideNavigationState';
-import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
-import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
+import { darkModeState } from '@/states/themeState';
 
 function MyActivity() {
   const router = useRouter();
   const { ref, inView } = useInView();
-  const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
   const { fetchNextPage, myActivityList, totalCount, hasNextPage } =
     useMyActivityList();
+  const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
+  const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
+
+  const openSideNavigation = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -28,23 +35,19 @@ function MyActivity() {
     router.push('myactivity/register');
   };
 
-  const openSideNavigation = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
-    <div className="flex justify-center w-full min-h-[1080px] mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0">
+    <div className="flex justify-center w-full min-h-screen mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0">
       <div className="m:hidden">
-        <SidenNavigation />
+        <SideNavigation />
       </div>
       <div className="p:hidden t:hidden">
         {isOpen && <SidenNavigationMobile />}
       </div>
       <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-full m:w-full m:h-full m:px-[15px]">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <div className="flex m:gap-[15px]">
             <Image
-              src={hamburgerIcon}
+              src={isDarkMode ? hamburgerWhiteIcon : hamburgerIcon}
               alt="햄버거 메뉴 아이콘"
               className="p:hidden t:hidden"
               onClick={() => openSideNavigation()}
@@ -56,7 +59,7 @@ function MyActivity() {
           </PrimaryButton>
         </div>
         {totalCount !== 0 ? (
-          <div className="flex flex-col gap-[20px] overflow-visible animate-slideDown">
+          <div className="flex flex-col gap-[20px] overflow-visible animate-slideDown scrollbar-hide pb-[20px] t:h-[calc(100vh-160px)] t:gap-[16px] m:h-[calc(100vh-100px)]">
             {myActivityList?.map((activity) => {
               return (
                 <Card

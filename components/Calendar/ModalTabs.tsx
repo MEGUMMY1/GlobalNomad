@@ -12,7 +12,7 @@ function ModalTabs({ labels, children }: ModalTabsProps) {
             key={index}
             className={`w-[72px] py-2 font-xl ${
               index === activeTab
-                ? 'border-b-2 border-var-green2 text-var-green2 font-bold'
+                ? 'border-b-2 border-var-green2 text-var-green2 dark:border-var-gray2 dark:text-var-gray2 font-bold'
                 : 'text-var-gray8'
             }`}
             onClick={() => setActiveTab(index)}
