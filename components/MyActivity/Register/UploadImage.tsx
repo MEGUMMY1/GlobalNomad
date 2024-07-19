@@ -10,6 +10,7 @@ import useActivityImage from '@/hooks/myActivity/useActivityImage';
 import { useRecoilState } from 'recoil';
 
 const KEYS = [0, 1, 2, 3, 4];
+let inputKey = 0;
 
 function UploadImage({
   label,
@@ -82,6 +83,7 @@ function UploadImage({
             <ImageUploadButton />
           </label>
           <input
+            key={inputKey++}
             type="file"
             id={`upload-${label}`}
             className="hidden"
