@@ -54,7 +54,11 @@ function MyActivity() {
             />
             <h1 className="text-[32px] font-[700]">내 체험 관리</h1>
           </div>
-          <PrimaryButton size="small" style="dark" onClick={handleClickAdd}>
+          <PrimaryButton
+            size="small"
+            style={isDarkMode ? 'bright' : 'dark'}
+            onClick={handleClickAdd}
+          >
             체험 등록하기
           </PrimaryButton>
         </div>
