@@ -60,7 +60,7 @@ export default function NotificationDropdown({
 
   return (
     <div className="z-50 px-[20px] pt-[17px] pb-[24px] absolute top-[60px] right-[400px] t:right-[100px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 m:overflow-y-hidden ">
-      <div className="flex text-[20px] font-bold mb-[25px] justify-between ">
+      <div className="flex text-[20px] font-bold mb-[15px] justify-between ">
         알림 {data ? `${data.totalCount}` : '0'}개
         <CloseButton onClick={onClick} />
       </div>
@@ -69,9 +69,9 @@ export default function NotificationDropdown({
           {notificationList.map((notification) => (
             <div
               key={notification.id}
-              className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] h-[120px] m:w-[335px] m:h-[105px] bg-white border-gray-200  "
+              className="flex flex-col text-[14px] px-[10px] justify-between pt-[15px] pb-[5px] rounded-[5px] border-b w-[328px] h-[125px] m:w-[335px] bg-white border-gray-200  "
             >
-              <div className="flex justify-between m:mb-[5px]">
+              <div className="flex justify-between">
                 <StatusIndicator
                   size="small"
                   status={
@@ -80,14 +80,16 @@ export default function NotificationDropdown({
                       : 'denied'
                   }
                 />
-                <div className="m:hidden h-[24px]">
+                <div className="h-[24px]">
                   <CloseButton onClick={() => handleDelete(notification.id)} />
                 </div>
               </div>
-              <div className="w-[298px] h-[44px] mb-[4px]">
-                <p>{ContentWithHighlights(notification.content)}</p>
+              <div className="w-[298px] h-[44px] mt-[-20px] ">
+                {ContentWithHighlights(notification.content)}
               </div>
-              <p>{formatTimeAgo(notification.updatedAt)}</p>
+              <div className="text-[12px]">
+                {formatTimeAgo(notification.updatedAt)}
+              </div>
             </div>
           ))}
           {hasNextPage && <div ref={ref} />}

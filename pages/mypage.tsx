@@ -1,12 +1,26 @@
 import MyPageInput from '@/components/MyPageInput/MyPageInput';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
+import useLoginState from '@/hooks/useLoginState';
 import { useSideNavigation } from '@/hooks/useSideNavigation';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function MyPage() {
+  const route = useRouter();
+  const { isLoggedIn } = useLoginState();
   const { isOpen } = useSideNavigation();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      route.push('/login');
+    }
+  }, [isLoggedIn, route]);
+
+  if (!isLoggedIn) {
+    return null;
+  }
+
   return (
     <>
       <div
