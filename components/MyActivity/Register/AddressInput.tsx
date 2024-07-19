@@ -28,7 +28,7 @@ function AddressInput() {
         id="address"
         value={address}
         onClick={handleInputClick}
-        className="w-full h-[56px] py-[8px] px-[16px] rounded-md border border-var-gray6 bg-white"
+        className="w-full h-[56px] py-[8px] px-[16px] rounded-md border border-var-gray6 dark:border-var-dark3 bg-white dark:bg-var-dark2 dark:text-var-gray2"
         readOnly
         placeholder="주소"
       />

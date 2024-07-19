@@ -60,7 +60,7 @@ function TimeSlotGroup({
       <div className="flex items-center gap-[20px] t:gap-[4px] m:gap-[6px] grow">
         <div className="m:w-[50%]">
           {isDefault && (
-            <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 ">
+            <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 dark:text-var-gray3">
               날짜
             </label>
           )}
@@ -69,7 +69,7 @@ function TimeSlotGroup({
         <div className="flex gap-[12px] items-center t:gap-[2px] m:gap-[2px] grow">
           <div className="m:w-[50%]">
             {isDefault && (
-              <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8">
+              <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 dark:text-var-gray3">
                 시작 시간
               </label>
             )}
@@ -86,11 +86,13 @@ function TimeSlotGroup({
                 ~
               </p>
             )}
-            <p className="text-[20px] font-[700] t:hidden m:hidden">~</p>
+            <p className="text-[20px] font-[700] t:hidden m:hidden dark:text-var-gray3">
+              ~
+            </p>
           </div>
           <div className="m:w-[50%]">
             {isDefault && (
-              <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8">
+              <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 dark:text-var-gray3">
                 종료 시간
               </label>
             )}
@@ -139,7 +141,7 @@ function TimeSlot() {
 
   return (
     <div>
-      <label className="text-[24px] font-[700] block mb-[24px] text-var-black">
+      <label className="text-[24px] font-[700] block mb-[24px] text-var-black dark:text-var-gray2">
         예약 가능한 시간대
       </label>
       <TimeSlotGroup isDefault handleClickPlus={handleClickPlus} index={0} />

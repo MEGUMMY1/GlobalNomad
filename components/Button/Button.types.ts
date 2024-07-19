@@ -1,7 +1,7 @@
 export interface PrimaryButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   size: 'small' | 'medium' | 'large';
-  style: 'dark' | 'bright' | 'disabled' | 'enabled' | 'darkGray';
+  style: 'dark' | 'bright' | 'disabled' | 'enabled';
   children?: string;
   disabled?: boolean;
   onClick?: () => void;

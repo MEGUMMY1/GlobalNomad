@@ -14,11 +14,10 @@ const primarySizeClasses = {
 };
 
 const primaryStyleClasses = {
-  dark: 'bg-nomad-black text-white',
+  dark: 'bg-nomad-black text-white dark:bg-var-dark3 dark:text-var-gray2',
   bright: 'bg-white text-nomad-black border border-nomad-black',
   disabled: 'bg-var-gray6 text-white',
   enabled: 'bg-nomad-black text-white',
-  darkGray: 'bg-var-dark3 text-white',
 };
 
 /* 기본 버튼 - 로그인하기, 신청 불가 등 기본적인 형태의 버튼
@@ -133,7 +132,7 @@ export function CircleCloseButton({ onClick }: SimpleButtonProps) {
   return (
     <button
       type="button"
-      className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-[40px] h-[40px] t:w-[32px] t:h-[32px] m:w-[24px] m:h-[24px]"
+      className="flex items-center justify-center rounded-full bg-nomad-black dark:bg-var-dark3 bg-opacity-80 w-[40px] h-[40px] t:w-[32px] t:h-[32px] m:w-[24px] m:h-[24px]"
       onClick={onClick}
     >
       <Image

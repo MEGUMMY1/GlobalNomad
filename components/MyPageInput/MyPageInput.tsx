@@ -107,13 +107,7 @@ export default function MyPageInput() {
           <p className="font-bold text-[32px]">내 정보</p>
           <div className="flex items-center m:hidden">
             <PrimaryButton
-              style={
-                isAllFieldsValid
-                  ? isDarkMode
-                    ? 'darkGray'
-                    : 'dark'
-                  : 'disabled'
-              }
+              style={isAllFieldsValid ? 'dark' : 'disabled'}
               size="small"
               onClick={handleSubmit(onSubmit)}
               disabled={!isAllFieldsValid}
