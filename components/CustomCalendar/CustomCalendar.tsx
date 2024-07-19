@@ -30,6 +30,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
         value={selectedDate}
         minDate={addDays(new Date(), 1)}
         locale="ko"
+        calendarType="gregory"
         className="custom-calendar"
         formatDay={(locale, date) => date.getDate().toString()}
       />

@@ -119,8 +119,7 @@ export default function Reservation({ activity }: ReservationProps) {
             errorMessage = '이미 지난 일정은 예약할 수 없습니다.';
             break;
           case 401:
-            errorMessage =
-              '인증되지 않은 사용자입니다. 로그인 후 다시 시도해 주세요.';
+            errorMessage = '로그인 후 다시 시도해 주세요.';
             break;
           case 404:
             errorMessage = '존재하지 않는 체험입니다.';
@@ -221,7 +220,7 @@ export default function Reservation({ activity }: ReservationProps) {
                 ),
               })
             }
-            className="t:block hidden underline font-bold text-nomad-black"
+            className="t:block hidden underline font-bold text-nomad-black dark:text-var-gray5"
           >
             {buttonText}
           </button>
@@ -279,7 +278,7 @@ export default function Reservation({ activity }: ReservationProps) {
           <p className="font-extrabold text-nomad-black text-xl dark:text-var-gray2">
             총 합계
           </p>
-          <p className="font-extrabold text-nomad-black text-xl">
+          <p className="font-extrabold text-nomad-black text-xl dark:text-var-green1">
             ₩ {totalPrice.toLocaleString()}
           </p>
         </div>
@@ -288,11 +287,11 @@ export default function Reservation({ activity }: ReservationProps) {
       <div className="hidden m:w-full m:flex m:justify-between m:items-center m:mx-4">
         <div className="flex flex-col items-start">
           <div className="flex items-center gap-2">
-            <p className="font-bold text-xl text-nomad-black">
+            <p className="font-bold text-xl text-nomad-black dark:text-var-gray2">
               ₩ {totalPrice.toLocaleString()} |
             </p>
             <button
-              className="font-bold text-lg underline text-var-green2 dark:text-var-gray4"
+              className="font-bold text-lg underline text-var-green2 dark:text-var-gray6"
               onClick={() =>
                 openModal({
                   title: '인원',
@@ -326,7 +325,7 @@ export default function Reservation({ activity }: ReservationProps) {
                 disabled: !selectedTime,
                 content: (
                   <>
-                    <p className="text-var-gray8 font-xl mb-5">
+                    <p className="text-var-gray8 font-xl mb-5 dark:text-var-gray2">
                       예약할 날짜를 선택해 주세요.
                     </p>
                     <div className="flex justify-center">
@@ -363,7 +362,7 @@ export default function Reservation({ activity }: ReservationProps) {
                 ),
               })
             }
-            className="text-nomad-black underline text-sm dark:text-var-gray2"
+            className="text-nomad-black underline text-sm dark:text-var-gray4"
           >
             {buttonText}
           </button>

@@ -59,7 +59,7 @@ export default function NotificationDropdown({
   }, []);
 
   return (
-    <div className="z-50 px-[20px] pt-[17px] pb-[24px] absolute top-[60px] right-[400px] t:right-[100px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 dark:bg-var-dark2 m:overflow-y-hidden ">
+    <div className="z-50 px-[20px] pt-[17px] pb-[24px] absolute top-[60px] right-[720px] t:right-[100px] w-[368px] h-[340px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 dark:bg-var-dark2 m:overflow-y-hidden ">
       <div className="flex text-[20px] font-bold mb-[25px] justify-between ">
         알림 {data ? `${data.totalCount}` : '0'}개
         <CloseButton onClick={onClick} />

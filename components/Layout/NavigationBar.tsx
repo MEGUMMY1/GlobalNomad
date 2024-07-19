@@ -53,70 +53,74 @@ export default function NavigationBar() {
   }
 
   return (
-    <div className="sticky top-0 flex h-[70px] z-30 justify-between pl-[369px] pr-[351px] t:px-[24px] m:px-[24px]  border-b bg-white dark:bg-var-dark1 border-var-gray3 dark:border-none border-solid ">
-      <div className="flex items-center">
-        <Link href="/">
-          <Image src={Logo} alt="로고 아이콘" />
-        </Link>
-      </div>
-      <button
-        onClick={toggleDarkMode}
-        className="w-[50px] p-2 bg-var-gray8 text-white rounded"
-      >
-        {darkMode ? 'Light' : 'Dark'}
-      </button>
-      {isLoggedIn ? (
-        <div className="flex items-center gap-[15px]">
-          <button onClick={toggleNotifyDropdown}>
-            <div className="relative">
-              <Image src={notificationIcon} alt="알림 아이콘" />
-              {data?.totalCount !== undefined && data?.totalCount > 0 && (
-                <span className="flex justify-center absolute -top-2 -right-2 bg-red-500 w-[15px] h-[15px] text-white text-xs rounded-full px-2">
-                  {data.totalCount}
-                </span>
-              )}
-            </div>
-          </button>
-          <div ref={notificationdropdownRef}>
-            {isNotificationOpen && (
-              <NotificationDropdown
-                data={data}
-                onClick={toggleNotifyDropdown}
-              />
-            )}
-          </div>
-          <div
-            className="flex relative items-center gap-[10px] border-l-2 cursor-pointer border-var-gray3 border-solid pl-[25px] m:pl-[12px]"
-            ref={profiledropdownRef}
-            onClick={toggleDropdown}
+    <div className="sticky top-0 flex h-[70px] justify-center items-center z-30 px-[24px] t:px-[24px] m:px-[24px] border-b bg-white dark:bg-var-dark1 border-var-gray3 dark:border-none border-solid">
+      <div className="w-[1200px] flex justify-between items-center ">
+        <div className="flex items-center">
+          <Link href="/">
+            <Image src={Logo} alt="로고 아이콘" />
+          </Link>
+        </div>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={toggleDarkMode}
+            className="w-[50px] p-2 bg-var-gray8 text-white rounded"
           >
-            {isDropdownOpen && <NavigationDropdown />}
-            {userData && (
-              <Image
-                src={
-                  userData.profileImageUrl
-                    ? userData.profileImageUrl
-                    : profileThumbnail
-                }
-                width={32}
-                height={32}
-                className="h-[32px] w-[32px] rounded-full bg-var-gray3"
-                alt="유저 프로필사진"
-              />
-            )}
-            <p className="text-[14px]">{userData.nickname}</p>
-          </div>
+            {darkMode ? 'Light' : 'Dark'}
+          </button>
+          {isLoggedIn ? (
+            <div className="flex items-center gap-2">
+              <button onClick={toggleNotifyDropdown}>
+                <div className="relative">
+                  <Image src={notificationIcon} alt="알림 아이콘" />
+                  {data?.totalCount !== undefined && data?.totalCount > 0 && (
+                    <span className="flex justify-center absolute -top-2 -right-2 bg-red-500 w-[15px] h-[15px] text-white text-xs rounded-full px-2">
+                      {data.totalCount}
+                    </span>
+                  )}
+                </div>
+              </button>
+              <div ref={notificationdropdownRef}>
+                {isNotificationOpen && (
+                  <NotificationDropdown
+                    data={data}
+                    onClick={toggleNotifyDropdown}
+                  />
+                )}
+              </div>
+              <div
+                className="flex relative items-center gap-4 m:gap-1 border-l-2 cursor-pointer border-var-gray3 border-solid pl-4 m:pl-2"
+                ref={profiledropdownRef}
+                onClick={toggleDropdown}
+              >
+                {isDropdownOpen && <NavigationDropdown />}
+                {userData && (
+                  <Image
+                    src={
+                      userData.profileImageUrl
+                        ? userData.profileImageUrl
+                        : profileThumbnail
+                    }
+                    width={32}
+                    height={32}
+                    className="h-[32px] w-[32px] rounded-full bg-var-gray3"
+                    alt="유저 프로필사진"
+                  />
+                )}
+                <p className="text-[14px]">{userData.nickname}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Link href="/login" className="text-[14px]">
+                로그인
+              </Link>
+              <Link href="/signup" className="text-[14px]">
+                회원가입
+              </Link>
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="flex items-center gap-[25px]">
-          <Link href="/login" className="text-[14px]">
-            로그인
-          </Link>
-          <Link href="/signup" className="text-[14px]">
-            회원가입
-          </Link>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

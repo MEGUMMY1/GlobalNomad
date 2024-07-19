@@ -162,7 +162,7 @@ function AllActivities() {
               <CatergoryBtn key={index} categoryName={Kategorie} />
             ))}
           </div>
-          <div className="p:hidden absolute top-0 right-0 w-20 m:w-3 h-full pointer-events-none bg-gradient-to-l from-white to-transparent"></div>
+          <div className="p:hidden absolute top-0 right-0 w-20 m:w-3 h-full pointer-events-none bg-gradient-to-l from-white dark:from-var-dark1 to-transparent"></div>
         </div>
         <PriceFilterBtn />
       </div>

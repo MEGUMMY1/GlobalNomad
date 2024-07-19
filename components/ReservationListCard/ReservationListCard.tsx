@@ -74,7 +74,7 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
           {statusTitles[reservationData.status]}
         </p>
         <Link href={`/activity-details/${reservationData.activity.id}`}>
-          <p className="text-[20px] mt-[8px] font-bold tracking-tight hover:underline t:text-[18px] t:mt-[0] m:text-[14px] m:mt-[0] m:py-[2px] m:w-[200px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
+          <p className="text-[20px] mt-[8px] font-bold tracking-tight hover:underline t:text-[18px] t:mt-[0] t:w-[250px] t:overflow-hidden t:whitespace-nowrap t:text-ellipsis m:text-[14px] m:mt-[0] m:py-[2px] m:w-[200px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
             {reservationData.activity.title}
           </p>
         </Link>

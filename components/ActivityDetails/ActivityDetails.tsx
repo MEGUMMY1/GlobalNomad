@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
@@ -26,14 +26,18 @@ import { useRecoilValue } from 'recoil';
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<number>(
-    router.query.page ? parseInt(router.query.page as string, 10) : 1
-  );
-  const itemsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
   const userData = useRecoilValue(userState);
+
+  useEffect(() => {
+    const page = router.query.page
+      ? parseInt(router.query.page as string, 10)
+      : 1;
+    setCurrentPage(page);
+  }, [router.query.page]);
 
   const {
     data: activityData,
@@ -50,8 +54,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     isLoading: isLoadingReviews,
   } = useQuery<getActivityReviewsResponse>({
     queryKey: ['reviewList', id, currentPage],
-    queryFn: () =>
-      getActivityReviews({ id, page: currentPage, size: itemsPerPage }),
+    queryFn: () => getActivityReviews({ id, page: currentPage, size: 3 }),
   });
 
   if (isLoadingActivity || isLoadingReviews) {
@@ -86,7 +89,9 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    router.push(`/activity-details/${id}?page=${page}`);
+    router.push(`/activity-details/${id}?page=${page}`, undefined, {
+      shallow: true,
+    });
   };
 
   const paginatedReviews = reviewData?.reviews || [];
@@ -240,7 +245,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               ))}
               <Pagination
                 totalItems={reviewData.totalCount}
-                itemsPerPage={itemsPerPage}
+                itemsPerPage={3}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
               />
