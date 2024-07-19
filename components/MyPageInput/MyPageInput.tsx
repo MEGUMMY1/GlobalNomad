@@ -16,6 +16,7 @@ import { useSideNavigation } from '@/hooks/useSideNavigation';
 import Spinner from '../Spinner/Spinner';
 import { useRecoilState } from 'recoil';
 import { darkModeState } from '@/states/themeState';
+import useEnterSubmit from '@/hooks/useEnterSubmit';
 
 export default function MyPageInput() {
   const {
@@ -94,9 +95,16 @@ export default function MyPageInput() {
   if (isLoading) {
     return <Spinner />;
   }
+
+  const handleKeyDown = useEnterSubmit(handleSubmit(onSubmit));
+
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
-      <form className="flex flex-col gap-[24px] t:gap-[16px]">
+      <form
+        className="flex flex-col gap-[24px] t:gap-[16px]"
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={handleKeyDown}
+      >
         <div className="flex m:gap-[15px] p:justify-between t:justify-between">
           <Image
             src={isDarkMode ? hamburgerWhiteIcon : hamburgerIcon}
