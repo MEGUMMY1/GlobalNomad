@@ -68,7 +68,7 @@ export function ShareButton({
       hasButton: false,
       buttonChildren: '예약하기',
       content: (
-        <div className="flex flex-col items-center gap-[30px] mt-[15px] mb-[25px] w-[400px] m:w-[300px] m-auto">
+        <div className="flex flex-col items-center gap-[30px] mt-[15px] mb-[25px] min-w-[400px] m:min-w-[300px] m-auto">
           <div className="w-[250px] h-[250px] relative border rounded-lg overflow-hidden">
             <Image
               src={bannerImageUrl ?? ''}
@@ -79,7 +79,7 @@ export function ShareButton({
               className="object-cover"
             />
           </div>
-          <div className="flex flex-col gap-[10px] overflow-hidden">
+          <div className="flex flex-col gap-[10px] overflow-hidden w-full">
             <p className="font-bold">{title}</p>
             <p className="text-gray-700 line-clamp-3">{description}</p>
           </div>
