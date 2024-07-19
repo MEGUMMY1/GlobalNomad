@@ -33,7 +33,7 @@ function Date({ index }: TimeSlotGroupProps) {
 
   return (
     <div className="relative">
-      <div className="w-[374px] t:w-[149px] m:w-[130px]">
+      <div className="w-[374px] t:w-[149px] m:w-full">
         <input
           type="text"
           value={date ? date.toDateString() : ''}
