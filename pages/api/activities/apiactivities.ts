@@ -59,7 +59,8 @@ export const getActivitySchedule = async (
 export const getActivityReviews = async (
   params: getActivityReviewsParams
 ): Promise<getActivityReviewsResponse> => {
-  const query = `${params.id}/reviews?page=${params.page | 1}&size=3`;
+  const page = params.page ? params.page : 1;
+  const query = `${params.id}/reviews?page=${page}&size=3`;
   const response = await axios.get(`/activities/${query}`);
   return response.data;
 };
