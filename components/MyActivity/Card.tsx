@@ -75,7 +75,7 @@ function Card({
   const formattedPrice = formatCurrency(price);
 
   return (
-    <div className="flex rounded-[24px] w-[800px] h-[204px] bg-white shadow-card t:w-full m:w-[calc(100vw-50px)]">
+    <div className="flex rounded-[24px] w-[800px] h-[204px] bg-white shadow-card t:w-full m:w-full">
       <Image
         className="rounded-l-[24px] shrink-0"
         src={activityImage}
