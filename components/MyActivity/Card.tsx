@@ -28,7 +28,10 @@ function Popover({ activityId, closePopover }: PopoverProps) {
   const { deleteMyActivityMutation } = useDeleteActivity();
 
   const handleClickEdit = () => {
-    router.push('/myActivity/edit');
+    router.push({
+      pathname: '/myactivity/edit',
+      query: { activityId: activityId },
+    });
   };
   const handleClickDelete = () => {
     openPopup({

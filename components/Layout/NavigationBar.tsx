@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Logo from '@/public/icon/logo_small.svg';
 import notificationIcon from '@/public/icon/icon_notification.svg';
 import { useUserData } from '@/hooks/useUserData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavigationDropdown from '../NavigationDropdown/NavigationDropdown';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
@@ -60,66 +60,108 @@ export default function NavigationBar() {
             <Image src={Logo} alt="로고 아이콘" />
           </Link>
         </div>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleDarkMode}
-            className="w-[50px] p-2 bg-var-gray8 text-white rounded"
-          >
-            {darkMode ? 'Light' : 'Dark'}
-          </button>
-          {isLoggedIn ? (
-            <div className="flex items-center gap-2">
-              <button onClick={toggleNotifyDropdown}>
-                <div className="relative">
-                  <Image src={notificationIcon} alt="알림 아이콘" />
-                  {data?.totalCount !== undefined && data?.totalCount > 0 && (
-                    <span className="flex justify-center absolute -top-2 -right-2 bg-red-500 w-[15px] h-[15px] text-white text-xs rounded-full px-2">
-                      {data.totalCount}
-                    </span>
-                  )}
+        {isLoggedIn ? (
+          <div className="flex items-center gap-4">
+            <input
+              type="checkbox"
+              name="checkbox"
+              className="switch"
+              onClick={toggleDarkMode}
+            ></input>
+            <button onClick={toggleNotifyDropdown}>
+              <div className="relative">
+                <Image src={notificationIcon} alt="알림 아이콘" />
+                {data?.totalCount !== undefined && data?.totalCount > 0 && (
+                  <span className="flex justify-center absolute -top-2 -right-2 bg-red-500 w-[15px] h-[15px] text-white text-xs rounded-full px-2">
+                    {data.totalCount}
+                  </span>
+                )}
+              </div>
+            </button>
+            <div ref={notificationdropdownRef}>
+              {isNotificationOpen && (
+                <NotificationDropdown
+                  data={data}
+                  onClick={toggleNotifyDropdown}
+                />
+              )}
+            </div>
+            <div
+              className="flex relative items-center gap-[10px] border-l-2 cursor-pointer border-var-gray3 border-solid pl-[25px] m:pl-[12px]"
+              ref={profiledropdownRef}
+              onClick={toggleDropdown}
+            >
+              {isLoggedIn ? (
+                <div className="flex items-center gap-2">
+                  <button onClick={toggleNotifyDropdown}>
+                    <div className="relative">
+                      <Image src={notificationIcon} alt="알림 아이콘" />
+                      {data?.totalCount !== undefined &&
+                        data?.totalCount > 0 && (
+                          <span className="flex justify-center absolute -top-2 -right-2 bg-red-500 w-[15px] h-[15px] text-white text-xs rounded-full px-2">
+                            {data.totalCount}
+                          </span>
+                        )}
+                    </div>
+                  </button>
+                  <div ref={notificationdropdownRef}>
+                    {isNotificationOpen && (
+                      <NotificationDropdown
+                        data={data}
+                        onClick={toggleNotifyDropdown}
+                      />
+                    )}
+                  </div>
+                  <div
+                    className="flex relative items-center gap-4 m:gap-1 border-l-2 cursor-pointer border-var-gray3 border-solid pl-4 m:pl-2"
+                    ref={profiledropdownRef}
+                    onClick={toggleDropdown}
+                  >
+                    {isDropdownOpen && <NavigationDropdown />}
+                    {userData && (
+                      <Image
+                        src={
+                          userData.profileImageUrl
+                            ? userData.profileImageUrl
+                            : profileThumbnail
+                        }
+                        width={32}
+                        height={32}
+                        className="h-[32px] w-[32px] rounded-full bg-var-gray3"
+                        alt="유저 프로필사진"
+                      />
+                    )}
+                    <p className="text-[14px]">{userData.nickname}</p>
+                  </div>
                 </div>
-              </button>
-              <div ref={notificationdropdownRef}>
-                {isNotificationOpen && (
-                  <NotificationDropdown
-                    data={data}
-                    onClick={toggleNotifyDropdown}
-                  />
-                )}
-              </div>
-              <div
-                className="flex relative items-center gap-4 m:gap-1 border-l-2 cursor-pointer border-var-gray3 border-solid pl-4 m:pl-2"
-                ref={profiledropdownRef}
-                onClick={toggleDropdown}
-              >
-                {isDropdownOpen && <NavigationDropdown />}
-                {userData && (
-                  <Image
-                    src={
-                      userData.profileImageUrl
-                        ? userData.profileImageUrl
-                        : profileThumbnail
-                    }
-                    width={32}
-                    height={32}
-                    className="h-[32px] w-[32px] rounded-full bg-var-gray3"
-                    alt="유저 프로필사진"
-                  />
-                )}
-                <p className="text-[14px]">{userData.nickname}</p>
-              </div>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <Link href="/login" className="text-[14px]">
+                    로그인
+                  </Link>
+                  <Link href="/signup" className="text-[14px]">
+                    회원가입
+                  </Link>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="flex items-center gap-4">
-              <Link href="/login" className="text-[14px]">
-                로그인
-              </Link>
-              <Link href="/signup" className="text-[14px]">
-                회원가입
-              </Link>
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="flex items-center gap-[25px]">
+            <Link href="/login" className="text-[14px]">
+              로그인
+            </Link>
+            <Link href="/signup" className="text-[14px]">
+              회원가입
+            </Link>
+            <input
+              type="checkbox"
+              name="checkbox"
+              className="switch"
+              onClick={toggleDarkMode}
+            ></input>
+          </div>
+        )}
       </div>
     </div>
   );

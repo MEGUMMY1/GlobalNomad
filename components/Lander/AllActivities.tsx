@@ -33,7 +33,7 @@ export function AllActivity({
   return (
     <div onClick={handleClick} className="cursor-pointer">
       <div
-        className="w-[286px] t:w-[223px] m:w-[170px] h-[286px] t:h-[223px] m:h-[170px] rounded-xl bg-[url('/image/Testimage.jpg')] bg-cover"
+        className="w-[276px] t:w-[206px] m:w-[146px] h-[276px] t:h-[206px] m:h-[146px] rounded-xl bg-[url('/image/Testimage.jpg')] bg-cover transition-transform duration-300 hover:scale-110 m:hover:scale-105"
         style={{
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
@@ -53,7 +53,7 @@ export function AllActivity({
             </span>
           </div>
         </div>
-        <div className="h-[70px] t:h-[30px] m:h-[20px] m:w-[160px] font-sans text-[24px] m:text-[16px] font-[600] mt-[10px] overfolow-hidden t:truncate ... m:truncate ...">
+        <div className="h-[70px] t:h-[30px] m:h-[20px] m:w-[146px] font-sans text-[24px] m:text-[16px] font-[600] mt-[10px] overfolow-hidden t:truncate ... m:truncate ...">
           {title}
         </div>
         <div className="font-sans text-[28px] text-[20px] m:text-[18px] font-[700] p:mt-[0px] mt-[10px]">
@@ -174,7 +174,7 @@ function AllActivities() {
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
+        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[8px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide px-[20px] pt-[20px]">
           {allActivitiesData?.activities.map((data) => (
             <AllActivity
               key={data.id}
@@ -188,7 +188,7 @@ function AllActivities() {
           ))}
         </div>
       )}
-      <div className="text-[30px] font-[700] flex justify-center mb-[342px] mt-[70px]">
+      <div className="text-[30px] font-[700] flex justify-center mb-[342px] m:mb-[160px] mt-[70px]">
         {allActivitiesData && allActivitiesData.totalCount > 0 && (
           <Pagination
             totalItems={allActivitiesData?.totalCount}

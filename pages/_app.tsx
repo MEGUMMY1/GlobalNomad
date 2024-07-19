@@ -1,5 +1,6 @@
 import '@/styles/globals.css';
 import '@/styles/calendar.css';
+import '@/styles/togglebutton.css';
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -12,6 +13,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import Theme from '@/components/Theme/Theme';
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 const queryClient = new QueryClient();
 
@@ -48,6 +55,10 @@ export default function App({ Component, pageProps }: AppProps) {
       );
       break;
   }
+
+  useEffect(() => {
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+  }, []);
 
   return (
     <RecoilRoot>

@@ -2,12 +2,13 @@ import { MinusButton, PlusButton } from '@/components/Button/Button';
 import DateInput from './DateInput';
 import TimeDropdown from './TimeDropdown';
 import { TimeSlotGroupProps } from './TimeSlot.types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   startTimeState,
   endTimeState,
   timeSlotCountState,
+  timeSlotState,
 } from '@/states/registerState';
 
 function autoSelectedTime(time: string) {
@@ -49,6 +50,11 @@ function TimeSlotGroup({
     }
   };
 
+  useEffect(() => {
+    setSelectedStartTime(startTime[index]);
+    setSelectedEndTime(endTime[index]);
+  }, [startTime[index], endTime[index]]);
+
   return (
     <div className="flex items-center t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[4px]">
       <div className="flex items-center gap-[20px] t:gap-[4px] m:gap-[4px]">
@@ -85,7 +91,7 @@ function TimeSlotGroup({
 }
 
 function TimeSlot() {
-  const [timeSlots, setTimeSlots] = useState<{ id: number }[]>([]);
+  const [timeSlots, setTimeSlots] = useRecoilState(timeSlotState);
   const [timeSlotCount, setTimeSlotCount] = useRecoilState(timeSlotCountState);
 
   const handleClickPlus = () => {
@@ -95,6 +101,7 @@ function TimeSlot() {
     setTimeSlots((prevTimeSlots) => [...prevTimeSlots, newTimeSlot]);
     setTimeSlotCount(timeSlotCount + 1);
   };
+
   const handleClickMinus = (id: number) => {
     setTimeSlots((prevTimeSlots) =>
       prevTimeSlots.filter((timeSlot) => timeSlot.id !== id)

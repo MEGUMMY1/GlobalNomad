@@ -5,15 +5,19 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        <title>GlobalNomad</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"
         ></link>
         <script
+          async
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing &autoload=false`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing&autoload=false`}
+        ></script>
+        <script
+          defer
+          src="https://developers.kakao.com/sdk/js/kakao.min.js"
         ></script>
         <meta property="og:title" content="GlobalNomad" />
         <meta

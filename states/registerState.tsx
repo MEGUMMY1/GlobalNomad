@@ -1,11 +1,12 @@
+import { DetailImageProps } from '@/components/MyActivity/Register/UploadImage.types';
 import { atom } from 'recoil';
 
-export const bannerImageState = atom<File[]>({
+export const bannerImageState = atom<string[]>({
   key: 'bannerImageState',
   default: [],
 });
 
-export const detailImageState = atom<File[]>({
+export const detailImageState = atom<DetailImageProps[]>({
   key: 'detailImageState',
   default: [],
 });
@@ -18,6 +19,11 @@ export const selectedDateState = atom<string[]>({
 });
 
 const initialTimeArray = Array(50).fill('00:00');
+
+export const timeSlotState = atom<{ id: number }[]>({
+  key: 'timeSlot',
+  default: [],
+});
 
 export const timeSlotCountState = atom<number>({
   key: 'timeSlotCount',

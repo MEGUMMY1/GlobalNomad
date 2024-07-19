@@ -56,7 +56,7 @@ function Main() {
       ></section>
       <div className="z-10 t:w-[696px] m:w-[343px]">
         <div className=" mt-[160px] m:mt-[74px] flex flex-col gap-[20px]">
-          <h1 className="w-[600px] t:w-[450px] m:w-[200px] text-white font-sans text-[68px] t:text-[54px] m:text-[24px] font-[700] leading-[1.2]">
+          <h1 className="w-[800px] t:w-[620px] m:w-[300px] h-[162px] m:h-[58px] text-white font-sans text-[68px] t:text-[54px] m:text-[24px] font-[700] leading-[1.2] overflow-hidden">
             {BestOfmonth?.activities[0].title}
           </h1>
           <span className="text-white font-sans test-[24px] m:text-[14px] font-[700]">
