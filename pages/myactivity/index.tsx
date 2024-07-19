@@ -36,7 +36,7 @@ function MyActivity() {
           </PrimaryButton>
         </div>
         {totalCount !== 0 ? (
-          <div className="flex flex-col gap-[20px] overflow-visible">
+          <div className="flex flex-col gap-[20px] overflow-visible animate-slideDown">
             {myActivityList?.map((activity) => {
               return (
                 <Card
