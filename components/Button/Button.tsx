@@ -110,6 +110,7 @@ export function PaginationArrowButton({
 export function CircleCloseButton({ onClick }: SimpleButtonProps) {
   return (
     <button
+      type="button"
       className="flex items-center justify-center rounded-full bg-nomad-black bg-opacity-80 w-[40px] h-[40px] t:w-[32px] t:h-[32px] m:w-[24px] m:h-[24px]"
       onClick={onClick}
     >
