@@ -56,7 +56,7 @@ function MyActivity() {
           </div>
           <PrimaryButton
             size="small"
-            style={isDarkMode ? 'bright' : 'dark'}
+            style={isDarkMode ? 'darkGray' : 'dark'}
             onClick={handleClickAdd}
           >
             체험 등록하기

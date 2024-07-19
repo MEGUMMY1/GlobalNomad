@@ -108,7 +108,11 @@ export default function MyPageInput() {
           <div className="flex items-center m:hidden">
             <PrimaryButton
               style={
-                isAllFieldsValid ? (isDarkMode ? 'bright' : 'dark') : 'disabled'
+                isAllFieldsValid
+                  ? isDarkMode
+                    ? 'darkGray'
+                    : 'dark'
+                  : 'disabled'
               }
               size="small"
               onClick={handleSubmit(onSubmit)}
