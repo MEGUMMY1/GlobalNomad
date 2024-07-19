@@ -71,7 +71,7 @@ export default function NotificationDropdown({
               key={notification.id}
               className="flex-col  items-center px-[12px] py-[16px] justify-between rounded-[5px] border-b w-[328px] min-h-[120px] m:w-[335px] m:h-[105px] bg-white border-gray-200 dark:bg-var-dark4 "
             >
-              <div className="flex justify-between m:mb-[5px]">
+              <div className="flex justify-between">
                 <StatusIndicator
                   size="small"
                   status={
@@ -80,14 +80,16 @@ export default function NotificationDropdown({
                       : 'denied'
                   }
                 />
-                <div className="m:hidden h-[24px]">
+                <div className="h-[24px]">
                   <CloseButton onClick={() => handleDelete(notification.id)} />
                 </div>
               </div>
               <div className="w-[298px] min-h-[44px] mb-[4px]">
-                <p>{ContentWithHighlights(notification.content)}</p>
+                {ContentWithHighlights(notification.content)}
               </div>
-              <p>{formatTimeAgo(notification.updatedAt)}</p>
+              <div className="text-[12px]">
+                {formatTimeAgo(notification.updatedAt)}
+              </div>
             </div>
           ))}
           {hasNextPage && <div ref={ref} />}
