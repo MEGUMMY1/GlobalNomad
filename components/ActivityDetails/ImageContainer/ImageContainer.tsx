@@ -33,15 +33,20 @@ export default function ImageContainer({
     ...subImages,
   ].filter((image) => image.imageUrl !== defaultImage);
 
+  // 모바일에서 SubImage가 없으면 Slider 사용 안 함
+  const shouldUseSlider = subImages.length > 0;
+
   return (
     <div className="flex max-w-[1200px] h-[500px] gap-2 my-10 t:w-full t:h-[310px] m:w-full m:h-[300px] m:my-6 m:justify-center m:relative m:left-0 m:right-0">
-      <div className="relative w-1/2 h-full m:hidden">
+      <div
+        className={`relative w-1/2 h-full ${shouldUseSlider ? 'm:hidden' : 'm:block m:w-full'}`}
+      >
         <Image
           src={bannerImageUrl}
           alt="Banner Image"
           layout="fill"
           objectFit="cover"
-          className="object-cover rounded-l-lg"
+          className="object-cover rounded-l-lg m:rounded-none"
         />
       </div>
       <div className="w-1/2 grid grid-cols-2 grid-rows-2 gap-2 rounded-r-lg overflow-hidden m:hidden">
@@ -60,24 +65,26 @@ export default function ImageContainer({
           </div>
         ))}
       </div>
-      <div className="hidden m:block m:w-screen m:h-full">
-        <Slider {...settings}>
-          {mobileImages.map((image) => (
-            <div
-              key={image.id}
-              className="m:relative m:w-full m:h-[300px] outline-none"
-            >
-              <Image
-                src={image.imageUrl}
-                alt={`Image ${image.id}`}
-                layout="fill"
-                objectFit="cover"
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      {shouldUseSlider && (
+        <div className="hidden m:block m:w-screen m:h-full">
+          <Slider {...settings}>
+            {mobileImages.map((image) => (
+              <div
+                key={image.id}
+                className="m:relative m:w-full m:h-[300px] outline-none"
+              >
+                <Image
+                  src={image.imageUrl}
+                  alt={`Image ${image.id}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </Slider>
+        </div>
+      )}
     </div>
   );
 }

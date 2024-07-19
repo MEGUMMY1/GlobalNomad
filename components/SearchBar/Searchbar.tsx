@@ -55,7 +55,7 @@ function SearchBar({ setIsSearch }: SearchBarProps) {
   }, [inputValue]);
 
   return (
-    <div className="p:w-[1200px] t:w-[696px] m:w-[343px] p:h-[178px] t:h-[166px] m:p-[130px] flex flex-col p:gap-[32px] t:gap-[20px] m:gap-[15px] bg-white p-[32px_24px_32px_24px] m:p-[16px_24px_16px_24px] rounded-2xl shadow-xl">
+    <div className="p:w-[1200px] t:w-[696px] m:w-[343px] p:h-[178px] t:h-[166px] flex flex-col p:gap-[32px] t:gap-[20px] m:gap-[15px] bg-white dark:bg-var-dark2 p-[32px_24px_32px_24px] m:p-[16px_24px_16px_24px] rounded-2xl shadow-xl dark:shadow-none">
       <span className="font-sans text-[20px] m:text-[16px] font-[700]">
         무엇을 체험하고 싶으신가요?
       </span>
@@ -63,7 +63,7 @@ function SearchBar({ setIsSearch }: SearchBarProps) {
         <div className="relative p:w-[1000px] h-[56px] t:w-[500px] m:w-[188px]">
           <input
             ref={inputRef}
-            className=" border border-[#79747E] border-solid p:w-[1000px] t:w-[500px] m:w-[188px] h-[56px] flex p-[4px_16px_4px_40px] items-center self-stretch rounded font-sans text-[16px] m:text-[14px] font-[400]"
+            className=" border border-[#79747E] dark:bg-var-dark3 dark:border-none dark:text-var-gray1 outline-none border-solid p:w-[1000px] t:w-[500px] m:w-[188px] h-[56px] flex p-[4px_16px_4px_40px] items-center self-stretch rounded font-sans text-[16px] m:text-[14px] font-[400]"
             placeholder="내가 원하는 체험은"
             onChange={handleChange}
           ></input>
@@ -75,7 +75,7 @@ function SearchBar({ setIsSearch }: SearchBarProps) {
             alt="검색 아이콘"
           ></Image>
           {inputValue ? (
-            <div className="w-[124px] m:w-[118px] h-[26px] text-[16px] m:text-[14px] font-sans font-[400] text-var-gray6 absolute top-[-10px] left-10 bg-white text-center">
+            <div className="w-[124px] m:w-[118px] h-[26px] text-[16px] m:text-[14px] font-sans font-[400] text-var-gray6 absolute top-[-10px] left-10 bg-white dark:bg-var-dark3 text-center">
               내가 원하는 체험은
             </div>
           ) : (

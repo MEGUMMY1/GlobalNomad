@@ -38,7 +38,7 @@ export function AllActivity({
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       ></div>
-      <div className="hover:bg-gray-200 rounded px-[4px]">
+      <div className="hover:bg-gray-200 dark:hover:bg-var-dark2 rounded px-[4px]">
         <div className="flex items-center mt-[16.5px]">
           <Image
             src={StarImg}
@@ -162,7 +162,7 @@ function AllActivities() {
               <CatergoryBtn key={index} categoryName={Kategorie} />
             ))}
           </div>
-          <div className="p:hidden absolute top-0 right-0 w-20 m:w-3 h-full pointer-events-none bg-gradient-to-l from-white to-transparent"></div>
+          <div className="p:hidden absolute top-0 right-0 w-20 m:w-3 h-full pointer-events-none bg-gradient-to-l from-white dark:from-var-dark1 to-transparent"></div>
         </div>
         <PriceFilterBtn />
       </div>

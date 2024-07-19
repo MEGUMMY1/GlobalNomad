@@ -18,19 +18,19 @@ export default function ReservationModal({
         />
       </div>
       <div className="mt-6">
-        <p className="font-extrabold text-nomad-black text-xl mb-4">
+        <p className="font-extrabold text-nomad-black dark:text-var-gray2 text-xl mb-4">
           예약 가능한 시간
         </p>
         {getAvailableTimes(selectedDate).length > 0 ? (
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-20 justify-center t:max-h-[100px] t:overflow-auto">
             {getAvailableTimes(selectedDate).map((time, index) => (
               <button
                 key={index}
                 onClick={() => handleTimeChange(time)}
-                className={`w-[117px] h-[46px] flex items-center justify-center border border-nomad-black rounded-lg ${
+                className={`w-[130px] h-[46px] flex items-center justify-center border border-nomad-black dark:border-none rounded-lg ${
                   selectedTime === time
                     ? 'bg-nomad-black text-white'
-                    : 'bg-white'
+                    : 'bg-white dark:bg-var-dark4'
                 }`}
               >
                 {time}

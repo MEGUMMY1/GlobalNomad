@@ -55,23 +55,25 @@ export default function Review({ reservation, closeModal }: ReviewProps) {
           width={125}
           height={125}
           alt="체험 사진"
-          className="object-cover rounded-xl m:w-[100px] m:h-[100px]"
+          className="object-cover rounded-xl m:w-[100px] m:h-[125px]"
         />
         <div className="text-nomad-black flex flex-col justify-between">
-          <p className="font-bold text-xl m:text-base max-w-[290px] m:max-w-[220px] overflow-hidden whitespace-nowrap text-ellipsis">
-            {reservation.activity.title}
-          </p>
-          <div className="flex gap-2 m:text-sm m:gap-1">
-            <p>{reservation.date}</p>
-            <p>·</p>
-            <p>
-              {reservation.startTime} - {reservation.endTime}
+          <div>
+            <p className="font-bold text-xl max-w-[270px] m:max-w-[220px] tracking-tight m:overflow-hidden m:whitespace-nowrap m:text-ellipsis dark:text-var-gray2">
+              {reservation.activity.title}
             </p>
-            <p>·</p>
-            <p>{reservation.headCount}명</p>
+            <div className="flex gap-2 m:text-sm m:gap-1 dark:text-var-gray2">
+              <p>{reservation.date}</p>
+              <p>·</p>
+              <p>
+                {reservation.startTime} - {reservation.endTime}
+              </p>
+              <p>·</p>
+              <p>{reservation.headCount}명</p>
+            </div>
           </div>
           <div className="border border-solid border-var-gray2" />
-          <p className="font-bold text-[32px] m:text-xl">
+          <p className="font-bold text-[32px] m:text-xl dark:text-var-gray2">
             ₩ {formatCurrency(reservation.totalPrice)}
           </p>
         </div>
@@ -80,9 +82,9 @@ export default function Review({ reservation, closeModal }: ReviewProps) {
         onRatingChange={(rating) => setRating(rating)}
         currentRating={rating}
       />
-      <div className="w-full h-[200px] m:h-1/2 p-4 rounded border border-solid border-var-gray2">
+      <div className="w-full h-[200px] m:h-1/2 p-4 rounded border border-solid border-var-gray2 dark:bg-var-dark2 dark:border-none">
         <textarea
-          className="w-full h-full border-none outline-none text-base resize-none scrollbar-hide"
+          className="w-full h-full border-none outline-none text-base resize-none scrollbar-hide dark:bg-var-dark2"
           placeholder="후기를 작성해 주세요."
           value={reviewContent}
           onChange={(e) => setReviewContent(e.target.value)}

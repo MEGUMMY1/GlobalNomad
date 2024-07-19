@@ -17,7 +17,6 @@ import {
 } from '@/pages/api/myActivities/apimyActivities.types';
 import useClickOutside from '@/hooks/useClickOutside';
 import ModalTabs from './ModalTabs';
-import { PrimaryButton } from '../Button/Button';
 
 const useMyDateSchedule = (params: getMyDateScheduleParams) => {
   return useQuery({
@@ -70,7 +69,7 @@ const ReservationDateTime: React.FC<{
       </div>
       <div className="relative mb-4" ref={dropDownElement}>
         <div
-          className={`w-full h-[56px] border-solid border border-gray-300 rounded flex items-center px-4 text-base font-medium bg-white cursor-pointer ${selectedTime ? 'text-black' : 'text-gray-500'}`}
+          className={`w-full h-[56px] border-solid border border-gray-300 rounded flex items-center px-4 text-base font-medium bg-white dark:bg-var-dark3 dark:border-none cursor-pointer ${selectedTime ? 'text-black dark:text-var-gray2' : 'text-gray-500'}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           {selectedTime || '시간을 선택하세요'}
@@ -83,9 +82,9 @@ const ReservationDateTime: React.FC<{
           />
         </div>
         {isOpen && (
-          <ul className="z-10 p-2 w-full absolute bg-white border border-solid border-gray-300 rounded-md mt-1 shadow-lg animate-slideDown flex flex-col">
+          <ul className="z-10 p-2 w-full absolute bg-white dark:bg-var-dark2 border border-solid border-var-gray3  dark:border-none rounded-md mt-1 shadow-lg dark:shadow-none animate-slideDown flex flex-col">
             {dateSchedule?.length === 0 ? (
-              <li className="p-2 h-[40px] flex items-center justify-center text-gray-500">
+              <li className="p-2 h-[40px] flex items-center justify-center text-gray-500 dark:text-var-gray2">
                 예약이 없습니다.
               </li>
             ) : (
@@ -94,7 +93,7 @@ const ReservationDateTime: React.FC<{
                 return (
                   <li
                     key={schedule.scheduleId}
-                    className={`p-2 h-[40px] hover:bg-gray-200 ${selectedTime === timeRange ? 'bg-black text-white' : 'bg-white text-black'} rounded-md cursor-pointer flex items-center`}
+                    className={`p-2 h-[40px] hover:bg-gray-200 dark:hover:bg-var-dark4 ${selectedTime === timeRange ? 'bg-black text-white' : 'bg-white dark:bg-var-dark2 text-black dark:text-var-gray2'} rounded-md cursor-pointer flex items-center`}
                     onClick={() =>
                       handleTimeChange(timeRange, schedule.scheduleId)
                     }
@@ -185,60 +184,66 @@ const ApplicationList: React.FC<{
     if (!isTimeScheduleLoading) {
       refetch();
     }
-  }, [mutation.isSuccess, isTimeScheduleLoading, refetch]);
+  }, [refetch, isTimeScheduleLoading]);
 
   return (
     <>
       <span className="font-bold">예약 내역</span>
-      <div className="mt-2 h-[250px] overflow-auto ">
+      <div className="mt-2 p:h-[250px] t:h-[250px] m:h-1/2 overflow-auto">
         {timeSchedule?.reservations.map((reservation) => (
           <div
             key={reservation.id}
-            className="flex p-4 mb-2 border border-solid border-var-gray3 rounded"
+            className="flex p-4 mb-2 border border-solid border-var-gray3 dark:border-none dark:bg-var-dark3 rounded"
           >
-            <div className="flex flex-col mr-auto">
-              <div className="flex gap-2">
-                <p className="text-var-gray7">닉네임</p>
-                <p>{reservation.nickname}</p>
-              </div>
-              <div className="flex gap-2">
-                <p className="text-var-gray7">인원</p>
-                <p>{reservation.headCount}명</p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center justify-center">
-              {reservation.status === 'pending' && (
-                <>
-                  <PrimaryButton
-                    size="small"
-                    style="dark"
-                    onClick={() =>
-                      handleReservation(reservation.id, 'confirmed')
-                    }
-                  >
-                    승인하기
-                  </PrimaryButton>
-                  <PrimaryButton
-                    size="small"
-                    style="bright"
-                    onClick={() =>
-                      handleReservation(reservation.id, 'declined')
-                    }
-                  >
-                    거절하기
-                  </PrimaryButton>
-                </>
-              )}
-              {reservation.status === 'confirmed' && (
-                <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-orange1 text-var-orange2">
-                  예약 승인
+            <div className="w-full flex m:flex-col justify-between">
+              <div>
+                <div className="flex flex-col mr-auto">
+                  <div className="flex gap-2 items-center">
+                    <p className="text-var-gray7 dark:text-var-gray5 m:text-sm">
+                      닉네임
+                    </p>
+                    <p>{reservation.nickname}</p>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <p className="text-var-gray7 dark:text-var-gray5 m:text-sm">
+                      인원
+                    </p>
+                    <p>{reservation.headCount}명</p>
+                  </div>
                 </div>
-              )}
-              {reservation.status === 'declined' && (
-                <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-red1 text-var-red2">
-                  예약 거절
-                </div>
-              )}
+              </div>
+              <div className="flex gap-2 items-center justify-center m:justify-end">
+                {reservation.status === 'pending' && (
+                  <>
+                    <button
+                      className="w-[82px] h-[38px] bg-nomad-black text-white rounded-md text-sm font-bold"
+                      onClick={() =>
+                        handleReservation(reservation.id, 'confirmed')
+                      }
+                    >
+                      승인하기
+                    </button>
+                    <button
+                      className="w-[82px] h-[38px] bg-white text-nomad-black border border-nomad-black rounded-md text-sm font-bold"
+                      onClick={() =>
+                        handleReservation(reservation.id, 'declined')
+                      }
+                    >
+                      거절하기
+                    </button>
+                  </>
+                )}
+                {reservation.status === 'confirmed' && (
+                  <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-orange1 text-var-orange2">
+                    예약 승인
+                  </div>
+                )}
+                {reservation.status === 'declined' && (
+                  <div className="w-[85px] h-[40px] flex items-center justify-center font-bold text-sm rounded-3xl bg-var-red1 text-var-red2">
+                    예약 거절
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}

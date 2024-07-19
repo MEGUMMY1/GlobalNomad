@@ -8,6 +8,7 @@ import { formatNumberToFixed } from '@/utils/formatNumberToFixed';
 import { usePopup } from '@/hooks/usePopup';
 import useClickOutside from '@/hooks/useClickOutside';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
+import Link from 'next/link';
 
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
@@ -75,15 +76,22 @@ function Card({
   const formattedPrice = formatCurrency(price);
 
   return (
-    <div className="flex rounded-[24px] w-[800px] h-[204px] bg-white shadow-card t:w-full m:w-[calc(100vw-50px)]">
-      <Image
-        className="rounded-l-[24px] shrink-0"
-        src={activityImage}
-        alt={title}
-        width={210}
-        height={204}
-      />
-      <div className="flex flex-col w-full justify-between px-[24px] py-[21px]">
+    <div className="h-[204px] flex rounded-3xl shadow-card dark:shadow-none overflow-hidden t:h-[156px] m:h-[128px]">
+      <div className="min-w-[204px] h-[204px] relative t:min-w-[156px] t:h-[156px] m:min-w-[110px] m:h-[128px]">
+        <Link
+          href={`/activity-details/${activityId}`}
+          className="text-[20px] font-bold mt-[8px] hover:underline"
+        >
+          <Image
+            src={activityImage}
+            alt={title}
+            layout="fill"
+            objectFit="cover"
+            className="hover:scale-110"
+          />
+        </Link>
+      </div>
+      <div className="w-full pl-[24px] pt-[24px] pb-[10px] pr-[10px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2 flex flex-col justify-between">
         <div className="flex flex-col gap-[6px]">
           <div className="flex gap-[6px] items-center">
             <Image
@@ -92,16 +100,24 @@ function Card({
               width={19}
               height={19}
             />
-            <div className="h-[21px] text-var-black">{`${formatNumberToFixed(rating)} (${reviewCount})`}</div>
+            <div className="h-[21px] text-var-black m:text-[14px] dark:text-var-gray2">{`${formatNumberToFixed(rating)} (${reviewCount})`}</div>
           </div>
-          <div className="text-[20px] font-[700] text-nomad-black">{title}</div>
+          <Link href={`/activity-details/${activityId}`}>
+            <p className="text-[20px] mt-[8px] font-bold tracking-tight hover:underline t:text-[18px] t:mt-[0] m:text-[14px] m:mt-[0] m:py-[2px]">
+              {title}
+            </p>
+          </Link>
         </div>
-        <div className="relative flex w-full justify-between items-center py-[5px]">
+        <div className="relative flex w-full justify-between items-center py-[5px] m:items-end">
           <div className="flex items-center gap-[8px]">
-            <span className="text-[24px] font-[500] text-var-gray8">{`₩${formattedPrice}`}</span>
-            <span className="font-[500] text-var-gray8">/인</span>
+            <span className="font-medium text-[24px] t:text-[20px] m:text-[16px]">{`₩${formattedPrice}`}</span>
+            <span className="font-[500] text-var-gray8 dark:text-var-gray6">
+              /인
+            </span>
           </div>
-          <MeatballButton onClick={handleClickMeatball} />
+          <div className="m:w-[32px] m:h-[32px]">
+            <MeatballButton onClick={handleClickMeatball} />
+          </div>
           {isPopoverOpen ? (
             <Popover
               activityId={activityId}
