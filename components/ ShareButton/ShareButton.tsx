@@ -1,7 +1,6 @@
 import { useModal } from '@/hooks/useModal';
 import { usePopup } from '@/hooks/usePopup';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 export function ShareButton({
   type,
