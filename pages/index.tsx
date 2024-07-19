@@ -1,12 +1,10 @@
 import Main from '@/components/Lander/Main';
-import Head from 'next/head';
+import { MainPageMeta } from '@/components/MetaData/MetaData';
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>GlobalNomad</title>
-      </Head>
+      <MainPageMeta />
       <Main></Main>
     </>
   );
