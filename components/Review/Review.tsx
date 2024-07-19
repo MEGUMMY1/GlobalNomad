@@ -3,23 +3,32 @@ import Image from 'next/image';
 import { PrimaryButton } from '@/components/Button/Button';
 import { formatCurrency } from '@/utils/formatCurrency';
 import Rating from './Rating';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ReservationId,
   ReviewBody,
 } from '@/pages/api/myReservations/apiMyReservations.types';
 import { apiReview } from '@/pages/api/myReservations/apiMyReservations';
 import { ReviewProps } from './Review.types';
+import { useUserData } from '@/hooks/useUserData';
 
 export default function Review({ reservation, closeModal }: ReviewProps) {
   const [reviewContent, setReviewContent] = useState<string>('');
   const [rating, setRating] = useState<number>(1);
+  const queryClient = useQueryClient();
+  const { userData } = useUserData();
 
   const mutation = useMutation({
     mutationFn: (data: { id: ReservationId; body: ReviewBody }) =>
       apiReview(data.id, data.body),
     onSuccess: (result) => {
       console.log('후기 작성 완료: ', result);
+      queryClient.invalidateQueries({
+        queryKey: ['myReservationList', userData.id, undefined],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['myReservationList', userData.id, 'completed'],
+      });
       closeModal();
     },
     onError: (error) => {

@@ -22,6 +22,8 @@ import {
 import Spinner from '../Spinner/Spinner';
 import { userState } from '@/states/userState';
 import { useRecoilValue } from 'recoil';
+import Head from 'next/head';
+import { ShareButton } from '../ ShareButton/ShareButton';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -92,153 +94,177 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const paginatedReviews = reviewData?.reviews || [];
   const isAuthor = activityData?.userId === userData?.id;
 
+  const currentUrl = location.href;
   return (
-    <div className="mt-16 t:mt-4 m:mt-4">
-      <div className="relative flex justify-between m:px-[24px]">
-        <div className="flex flex-col gap-1">
-          <p className="text-sm text-nomad-black">{activityData?.category}</p>
-          <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
-            {activityData?.title}
-          </h1>
-          <div className="flex gap-3">
-            <div className="flex gap-1">
-              <Image
-                src="/icon/icon_star_on.svg"
-                alt="별점 아이콘"
-                width={16}
-                height={16}
-              />
-              <p className="m:text-sm">
-                {activityData && formatNumberToFixed(activityData?.rating)}
-              </p>
-              <p className="m:text-sm">
-                ({formatCurrency(activityData?.reviewCount)})
-              </p>
+    <>
+      <Head>
+        <title>{activityData?.title}</title>
+        <meta property="og:title" content={activityData?.title} />
+        <meta property="og:description" content={activityData?.description} />
+        <meta property="og:image" content={activityData?.bannerImageUrl} />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={activityData?.title} />
+        <meta name="twitter:description" content={activityData?.description} />
+        <meta name="twitter:image" content={activityData?.bannerImageUrl} />
+        <meta name="twitter:url" content={currentUrl} />
+      </Head>
+      <div className="mt-16 t:mt-4 m:mt-4">
+        <div className="relative flex justify-between m:px-[24px]">
+          <div className="flex flex-col gap-1">
+            <p className="text-sm text-nomad-black">{activityData?.category}</p>
+            <h1 className="text-[32px] text-nomad-black font-bold m:text-[24px] m:max-w-[300px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
+              {activityData?.title}
+            </h1>
+            <div className="flex gap-3">
+              <div className="flex gap-1">
+                <Image
+                  src="/icon/icon_star_on.svg"
+                  alt="별점 아이콘"
+                  width={16}
+                  height={16}
+                />
+                <p className="m:text-sm">
+                  {activityData && formatNumberToFixed(activityData?.rating)}
+                </p>
+                <p className="m:text-sm">
+                  ({formatCurrency(activityData?.reviewCount)})
+                </p>
+              </div>
+              <div className="flex gap-1">
+                <Image
+                  src="/icon/location.svg"
+                  alt="위치 아이콘"
+                  width={18}
+                  height={18}
+                />
+                <p className="text-nomad-black m:text-sm">
+                  {activityData?.address}
+                </p>
+              </div>
             </div>
-            <div className="flex gap-1">
+          </div>
+          <ShareButton
+            type="none-bg"
+            title={activityData?.title}
+            bannerImageUrl={activityData?.bannerImageUrl}
+            description={activityData?.description}
+            activityId={id}
+          />
+          {isAuthor && (
+            <>
+              <MeatballButton onClick={toggleMenu} />
+              {isOpen && (
+                <div
+                  ref={menuRef}
+                  className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white border border-var-gray3 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
+                >
+                  <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-t-lg border-b border-var-gray3 border-solid">
+                    수정하기
+                  </button>
+                  <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-b-lg">
+                    삭제하기
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        {activityData && (
+          <ImageContainer
+            bannerImageUrl={activityData.bannerImageUrl}
+            subImages={activityData.subImages}
+          />
+        )}
+        <div className="flex gap-4 m:block m:relative">
+          <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
+            <div className="border-t-2 border-var-gray3 border-solid pt-10 m:pt-6" />
+            <div className="flex flex-col gap-4">
+              <p className="text-nomad-black font-bold text-xl">체험 설명</p>
+              <p className="text-nomad-black">{activityData?.description}</p>
+            </div>
+            <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
+            {activityData && <Map address={activityData.address} />}
+            <div className="flex gap-1 mt-2">
               <Image
                 src="/icon/location.svg"
                 alt="위치 아이콘"
                 width={18}
                 height={18}
               />
-              <p className="text-nomad-black m:text-sm">
+              <p className="text-nomad-black text-sm max-w-[700px] overflow-hidden whitespace-nowrap text-ellipsis">
                 {activityData?.address}
               </p>
             </div>
-          </div>
-        </div>
-        {isAuthor && (
-          <>
-            <MeatballButton onClick={toggleMenu} />
-            {isOpen && (
-              <div
-                ref={menuRef}
-                className="absolute top-[70px] right-0 mt-2 w-40 h-[114px] bg-white border border-var-gray3 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10"
-              >
-                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-t-lg border-b border-var-gray3 border-solid">
-                  수정하기
-                </button>
-                <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 hover:bg-gray-100 rounded-b-lg">
-                  삭제하기
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      {activityData && (
-        <ImageContainer
-          bannerImageUrl={activityData.bannerImageUrl}
-          subImages={activityData.subImages}
-        />
-      )}
-      <div className="flex gap-4 m:block m:relative">
-        <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
-          <div className="border-t-2 border-var-gray3 border-solid pt-10 m:pt-6" />
-          <div className="flex flex-col gap-4">
-            <p className="text-nomad-black font-bold text-xl">체험 설명</p>
-            <p className="text-nomad-black">{activityData?.description}</p>
-          </div>
-          <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
-          {activityData && <Map address={activityData.address} />}
-          <div className="flex gap-1 mt-2">
-            <Image
-              src="/icon/location.svg"
-              alt="위치 아이콘"
-              width={18}
-              height={18}
-            />
-            <p className="text-nomad-black text-sm max-w-[700px] overflow-hidden whitespace-nowrap text-ellipsis">
-              {activityData?.address}
-            </p>
-          </div>
-          <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
-          <div className="flex flex-col gap-4">
-            <p className="text-nomad-black font-bold text-xl">후기</p>
-            <div className="flex gap-4 items-center">
-              <p className="text-[50px] font-bold">
-                {activityData && formatNumberToFixed(activityData?.rating)}
-              </p>
-              <div className="flex flex-col gap-1">
-                <p className="text-lg text-nomad-black">
-                  {activityData && getRatingText(activityData?.rating)}
+            <div className="border-t-2 border-var-gray3 border-solid my-10 m:my-6" />
+            <div className="flex flex-col gap-4">
+              <p className="text-nomad-black font-bold text-xl">후기</p>
+              <div className="flex gap-4 items-center">
+                <p className="text-[50px] font-bold">
+                  {activityData && formatNumberToFixed(activityData?.rating)}
                 </p>
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="/icon/icon_star_on.svg"
-                    alt="별점 아이콘"
-                    width={16}
-                    height={16}
-                  />
-                  <p className="text-var-black text-sm">
-                    {formatCurrency(activityData?.reviewCount)}개 후기
+                <div className="flex flex-col gap-1">
+                  <p className="text-lg text-nomad-black">
+                    {activityData && getRatingText(activityData?.rating)}
                   </p>
+                  <div className="flex items-center gap-1">
+                    <Image
+                      src="/icon/icon_star_on.svg"
+                      alt="별점 아이콘"
+                      width={16}
+                      height={16}
+                    />
+                    <p className="text-var-black text-sm">
+                      {formatCurrency(activityData?.reviewCount)}개 후기
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          {reviewData && reviewData.totalCount > 0 && (
-            <>
-              {paginatedReviews?.map((review, i) => (
-                <div
-                  key={review.id}
-                  className={`flex gap-4 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
-                >
-                  <div className="flex-shrink-0">
-                    <Image
-                      src={review.user.profileImageUrl}
-                      alt={`${review.user.nickname}의 프로필 이미지`}
-                      width={45}
-                      height={45}
-                      className="rounded-full object-cover border border-var-gray3 border-solid w-12 h-12"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex mb-2">
-                      <p className="font-bold max-w-[300px] m:max-w-[160px] overflow-hidden whitespace-nowrap text-ellipsis">
-                        {review.user.nickname}
-                      </p>
-                      <p className="mx-2">|</p>
-                      <p className="text-sm text-var-gray6">
-                        {new Date(review.createdAt).toLocaleDateString()}
-                      </p>
+            {reviewData && reviewData.totalCount > 0 && (
+              <>
+                {paginatedReviews?.map((review, i) => (
+                  <div
+                    key={review.id}
+                    className={`flex gap-4 py-6 items-start ${i === paginatedReviews.length - 1 ? '' : 'border-b-2 border-var-gray3 border-solid'}`}
+                  >
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={review.user.profileImageUrl}
+                        alt={`${review.user.nickname}의 프로필 이미지`}
+                        width={45}
+                        height={45}
+                        className="rounded-full object-cover border border-var-gray3 border-solid w-12 h-12"
+                      />
                     </div>
-                    <p className="text-nomad-black">{review.content}</p>
+                    <div>
+                      <div className="flex mb-2">
+                        <p className="font-bold max-w-[300px] m:max-w-[160px] overflow-hidden whitespace-nowrap text-ellipsis">
+                          {review.user.nickname}
+                        </p>
+                        <p className="mx-2">|</p>
+                        <p className="text-sm text-var-gray6">
+                          {new Date(review.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <p className="text-nomad-black">{review.content}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-              <Pagination
-                totalItems={reviewData.totalCount}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-              />
-            </>
-          )}
+                ))}
+                <Pagination
+                  totalItems={reviewData.totalCount}
+                  itemsPerPage={itemsPerPage}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </>
+            )}
+          </div>
+          <div>{activityData && <Reservation activity={activityData} />}</div>
         </div>
-        <div>{activityData && <Reservation activity={activityData} />}</div>
       </div>
-    </div>
+    </>
   );
 }

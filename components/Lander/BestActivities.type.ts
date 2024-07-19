@@ -26,4 +26,5 @@ export interface BestActivityProps {
   reviewCount: number;
   id: number;
   bannerImageUrl: string;
+  description: string;
 }

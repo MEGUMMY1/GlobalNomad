@@ -11,6 +11,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
+import { ShareButton } from '../ ShareButton/ShareButton';
 
 function BestActivity({
   title,
@@ -18,6 +19,7 @@ function BestActivity({
   rating,
   reviewCount,
   bannerImageUrl,
+  description,
   id,
 }: BestActivityProps) {
   const router = useRouter();
@@ -45,7 +47,14 @@ function BestActivity({
           {rating.toFixed(1)} ({reviewCount})
         </span>
       </div>
-      <div className="font-sans w-[320px] h-[80px] m:w-[140px] m:h-[40px] text-[30px] m:text-[16px] font-[700] absolute left-[20px] bottom-[84px] m:bottom-[50px] text-white text-ellipsis overflow-hidden leading-normal m:truncate ...">
+      <ShareButton
+        type="initial"
+        title={title}
+        bannerImageUrl={bannerImageUrl}
+        description={description}
+        activityId={id}
+      />
+      <div className="font-sans text-[30px] m:text-[18px] font-[700] absolute left-[20px] bottom-[74px] m:bottom-[50px] text-white">
         {title}
       </div>
       <div className="font-sans text-[20px] m:text-[16px] font-[700] absolute left-[20px] bottom-[39px] m:bottom-[24px] text-white">
@@ -139,6 +148,7 @@ function BestActivities() {
               title={item.title}
               price={item.price}
               rating={item.rating}
+              description={item.description}
               reviewCount={item.reviewCount}
               id={item.id}
               bannerImageUrl={item.bannerImageUrl}
@@ -158,6 +168,7 @@ function BestActivities() {
               price={item.price}
               rating={item.rating}
               reviewCount={item.reviewCount}
+              description={item.description}
               id={item.id}
               bannerImageUrl={item.bannerImageUrl}
             />
