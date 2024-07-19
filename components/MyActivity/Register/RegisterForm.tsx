@@ -28,7 +28,7 @@ import AddressInput from '@/components/MyActivity/Register/AddressInput';
 import { useEffect } from 'react';
 import { RegisterFormProps } from './RegisterForm.types';
 import useEditMyActivity from '@/hooks/myActivity/useEditMyActivity';
-import useResetRegisterState from '../../../hooks/myActivity/useResetRegisterState';
+import useResetRegisterState from '@/hooks/myActivity/useResetRegisterState';
 
 function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   const [selectedKateogorie, setSelectedKategorie] =
@@ -46,7 +46,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
     register,
     handleSubmit,
     setValue,
-    getValues,
+    watch,
     formState: { errors },
   } = useForm<FieldValues>({
     mode: 'onChange',
@@ -157,7 +157,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
 
   // form 제출이 가능한지 체크
   const isAllFieldsValid = () => {
-    const { title, description, price } = getValues();
+    const { title, description, price } = watch();
     return (
       !!title &&
       !!description &&
