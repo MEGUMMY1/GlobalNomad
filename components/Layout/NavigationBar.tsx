@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Logo from '@/public/icon/logo_small.svg';
 import notificationIcon from '@/public/icon/icon_notification.svg';
 import { useUserData } from '@/hooks/useUserData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavigationDropdown from '../NavigationDropdown/NavigationDropdown';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
@@ -13,6 +13,14 @@ import Spinner from '../Spinner/Spinner';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 
 export default function NavigationBar() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    document.body.classList.toggle('dark');
+    setIsDarkMode(!isDarkMode);
+    console.log(isDarkMode);
+  };
+
   const { userData, isLoading } = useUserData();
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const { isLoggedIn } = useLoginState();
@@ -54,6 +62,12 @@ export default function NavigationBar() {
       </div>
       {isLoggedIn ? (
         <div className="flex items-center gap-[15px]">
+          <input
+            type="checkbox"
+            name="checkbox"
+            className="switch"
+            onClick={toggleDarkMode}
+          ></input>
           <button onClick={toggleNotifyDropdown}>
             <div className="relative">
               <Image src={notificationIcon} alt="알림 아이콘" />
@@ -102,6 +116,12 @@ export default function NavigationBar() {
           <Link href="/signup" className="text-[14px]">
             회원가입
           </Link>
+          <input
+            type="checkbox"
+            name="checkbox"
+            className="switch"
+            onClick={toggleDarkMode}
+          ></input>
         </div>
       )}
     </div>

@@ -12,10 +12,6 @@ export default function PriceFilterBtn() {
   );
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   const [MainPageState, setMainPageState] = useRecoilState(mainPageState);
   const { selectedSorted: selectedPriceSorted, sortedName } =
     useRecoilValue(mainPageState);
@@ -28,6 +24,10 @@ export default function PriceFilterBtn() {
     setShowMenuList(false);
   };
 
+  useEffect(() => {
+    setIsClient(true);
+  }, [sortedName]);
+
   return (
     <div className="relative" ref={dropDownElement}>
       <button
@@ -35,7 +35,7 @@ export default function PriceFilterBtn() {
         onClick={() => setShowMenuList((prev) => !prev)}
       >
         <p className="text-[18px] t:text-[12px] m:text-[10px] text-var-green2">
-          {isClient ? sortedName : '정렬'}
+          {sortedName ? sortedName : '정렬'}
         </p>
         <Image
           src={filterIcon}
