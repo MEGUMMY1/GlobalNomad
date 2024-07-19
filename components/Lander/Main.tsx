@@ -20,9 +20,6 @@ function Main() {
   const { SearchValue } = useRecoilValue(mainSearchValueState);
   const date = new Date();
   const month = date.getMonth() + 1;
-  //const {id, title, bannerImageUrl} = useRecoilValue(BestOfmonth);
-
-  console.log(userData);
 
   const params: getActivityListParams = {
     method: 'offset',

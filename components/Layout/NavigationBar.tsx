@@ -18,7 +18,6 @@ export default function NavigationBar() {
   const toggleDarkMode = () => {
     document.body.classList.toggle('dark');
     setIsDarkMode(!isDarkMode);
-    console.log(isDarkMode);
   };
 
   const { userData, isLoading } = useUserData();
@@ -67,6 +66,7 @@ export default function NavigationBar() {
             name="checkbox"
             className="switch"
             onClick={toggleDarkMode}
+            checked={isDarkMode}
           ></input>
           <button onClick={toggleNotifyDropdown}>
             <div className="relative">
