@@ -1,10 +1,10 @@
 import Main from '@/components/Lander/Main';
-import { MainPageMeta } from '@/components/MetaData/MetaData';
+import { InitialPageMeta } from '@/components/MetaData/MetaData';
 
 export default function Home() {
   return (
     <>
-      <MainPageMeta />
+      <InitialPageMeta title="GlobalNomad" />
       <Main></Main>
     </>
   );
