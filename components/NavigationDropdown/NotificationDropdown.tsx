@@ -95,7 +95,7 @@ export default function NotificationDropdown({
           {hasNextPage && <div ref={ref} />}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-[245px] bg-white py-[24px] rounded-[5px] m:bg-var-green1 m:px-[20px] m:py-[40px]">
+        <div className="flex justify-center items-center h-[245px] bg-white py-[24px] rounded-[5px] m:bg-var-green1 m:px-[20px] m:py-[40px] dark:bg-var-dark3">
           새로운 알림이 없습니다.
         </div>
       )}
