@@ -60,16 +60,16 @@ function Popup() {
               </p>
               <div className="flex justify-between gap-2">
                 <button
-                  className="w-[80px] h-[38px] bg-white text-nomad-black font-bold text-sm py-2 rounded-md border border-nomad-black hover:bg-var-gray3 dark:hover:bg-var-dark3"
-                  onClick={closePopup}
-                >
-                  {popup.btnName[0]}
-                </button>
-                <button
                   className="w-[80px] h-[38px] bg-nomad-black text-white font-bold text-sm py-2 rounded-md hover:bg-var-black dark:hover:bg-var-dark3 "
                   onClick={handleCallback}
                 >
                   {popup.btnName[1]}
+                </button>
+                <button
+                  className="w-[80px] h-[38px] bg-white text-nomad-black font-bold text-sm py-2 rounded-md border border-nomad-black hover:bg-var-gray3 dark:hover:bg-var-dark3"
+                  onClick={closePopup}
+                >
+                  {popup.btnName[0]}
                 </button>
               </div>
             </div>
