@@ -212,9 +212,12 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
                 체험 설명
               </p>
-              <p className="text-nomad-black dark:text-var-gray2">
+              <textarea
+                className="py-[16px] px-[20px] h-[200px] resize-none dark:bg-var-dark1 dark:text-var-gray2 custom-scrollbar"
+                disabled
+              >
                 {activityData?.description}
-              </p>
+              </textarea>
             </div>
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
             {activityData && <Map address={activityData.address} />}
