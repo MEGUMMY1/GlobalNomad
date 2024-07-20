@@ -10,6 +10,7 @@ import useActivityImage from '@/hooks/myActivity/useActivityImage';
 import { useRecoilState } from 'recoil';
 
 const KEYS = [0, 1, 2, 3, 4];
+let inputKey = 0;
 
 function UploadImage({
   label,
@@ -67,7 +68,9 @@ function UploadImage({
 
   return (
     <div>
-      <label className="text-[24px] font-[700] text-var-black">{label}</label>
+      <label className="text-[24px] font-[700] text-var-black dark:text-var-gray2">
+        {label}
+      </label>
       {label === '소개 이미지' ? (
         <span className="text-var-gray7">{`\u00A0\u00A0\u00A0\u00A0*이미지는 최대 4개까지 등록 가능합니다.`}</span>
       ) : null}
@@ -82,6 +85,7 @@ function UploadImage({
             <ImageUploadButton />
           </label>
           <input
+            key={inputKey++}
             type="file"
             id={`upload-${label}`}
             className="hidden"

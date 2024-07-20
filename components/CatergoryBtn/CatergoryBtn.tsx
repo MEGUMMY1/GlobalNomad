@@ -40,7 +40,9 @@ export default function CatergoryBtn({ categoryName }: CategoryBtnProps) {
       className={`flex items-center justify-center rounded-[15px] border-[1px] border-solid border-2 m:border-[1px] border-var-green2 dark:border-none w-[127px] h-[53px] t:min-w-[120px] m:min-w-[80px] m:h-[41px] ${backgroundColor}`}
       onClick={handleClick}
     >
-      <p className={`text-[18px] p:font-[600] m:text-[14px] ${textColor}`}>{categoryName}</p>
+      <p className={`text-[18px] p:font-[600] m:text-[14px] ${textColor}`}>
+        {categoryName}
+      </p>
     </button>
   );
 }

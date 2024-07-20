@@ -102,7 +102,7 @@ function AllActivities() {
         return prevState;
       });
     }
-  }, []);
+  }, [setMainPageState]);
 
   const params: getActivityListParams = {
     method: 'offset',
@@ -153,7 +153,7 @@ function AllActivities() {
       page: currentPage,
       size: items_per_page,
     };
-  }, [currentPage, items_per_page, selectedSorted]);
+  }, [currentPage, items_per_page, selectedSorted, KategorieName]);
 
   console.log(currentPage);
   return (

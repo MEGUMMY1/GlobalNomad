@@ -29,8 +29,14 @@ import { useEffect } from 'react';
 import { RegisterFormProps } from './RegisterForm.types';
 import useEditMyActivity from '@/hooks/myActivity/useEditMyActivity';
 import useResetRegisterState from '@/hooks/myActivity/useResetRegisterState';
+import { sideNavigationState } from '@/states/sideNavigationState';
+import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
+import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
+import Image from 'next/image';
 
 function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
+  const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
+
   const [selectedKateogorie, setSelectedKategorie] =
     useRecoilState(KategoriedDropState);
   const [bannerImage, setBannerImage] = useRecoilState(bannerImageState);
@@ -172,6 +178,11 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
     );
   };
 
+  // 사이드 네비게이션
+  const openSideNavigation = () => {
+    setIsOpen(!isOpen);
+  };
+
   // 페이지 나갈 때 state reset
   const resetRegisterState = useResetRegisterState();
   useEffect(() => {
@@ -181,17 +192,28 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   }, []);
 
   return (
-    <div className="flex gap-[20px] py-[72px] m:gap-0 w-full">
+    <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0">
       <div className="m:hidden">
         <SidenNavigation />
       </div>
+      <div className="p:hidden t:hidden">
+        {isOpen && <SidenNavigationMobile />}
+      </div>
       <form
         onSubmit={isEdit ? onSubmitEdit : onSubmitRegister}
-        className="w-full m:p-[16px]"
+        className="m:w-full m:p-[16px]"
       >
-        <div className="flex flex-col w-full gap-[20px]">
+        <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-full m:w-full m:h-full m:px-[15px]">
           <div className="flex justify-between items-center">
-            <h1 className="text-[32px] font-[700]">내 체험 등록</h1>
+            <div className="flex m:gap-[15px]">
+              <Image
+                src={hamburgerIcon}
+                alt="햄버거 메뉴 아이콘"
+                className="p:hidden t:hidden"
+                onClick={() => openSideNavigation()}
+              />
+              <h1 className="text-[32px] font-[700]">내 체험 등록</h1>
+            </div>
             <PrimaryButton
               type="submit"
               size="small"

@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { SearchResultsProps } from './SearchResults.type';
 import { mainSearchValueState } from '@/states/mainPageState';
-import { useEffect, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import {
   getActivityListParams,
   getActivityListResponse,
@@ -23,7 +23,7 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
     itemsPerPage,
   } = useRecoilValue(mainSearchValueState);
 
-  const setItemsPerPage = () => {
+  const setItemsPerPage = useCallback(() => {
     if (typeof window !== 'undefined') {
       // 브라우저 환경에서만 실행
       const width = window.innerWidth;
@@ -43,7 +43,8 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
         currentPage: 1,
       }));
     }
-  };
+  }, [setSearchResultsState]);
+
   useEffect(() => {
     setItemsPerPage();
     if (typeof window !== 'undefined') {
@@ -54,7 +55,7 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
         window.removeEventListener('resize', setItemsPerPage);
       }
     };
-  }, []);
+  }, [setItemsPerPage]);
 
   useEffect(() => {
     setSearchResultsState((prevState) => ({
@@ -87,7 +88,7 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
       ...prevState,
       currentPage: page,
     }));
-    PaginationScrollRef.current?.scrollIntoView({behavior: 'smooth'});
+    PaginationScrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
