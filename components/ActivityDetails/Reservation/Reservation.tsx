@@ -39,7 +39,10 @@ export default function Reservation({ activity }: ReservationProps) {
             format(new Date(schedule.date), 'yyyy-MM-dd') ===
             format(date, 'yyyy-MM-dd')
         )
-        .map((schedule) => `${schedule.startTime} ~ ${schedule.endTime}`);
+        .map(
+          (schedule) =>
+            `${schedule.startTime} ~ ${schedule.endTime === '00:00' ? '24:00' : schedule.endTime}`
+        );
     },
     [schedules]
   );

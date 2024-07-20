@@ -23,7 +23,7 @@ export default function TextArea({
     <div className="flex flex-col gap-[16px] relative">
       {label && <label className="text-[24px] font-bold">{label}</label>}
       <textarea
-        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6 dark:border-var-dark3 w-full h-[346px] resize-none dark:bg-var-dark2 dark:text-var-gray2`}
+        className={`border ${errors[name] ? 'border-var-red2' : ''} py-[16px] px-[20px] rounded-md border-var-gray6 dark:border-var-dark3 w-full h-[346px] resize-none dark:bg-var-dark2 dark:text-var-gray2 custom-scrollbar`}
         type={type}
         placeholder={placeholder}
         {...register(name, { ...validation, readOnly })}

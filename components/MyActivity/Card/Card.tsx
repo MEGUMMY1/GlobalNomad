@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CardProps, PopoverButtonProps, PopoverProps } from './Card.types';
-import { MeatballButton } from '../Button/Button';
+import { MeatballButton } from '../../Button/Button';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatNumberToFixed } from '@/utils/formatNumberToFixed';
 import { usePopup } from '@/hooks/usePopup';
@@ -76,7 +76,7 @@ function Card({
   const formattedPrice = formatCurrency(price);
 
   return (
-    <div className="flex rounded-[24px] h-[204px] shadow-card dark:shadow-none t:w-full m:w-full">
+    <div className="flex rounded-[24px] shadow-card dark:shadow-none t:w-full m:w-full">
       <div className="min-w-[204px] h-[204px] relative t:min-w-[156px] t:h-[156px] m:min-w-[110px] m:h-[128px]">
         <Link
           href={`/activity-details/${activityId}`}
@@ -91,7 +91,7 @@ function Card({
           />
         </Link>
       </div>
-      <div className="w-full rounded-r-[24px] pl-[24px] pt-[24px] pb-[10px] pr-[10px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2 flex flex-col justify-between">
+      <div className="w-full h-[204px] t:h-[156px] m:h-[128px] rounded-r-[24px] pl-[24px] pt-[24px] pb-[10px] pr-[10px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2 flex flex-col justify-between">
         <div className="flex flex-col gap-[6px]">
           <div className="flex gap-[6px] items-center">
             <Image
