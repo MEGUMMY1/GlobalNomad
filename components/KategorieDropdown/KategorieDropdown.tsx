@@ -7,6 +7,7 @@ import { KategorieDropdownProps } from './KategorieDropdown.type';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { KategoriedDropState } from '@/states/KategorieDropState';
 import useClickOutside from '@/hooks/useClickOutside';
+import { darkModeState } from '@/states/themeState';
 
 const Kategories: { [key: string]: string } = {
   '문화 예술': '문화 · 예술',
@@ -26,12 +27,25 @@ function Kategorie({ name, setIsOpen }: KategorieDropdownProps) {
     setIsOpen(false);
   };
 
+  const isDarkMode = useRecoilValue(darkModeState);
   const isSelected = KategorieInfo.name === name;
-  const backgroundColor = isSelected ? 'bg-black' : 'bg-white'; // 조건부 배경색 설정
-  const textColor = isSelected ? 'text-white' : 'text-black';
+  const backgroundColor = isDarkMode
+    ? isSelected
+      ? 'bg-white'
+      : 'bg-var-dark3'
+    : isSelected
+      ? 'bg-black'
+      : 'bg-white'; // 조건부 배경색 설정
+  const textColor = isDarkMode
+    ? isSelected
+      ? 'text-var-dark3'
+      : 'text-var-white'
+    : isSelected
+      ? 'text-white'
+      : 'text-black';
   return (
     <li
-      className={`w-[784px] h-[40px] flex items-center pl-[36px] ${backgroundColor} ${textColor} relative rounded-md hover:bg-gray-100 t:w-full m:w-full`}
+      className={`w-[784px] h-[40px] flex items-center pl-[36px] ${backgroundColor} ${textColor} relative rounded-md hover:bg-gray-100 dark:hover:text-var-dark2 t:w-full m:w-full`}
       onClick={changeKateogireInfo}
       style={{ pointerEvents: isSelected ? 'none' : 'auto' }}
     >
@@ -65,11 +79,11 @@ function KategorieDropdown() {
 
   return (
     <div
-      className="w-[800px] h-[56px] relative z-10 t:w-full m:w-full"
+      className="h-[56px] relative z-10 t:w-full m:w-full"
       ref={KateDropdownElement}
     >
       <div
-        className={`w-[800px] h-[56px] border-solid border border-var-gray7 rounded flex items-center pl-[16px] text-[16px] font-[400] font-sans ${isSelected} bg-white t:w-full m:w-full`}
+        className={`h-[56px] border-solid border border-var-gray7 dark:border-var-dark3 rounded flex items-center pl-[16px] text-[16px] font-[400] font-sans ${isSelected} bg-white dark:bg-var-dark2 t:w-full m:w-full dark:text-var-gray2`}
         onClick={handleOpen}
       >
         {SelectedKateogorie.name ? SelectedKateogorie.name : '카테고리'}
@@ -92,7 +106,7 @@ function KategorieDropdown() {
         )}
       </div>
       {isOpen && (
-        <ul className="w-[800px] h-[260px] rounded-md bg-white absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center shadow-kategorieDropdown t:w-full m:w-full">
+        <ul className="w-full h-[260px] rounded-md bg-white dark:bg-var-dark3 absolute animate-slideDown bottom-[-266px] flex flex-col items-center justify-center shadow-kategorieDropdown t:w-full m:w-full">
           {Object.values(Kategories).map((category) => (
             <Kategorie key={category} name={category} setIsOpen={setIsOpen} />
           ))}

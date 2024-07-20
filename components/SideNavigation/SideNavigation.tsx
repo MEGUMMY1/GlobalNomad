@@ -101,7 +101,7 @@ export default function SidenNavigation() {
             src={profileImageUrl ? profileImageUrl : profileThumbnail}
             width={160}
             height={160}
-            className="rounded-full w-[160px] h-[160px] "
+            className="rounded-full w-[160px] h-[160px] object-cover"
             alt="유저 프로필 사진"
           />
           <Image
