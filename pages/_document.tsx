@@ -1,4 +1,3 @@
-import { appKey } from '@/static/appKey';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
@@ -13,7 +12,7 @@ export default function Document() {
         <script
           async
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services,clusterer,drawing&autoload=false`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_MAP_APP_KEY}&libraries=services,clusterer,drawing&autoload=false`}
         ></script>
         <script
           defer
