@@ -77,7 +77,8 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
       activityData.schedules.forEach((schedule, index) => {
         tempDate[index] = schedule.date;
         tempStartTime[index] = schedule.startTime;
-        tempEndTime[index] = schedule.endTime;
+        tempEndTime[index] =
+          schedule.endTime === '00:00' ? '24:00' : schedule.endTime;
         tempTimeSlots.push({ id: schedule.id });
       });
       tempTimeSlots.pop();
@@ -95,7 +96,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
 
   const formatSchedules = () =>
     Array.from({ length: timeSlotCount }, (_, i) => ({
-      endTime: endTime[i],
+      endTime: endTime[i] === '24:00' ? '00:00' : endTime[i],
       startTime: startTime[i],
       date: formatDate(selectedDate[i]),
     }));
