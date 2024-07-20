@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Icon from '@/public/icon/icon_search.svg';
 import { useRecoilState } from 'recoil';
 import { mainSearchValueState } from '@/states/mainPageState';
-
-/*
-메인화면에서 보이는 검색 바 입니다.
-*/
+import useEnterSubmit from '@/hooks/useEnterSubmit';
 
 interface SearchBarProps {
   setIsSearch: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,7 +19,7 @@ function SearchBar({ setIsSearch }: SearchBarProps) {
     setInputValue(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (inputValue === '') {
       setIsSearch(false);
     } else {
@@ -33,26 +30,9 @@ function SearchBar({ setIsSearch }: SearchBarProps) {
       }));
       setIsSearch(true);
     }
-  };
+  }, [inputValue, setIsSearch, setSearchResultsState]);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
-        handleSubmit();
-      }
-    };
-
-    const inputElement = inputRef.current;
-    if (inputElement) {
-      inputElement.addEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      if (inputElement) {
-        inputElement.removeEventListener('keydown', handleKeyDown);
-      }
-    };
-  }, [inputValue]);
+  const handleKeyDown = useEnterSubmit(handleSubmit);
 
   return (
     <div className="p:w-[1200px] t:w-[696px] m:w-[343px] p:h-[178px] t:h-[166px] flex flex-col p:gap-[32px] t:gap-[20px] m:gap-[15px] bg-white dark:bg-var-dark2 p-[32px_24px_32px_24px] m:p-[16px_24px_16px_24px] rounded-2xl shadow-xl dark:shadow-none">
@@ -63,9 +43,10 @@ function SearchBar({ setIsSearch }: SearchBarProps) {
         <div className="relative p:w-[1000px] h-[56px] t:w-[500px] m:w-[188px]">
           <input
             ref={inputRef}
-            className=" border border-[#79747E] dark:bg-var-dark3 dark:border-none dark:text-var-gray1 outline-none border-solid p:w-[1000px] t:w-[500px] m:w-[188px] h-[56px] flex p-[4px_16px_4px_40px] items-center self-stretch rounded font-sans text-[16px] m:text-[14px] font-[400]"
+            className="border border-[#79747E] dark:bg-var-dark3 dark:border-none dark:text-var-gray1 outline-none border-solid p:w-[1000px] t:w-[500px] m:w-[188px] h-[56px] flex p-[4px_16px_4px_40px] items-center self-stretch rounded font-sans text-[16px] m:text-[14px] font-[400]"
             placeholder="내가 원하는 체험은"
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           ></input>
           <Image
             className="absolute left-0 top-2"
