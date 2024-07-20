@@ -43,7 +43,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
         calendarType="gregory"
         className="custom-calendar"
         formatDay={(locale, date) => date.getDate().toString()}
-        tileClassName={tileClassName}
+        tileClassName={getAvailableDates && tileClassName}
       />
     </div>
   );

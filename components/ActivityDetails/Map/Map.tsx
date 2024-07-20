@@ -55,6 +55,17 @@ export default function Map({ address }: MapProps) {
                 (position) => {
                   const currentLat = position.coords.latitude;
                   const currentLon = position.coords.longitude;
+                  const currentCoords = new kakao.maps.LatLng(
+                    currentLat,
+                    currentLon
+                  );
+
+                  // 현재 위치 마커 추가
+                  new kakao.maps.Marker({
+                    map: map,
+                    position: currentCoords,
+                    title: '현재 위치',
+                  });
 
                   const distanceInMeters = calculateDistanceInMeters(
                     currentLat,
