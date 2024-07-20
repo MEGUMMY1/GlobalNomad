@@ -206,7 +206,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 체험 설명
               </p>
               <textarea
-                className="py-[16px] px-[20px] h-[200px] resize-none dark:bg-var-dark1 dark:text-var-gray2 custom-scrollbar"
+                className="py-[16px] px-[20px] h-[200px] resize-none dark:bg-var-dark1 dark:text-var-gray2 "
                 disabled
               >
                 {activityData?.description}
