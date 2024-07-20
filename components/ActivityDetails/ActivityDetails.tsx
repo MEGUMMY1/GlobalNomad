@@ -24,6 +24,8 @@ import { userState } from '@/states/userState';
 import { useRecoilValue } from 'recoil';
 import Head from 'next/head';
 import { ShareButton } from '../ ShareButton/ShareButton';
+import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
+import { usePopup } from '@/hooks/usePopup';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -32,6 +34,8 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
   const itemsPerPage = 3;
+  const { openPopup } = usePopup();
+  const { deleteMyActivityMutation } = useDeleteActivity();
   const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
   const userData = useRecoilValue(userState);
   const {
@@ -86,6 +90,22 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     router.push(`/activity-details/${id}?page=${page}`);
+  };
+
+  const handleDelete = () => {
+    openPopup({
+      popupType: 'select',
+      content: '체험을 삭제하시겠어요?',
+      btnName: ['아니오', '삭제하기'],
+      callBackFnc: () => {
+        deleteMyActivityMutation.mutate(id);
+        router.push(`/myactivity`);
+      },
+    });
+  };
+
+  const handleEdit = () => {
+    router.push(`/myactivity/edit?activityId=${id}`);
   };
 
   const paginatedReviews = reviewData?.reviews || [];
@@ -159,12 +179,18 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 {isOpen && (
                   <div
                     ref={menuRef}
-                    className="absolute top-10 right-0 m:top-14 m:right-6 mt-2 w-40 h-[114px] m:w-24 m:h-20 bg-white dark:bg-var-dark3 border border-var-gray3 dark:border-var-gray7 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10 m:text-sm"
+                    className="absolute top-16 right-0 m:top-14 m:right-6 mt-2 w-40 h-[114px] m:w-24 m:h-20 bg-white dark:bg-var-dark3 border border-var-gray3 dark:border-var-gray7 border-solid rounded-lg flex flex-col items-center justify-center text-lg z-10 m:text-sm"
                   >
-                    <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-t-lg border-b dark:border-var-gray7 border-var-gray3 border-solid">
+                    <button
+                      className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-t-lg border-b dark:border-var-gray7 border-var-gray3 border-solid"
+                      onClick={handleEdit}
+                    >
                       수정하기
                     </button>
-                    <button className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-b-lg">
+                    <button
+                      className="block w-full h-[57px] px-4 py-2 text-var-gray8 dark:text-var-gray2 hover:bg-gray-100 dark:hover:bg-var-dark4 rounded-b-lg"
+                      onClick={handleDelete}
+                    >
                       삭제하기
                     </button>
                   </div>

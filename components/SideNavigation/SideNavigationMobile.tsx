@@ -68,7 +68,7 @@ export default function SidenNavigationMobile() {
   }
   return (
     isOpen && (
-      <div className="fixed inset-0 bg-black bg-opacity-70 mt-[70px] overflow-hidden p:hidden t:hidden">
+      <div className="fixed inset-0 bg-black bg-opacity-70 mt-[70px] overflow-hidden p:hidden t:hidden z-20">
         <div className="fixed left-0 top-0 z-20 w-4/5 h-full p-[24px] flex flex-col mt-[70px] gap-[24px] bg-white dark:bg-var-dark2 animate-slideRight">
           <div className="flex justify-end">
             <CloseButton onClick={handleCloseSideNav} />
@@ -82,7 +82,7 @@ export default function SidenNavigationMobile() {
               }
               width={160}
               height={160}
-              className="rounded-full w-[160px] h-[160px] "
+              className="rounded-full w-[160px] h-[160px] object-cover"
               alt="유저 프로필 사진"
             />
             <p className="font-bold text-[24px]">{userData.nickname}</p>

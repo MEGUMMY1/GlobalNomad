@@ -56,23 +56,53 @@ function TimeSlotGroup({
   }, [startTime[index], endTime[index]]);
 
   return (
-    <div className="flex items-center t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[4px]">
-      <div className="flex items-center gap-[20px] t:gap-[4px] m:gap-[4px]">
-        <DateInput index={index} />
-        <div className="flex gap-[12px] items-center t:gap-[4px] m:gap-[4px]">
-          <TimeDropdown
-            type="start"
-            handleChange={handleChange}
-            startTime={startTime[index]}
-            selectedTime={selectedStartTime}
-          />
-          <p className="text-[20px] font-[700] t:hidden m:hidden">~</p>
-          <TimeDropdown
-            type="end"
-            handleChange={handleChange}
-            startTime={startTime[index]}
-            selectedTime={selectedEndTime}
-          />
+    <div className="flex items-end t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[6px]">
+      <div className="flex items-center gap-[20px] t:gap-[4px] m:gap-[6px] grow">
+        <div className="m:w-[50%]">
+          {isDefault && (
+            <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 dark:text-var-gray3">
+              날짜
+            </label>
+          )}
+          <DateInput index={index} />
+        </div>
+        <div className="flex gap-[12px] items-center t:gap-[2px] m:gap-[2px] grow">
+          <div className="m:w-[50%]">
+            {isDefault && (
+              <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 dark:text-var-gray3">
+                시작 시간
+              </label>
+            )}
+            <TimeDropdown
+              type="start"
+              handleChange={handleChange}
+              startTime={startTime[index]}
+              selectedTime={selectedStartTime}
+            />
+          </div>
+          <div>
+            {isDefault && (
+              <p className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-transparent t:hidden m:hidden">
+                ~
+              </p>
+            )}
+            <p className="text-[20px] font-[700] t:hidden m:hidden dark:text-var-gray3">
+              ~
+            </p>
+          </div>
+          <div className="m:w-[50%]">
+            {isDefault && (
+              <label className="text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 dark:text-var-gray3">
+                종료 시간
+              </label>
+            )}
+            <TimeDropdown
+              type="end"
+              handleChange={handleChange}
+              startTime={startTime[index]}
+              selectedTime={selectedEndTime}
+            />
+          </div>
         </div>
       </div>
       <div className="flex items-center">
@@ -111,23 +141,9 @@ function TimeSlot() {
 
   return (
     <div>
-      <label className="text-[24px] font-[700] block mb-[24px] text-var-black">
+      <label className="text-[24px] font-[700] block mb-[24px] text-var-black dark:text-var-gray2">
         예약 가능한 시간대
       </label>
-      <div className="flex gap-[20px] t:gap-[4px] m:gap-[4px]">
-        <label className="w-[374px] t:w-[149px] m:w-[130px] text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8 ">
-          날짜
-        </label>
-        <div className="flex gap-[12px] items-center t:gap-[4px] m:gap-[4px]">
-          <label className="w-[140px] t:w-[104px] m:w-[79px] text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8">
-            시작 시간
-          </label>
-          <label className="w-[140px] t:w-[104px] m:w-[79px] text-[20px] m:text-[16px] font-[500] block mb-[10px] text-var-gray8">
-            종료 시간
-          </label>
-        </div>
-        <label className="text-transparent w-[56px] shrink-0">blank</label>
-      </div>
       <TimeSlotGroup isDefault handleClickPlus={handleClickPlus} index={0} />
       <hr className="mt-[20px] mb-[20px]" />
       <div className="space-y-[20px]">

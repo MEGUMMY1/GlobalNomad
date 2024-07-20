@@ -13,7 +13,7 @@ import Link from 'next/link';
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
     <button
-      className="px-[46px] py-[18px] w-auto text-[18px] font-[500]"
+      className="rounded-[6px] px-[46px] py-[18px] w-auto text-[18px] font-[500] hover:bg-var-gray2 dark:hover:text-var-dark2"
       onClick={onClick}
     >
       {children}
@@ -46,11 +46,11 @@ function Popover({ activityId, closePopover }: PopoverProps) {
 
   return (
     <div
-      className="flex flex-col absolute rounded-[6px] border border-solid border-var-gray3 right-0 top-[50px] bg-white z-10"
+      className="flex flex-col absolute rounded-[6px] border border-solid border-var-gray3 dark:border-var-dark3 right-0 top-[50px] bg-white dark:bg-var-dark2 z-10 dark:text-var-gray2"
       ref={popoverRef}
     >
       <PopoverButton onClick={handleClickEdit}>수정하기</PopoverButton>
-      <hr className="bg-var-gray3"></hr>
+      <hr className="h-[1px] bg-var-gray3 dark:bg-var-dark3 border-none"></hr>
       <PopoverButton onClick={handleClickDelete}>삭제하기</PopoverButton>
     </div>
   );
@@ -76,7 +76,7 @@ function Card({
   const formattedPrice = formatCurrency(price);
 
   return (
-    <div className="h-[204px] flex rounded-3xl shadow-card dark:shadow-none overflow-hidden t:h-[156px] m:h-[128px]">
+    <div className="flex rounded-[24px] h-[204px] shadow-card dark:shadow-none t:w-full m:w-full">
       <div className="min-w-[204px] h-[204px] relative t:min-w-[156px] t:h-[156px] m:min-w-[110px] m:h-[128px]">
         <Link
           href={`/activity-details/${activityId}`}
@@ -87,11 +87,11 @@ function Card({
             alt={title}
             layout="fill"
             objectFit="cover"
-            className="hover:scale-110"
+            className="rounded-l-[24px] hover:scale-110"
           />
         </Link>
       </div>
-      <div className="w-full pl-[24px] pt-[24px] pb-[10px] pr-[10px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2 flex flex-col justify-between">
+      <div className="w-full rounded-r-[24px] pl-[24px] pt-[24px] pb-[10px] pr-[10px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2 flex flex-col justify-between">
         <div className="flex flex-col gap-[6px]">
           <div className="flex gap-[6px] items-center">
             <Image

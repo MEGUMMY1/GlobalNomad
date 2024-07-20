@@ -4,7 +4,7 @@ import InputBox from '../InputBox/InputBox';
 import { validation } from './validation';
 import hamburgerIcon from '@/public/icon/hamburger_black.svg';
 import hamburgerWhiteIcon from '@/public/icon/hamburger_white.svg';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { useUserData } from '@/hooks/useUserData';
 import Image from 'next/image';
@@ -16,6 +16,7 @@ import { useSideNavigation } from '@/hooks/useSideNavigation';
 import Spinner from '../Spinner/Spinner';
 import { useRecoilState } from 'recoil';
 import { darkModeState } from '@/states/themeState';
+import useEnterSubmit from '@/hooks/useEnterSubmit';
 
 export default function MyPageInput() {
   const {
@@ -37,14 +38,6 @@ export default function MyPageInput() {
   );
 
   const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
-
-  const onSubmit = (data: FieldValues) => {
-    const { nickname, password, passwordCheck } = data;
-    if (password === passwordCheck) {
-      const newPassword = password;
-      postMyInfoMutation.mutate({ nickname, newPassword });
-    }
-  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -91,12 +84,27 @@ export default function MyPageInput() {
 
   const isAllFieldsValid = isFormFilled && isNotError;
 
+  const onSubmit = (data: FieldValues) => {
+    const { nickname, password, passwordCheck } = data;
+    if (password === passwordCheck) {
+      const newPassword = password;
+      postMyInfoMutation.mutate({ nickname, newPassword });
+    }
+  };
+
+  const handleKeyDown = useEnterSubmit(handleSubmit(onSubmit));
+
   if (isLoading) {
     return <Spinner />;
   }
+
   return (
     <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
-      <form className="flex flex-col gap-[24px] t:gap-[16px]">
+      <form
+        className="flex flex-col gap-[24px] t:gap-[16px]"
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={handleKeyDown}
+      >
         <div className="flex m:gap-[15px] p:justify-between t:justify-between">
           <Image
             src={isDarkMode ? hamburgerWhiteIcon : hamburgerIcon}
