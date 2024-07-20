@@ -68,8 +68,8 @@ export function ShareButton({
       hasButton: false,
       buttonChildren: '예약하기',
       content: (
-        <div className="flex flex-col items-center gap-[30px]">
-          <div className="w-[200px] h-[200px] relative border rounded-lg overflow-hidden">
+        <div className="flex flex-col items-center gap-[30px] mt-[15px] mb-[25px] min-w-[400px] m:min-w-[300px] m-auto">
+          <div className="w-[250px] h-[250px] relative border rounded-lg overflow-hidden">
             <Image
               src={bannerImageUrl ?? ''}
               alt="체험 배너 이미지"
@@ -79,25 +79,28 @@ export function ShareButton({
               className="object-cover"
             />
           </div>
-          <p>{title}</p>
-          <div className="grid grid-cols-2 grid-rows-2 gap-y-[30px] gap-x-[15px] mt-[10px]">
+          <div className="flex flex-col gap-[10px] overflow-hidden w-full">
+            <p className="font-bold">{title}</p>
+            <p className="text-gray-700 line-clamp-3">{description}</p>
+          </div>
+          <div className="flex w-full justify-between px-[10px]">
             <SNSShareButton
               imageUrl="/icon/link.png"
               title="URL 복사하기"
               onClick={handlePasteURL}
             />
             <SNSShareButton
-              imageUrl="/image/kakao.png"
+              imageUrl="/icon/kakaotalk-logo.svg"
               title="카카오로 공유하기"
               onClick={handleKaKaoShare}
             />
             <SNSShareButton
-              imageUrl="/icon/twitter.png"
+              imageUrl="/icon/twitter-logo-2.svg"
               title="X로 공유하기"
               onClick={handleXShare}
             />
             <SNSShareButton
-              imageUrl="/icon/facebookIconforShare.png"
+              imageUrl="/icon/facebook-3-2.svg"
               title="페이스북으로 공유하기"
               onClick={handleFacebookShare}
             />
@@ -130,16 +133,13 @@ export function ShareButton({
 
 function SNSShareButton({ imageUrl, title, onClick }: SNSShareBUttonProps) {
   return (
-    <button className={SNSShareButtonStyle} onClick={onClick}>
-      <div className="w-[20px] h-[20px] relative">
-        <Image
-          src={imageUrl}
-          alt={title}
-          layout="fill"
-          className="rounded-full object-cover"
-        />
-      </div>
-      {title}
+    <button className="w-[60px] h-[60px] relative" onClick={onClick}>
+      <Image
+        src={imageUrl}
+        alt={title}
+        layout="fill"
+        className="rounded-lg object-cover"
+      />
     </button>
   );
 }
