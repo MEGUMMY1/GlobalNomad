@@ -5,6 +5,7 @@ import CustomCalendar from '@/components/CustomCalendar/CustomCalendar';
 export default function ReservationModal({
   selectedDate,
   handleDateChange,
+  getAvailableDates,
   getAvailableTimes,
   selectedTime,
   handleTimeChange,
@@ -15,6 +16,7 @@ export default function ReservationModal({
         <CustomCalendar
           selectedDate={selectedDate}
           onChange={handleDateChange}
+          getAvailableDates={getAvailableDates}
         />
       </div>
       <div className="mt-6">
