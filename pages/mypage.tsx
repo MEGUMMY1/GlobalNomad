@@ -1,3 +1,4 @@
+import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import MyPageInput from '@/components/MyPageInput/MyPageInput';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
@@ -23,6 +24,7 @@ export default function MyPage() {
 
   return (
     <>
+      <InitialPageMeta title="마이페이지 - 내 정보" />
       <div
         className={`flex justify-center w-full min-h-screen mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] ${isOpen ? 'fixed' : ''}`}
       >
