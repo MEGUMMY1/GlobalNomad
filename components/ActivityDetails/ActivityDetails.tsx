@@ -99,8 +99,8 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
       content: '체험을 삭제하시겠어요?',
       btnName: ['아니오', '삭제하기'],
       callBackFnc: () => {
-        deleteMyActivityMutation.mutate(id);
         router.push(`/myactivity`);
+        deleteMyActivityMutation.mutate(id);
       },
     });
   };
