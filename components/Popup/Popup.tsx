@@ -45,7 +45,7 @@ function Popup() {
             </button>
           </div>
         ) : (
-          <div className="bg-white rounded-xl w-[298px] h-[184px] flex flex-col items-center justify-center p-6">
+          <div className="bg-white dark:bg-var-dark1 rounded-xl w-[298px] h-[184px] flex flex-col items-center justify-center p-6">
             <div className="flex justify-center mb-6">
               <Image
                 src="/icon/popup_check.svg"
