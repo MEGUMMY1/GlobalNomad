@@ -24,6 +24,7 @@ import { userState } from '@/states/userState';
 import { useRecoilValue } from 'recoil';
 import Head from 'next/head';
 import { ShareButton } from '../ ShareButton/ShareButton';
+import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
 
@@ -114,20 +115,12 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
 
   return (
     <>
-      <Head>
-        <title>{activityData?.title}</title>
-        <meta property="og:title" content={activityData?.title} />
-        <meta property="og:description" content={activityData?.description} />
-        <meta property="og:image" content={activityData?.bannerImageUrl} />
-        <meta property="og:url" content={currentUrl} />
-        <meta property="og:type" content="website" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={activityData?.title} />
-        <meta name="twitter:description" content={activityData?.description} />
-        <meta name="twitter:image" content={activityData?.bannerImageUrl} />
-        <meta name="twitter:url" content={currentUrl} />
-      </Head>
+      <ActivityDetailsPageMeta
+        title={activityData?.title}
+        description={activityData?.description}
+        bannerImageUrl={activityData?.bannerImageUrl}
+        currentUrl={currentUrl}
+      />
       <div className="mt-16 t:mt-4 m:mt-4">
         <div className="relative flex justify-between m:px-[24px]">
           <div className="flex flex-col gap-1">
