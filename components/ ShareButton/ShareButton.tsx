@@ -137,7 +137,11 @@ export function ShareButton({
             : 'h-[30px] w-[30px] relative'
         }
       >
-        <Image src="/icon/share.png" alt="공유 버튼" layout="fill" />
+        <Image
+          src={isDarkMode ? '/icon/share_gray.png' : '/icon/share.png'}
+          alt="공유 버튼"
+          layout="fill"
+        />
       </div>
     </button>
   );
