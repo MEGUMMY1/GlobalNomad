@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/public/icon/logo_small.svg';
+import darkLogo from '@/public/icon/dark_logo_small.svg';
 import notificationIcon from '@/public/icon/icon_notification.svg';
 import { useUserData } from '@/hooks/useUserData';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavigationDropdown from '../NavigationDropdown/NavigationDropdown';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
@@ -57,7 +58,7 @@ export default function NavigationBar() {
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
-            <Image src={Logo} alt="로고 아이콘" />
+            <Image src={darkMode ? darkLogo : Logo} alt="로고 아이콘" />
           </Link>
         </div>
         <div className="flex items-center gap-4">

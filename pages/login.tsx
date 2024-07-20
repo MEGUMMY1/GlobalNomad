@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import useEnterSubmit from '@/hooks/useEnterSubmit';
 import Spinner from '@/components/Spinner/Spinner';
+import { darkModeState } from '@/states/themeState';
+import { useRecoilState } from 'recoil';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
@@ -24,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function LoginPage() {
   const { postLoginMutation, isLoading } = useLogin();
   const { isLoggedIn } = useLoginState();
+  const [darkMode, setDarkMode] = useRecoilState(darkModeState);
   const router = useRouter();
   const {
     register,
@@ -51,7 +54,12 @@ export default function LoginPage() {
     <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
       {/* 로고 */}
       <Link href="/">
-        <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
+        <Image
+          width={340}
+          height={192}
+          src={`${darkMode ? '/icon/dark_logo_big.svg' : '/icon/logo_big.svg'}`}
+          alt="로고"
+        />
       </Link>
 
       {/* 로그인 폼 */}
