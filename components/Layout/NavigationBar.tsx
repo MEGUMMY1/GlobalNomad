@@ -102,7 +102,7 @@ export default function NavigationBar() {
                     }
                     width={32}
                     height={32}
-                    className="h-[32px] w-[32px] rounded-full bg-var-gray3"
+                    className="h-[32px] w-[32px] rounded-full bg-var-gray3 object-cover"
                     alt="유저 프로필사진"
                   />
                 )}

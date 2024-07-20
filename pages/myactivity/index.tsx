@@ -29,7 +29,7 @@ function MyActivity() {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage, hasNextPage]);
 
   const handleClickAdd = () => {
     router.push('myactivity/register');
