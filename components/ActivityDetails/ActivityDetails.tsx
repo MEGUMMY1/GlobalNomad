@@ -211,17 +211,6 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
             </div>
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
             {activityData && <Map address={activityData.address} />}
-            <div className="flex gap-1 mt-2">
-              <Image
-                src="/icon/location.svg"
-                alt="위치 아이콘"
-                width={18}
-                height={18}
-              />
-              <p className="text-nomad-black dark:text-var-gray2 text-sm max-w-[700px] tracking-tight">
-                {activityData?.address}
-              </p>
-            </div>
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
             <div className="flex flex-col gap-4">
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
