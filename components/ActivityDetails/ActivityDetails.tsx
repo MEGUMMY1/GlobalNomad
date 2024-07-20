@@ -206,7 +206,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           />
         )}
         <div className="flex gap-4 m:block m:relative">
-          <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
+          <div className="max-w-[800px] mb-20 ipad-pro:w-[725px] t:w-full m:w-fit m:px-[24px]">
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid pt-10 m:pt-6" />
             <div className="flex flex-col gap-4">
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">

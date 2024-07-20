@@ -43,7 +43,7 @@ export default function Map({ address }: MapProps) {
   return (
     <div
       id="map"
-      className="w-[800px] h-[500px] rounded-2xl t:w-full t:h-[276px] m:w-full m:h-[450px]"
+      className="w-[800px] h-[500px] rounded-2xl ipad-pro:h-[400px] t:w-full t:h-[276px] m:w-full m:h-[450px]"
     />
   );
 }
