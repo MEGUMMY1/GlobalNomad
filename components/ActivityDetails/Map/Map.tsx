@@ -111,7 +111,7 @@ export default function Map({ address }: MapProps) {
         toast.success('주소가 복사되었습니다.');
       },
       (err) => {
-        console.error('클립보드 복사 실패:', err);
+        toast.error('클립보드 복사 실패');
       }
     );
   };
