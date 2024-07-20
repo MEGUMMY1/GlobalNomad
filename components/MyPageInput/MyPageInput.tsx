@@ -2,7 +2,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { PrimaryButton } from '../Button/Button';
 import InputBox from '../InputBox/InputBox';
 import { validation } from './validation';
-import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
+import hamburgerIcon from '@/public/icon/hamburger_black.svg';
+import hamburgerWhiteIcon from '@/public/icon/hamburger_white.svg';
 import { useEffect, useMemo, useState } from 'react';
 import useEditMyInfo from '@/hooks/useEditMyInfo';
 import { useUserData } from '@/hooks/useUserData';
@@ -13,6 +14,8 @@ import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30h
 import editProfileIcon from '@/public/image/btn.png';
 import { useSideNavigation } from '@/hooks/useSideNavigation';
 import Spinner from '../Spinner/Spinner';
+import { useRecoilState } from 'recoil';
+import { darkModeState } from '@/states/themeState';
 
 export default function MyPageInput() {
   const {
@@ -32,6 +35,8 @@ export default function MyPageInput() {
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(
     userData?.profileImageUrl
   );
+
+  const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
 
   const onSubmit = (data: FieldValues) => {
     const { nickname, password, passwordCheck } = data;
@@ -94,7 +99,7 @@ export default function MyPageInput() {
       <form className="flex flex-col gap-[24px] t:gap-[16px]">
         <div className="flex m:gap-[15px] p:justify-between t:justify-between">
           <Image
-            src={hamburgerIcon}
+            src={isDarkMode ? hamburgerWhiteIcon : hamburgerIcon}
             alt="햄버거 메뉴 아이콘"
             className="p:hidden t:hidden"
             onClick={() => openSideNavigation()}

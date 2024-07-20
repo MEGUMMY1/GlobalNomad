@@ -52,8 +52,8 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
   }
 
   return (
-    <div className="h-full relative flex rounded-3xl shadow-card overflow-hidden t:h-full m:h-full">
-      <div className="min-w-[204px] h-full relative t:min-w-[156px] t:h-full m:min-w-[128px] m:h-full">
+    <div className="h-[204px] relative flex rounded-3xl shadow-card dark:shadow-none overflow-hidden t:h-[156px] m:h-[128px]">
+      <div className="min-w-[204px] h-[204px] relative t:min-w-[156px] t:h-[156px] m:min-w-[110px] m:h-[128px]">
         <Link
           href={`/activity-details/${reservationData.activity.id}`}
           className="text-[20px] font-bold mt-[8px] hover:underline"
@@ -67,14 +67,14 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
           />
         </Link>
       </div>
-      <div className="w-full p-[24px] t:p-[12px] m:p-[9px]">
+      <div className="w-full p-[24px] t:p-[12px] m:p-[9px] bg-white dark:bg-var-dark2">
         <p
           className={`text-[16px] font-bold ${statusStyle[reservationData.status]} m:text-[14px] m:py-[2px]`}
         >
           {statusTitles[reservationData.status]}
         </p>
         <Link href={`/activity-details/${reservationData.activity.id}`}>
-          <p className="text-[20px] mt-[8px] font-bold hover:underline t:text-[18px] t:mt-[0] m:text-[14px] m:mt-[0] m:py-[2px]">
+          <p className="text-[20px] mt-[8px] font-bold tracking-tight hover:underline t:text-[18px] t:mt-[0] t:w-[250px] t:overflow-hidden t:whitespace-nowrap t:text-ellipsis m:text-[14px] m:mt-[0] m:py-[2px] m:w-[200px] m:overflow-hidden m:whitespace-nowrap m:text-ellipsis">
             {reservationData.activity.title}
           </p>
         </Link>
@@ -98,7 +98,10 @@ const ReservationListCard = ({ reservationData }: ReservationCardProps) => {
             )}
             {reservationData.status === 'completed' &&
               !reservationData.reviewSubmitted && (
-                <button className={buttonStyle} onClick={handleOpenReviewModal}>
+                <button
+                  className={`bg-nomad-black text-white ${buttonStyle}`}
+                  onClick={handleOpenReviewModal}
+                >
                   후기 작성
                 </button>
               )}

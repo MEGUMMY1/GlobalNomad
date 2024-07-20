@@ -1,12 +1,14 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const StyleWrapper = styled.div`
+export const StyleWrapper = styled.div<{ darkMode: boolean }>`
   .fc {
     display: flex;
     flex-direction: column;
     height: 800px;
     overflow: hidden;
     z-index: 0;
+    background-color: ${(props) => (props.darkMode ? '#282828' : '#ffffff')};
+    color: ${(props) => (props.darkMode ? '#eee' : '#000000')};
   }
 
   .fc-daygrid-day {
@@ -99,6 +101,10 @@ export const StyleWrapper = styled.div`
     display: none;
   }
 
+  .fc table {
+    background-color: ${(props) => (props.darkMode ? '#282828' : '#fff')};
+  }
+
   .fc-prev-button,
   .fc-next-button {
     background: none;
@@ -108,7 +114,7 @@ export const StyleWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #1b1b1b;
+    color: ${(props) => (props.darkMode ? '#eee' : '#1b1b1b')};
   }
 
   .fc-prev-button:before {
@@ -132,13 +138,15 @@ export const StyleWrapper = styled.div`
   }
 
   .fc-scroller {
-    background-color: #fff;
+    background-color: ${(props) => (props.darkMode ? '#282828' : '#fff')};
+    border-color: ${(props) => (props.darkMode ? '#535353' : '#fff')};
     overflow: hidden;
     color: #969696;
   }
 
   .fc-daygrid-day-frame {
-    background-color: #fff;
+    background-color: ${(props) => (props.darkMode ? '#282828' : '#fff')};
+    border-color: ${(props) => (props.darkMode ? '#535353' : '#fff')};
     overflow: hidden;
     color: #969696;
     font-size: 18px;

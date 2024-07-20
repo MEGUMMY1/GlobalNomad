@@ -57,7 +57,7 @@ function Main() {
             {BestOfmonth?.activities[0].title}
           </h1>
           <span className="text-white font-sans test-[24px] m:text-[14px] font-[700]">
-            {month} 월의 인기 체험 BEST 🔥
+            {month}월의 인기 체험 BEST🔥
           </span>
         </div>
         <div className="mt-[120px] m:mt-[14px] flex justify-center">
