@@ -2,7 +2,7 @@ import Image from 'next/image';
 import StarImg from '@/public/icon/Star.svg';
 import CatergoryBtn from '../CatergoryBtn/CatergoryBtn';
 import PriceFilterBtn from '../PriceFilterBtn/PriceFilterBtn';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AllActivityProps } from './AllActivities.type';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { getActivityListResponse } from '@/pages/api/activities/apiactivities.types';
@@ -67,6 +67,7 @@ export function AllActivity({
 
 function AllActivities() {
   const [MainPageState, setMainPageState] = useRecoilState(mainPageState);
+  const PaginationScrollRef = useRef<HTMLDivElement | null>(null);
 
   const {
     itemsPerPage: items_per_page,
@@ -127,6 +128,7 @@ function AllActivities() {
       ...prevState,
       currentPage: page,
     }));
+    PaginationScrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -153,8 +155,9 @@ function AllActivities() {
     };
   }, [currentPage, items_per_page, selectedSorted, KategorieName]);
 
+  console.log(currentPage);
   return (
-    <div>
+    <div ref={PaginationScrollRef}>
       <div className="flex justify-between">
         <div className="relative t:w-[520px] m:w-[230px]">
           <div className="flex gap-[24px] t:gap-[14px] m:gap-[8px] t:w-[520px] m:w-[230px] overflow-auto scrollbar-hide">
