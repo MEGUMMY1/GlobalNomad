@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
 import { ShareButton } from '../ ShareButton/ShareButton';
+import Test from './Test';
 
 function BestActivity({
   title,
@@ -121,13 +122,31 @@ function BestActivities() {
     setBestCurrentPage(currentPage);
   }, [currentPage]);
 
+  useEffect(() => {
+    const scrollableArea = document.querySelector('.scrollable-area') as HTMLElement;
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      if (scrollableArea) {
+        scrollableArea.scrollLeft += event.deltaY;
+      }
+    };
+
+    if (scrollableArea) {
+      scrollableArea.addEventListener('wheel', handleWheel);
+    }
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <span className="text-[36px] m:text-[18px] font-[700]">
           🔥 인기 체험
         </span>
-        <div className="t:hidden m:hidden flex gap-[10px]">
+        {/* <div className="t:hidden m:hidden flex gap-[10px]">
           <PaginationArrowButton
             onClick={handlePrevClick}
             direction="prev"
@@ -138,9 +157,9 @@ function BestActivities() {
             direction="next"
             disabled={isLastPage}
           />
-        </div>
+        </div> */}
       </div>
-      {items && items.length > 0 ? (
+      {/* {items && items.length > 0 ? (
         <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide t:hidden m:hidden">
           {items.map((item: ActivityDetail) => (
             <BestActivity
@@ -157,10 +176,13 @@ function BestActivities() {
         </div>
       ) : (
         <div>No activities found</div>
-      )}
+      )} */}
+      <div className='w-[1200px] t:hidden m:hidden mt-[34px]'>
+        <Test />
+      </div>
       {bestActivitiesDataNotPc?.activities &&
       bestActivitiesDataNotPc.activities.length > 0 ? (
-        <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden">
+        <div className="scrollable-area flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden">
           {bestActivitiesDataNotPc.activities.map((item: ActivityDetail) => (
             <BestActivity
               key={item.id}
