@@ -28,10 +28,7 @@ import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
 
-export default function ActivityDetails({
-  id,
-  activityDataBySSR,
-}: ActivityDetailsProps) {
+export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(
@@ -119,9 +116,9 @@ export default function ActivityDetails({
   return (
     <>
       <ActivityDetailsPageMeta
-        title={activityDataBySSR?.title}
-        description={activityDataBySSR?.description}
-        bannerImageUrl={activityDataBySSR?.bannerImageUrl}
+        title={activityData?.title}
+        description={activityData?.description}
+        bannerImageUrl={activityData?.bannerImageUrl}
         currentUrl={currentUrl}
       />
       <div className="mt-16 t:mt-4 m:mt-4">
