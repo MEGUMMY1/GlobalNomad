@@ -27,6 +27,7 @@ export function ActivityDetailsPageMeta({
 export function InitialPageMeta({ title }: InitialPageMetaProps) {
   return (
     <Head>
+      <title>{title}</title>
       <meta property="og:title" content={title} />
       <meta
         property="og:description"
