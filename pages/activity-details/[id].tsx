@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import ActivityDetails from '@/components/ActivityDetails/ActivityDetails';
 import { getActivityInfo } from '../api/activities/apiactivities';
 import { getActivityInfoResponse } from '../api/activities/apiactivities.types';
+import { ActivityDetailsPageMeta } from '@/components/MetaData/MetaData';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // context.query에서 id 추출
@@ -18,6 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         activityDataBySSR: null,
+        metaProps: null,
       },
     };
   }
@@ -25,10 +27,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     // id를 인자로 getActivityInfo 호출
     const activityData = await getActivityInfo({ id: activityId });
-    console.log(activityData);
+
+    // metaProps 생성
+    const metaProps = {
+      title: activityData.title,
+      description: activityData.description,
+      bannerImageUrl: activityData.bannerImageUrl,
+      currentUrl: `https://${context.req.headers.host}/activity-details/${id}`,
+    };
+
     return {
       props: {
         activityDataBySSR: activityData,
+        metaProps,
       },
     };
   } catch (error) {
@@ -36,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         activityDataBySSR: null,
+        metaProps: null,
       },
     };
   }
@@ -43,16 +55,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 interface ActivityDetailsPageProps {
   activityDataBySSR: getActivityInfoResponse | null;
+  metaProps: {
+    title: string;
+    description: string;
+    bannerImageUrl: string;
+    currentUrl: string;
+  } | null;
 }
 
 export default function ActivityDetailsPage({
   activityDataBySSR,
+  metaProps,
 }: ActivityDetailsPageProps) {
   const router = useRouter();
   const { id } = router.query;
   const activityId = typeof id === 'string' ? parseInt(id, 10) : undefined;
 
-  return activityId ? (
-    <ActivityDetails id={activityId} activityDataBySSR={activityDataBySSR} />
-  ) : null;
+  return (
+    <>
+      {metaProps && <ActivityDetailsPageMeta {...metaProps} />}
+      {activityId && activityDataBySSR && <ActivityDetails id={activityId} />}
+    </>
+  );
 }

@@ -2,5 +2,4 @@ import { getActivityInfoResponse } from '@/pages/api/activities/apiactivities.ty
 
 export interface ActivityDetailsProps {
   id: number;
-  activityDataBySSR: getActivityInfoResponse | null;
 }
