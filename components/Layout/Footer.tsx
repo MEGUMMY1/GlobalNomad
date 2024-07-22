@@ -6,7 +6,7 @@ function Footer() {
   return (
     <div className="absolute bottom-0 w-full h-[160px] bg-nomad-black flex justify-center">
       <div className="w-[1200px] flex justify-between py-8 mx-12 m:grid m:grid-cols-2 m:mx-6 m:justify-center">
-        <p className="text-[#676767]">©codeit - 2023</p>
+        <p className="text-[#676767]">©codeit-2024-Team8</p>
         <div className="flex gap-8">
           <p className="text-[#676767]">Privacy Policy</p>
           <p className="text-[#676767]">FAQ</p>
