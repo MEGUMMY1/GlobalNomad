@@ -27,10 +27,12 @@ import { ShareButton } from '../ ShareButton/ShareButton';
 import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
+import { darkModeState } from '@/states/themeState';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const isDarkMode = useRecoilValue(darkModeState);
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
@@ -147,7 +149,11 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
               <div className="flex gap-1 items-center justify-center m:items-start">
                 <Image
-                  src="/icon/location.svg"
+                  src={
+                    isDarkMode
+                      ? '/icon/location_gray.svg'
+                      : '/icon/location.svg'
+                  }
                   alt="위치 아이콘"
                   width={18}
                   height={18}

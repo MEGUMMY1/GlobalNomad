@@ -163,7 +163,7 @@ export default function Map({ address }: MapProps) {
       />
       <div className="flex gap-1 mt-2 items-center">
         <Image
-          src="/icon/location.svg"
+          src={isDarkMode ? '/icon/location_gray.svg' : '/icon/location.svg'}
           alt="위치 아이콘"
           width={18}
           height={18}
