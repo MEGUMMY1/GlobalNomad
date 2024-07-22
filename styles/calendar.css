@@ -5,6 +5,14 @@ abbr {
   font-family: 'Pretendard Variable', sans-serif;
 }
 
+.custom-calendar .available-date {
+  background-color: #ced8d5;
+}
+
+.custom-calendar .unavailable-date {
+  pointer-events: none;
+}
+
 .dark .react-calendar {
   border: #646464 1px solid;
   background-color: #282828;

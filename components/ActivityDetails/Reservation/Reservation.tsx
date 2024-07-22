@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { format, addDays } from 'date-fns';
+import { format, addDays, eachDayOfInterval } from 'date-fns';
 import { PrimaryButton } from '@/components/Button/Button';
 import { usePopup } from '@/hooks/usePopup';
 import { useModal } from '@/hooks/useModal';
@@ -29,6 +29,7 @@ export default function Reservation({ activity }: ReservationProps) {
   const { openPopup } = usePopup();
   const { openModal, closeModal } = useModal();
 
+  // 예약 가능한 시간 반환 함수
   const getAvailableTimes = useCallback(
     (date: Date | null) => {
       if (!date) return [];
@@ -38,10 +39,22 @@ export default function Reservation({ activity }: ReservationProps) {
             format(new Date(schedule.date), 'yyyy-MM-dd') ===
             format(date, 'yyyy-MM-dd')
         )
-        .map((schedule) => `${schedule.startTime} ~ ${schedule.endTime}`);
+        .map(
+          (schedule) =>
+            `${schedule.startTime} ~ ${schedule.endTime === '00:00' ? '24:00' : schedule.endTime}`
+        );
     },
     [schedules]
   );
+
+  // 예약 가능한 날짜 반환 함수
+  const getAvailableDates = useCallback(() => {
+    const today = new Date();
+    const endDate = addDays(today, 30);
+    const allDates = eachDayOfInterval({ start: today, end: endDate });
+
+    return allDates.filter((date) => getAvailableTimes(date).length > 0);
+  }, [getAvailableTimes]);
 
   const updateModal = useCallback(
     (date: Date | null, time: string | null) => {
@@ -51,6 +64,7 @@ export default function Reservation({ activity }: ReservationProps) {
           <ReservationModal
             selectedDate={date}
             handleDateChange={handleDateChange}
+            getAvailableDates={getAvailableDates}
             getAvailableTimes={getAvailableTimes}
             selectedTime={time}
             handleTimeChange={handleTimeChange}
@@ -213,6 +227,7 @@ export default function Reservation({ activity }: ReservationProps) {
                   <ReservationModal
                     selectedDate={selectedDate}
                     handleDateChange={handleDateChange}
+                    getAvailableDates={getAvailableDates}
                     getAvailableTimes={getAvailableTimes}
                     selectedTime={selectedTime}
                     handleTimeChange={handleTimeChange}
@@ -228,6 +243,7 @@ export default function Reservation({ activity }: ReservationProps) {
             <CustomCalendar
               selectedDate={selectedDate}
               onChange={handleDateChange}
+              getAvailableDates={getAvailableDates}
             />
           </div>
         </div>
@@ -332,6 +348,7 @@ export default function Reservation({ activity }: ReservationProps) {
                       <CustomCalendar
                         selectedDate={selectedDate}
                         onChange={handleDateChange}
+                        getAvailableDates={getAvailableDates}
                       />
                     </div>
                     <p className="my-4 font-extrabold text-nomad-black dark:text-var-gray2 text-xl">

@@ -45,7 +45,7 @@ function Popup() {
             </button>
           </div>
         ) : (
-          <div className="bg-white rounded-xl w-[298px] h-[184px] flex flex-col items-center justify-center p-6">
+          <div className="bg-white dark:bg-var-dark1 rounded-xl w-[298px] h-[184px] flex flex-col items-center justify-center p-6">
             <div className="flex justify-center mb-6">
               <Image
                 src="/icon/popup_check.svg"
@@ -60,16 +60,16 @@ function Popup() {
               </p>
               <div className="flex justify-between gap-2">
                 <button
-                  className="w-[80px] h-[38px] bg-white text-nomad-black font-bold text-sm py-2 rounded-md border border-nomad-black hover:bg-var-gray3 dark:hover:bg-var-dark3"
-                  onClick={closePopup}
-                >
-                  {popup.btnName[0]}
-                </button>
-                <button
                   className="w-[80px] h-[38px] bg-nomad-black text-white font-bold text-sm py-2 rounded-md hover:bg-var-black dark:hover:bg-var-dark3 "
                   onClick={handleCallback}
                 >
                   {popup.btnName[1]}
+                </button>
+                <button
+                  className="w-[80px] h-[38px] bg-white text-nomad-black font-bold text-sm py-2 rounded-md border border-nomad-black hover:bg-var-gray3 dark:hover:bg-var-dark3"
+                  onClick={closePopup}
+                >
+                  {popup.btnName[0]}
                 </button>
               </div>
             </div>

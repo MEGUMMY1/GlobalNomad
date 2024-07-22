@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { PrimaryButton } from '@/components/Button/Button';
-import Card from '@/components/MyActivity/Card';
+import Card from '@/components/MyActivity/Card/Card';
 import { useInView } from 'react-intersection-observer';
 import { useMyActivityList } from '@/hooks/myActivity/useMyActivityList';
 import Image from 'next/image';
@@ -61,42 +61,40 @@ function MyActivity() {
               체험 등록하기
             </PrimaryButton>
           </div>
-          <div>
-            {totalCount !== 0 ? (
-              <div className="flex flex-col animate-slideDown gap-[24px] overflow-auto scrollbar-hide pb-[20px] t:h-[calc(100vh-160px)] t:gap-[16px] m:h-[calc(100vh-100px)]">
-                {myActivityList?.map((activity) => {
-                  return (
-                    <Card
-                      key={activity.id}
-                      activityId={activity.id}
-                      activityImage={activity.bannerImageUrl}
-                      rating={activity.rating}
-                      reviewCount={activity.reviewCount}
-                      title={activity.title}
-                      price={activity.price}
-                    />
-                  );
-                })}
-                {hasNextPage && (
-                  <div className="text-[35px] font-bold text-center" ref={ref}>
-                    ...
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="flex flex-col h-[500px] items-center justify-center">
-                <Image
-                  src="/icon/empty_reservation.svg"
-                  alt="예약 내역 없음"
-                  width={240}
-                  height={240}
-                />
-                <p className="text-[24px] font-[500] text-var-gray7">
-                  아직 등록한 체험이 없어요
-                </p>
-              </div>
-            )}
-          </div>
+          {totalCount !== 0 ? (
+            <>
+              {myActivityList?.map((activity) => {
+                return (
+                  <Card
+                    key={activity.id}
+                    activityId={activity.id}
+                    activityImage={activity.bannerImageUrl}
+                    rating={activity.rating}
+                    reviewCount={activity.reviewCount}
+                    title={activity.title}
+                    price={activity.price}
+                  />
+                );
+              })}
+              {hasNextPage && (
+                <div className="text-[35px] font-bold text-center" ref={ref}>
+                  ...
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="flex flex-col h-[500px] items-center justify-center">
+              <Image
+                src="/icon/empty_reservation.svg"
+                alt="예약 내역 없음"
+                width={240}
+                height={240}
+              />
+              <p className="text-[24px] font-[500] text-var-gray7">
+                아직 등록한 체험이 없어요
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
