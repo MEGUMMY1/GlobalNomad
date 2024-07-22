@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { SearchResultsProps } from './SearchResults.type';
 import { mainSearchValueState } from '@/states/mainPageState';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import {
   getActivityListParams,
   getActivityListResponse,
@@ -15,6 +15,7 @@ import Spinner from '../Spinner/Spinner';
 function SearchResults({ SearchValue }: SearchResultsProps) {
   const [searchresultsState, setSearchResultsState] =
     useRecoilState(mainSearchValueState);
+  const PaginationScrollRef = useRef<HTMLDivElement | null>(null);
 
   const {
     SearchValue: resultsValue,
@@ -87,10 +88,11 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
       ...prevState,
       currentPage: page,
     }));
+    PaginationScrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="mt-[40px]">
+    <div className="mt-[40px]" ref={PaginationScrollRef}>
       <div className="font-sans text-[32px] font-[400] mb-[12px]">
         <span className="font-sans text-[32px] font-[700]">
           {`"${resultsValue}"`}
@@ -105,7 +107,7 @@ function SearchResults({ SearchValue }: SearchResultsProps) {
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[6px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide">
+        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[8px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide px-[20px] pt-[20px]">
           {SearchResultsData?.activities.map((data) => (
             <AllActivity
               key={data.id}
