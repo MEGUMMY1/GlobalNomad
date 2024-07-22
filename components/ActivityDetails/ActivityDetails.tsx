@@ -273,7 +273,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                           {new Date(review.createdAt).toLocaleDateString()}
                         </p>
                       </div>
-                      <p className="text-nomad-black tracking-tight dark:text-var-gray2">
+                      <p className="text-nomad-black tracking-tight dark:text-var-gray2 whitespace-pre-wrap">
                         {review.content}
                       </p>
                     </div>
