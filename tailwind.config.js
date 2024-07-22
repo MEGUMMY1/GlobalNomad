@@ -59,6 +59,7 @@ module.exports = {
       screens: {
         m: { max: '743px' },
         t: { min: '744px', max: '1280px' },
+        'ipad-pro': { min: '1024px', max: '1366px' },
         p: { min: '1281px' },
       },
       boxShadow: {

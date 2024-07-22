@@ -1,6 +1,10 @@
 import { useModal } from '@/hooks/useModal';
 import { usePopup } from '@/hooks/usePopup';
+import { darkModeState } from '@/states/themeState';
 import Image from 'next/image';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRecoilValue } from 'recoil';
 
 export function ShareButton({
   type,
@@ -16,18 +20,15 @@ export function ShareButton({
   const text = `${title}\n\n${description}`;
   const encodedUrl = encodeURIComponent(url);
   const encodedText = encodeURIComponent(text);
+  const isDarkMode = useRecoilValue(darkModeState);
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      alert('클립보드에 복사되었습니다.');
+      toast.success('클립보드에 복사되었습니다.');
     } catch (error) {
       console.error(error);
-      openPopup({
-        popupType: 'alert',
-        content: '클립 보드 복사에 실패하였습니다.',
-        btnName: ['확인'],
-      });
+      toast.error('클립 보드 복사에 실패하였습니다.');
     }
   };
 
@@ -78,10 +79,23 @@ export function ShareButton({
               objectFit="cover"
               className="object-cover"
             />
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme={isDarkMode ? 'dark' : 'light'}
+            />
           </div>
           <div className="flex flex-col gap-[10px] overflow-hidden w-full">
             <p className="font-bold">{title}</p>
-            <p className="text-gray-700 line-clamp-3">{description}</p>
+            <p className="text-gray-700 line-clamp-3 dark:text-var-gray2">
+              {description}
+            </p>
           </div>
           <div className="flex w-full justify-between px-[10px]">
             <SNSShareButton
@@ -123,7 +137,15 @@ export function ShareButton({
             : 'h-[30px] w-[30px] relative'
         }
       >
-        <Image src="/icon/share.png" alt="공유 버튼" layout="fill" />
+        <Image
+          src={
+            type !== 'initial' && isDarkMode
+              ? '/icon/share_gray.png'
+              : '/icon/share.png'
+          }
+          alt="공유 버튼"
+          layout="fill"
+        />
       </div>
     </button>
   );

@@ -27,10 +27,12 @@ import { ShareButton } from '../ ShareButton/ShareButton';
 import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
+import { darkModeState } from '@/states/themeState';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const isDarkMode = useRecoilValue(darkModeState);
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
@@ -99,8 +101,8 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
       content: '체험을 삭제하시겠어요?',
       btnName: ['아니오', '삭제하기'],
       callBackFnc: () => {
-        deleteMyActivityMutation.mutate(id);
         router.push(`/myactivity`);
+        deleteMyActivityMutation.mutate(id);
       },
     });
   };
@@ -147,7 +149,11 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
               <div className="flex gap-1 items-center justify-center m:items-start">
                 <Image
-                  src="/icon/location.svg"
+                  src={
+                    isDarkMode
+                      ? '/icon/location_gray.svg'
+                      : '/icon/location.svg'
+                  }
                   alt="위치 아이콘"
                   width={18}
                   height={18}
@@ -199,14 +205,14 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           />
         )}
         <div className="flex gap-4 m:block m:relative">
-          <div className="max-w-[800px] mb-20 t:w-[470px] m:w-fit m:px-[24px]">
+          <div className="max-w-[800px] mb-20 ipad-pro:w-[725px] t:w-full m:w-fit m:px-[24px]">
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid pt-10 m:pt-6" />
             <div className="flex flex-col gap-4">
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
                 체험 설명
               </p>
               <textarea
-                className="py-[16px] px-[20px] h-[200px] resize-none dark:bg-var-dark1 dark:text-var-gray2 "
+                className="py-[16px] px-[20px] h-[200px] resize-none custom-scrollbar dark:bg-var-dark1 dark:text-var-gray2 "
                 disabled
               >
                 {activityData?.description}
@@ -214,17 +220,6 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
             </div>
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
             {activityData && <Map address={activityData.address} />}
-            <div className="flex gap-1 mt-2">
-              <Image
-                src="/icon/location.svg"
-                alt="위치 아이콘"
-                width={18}
-                height={18}
-              />
-              <p className="text-nomad-black dark:text-var-gray2 text-sm max-w-[700px] tracking-tight">
-                {activityData?.address}
-              </p>
-            </div>
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
             <div className="flex flex-col gap-4">
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">

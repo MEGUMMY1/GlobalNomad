@@ -3,6 +3,7 @@ import { getActivityInfoResponse } from '@/pages/api/activities/apiactivities.ty
 export interface ReservationModalProps {
   selectedDate: Date | null;
   handleDateChange: (date: Date | null) => void;
+  getAvailableDates: () => Date[];
   getAvailableTimes: (date: Date | null) => string[];
   selectedTime: string | null;
   handleTimeChange: (time: string) => void;

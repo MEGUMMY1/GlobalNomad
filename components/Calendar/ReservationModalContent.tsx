@@ -189,7 +189,7 @@ const ApplicationList: React.FC<{
   return (
     <>
       <span className="font-bold">예약 내역</span>
-      <div className="mt-2 p:h-[250px] t:h-[250px] m:h-1/2 overflow-auto">
+      <div className="mt-2 p:h-[250px] t:h-[250px] m:h-1/2 overflow-auto custom-scrollbar">
         {timeSchedule?.reservations.map((reservation) => (
           <div
             key={reservation.id}
