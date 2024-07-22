@@ -58,7 +58,7 @@ export default function NavigationBar() {
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
-            <Image src={darkMode ? darkLogo : Logo} alt="로고 아이콘" />
+            <Image src={darkMode ? darkLogo : Logo} alt="로고 아이콘" className="m:w-[120px]" />
           </Link>
         </div>
         <div className="flex items-center gap-4">
@@ -67,6 +67,7 @@ export default function NavigationBar() {
             name="checkbox"
             className="switch"
             onClick={toggleDarkMode}
+            checked={darkMode}
           ></input>
           {isLoggedIn ? (
             <div className="flex items-center gap-2">

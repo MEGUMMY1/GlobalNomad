@@ -54,7 +54,7 @@ function BestActivity({
         description={description}
         activityId={id}
       />
-      <div className="font-sans text-[30px] m:text-[18px] font-[700] absolute left-[20px] bottom-[74px] m:bottom-[50px] text-white">
+      <div className="font-sans w-[320px] h-[80px] m:w-[140px] m:h-[40px] text-[30px] m:text-[16px] font-[700] absolute left-[20px] bottom-[84px] m:bottom-[50px] text-white text-ellipsis overflow-hidden leading-normal m:truncate ...">
         {title}
       </div>
       <div className="font-sans text-[20px] m:text-[16px] font-[700] absolute left-[20px] bottom-[39px] m:bottom-[24px] text-white">
