@@ -13,8 +13,21 @@ import { useRecoilState } from 'recoil';
 import { sideNavigationState } from '@/states/sideNavigationState';
 import { darkModeState } from '@/states/themeState';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
+import { GetServerSideProps } from 'next';
+import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 
-function MyActivity() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const OGTitle = '내 체험 관리 | GLOBALNOMAD';
+  const OGUrl = 'https://globalnomad-5-8.netlify.app/myactivity';
+  return {
+    props: {
+      OGTitle,
+      OGUrl,
+    },
+  };
+};
+
+function MyActivity({ OGTitle, OGUrl }: SSRMetaProps) {
   const router = useRouter();
   const { ref, inView } = useInView();
   const { fetchNextPage, myActivityList, totalCount, hasNextPage } =
@@ -38,7 +51,7 @@ function MyActivity() {
 
   return (
     <>
-      <InitialPageMeta title="내 체험 관리 - GlobalNomad" />
+      <InitialPageMeta title={OGTitle} url={OGUrl} />
       <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0 min-h-screen">
         <div className="m:hidden">
           <SideNavigation />
