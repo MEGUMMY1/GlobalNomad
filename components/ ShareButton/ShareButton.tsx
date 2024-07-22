@@ -138,7 +138,11 @@ export function ShareButton({
         }
       >
         <Image
-          src={isDarkMode ? '/icon/share_gray.png' : '/icon/share.png'}
+          src={
+            type !== 'initial' && isDarkMode
+              ? '/icon/share_gray.png'
+              : '/icon/share.png'
+          }
           alt="공유 버튼"
           layout="fill"
         />
