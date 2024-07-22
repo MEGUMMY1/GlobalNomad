@@ -133,8 +133,8 @@ export function ShareButton({
       <div
         className={
           type === 'initial'
-            ? 'h-[22px] w-[20px] relative m:h-[17px] m:w-[15px]'
-            : 'h-[30px] w-[30px] relative'
+            ? 'h-[22px] w-[22px] relative m:h-[12px] m:w-[12px]'
+            : 'h-[30px] w-[30px] relative m:mb-[5px]'
         }
       >
         <Image
