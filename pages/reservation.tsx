@@ -60,12 +60,12 @@ export default function MyReservationPage({ OGTitle, OGUrl }: SSRMetaProps) {
   return (
     <>
       <InitialPageMeta title={OGTitle} url={OGUrl} />
-      <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px m:mt-[26px]">
+      <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:w-full m:px-[16px]">
         <div className="m:hidden">
           <SideNavigation />
         </div>
         {isOpen && <SidenNavigationMobile />}
-        <div className="flex flex-col w-[792px] gap-[24px] t:w-[430px] m:w-[344px]">
+        <div className="flex flex-col w-[792px] gap-[24px] t:w-[430px] m:w-full">
           <div className="flex w-full justify-between items-center">
             <div className="flex m:gap-[15px]">
               <Image
