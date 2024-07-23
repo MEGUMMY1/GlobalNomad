@@ -19,7 +19,7 @@ import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = '예약현황 | GLOBALNOMAD';
-  const OGUrl = 'https://globalnomad-5-8.netlify.app/calender';
+  const OGUrl = 'https://globalnomad-5-8.netlify.app/calendar';
   return {
     props: {
       OGTitle,
