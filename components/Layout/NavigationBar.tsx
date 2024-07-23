@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/public/icon/logo_small.svg';
+import darkLogo from '@/public/icon/dark_logo_small.svg';
 import notificationIcon from '@/public/icon/icon_notification.svg';
 import { useUserData } from '@/hooks/useUserData';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavigationDropdown from '../NavigationDropdown/NavigationDropdown';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
@@ -57,7 +58,11 @@ export default function NavigationBar() {
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
-            <Image src={Logo} alt="로고 아이콘" className="m:w-[120px]" />
+            <Image
+              src={darkMode ? darkLogo : Logo}
+              alt="로고 아이콘"
+              className="m:w-[120px]"
+            />
           </Link>
         </div>
         <div className="flex items-center gap-4">
@@ -74,8 +79,10 @@ export default function NavigationBar() {
                 <div className="relative">
                   <Image src={notificationIcon} alt="알림 아이콘" />
                   {data?.totalCount !== undefined && data?.totalCount > 0 && (
-                    <span className="flex justify-center items-center absolute -top-2 -right-2 bg-red-500 w-[15px] h-[15px] text-white text-xs rounded-full px-2">
-                      {data.totalCount}
+                    <span className="absolute top-[-7px] right-[-7px] bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
+                      <p className="pr-[1.5px] translate-y-[-10%]">
+                        {data.totalCount}
+                      </p>
                     </span>
                   )}
                 </div>

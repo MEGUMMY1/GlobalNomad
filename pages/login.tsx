@@ -14,6 +14,8 @@ import useEnterSubmit from '@/hooks/useEnterSubmit';
 import Spinner from '@/components/Spinner/Spinner';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
+import { darkModeState } from '@/states/themeState';
+import { useRecoilState } from 'recoil';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = '로그인 | GLOBALNOMAD';
@@ -30,6 +32,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function LoginPage({ OGTitle, OGUrl }: SSRMetaProps) {
   const { postLoginMutation, isLoading } = useLogin();
   const { isLoggedIn } = useLoginState();
+  const [darkMode, setDarkMode] = useRecoilState(darkModeState);
   const router = useRouter();
   const {
     register,
@@ -59,7 +62,12 @@ export default function LoginPage({ OGTitle, OGUrl }: SSRMetaProps) {
       <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
         {/* 로고 */}
         <Link href="/">
-          <Image width={340} height={192} src="/icon/logo_big.svg" alt="로고" />
+          <Image
+            width={340}
+            height={192}
+            src={`${darkMode ? '/icon/dark_logo_big.svg' : '/icon/logo_big.svg'}`}
+            alt="로고"
+          />
         </Link>
 
         {/* 로그인 폼 */}
