@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
 import { ShareButton } from '../ ShareButton/ShareButton';
+import { BestsSlide, BestsSlideTsize } from './BestActivitiesSlide';
 
 function BestActivity({
   title,
@@ -65,18 +66,6 @@ function BestActivity({
 }
 
 function BestActivities() {
-  const [bestCurrentPage, setBestCurrentPage] = useState(1);
-
-  const params: getActivityListParams = {
-    method: 'offset',
-    cursorId: null,
-    category: null,
-    keyword: null,
-    sort: 'most_reviewed',
-    page: bestCurrentPage,
-    size: 3,
-  };
-
   const paramsNotPc: getActivityListParams = {
     method: 'offset',
     cursorId: null,
@@ -88,15 +77,6 @@ function BestActivities() {
   };
 
   const {
-    data: bestActivitiesData,
-    error,
-    isLoading,
-  } = useQuery<getActivityListResponse>({
-    queryKey: ['BestActivities', params],
-    queryFn: () => getActivityList(params),
-  });
-
-  const {
     data: bestActivitiesDataNotPc,
     error: errorNotPc,
     isLoading: isLoadingNotPc,
@@ -105,21 +85,25 @@ function BestActivities() {
     queryFn: () => getActivityList(paramsNotPc),
   });
 
-  const {
-    items,
-    currentPage,
-    isFirstPage,
-    isLastPage,
-    handlePrevClick,
-    handleNextClick,
-  } = usePagination({
-    data: bestActivitiesData,
-    itemsPerPage: 3,
-  });
-
   useEffect(() => {
-    setBestCurrentPage(currentPage);
-  }, [currentPage]);
+    const scrollableArea = document.querySelector(
+      '.scrollable-area'
+    ) as HTMLElement;
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      if (scrollableArea) {
+        scrollableArea.scrollLeft += event.deltaY;
+      }
+    };
+
+    if (scrollableArea) {
+      scrollableArea.addEventListener('wheel', handleWheel);
+    }
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   return (
     <div>
@@ -127,40 +111,14 @@ function BestActivities() {
         <span className="text-[36px] m:text-[18px] font-[700]">
           🔥 인기 체험
         </span>
-        <div className="t:hidden m:hidden flex gap-[10px]">
-          <PaginationArrowButton
-            onClick={handlePrevClick}
-            direction="prev"
-            disabled={isFirstPage}
-          />
-          <PaginationArrowButton
-            onClick={handleNextClick}
-            direction="next"
-            disabled={isLastPage}
-          />
-        </div>
       </div>
-      {items && items.length > 0 ? (
-        <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide t:hidden m:hidden">
-          {items.map((item: ActivityDetail) => (
-            <BestActivity
-              key={item.id}
-              title={item.title}
-              price={item.price}
-              rating={item.rating}
-              description={item.description}
-              reviewCount={item.reviewCount}
-              id={item.id}
-              bannerImageUrl={item.bannerImageUrl}
-            />
-          ))}
-        </div>
-      ) : (
-        <div>No activities found</div>
-      )}
+      <div className="w-[1200px] t:hidden m:hidden mt-[34px]">
+        <BestsSlide />
+      </div>
       {bestActivitiesDataNotPc?.activities &&
       bestActivitiesDataNotPc.activities.length > 0 ? (
-        <div className="flex gap-[32px] m:gap-[16px] m:mt-5 overflow-auto scrollbar-hide p:hidden">
+        <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden t:hidden">
+
           {bestActivitiesDataNotPc.activities.map((item: ActivityDetail) => (
             <BestActivity
               key={item.id}
@@ -177,6 +135,9 @@ function BestActivities() {
       ) : (
         <div>No activities found</div>
       )}
+      <div className="hidden t:block ml-[-10px]m mt-[30px]">
+        <BestsSlideTsize />
+      </div>
     </div>
   );
 }
