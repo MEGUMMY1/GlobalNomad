@@ -59,7 +59,7 @@ export default function NotificationDropdown({
   }, []);
 
   return (
-    <div className="z-50 px-[20px] py-[17px] absolute top-[60px] t:right-[100px] w-[368px] h-[360px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 dark:bg-var-dark2 border-var-dark3 border border-solid">
+    <div className="z-50 px-[20px] py-[17px] absolute top-[80%] right-[8%] t:right-[8%] w-[368px] h-[360px] animate-slideDown flex-col justify-center overflow-y-auto scrollbar-hide rounded-[5px] m:fixed m:inset-0 m:rounded-none m:w-full m:h-full bg-var-green1 dark:bg-var-dark2 border-var-dark3 border border-solid">
       <div className="flex text-[20px] font-bold mb-[10px] justify-between ">
         알림 {data ? `${data.totalCount}` : '0'}개
         <CloseButton onClick={onClick} />
@@ -95,7 +95,7 @@ export default function NotificationDropdown({
           {hasNextPage && <div ref={ref} />}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-[245px] bg-white py-[24px] rounded-[5px] m:bg-var-green1 m:px-[20px] m:py-[40px]">
+        <div className="flex justify-center items-center h-[245px] bg-white py-[24px] rounded-[5px] m:bg-var-green1 m:px-[20px] m:py-[40px] dark:bg-var-dark3">
           새로운 알림이 없습니다.
         </div>
       )}
