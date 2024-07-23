@@ -22,12 +22,11 @@ import {
 import Spinner from '../Spinner/Spinner';
 import { userState } from '@/states/userState';
 import { useRecoilValue } from 'recoil';
-import Head from 'next/head';
-import { ShareButton } from '../ ShareButton/ShareButton';
 import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
 import { darkModeState } from '@/states/themeState';
+import { ShareButton } from '../ShareButton/ShareButton';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -113,7 +112,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
 
   const paginatedReviews = reviewData?.reviews || [];
   const isAuthor = activityData?.userId === userData?.id;
-  const currentUrl = location.href;
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   return (
     <>
@@ -205,18 +204,17 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           />
         )}
         <div className="flex gap-4 m:block m:relative">
-          <div className="max-w-[800px] mb-20 ipad-pro:w-[725px] t:w-full m:w-fit m:px-[24px]">
+          <div className="mb-20 ipad-pro:w-[725px] t:w-full m:w-full m:px-[24px]">
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid pt-10 m:pt-6" />
             <div className="flex flex-col gap-4">
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
                 체험 설명
               </p>
               <textarea
-                className="h-[200px] resize-none custom-scrollbar dark:bg-var-dark1 dark:text-var-gray2 "
+                className="h-[200px] resize-none custom-scrollbar dark:bg-var-dark1 dark:text-var-gray2"
                 disabled
-              >
-                {activityData?.description}
-              </textarea>
+                value={activityData?.description || ''}
+              />
             </div>
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid my-10 m:my-6" />
             {activityData && <Map address={activityData.address} />}

@@ -11,7 +11,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { getActivityList } from '@/pages/api/activities/apiactivities';
 import { useRouter } from 'next/router';
-import { ShareButton } from '../ ShareButton/ShareButton';
+import { ShareButton } from '../ShareButton/ShareButton';
 
 function BestActivity({
   title,
