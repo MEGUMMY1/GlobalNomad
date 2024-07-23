@@ -16,6 +16,7 @@ import { darkModeState } from '@/states/themeState';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import { GetServerSideProps } from 'next';
 import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = '예약현황 | GLOBALNOMAD';
@@ -32,6 +33,8 @@ export default function CalendarPage({ OGTitle, OGUrl }: SSRMetaProps) {
   const [activityId, setActivityId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
   const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
+  // 로그아웃 상태에서 페이지 접근시 로그인 페이지로 redirect
+  useAuthRedirect();
 
   const openSideNavigation = () => {
     setIsOpen(!isOpen);
