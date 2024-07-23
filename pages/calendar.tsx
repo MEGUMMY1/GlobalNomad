@@ -14,8 +14,21 @@ import hamburgerIcon from '@/public/icon/hamburger_black.svg';
 import hamburgerWhiteIcon from '@/public/icon/hamburger_white.svg';
 import { darkModeState } from '@/states/themeState';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
+import { GetServerSideProps } from 'next';
+import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 
-export default function CalendarPage() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const OGTitle = '예약현황 | GLOBALNOMAD';
+  const OGUrl = 'https://globalnomad-5-8.netlify.app/calender';
+  return {
+    props: {
+      OGTitle,
+      OGUrl,
+    },
+  };
+};
+
+export default function CalendarPage({ OGTitle, OGUrl }: SSRMetaProps) {
   const [activityId, setActivityId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
   const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
@@ -47,7 +60,7 @@ export default function CalendarPage() {
 
   return (
     <>
-      <InitialPageMeta title="예약현황 - GlobalNomad" />
+      <InitialPageMeta title={OGTitle} url={OGUrl} />
       <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0 min-h-screen">
         <div className="m:hidden">
           <SideNavigation />

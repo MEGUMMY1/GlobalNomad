@@ -5,8 +5,8 @@ import { MyReservationListResponse } from '@/pages/api/myReservations/apiMyReser
 import { useMemo } from 'react';
 import { statusType } from '@/components/ReservationFilter/myReservationTypes.types';
 
-const INITIAL_SIZE = 10;
-const REFETCH_SIZE = 1;
+const INITIAL_SIZE = 20;
+const REFETCH_SIZE = 2;
 
 export const useReservationList = (filterOption: statusType | undefined) => {
   const { userData } = useUserData();

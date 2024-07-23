@@ -164,7 +164,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
             </div>
           </div>
-          <div className="flex m:items-start m:pt-6">
+          <div className="flex t:items-center m:items-end">
             <ShareButton
               type="none-bg"
               title={activityData?.title}

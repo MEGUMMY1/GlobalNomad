@@ -13,18 +13,23 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import useEnterSubmit from '@/hooks/useEnterSubmit';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
+import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 import { useRecoilState } from 'recoil';
 import { darkModeState } from '@/states/themeState';
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const OGTitle = '회원가입 | GLOBALNOMAD';
+  const OGUrl = 'https://globalnomad-5-8.netlify.app/signup';
   return {
     props: {
       layoutType: 'removeLayout',
+      OGTitle,
+      OGUrl,
     },
   };
 };
 
-export default function SingupPage() {
+export default function SingupPage({ OGTitle, OGUrl }: SSRMetaProps) {
   const [isChecked, setIsChecked] = useState(false);
   const { isLoggedIn } = useLoginState();
   const router = useRouter();
@@ -67,7 +72,7 @@ export default function SingupPage() {
 
   return (
     <>
-      <InitialPageMeta title="회원가입 | GlobalNomad" />
+      <InitialPageMeta title={OGTitle} url={OGUrl} />
       <div className="flex flex-col items-center max-w-[640px] m-auto pt-[160px] gap-[40px] px-[20px] ">
         {/* 로고 */}
         <Link href="/">

@@ -16,8 +16,21 @@ import hamburgerIcon from '@/public/icon/hamburger_black.svg';
 import hamburgerWhiteIcon from '@/public/icon/hamburger_white.svg';
 import { darkModeState } from '@/states/themeState';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
+import { GetServerSideProps } from 'next';
+import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 
-export default function MyReservationPage() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const OGTitle = '예약내역 | GLOBALNOMAD';
+  const OGUrl = 'https://globalnomad-5-8.netlify.app/reservation';
+  return {
+    props: {
+      OGTitle,
+      OGUrl,
+    },
+  };
+};
+
+export default function MyReservationPage({ OGTitle, OGUrl }: SSRMetaProps) {
   const [filterOption, setFilterOption] = useState<statusType | undefined>();
   const [reservationListByFilter, setReservationListByFilter] = useState<
     MyReservationProps[]
@@ -46,13 +59,13 @@ export default function MyReservationPage() {
 
   return (
     <>
-      <InitialPageMeta title="예약내역 - GlobalNomad" />
-      <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px m:mt-[26px]">
+      <InitialPageMeta title={OGTitle} url={OGUrl} />
+      <div className="flex justify-center w-full mt-[72px] gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:w-full m:px-[16px]">
         <div className="m:hidden">
           <SideNavigation />
         </div>
         {isOpen && <SidenNavigationMobile />}
-        <div className="flex flex-col w-[792px] gap-[24px] t:w-[430px] m:w-[344px]">
+        <div className="flex flex-col w-[792px] gap-[24px] t:w-[430px] m:w-full">
           <div className="flex w-full justify-between items-center">
             <div className="flex m:gap-[15px]">
               <Image
