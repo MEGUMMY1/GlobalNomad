@@ -160,7 +160,7 @@ function BestActivities() {
       )}
       {bestActivitiesDataNotPc?.activities &&
       bestActivitiesDataNotPc.activities.length > 0 ? (
-        <div className="flex gap-[32px] m:gap-[16px] mt-[34px] overflow-auto scrollbar-hide p:hidden">
+        <div className="flex gap-[32px] m:gap-[16px] m:mt-5 overflow-auto scrollbar-hide p:hidden">
           {bestActivitiesDataNotPc.activities.map((item: ActivityDetail) => (
             <BestActivity
               key={item.id}

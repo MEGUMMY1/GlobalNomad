@@ -30,6 +30,10 @@ export default function NavigationBar() {
     setDarkMode(!darkMode);
   };
 
+  const handleDarkModeChange = () => {
+    setDarkMode(!darkMode);
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -70,9 +74,9 @@ export default function NavigationBar() {
             type="checkbox"
             name="checkbox"
             className="switch"
-            onClick={toggleDarkMode}
+            onChange={handleDarkModeChange}
             checked={darkMode}
-          ></input>
+          />
           {isLoggedIn ? (
             <div className="flex items-center gap-2">
               <button onClick={toggleNotifyDropdown}>
