@@ -11,12 +11,14 @@ import {
 import { apiReview } from '@/pages/api/myReservations/apiMyReservations';
 import { ReviewProps } from './Review.types';
 import { useUserData } from '@/hooks/useUserData';
+import { usePopup } from '@/hooks/usePopup';
 
 export default function Review({ reservation, closeModal }: ReviewProps) {
   const [reviewContent, setReviewContent] = useState<string>('');
   const [rating, setRating] = useState<number>(1);
   const queryClient = useQueryClient();
   const { userData } = useUserData();
+  const { openPopup } = usePopup();
 
   const mutation = useMutation({
     mutationFn: (data: { id: ReservationId; body: ReviewBody }) =>
@@ -33,6 +35,13 @@ export default function Review({ reservation, closeModal }: ReviewProps) {
     },
     onError: (error) => {
       console.error('후기 작성 에러: ', error);
+      if (error.message === 'Request failed with status code 404') {
+        openPopup({
+          popupType: 'alert',
+          content: '삭제된 체험입니다.',
+          btnName: ['확인'],
+        });
+      }
     },
   });
 

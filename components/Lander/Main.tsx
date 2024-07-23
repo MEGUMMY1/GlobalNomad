@@ -67,10 +67,10 @@ function Main() {
           <SearchResults SearchValue={SearchValue} />
         ) : (
           <div>
-            <div className="mt-[40px]">
+            <div className="mt-[30px]">
               <BestActivities></BestActivities>
             </div>
-            <div className=" mt-[60px]">
+            <div className=" mt-[40px]">
               <AllActivities></AllActivities>
             </div>
           </div>

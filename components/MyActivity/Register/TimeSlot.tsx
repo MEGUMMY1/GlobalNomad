@@ -56,7 +56,7 @@ function TimeSlotGroup({
   }, [startTime[index], endTime[index]]);
 
   return (
-    <div className="flex items-end t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[6px]">
+    <div className="flex items-end t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[6px] m:mr-4">
       <div className="flex items-center gap-[20px] t:gap-[4px] m:gap-[6px] grow">
         <div className="m:w-[50%]">
           {isDefault && (

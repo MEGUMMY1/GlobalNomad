@@ -164,7 +164,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
             </div>
           </div>
-          <div className="flex m:items-start m:pt-6">
+          <div className="flex t:items-center m:items-end">
             <ShareButton
               type="none-bg"
               title={activityData?.title}
@@ -212,7 +212,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 체험 설명
               </p>
               <textarea
-                className="py-[16px] px-[20px] h-[200px] resize-none custom-scrollbar dark:bg-var-dark1 dark:text-var-gray2 "
+                className="h-[200px] resize-none custom-scrollbar dark:bg-var-dark1 dark:text-var-gray2 "
                 disabled
               >
                 {activityData?.description}
@@ -273,7 +273,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                           {new Date(review.createdAt).toLocaleDateString()}
                         </p>
                       </div>
-                      <p className="text-nomad-black tracking-tight dark:text-var-gray2">
+                      <p className="text-nomad-black tracking-tight dark:text-var-gray2 whitespace-pre-wrap">
                         {review.content}
                       </p>
                     </div>
