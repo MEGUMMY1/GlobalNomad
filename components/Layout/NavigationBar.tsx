@@ -58,10 +58,10 @@ export default function NavigationBar() {
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
-            <Image 
-              src={darkMode ? darkLogo : Logo} 
-              alt="로고 아이콘" 
-              className="m:w-[120px]" 
+            <Image
+              src={darkMode ? darkLogo : Logo}
+              alt="로고 아이콘"
+              className="m:w-[120px]"
             />
           </Link>
         </div>
