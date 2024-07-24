@@ -1,6 +1,7 @@
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 import RegisterForm from '@/components/MyActivity/Register/RegisterForm';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -15,6 +16,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 function RegisterActivity({ OGTitle, OGUrl }: SSRMetaProps) {
+  // 로그아웃 상태에서 페이지 접근시 로그인 페이지로 redirect
+  useAuthRedirect();
+
   return (
     <>
       <InitialPageMeta title={OGTitle} url={OGUrl} />
