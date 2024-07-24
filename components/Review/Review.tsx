@@ -36,6 +36,7 @@ export default function Review({ reservation, closeModal }: ReviewProps) {
     onError: (error) => {
       console.error('후기 작성 에러: ', error);
       if (error.message === 'Request failed with status code 404') {
+        closeModal();
         openPopup({
           popupType: 'alert',
           content: '삭제된 체험입니다.',
