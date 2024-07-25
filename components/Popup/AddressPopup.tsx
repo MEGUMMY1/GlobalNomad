@@ -2,7 +2,7 @@ import { addressState } from '@/states/registerState';
 import React, { useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import { useRecoilState } from 'recoil';
-import { AddressPopupProps } from './Popup.types';
+import { ClosePopupProps } from './Popup.types';
 import { CloseButtonBold } from '../Button/Button';
 
 const style = {
@@ -10,7 +10,7 @@ const style = {
   height: '600px',
 };
 
-const AddressPopup = ({ closePopup }: AddressPopupProps) => {
+const AddressPopup = ({ closePopup }: ClosePopupProps) => {
   const [address, setAddress] = useRecoilState(addressState);
 
   const handleComplete = (data: any) => {
