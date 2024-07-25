@@ -1,7 +1,7 @@
 import { ActivityDetail, BestActivityProps } from './BestActivities.type';
 import Image from 'next/image';
 import StarImg from '@/public/icon/Star.svg';
-import { ShareButton } from '../ ShareButton/ShareButton';
+import { ShareButton } from '../ShareButton/ShareButton';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {
