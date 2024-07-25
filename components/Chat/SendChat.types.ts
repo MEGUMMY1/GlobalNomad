@@ -1,3 +1,3 @@
 export interface SendChatProps {
-  writer: string;
+  receiver: number;
 }
