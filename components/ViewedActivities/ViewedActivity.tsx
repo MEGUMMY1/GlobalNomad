@@ -13,7 +13,7 @@ function ViewedActivity({ bannerImage, title }: ViewedActivityProps) {
         className="ml-[10px]"
       />
       <div className="mr-[10px] font-sans text-[12px] font-[700] w-[70px] h-[38px] line-clamp-2 overflow-hidden">
-        [TEST] 체험 제목 체험 제목 체험 제목
+        [TEST] 체험 제목 체험 제목 체험 제목 체험 제목
       </div>
     </div>
   );

@@ -15,7 +15,6 @@ import { useRouter } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import Theme from '@/components/Theme/Theme';
 import TopButton from '@/components/Button/TopButton';
-import ViewedActivities from '@/components/ViewedActivities/ViewedActivities';
 
 declare global {
   interface Window {
@@ -75,7 +74,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <Modal />
           <SidenNavigationMobile />
           <SilentRefresh />
-          <ViewedActivities />
           <TopButton />
         </QueryClientProvider>
       )}
