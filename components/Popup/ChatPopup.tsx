@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { CloseButtonBold } from '../Button/Button';
-import { ClosePopupProps } from './Popup.types';
+import { ChatPopupProps } from './Popup.types';
 import socket from '@/server/server';
 
-function ChatPopup({ closePopup }: ClosePopupProps) {
+function ChatPopup({ closePopup, activityId }: ChatPopupProps) {
   const [message, setMessage] = useState('');
 
   const sendMessage = (event: any) => {
     event.preventDefault();
-    socket.emit('sendMessage', message, (res: any) => {
+    socket.emit('sendMessage', activityId, message, (res: any) => {
       console.log('sendMessage res', res);
     });
     setMessage('');
@@ -49,8 +49,12 @@ function ChatPopup({ closePopup }: ClosePopupProps) {
 function ShowChatList() {
   const [received, setReceived] = useState<string[]>([]);
 
+  socket.on('prevMessage', (prevMessage) => {
+    setReceived(prevMessage);
+  });
+
   socket.on('message', (message) => {
-    setReceived([...received, message.chat]);
+    setReceived([...received, message]);
   });
 
   return (

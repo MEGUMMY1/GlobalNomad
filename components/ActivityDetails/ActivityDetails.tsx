@@ -168,7 +168,10 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           <div className="flex items-center t:items-center m:items-end">
             <div className="flex gap-[12px]">
               {!isAuthor && (
-                <SendChat receiver={Number(activityData?.userId)} />
+                <SendChat
+                  receiver={Number(activityData?.userId)}
+                  activityId={Number(activityData?.id)}
+                />
               )}
               <ShareButton
                 type="none-bg"

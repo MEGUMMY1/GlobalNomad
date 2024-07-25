@@ -7,7 +7,7 @@ import { useState } from 'react';
 import ChatPopup from '../Popup/ChatPopup';
 import { SendChatProps } from './SendChat.types';
 
-function SendChat({ receiver }: SendChatProps) {
+function SendChat({ receiver, activityId }: SendChatProps) {
   const isDarkMode = useRecoilValue(darkModeState);
   const { userData } = useUserData();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -17,7 +17,7 @@ function SendChat({ receiver }: SendChatProps) {
   });
 
   const handleClick = () => {
-    socket.emit('login', userData.id, receiver, (res: any) => {
+    socket.emit('login', userData.id, receiver, activityId, (res: any) => {
       console.log('login res: ', res);
     });
     setIsPopupOpen(!isPopupOpen);
@@ -46,7 +46,9 @@ function SendChat({ receiver }: SendChatProps) {
           />
         )}
       </button>
-      {isPopupOpen && <ChatPopup closePopup={closePopup} />}
+      {isPopupOpen && (
+        <ChatPopup closePopup={closePopup} activityId={activityId} />
+      )}
     </>
   );
 }
