@@ -33,7 +33,6 @@ import { sideNavigationState } from '@/states/sideNavigationState';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
 import Image from 'next/image';
-import socket from '@/server/server';
 
 function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
