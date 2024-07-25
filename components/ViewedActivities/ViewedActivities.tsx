@@ -25,8 +25,7 @@ function ViewedActivities() {
   };
 
   return (
-    <div ref={ViewedActivitiesElement}
-    >
+    <div ref={ViewedActivitiesElement}>
       <div className="fixed right-[32px] bottom-[90px] z-30 w-[40px] h-[40px] bg-gray-200 flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-300">
         {!isOpen ? (
           <Image
@@ -52,13 +51,13 @@ function ViewedActivities() {
         <div
           className={`w-[180px] h-[300px] rounded-lg fixed right-[32px] bottom-[138px] z-30 bg-white border-solid border-4 border-gray-500 ${faded} flex flex-col items-center px-[10px] pt-[10px] gap-[10px] overflow-y-auto overflow-x-hidden pb-[10px] custom-scrollbar`}
         >
-          <ViewedActivity bannerImage='' title=''/>
-          <ViewedActivity bannerImage='' title=''/>
-          <ViewedActivity bannerImage='' title=''/>
-          <ViewedActivity bannerImage='' title=''/>
-          <ViewedActivity bannerImage='' title=''/>
-          <ViewedActivity bannerImage='' title=''/>
-          <ViewedActivity bannerImage='' title=''/>
+          <ViewedActivity bannerImage="" title="" />
+          <ViewedActivity bannerImage="" title="" />
+          <ViewedActivity bannerImage="" title="" />
+          <ViewedActivity bannerImage="" title="" />
+          <ViewedActivity bannerImage="" title="" />
+          <ViewedActivity bannerImage="" title="" />
+          <ViewedActivity bannerImage="" title="" />
         </div>
       )}
     </div>
