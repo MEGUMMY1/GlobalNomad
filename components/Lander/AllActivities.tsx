@@ -41,8 +41,8 @@ export function AllActivity({
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
       />
-      <div className="hover:bg-gray-200 dark:hover:bg-var-dark2 rounded px-[4px]">
-        <div className="flex mt-3">
+      <div className="hover:bg-gray-200 dark:hover:bg-var-dark2 rounded px-[4px] mt-[6px] m:mt-[4px]">
+        <div className="flex mt-2">
           <Image src={StarImg} alt="별점 표시 이미지" width={20} height={20} />
           <div className="font-sans text-[16px] font-[500] ml-[5px]">
             {rating ? rating.toFixed(1) : 0}{' '}
@@ -176,7 +176,7 @@ function AllActivities() {
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-auto gap-[20px] t:gap-[14px] m:gap-[8px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide px-[20px] pt-[20px] m:px-0 m:pt-0 m:items-center">
+        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-auto gap-[20px] t:gap-[14px] m:gap-[4px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide px-[20px] pt-[20px] m:px-0 m:pt-[10px] m:items-center">
           {allActivitiesData?.activities.map((data) => (
             <AllActivity
               key={data.id}
