@@ -7,7 +7,11 @@ import { LoginAccess } from '@/pages/api/auth/auth';
 import INSTANCE_URL from '@/pages/api/instance';
 import useLoginState from './useLoginState';
 
-export default function useLogin() {
+interface useLoginProps {
+  isAutoLogin: boolean;
+}
+
+export default function useLogin({ isAutoLogin }: useLoginProps) {
   const { setIsLoggedIn } = useLoginState();
   const { openPopup } = usePopup();
   const postLoginMutation: UseMutationResult<
@@ -37,8 +41,13 @@ export default function useLogin() {
         `Bearer ${accessToken}`;
 
       setIsLoggedIn(true);
-      localStorage.setItem('refreshToken', refreshToken);
-      localStorage.setItem('userId', user.id);
+      if (isAutoLogin) {
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', user.id);
+      } else {
+        sessionStorage.setItem('refreshToken', refreshToken);
+        sessionStorage.setItem('userId', user.id);
+      }
     },
   });
 
