@@ -33,6 +33,7 @@ import { sideNavigationState } from '@/states/sideNavigationState';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import hamburgerIcon from '@/public/icon/hamburger_icon.svg';
 import Image from 'next/image';
+import socket from '@/server/server';
 
 function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   const [isOpen, setIsOpen] = useRecoilState(sideNavigationState);
@@ -213,7 +214,9 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
                 className="p:hidden t:hidden"
                 onClick={() => openSideNavigation()}
               />
-              <h1 className="text-[32px] font-[700]">내 체험 등록</h1>
+              <h1 className="text-[32px] font-[700]">
+                {isEdit ? '내 체험 수정' : '내 체험 등록'}
+              </h1>
             </div>
             <PrimaryButton
               type="submit"
