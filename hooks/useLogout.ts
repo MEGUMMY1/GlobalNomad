@@ -16,6 +16,8 @@ export default function useLogout() {
     setUserData(userDefaultState);
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
+    sessionStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('userId');
     setIsLoggedIn(false);
     route.push('/');
   };
