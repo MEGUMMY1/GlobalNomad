@@ -53,23 +53,30 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     queryFn: () => getActivityInfo({ id }),
   });
 
-  const addViewedActivity = useCallback((newActivity: ViewedActivityProps) => {
-    setViewedInfo(prevViewedInfo => {
-      // 중복되는 항목 찾기
-      const isDuplicate = prevViewedInfo.some(activity => activity.id === newActivity.id);
-      let updatedViewedInfo = prevViewedInfo.filter(activity => activity.id !== newActivity.id);
-      
-      // 새로운 항목 추가
-      updatedViewedInfo = [newActivity, ...updatedViewedInfo];
+  const addViewedActivity = useCallback(
+    (newActivity: ViewedActivityProps) => {
+      setViewedInfo((prevViewedInfo) => {
+        // 중복되는 항목 찾기
+        const isDuplicate = prevViewedInfo.some(
+          (activity) => activity.id === newActivity.id
+        );
+        let updatedViewedInfo = prevViewedInfo.filter(
+          (activity) => activity.id !== newActivity.id
+        );
 
-      // 10개를 초과할 경우 가장 오래된 항목 삭제
-      if (updatedViewedInfo.length > 10) {
-        updatedViewedInfo.pop();
-      }
+        // 새로운 항목 추가
+        updatedViewedInfo = [newActivity, ...updatedViewedInfo];
 
-      return updatedViewedInfo;
-    });
-  }, [setViewedInfo]);
+        // 10개를 초과할 경우 가장 오래된 항목 삭제
+        if (updatedViewedInfo.length > 10) {
+          updatedViewedInfo.pop();
+        }
+
+        return updatedViewedInfo;
+      });
+    },
+    [setViewedInfo]
+  );
 
   const {
     data: reviewData,

@@ -57,16 +57,21 @@ function ViewedActivities() {
           <div className="font-sans text-[14px] font-[600]">
             최근 방문한 체험
           </div>
-          <div className='flex flex-col gap-[10px]'>
+          <div className="flex flex-col gap-[10px]">
             {ViewedActivitiesVlue.map((activity) => (
               <ViewedActivity
+                key={activity.id}
                 id={activity.id}
                 bannerImage={activity.bannerImage}
                 title={activity.title}
               />
             ))}
           </div>
-          {(ViewedActivitiesVlue.length === 10) && <div className='font-sans text-[10px] font-[600]'>*최근 10개 정보까지 볼 수 있습니다.</div>}
+          {ViewedActivitiesVlue.length === 10 && (
+            <div className="font-sans text-[10px] font-[600]">
+              *최근 10개 정보까지 볼 수 있습니다.
+            </div>
+          )}
         </div>
       )}
     </div>
