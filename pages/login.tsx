@@ -6,7 +6,7 @@ import { loginValidation } from '@/components/AuthInputBox/validation';
 import Link from 'next/link';
 import { PrimaryButton } from '@/components/Button/Button';
 import useLogin from '@/hooks/useLogin';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useLoginState from '@/hooks/useLoginState';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
@@ -30,7 +30,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function LoginPage({ OGTitle, OGUrl }: SSRMetaProps) {
-  const { postLoginMutation, isLoading } = useLogin();
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const { postLoginMutation, isLoading } = useLogin({ isAutoLogin: isChecked });
   const { isLoggedIn } = useLoginState();
   const [darkMode, setDarkMode] = useRecoilState(darkModeState);
   const router = useRouter();
@@ -46,6 +47,10 @@ export default function LoginPage({ OGTitle, OGUrl }: SSRMetaProps) {
   };
 
   const handleKeyDown = useEnterSubmit(handleSubmit(onSubmit));
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const { email, password } = watch();
   const isNotError = !errors.email && !errors.password;
@@ -93,6 +98,12 @@ export default function LoginPage({ OGTitle, OGUrl }: SSRMetaProps) {
             register={register}
             errors={errors}
             eyeIconActive={true}
+          />
+          <AuthInputBox
+            type="checkbox"
+            placeholder="자동 로그인"
+            name="agreement"
+            handleChange={handleCheckboxChange}
           />
           <PrimaryButton
             size="large"
