@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
@@ -21,12 +21,14 @@ import {
 } from '@/pages/api/activities/apiactivities.types';
 import Spinner from '../Spinner/Spinner';
 import { userState } from '@/states/userState';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
 import { darkModeState } from '@/states/themeState';
 import { ShareButton } from '../ShareButton/ShareButton';
+import { ViewedActivitiesState } from '@/states/ViewedState';
+import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -35,11 +37,13 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
+  const [ViewedInfo, setViewedInfo] = useRecoilState(ViewedActivitiesState);
   const itemsPerPage = 3;
   const { openPopup } = usePopup();
   const { deleteMyActivityMutation } = useDeleteActivity();
   const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
   const userData = useRecoilValue(userState);
+
   const {
     data: activityData,
     error: activityError,
@@ -48,6 +52,24 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     queryKey: ['activityDetails', id],
     queryFn: () => getActivityInfo({ id }),
   });
+
+  const addViewedActivity = useCallback((newActivity: ViewedActivityProps) => {
+    setViewedInfo(prevViewedInfo => {
+      // 중복되는 항목 찾기
+      const isDuplicate = prevViewedInfo.some(activity => activity.id === newActivity.id);
+      let updatedViewedInfo = prevViewedInfo.filter(activity => activity.id !== newActivity.id);
+      
+      // 새로운 항목 추가
+      updatedViewedInfo = [newActivity, ...updatedViewedInfo];
+
+      // 10개를 초과할 경우 가장 오래된 항목 삭제
+      if (updatedViewedInfo.length > 10) {
+        updatedViewedInfo.pop();
+      }
+
+      return updatedViewedInfo;
+    });
+  }, [setViewedInfo]);
 
   const {
     data: reviewData,
@@ -58,6 +80,16 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
     queryFn: () =>
       getActivityReviews({ id, page: currentPage, size: itemsPerPage }),
   });
+
+  useEffect(() => {
+    if (activityData?.id !== undefined) {
+      addViewedActivity({
+        id: activityData.id,
+        bannerImage: activityData.bannerImageUrl || '',
+        title: activityData.title || '',
+      });
+    }
+  }, [activityData, addViewedActivity]);
 
   if (isLoadingActivity || isLoadingReviews) {
     return <Spinner />;
