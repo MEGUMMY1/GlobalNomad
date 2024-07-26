@@ -83,8 +83,8 @@ export default function NavigationBar() {
                 <div className="relative">
                   <Image src={notificationIcon} alt="알림 아이콘" />
                   {data?.totalCount !== undefined && data?.totalCount > 0 && (
-                    <span className="absolute top-[-7px] right-[-7px] bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
-                      <p className="pr-[1.5px] translate-y-[-10%] translate-x-[5%]">
+                    <span className="absolute top-[-7px] right-[-7px] flex items-center justify-center bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
+                      <p className="translate-y-[-4%] translate-x-[-10%]">
                         {data.totalCount}
                       </p>
                     </span>
