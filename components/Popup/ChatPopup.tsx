@@ -1,67 +1,212 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CloseButtonBold } from '../Button/Button';
-import { ChatPopupProps } from './Popup.types';
+import {
+  ChatListProps,
+  ChatPopupProps,
+  ChatRoomPopupProps,
+  ChatRoomProps,
+} from './ChatPopup.types';
 import socket from '@/server/server';
+import { useUserData } from '@/hooks/useUserData';
+import Image from 'next/image';
 
-function ChatPopup({ closePopup, activityId }: ChatPopupProps) {
+function ChatPopup({
+  closePopup,
+  activityId,
+  isAdmin = false,
+}: ChatPopupProps) {
   const [message, setMessage] = useState('');
+  const [senderId, setSenderId] = useState(0);
+  const [isSendEnabled, setIsSendEnabled] = useState(true);
 
   const sendMessage = (event: any) => {
     event.preventDefault();
-    socket.emit('sendMessage', activityId, message, (res: any) => {
-      console.log('sendMessage res', res);
-    });
+    if (isAdmin) {
+      socket.emit(
+        'sendMessageAdmin',
+        activityId,
+        message,
+        senderId,
+        (res: any) => {
+          console.log('sendMessage admin res', res);
+        }
+      );
+    } else {
+      socket.emit('sendMessage', activityId, message, (res: any) => {
+        console.log('sendMessage res', res);
+      });
+    }
     setMessage('');
+    socket.off('sendMessageAdmin');
+    socket.off('sendMessage');
   };
+
+  useEffect(() => {
+    setIsSendEnabled(!isAdmin);
+  }, []);
 
   return (
     <div className="flex items-center justify-center fixed top-[250px] t:top-[200px] m:top-[210px] right-[56px] w-[400px] z-50">
       <div className="flex flex-col bg-var-gray2 w-full rounded-[20px]">
-        <div className="flex justify-between pt-[10px] px-[20px] items-center">
+        <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[20px]">
           <p>문의 채팅</p>
           <div className="flex items-center h-[30px]">
             <CloseButtonBold onClick={closePopup} />
           </div>
         </div>
         <div className="flex flex-col h-[500px]">
-          <ShowChatList />
-          <div className="pb-[10px] px-[20px] h-[50px]">
-            <form onSubmit={sendMessage} className="flex justify-between">
-              <input
-                type="text"
-                name="message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="메시지 입력"
-                className="w-[70%]"
-              />
-              <button className="bg-nomad-black text-white w-[25%]">
-                전송
-              </button>
-            </form>
-          </div>
+          {isAdmin ? (
+            <ShowChatRoomList
+              activityId={activityId}
+              handleSenderId={setSenderId}
+              handleSendEnable={setIsSendEnabled}
+            />
+          ) : (
+            <ShowChatList />
+          )}
+          {isSendEnabled ? (
+            <div className="pb-[10px] px-[20px] h-[50px]">
+              <form onSubmit={sendMessage} className="flex justify-between">
+                <input
+                  type="text"
+                  name="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="메시지 입력"
+                  className="w-[70%] h-[30px] rounded-[10px] p-[5px] pl-[10px]"
+                />
+                <button className="bg-nomad-black text-white w-[25%] rounded-[5px]">
+                  전송
+                </button>
+              </form>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
   );
 }
 
-function ShowChatList() {
-  const [received, setReceived] = useState<string[]>([]);
+function ShowChatRoomList({
+  activityId,
+  handleSenderId,
+  handleSendEnable,
+}: ChatRoomPopupProps) {
+  const [rooms, setRooms] = useState<ChatRoomProps[]>([]);
+  const [isEnter, setIsEnter] = useState(false);
+  const { userData } = useUserData();
 
-  socket.on('prevMessage', (prevMessage) => {
-    setReceived(prevMessage);
-  });
+  const handleClickRoom = (userId: number) => {
+    socket.emit('inquiryAdmin', userData.id, activityId, userId, (res: any) => {
+      console.log('inquiryAdmin res', res);
+    });
+    setIsEnter(true);
+    handleSenderId(userId);
+    handleSendEnable(true);
+  };
 
-  socket.on('message', (message) => {
-    setReceived([...received, message]);
-  });
+  useEffect(() => {
+    const handleRoomList = (res: ChatRoomProps[]) => {
+      console.log(res);
+      setRooms(res);
+    };
+
+    socket.on('roomList', handleRoomList);
+
+    // 컴포넌트 언마운트 시 핸들러 제거
+    return () => {
+      socket.off('roomList', handleRoomList);
+    };
+  }, []);
 
   return (
-    <div className="px-[20px] py-[20px] w-full h-full">
-      {received.map((message, index) => (
-        <p key={'message' + index}>{message}</p>
-      ))}
+    <>
+      {isEnter && <ShowChatList isAdmin />}
+      {!isEnter &&
+        (rooms.length > 0 ? (
+          <div className="flex flex-col py-[10px]">
+            {rooms.map((room, index) => (
+              <div key={room.user.id} className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => handleClickRoom(room.user.id)}
+                  className={`flex items-center gap-[15px] p-[15px] h-[75px] bg-var-gray2 w-full max-w-[400px] border-b border-solid border-b-var-gray4`}
+                >
+                  <div className="w-[50px] h-[50px] rounded-full overflow-hidden">
+                    <Image
+                      src={room.user.profile}
+                      alt="프로필 이미지"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <div className="font-[500] text-nomad-black">
+                      {room.user.name}
+                    </div>
+                    <div className="text-var-gray6">
+                      {room.message[room.message.length - 1]}
+                    </div>
+                  </div>
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center">
+            <p>아직 문의 채팅이 없습니다.</p>
+          </div>
+        ))}
+    </>
+  );
+}
+
+function ShowChatList({ isAdmin = false }: ChatListProps) {
+  const [received, setReceived] = useState<string[]>([]);
+  const [sender, setSender] = useState<string[]>([]);
+
+  useEffect(() => {
+    // 이전 메시지를 받는 이벤트 핸들러
+    socket.on('prevMessage', (prevChat) => {
+      if (prevChat) {
+        setReceived(prevChat.message);
+        setSender(prevChat.sender);
+      }
+    });
+
+    // 새로운 메시지를 받는 이벤트 핸들러
+    socket.on('message', (chat) => {
+      console.log(chat);
+      setReceived(chat.message);
+      setSender(chat.sender);
+    });
+
+    // 컴포넌트가 언마운트될 때 이벤트 핸들러 제거
+    return () => {
+      socket.off('prevMessage');
+      socket.off('message');
+    };
+  }, []);
+
+  return (
+    <div className="flex flex-col gap-[12px] px-[20px] py-[20px] w-full h-full overflow-y-auto">
+      {received &&
+        received.map((message, index) => (
+          <div
+            key={'message' + index}
+            className={`flex ${isAdmin ? (sender[index] === 'admin' ? 'justify-end' : 'justify-start') : sender[index] === 'user' ? 'justify-end' : 'justify-start'} `}
+          >
+            <div
+              className={`inline-block max-w-max rounded-[10px] p-[8px] pl-[10px] ${
+                sender[index] === 'user'
+                  ? 'bg-var-green2 text-white'
+                  : 'bg-var-gray3'
+              }`}
+            >
+              {message}
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

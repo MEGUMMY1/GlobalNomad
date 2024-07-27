@@ -9,6 +9,9 @@ import { usePopup } from '@/hooks/usePopup';
 import useClickOutside from '@/hooks/useClickOutside';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import Link from 'next/link';
+import ChatPopup from '@/components/Popup/ChatPopup';
+import { useUserData } from '@/hooks/useUserData';
+import socket from '@/server/server';
 
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
@@ -65,12 +68,23 @@ function Card({
   price,
 }: CardProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { userData } = useUserData();
 
   const handleClickMeatball = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
   const handleClosePopover = () => {
     setIsPopoverOpen(false);
+  };
+
+  const handleClickChat = () => {
+    socket.emit('inquiryList', activityId);
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
   };
 
   const formattedPrice = formatCurrency(price);
@@ -115,9 +129,24 @@ function Card({
               /인
             </span>
           </div>
-          <div className="m:w-[32px] m:h-[32px]">
+          <div className="m:w-[32px] m:h-[32px] flex items-center">
+            <button onClick={handleClickChat}>
+              <Image
+                src="/icon/chat_bubble.svg"
+                alt="문의 내역"
+                width={30}
+                height={30}
+              />
+            </button>
             <MeatballButton onClick={handleClickMeatball} />
           </div>
+          {isPopupOpen && (
+            <ChatPopup
+              closePopup={closePopup}
+              activityId={activityId}
+              isAdmin
+            />
+          )}
           {isPopoverOpen ? (
             <Popover
               activityId={activityId}

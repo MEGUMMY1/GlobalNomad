@@ -9,8 +9,3 @@ export interface PopupProps {
 export interface ClosePopupProps {
   closePopup: () => void;
 }
-
-export interface ChatPopupProps {
-  closePopup: () => void;
-  activityId: number;
-}

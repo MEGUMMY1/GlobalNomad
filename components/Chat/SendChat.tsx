@@ -12,14 +12,26 @@ function SendChat({ receiver, activityId }: SendChatProps) {
   const { userData } = useUserData();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  if (!socket.connected) {
+    socket.connect();
+  }
+
   socket.on('connect', () => {
     console.log('connection server');
   });
 
   const handleClick = () => {
-    socket.emit('login', userData.id, receiver, activityId, (res: any) => {
-      console.log('login res: ', res);
-    });
+    socket.emit(
+      'inquiry',
+      userData.id,
+      receiver,
+      activityId,
+      userData.nickname,
+      userData.profileImageUrl,
+      (res: any) => {
+        console.log('login res: ', res);
+      }
+    );
     setIsPopupOpen(!isPopupOpen);
   };
 
