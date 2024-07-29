@@ -31,32 +31,32 @@ export function AllActivity({
   };
 
   return (
-    <div onClick={handleClick} className="cursor-pointer">
+    <div
+      onClick={handleClick}
+      className="cursor-pointer flex flex-col items-start h-full"
+    >
       <div
-        className="w-[276px] t:w-[206px] m:w-[146px] h-[276px] t:h-[206px] m:h-[146px] rounded-xl bg-[url('/image/Testimage.jpg')] bg-cover transition-transform duration-300 hover:scale-110 m:hover:scale-105"
+        className="self-center w-[276px] t:w-[206px] m:w-[146px] h-[276px] t:h-[206px] m:h-[146px] rounded-xl bg-[url('/image/Testimage.jpg')] bg-cover transition-transform duration-300 hover:scale-110 m:hover:scale-105"
         style={{
           backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 20.33%, rgba(0, 0, 0, 0.60) 100%),url(${backgroundImage})`,
         }}
-      ></div>
-      <div className="hover:bg-gray-200 dark:hover:bg-var-dark2 rounded px-[4px]">
-        <div className="flex items-center mt-[16.5px]">
-          <Image
-            src={StarImg}
-            alt="별점 표시 이미지"
-            width={20}
-            height={20}
-          ></Image>
+      />
+      <div className="hover:bg-gray-200 dark:hover:bg-var-dark2 rounded px-[4px] mt-[6px] m:mt-[4px]">
+        <div className="flex mt-2">
+          <Image src={StarImg} alt="별점 표시 이미지" width={20} height={20} />
           <div className="font-sans text-[16px] font-[500] ml-[5px]">
             {rating ? rating.toFixed(1) : 0}{' '}
-            <span className="font-sans text-[16px] text-[#A1A1A1] font-[500] ">
+            <span className="font-sans text-[16px] text-[#A1A1A1] font-[500]">
               ({reviewCount ? reviewCount : 0})
             </span>
           </div>
         </div>
-        <div className="h-[70px] t:h-[30px] m:h-[20px] m:w-[146px] font-sans text-[24px] m:text-[16px] font-[600] mt-[10px] overfolow-hidden t:truncate ... m:truncate ...">
-          {title}
+        <div className="relative mt-[10px]">
+          <div className="font-sans text-[24px] m:text-[16px] font-[600] mt-[10px] line-clamp-2">
+            {title}
+          </div>
         </div>
-        <div className="font-sans text-[28px] text-[20px] m:text-[18px] font-[700] p:mt-[0px] mt-[10px]">
+        <div className="font-sans text-[28px] m:text-[18px] font-[700] p:mt-[0px] mt-[16px] m:mb-6">
           ₩{price.toLocaleString()}{' '}
           <span className="font-sans text-[16px] font-[400]">/ 인</span>
         </div>
@@ -155,7 +155,6 @@ function AllActivities() {
     };
   }, [currentPage, items_per_page, selectedSorted, KategorieName]);
 
-  console.log(currentPage);
   return (
     <div ref={PaginationScrollRef}>
       <div className="flex justify-between">
@@ -169,7 +168,7 @@ function AllActivities() {
         </div>
         <PriceFilterBtn />
       </div>
-      <div className="font-sans text-[36px] font-[700] mt-[40px] mb-[30px]">
+      <div className="font-sans text-[36px] font-[700] mt-[40px] mb-[20px] m:text-lg m:my-5">
         {KategorieName ? KategorieName : '🛼 모든 체험'}
       </div>
       {isLoading ? (
@@ -177,7 +176,7 @@ function AllActivities() {
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-2 gap-[20px] t:gap-[14px] m:gap-[8px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide px-[20px] pt-[20px]">
+        <div className="grid grid-cols-4 t:grid-cols-3 m:grid-cols-2 grid-rows-auto gap-[20px] t:gap-[14px] m:gap-[4px] gap-y-[48px] mb-[40px] overflow-auto scrollbar-hide px-[20px] pt-[20px] m:px-0 m:pt-[10px] m:items-center">
           {allActivitiesData?.activities.map((data) => (
             <AllActivity
               key={data.id}
@@ -191,7 +190,7 @@ function AllActivities() {
           ))}
         </div>
       )}
-      <div className="text-[30px] font-[700] flex justify-center mb-[342px] m:mb-[160px] mt-[70px]">
+      <div className="text-[30px] font-[700] flex justify-center mb-[50px] ">
         {allActivitiesData && allActivitiesData.totalCount > 0 && (
           <Pagination
             totalItems={allActivitiesData?.totalCount}

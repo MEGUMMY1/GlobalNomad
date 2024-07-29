@@ -12,7 +12,11 @@ export const LoginAccess = async (body: LoginBody): Promise<LoginResponse> => {
 export const apiRefreshToken = async (
   setIsLoggedIn: SetterOrUpdater<boolean>
 ): Promise<LoginResponse | void> => {
-  const currentrefreshToken = localStorage.getItem('refreshToken');
+  let currentrefreshToken = localStorage.getItem('refreshToken');
+  if (!currentrefreshToken) {
+    currentrefreshToken = sessionStorage.getItem('refreshToken');
+  }
+
   INSTANCE_URL.defaults.headers.common['Authorization'] =
     `Bearer ${currentrefreshToken}`;
 
@@ -23,7 +27,14 @@ export const apiRefreshToken = async (
     INSTANCE_URL.defaults.headers.common['Authorization'] =
       `Bearer ${accessToken}`;
 
-    localStorage.setItem('refreshToken', refreshToken);
+    if (localStorage.getItem('refreshToken')) {
+      localStorage.setItem('refreshToken', refreshToken);
+    }
+
+    if (sessionStorage.getItem('refreshToken')) {
+      sessionStorage.setItem('refreshToken', refreshToken);
+    }
+
     setIsLoggedIn(true);
 
     setTimeout(apiRefreshToken, JWT_EXPIRY_TIME - 60000);

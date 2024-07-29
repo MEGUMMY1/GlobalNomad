@@ -13,6 +13,7 @@ import SearchResults from './SearchResults';
 import { useRecoilValue } from 'recoil';
 import { mainSearchValueState } from '@/states/mainPageState';
 import { useUserData } from '@/hooks/useUserData';
+import ViewedActivities from '../ViewedActivities/ViewedActivities';
 
 function Main() {
   const [isSearch, setIsSearch] = useState(false);
@@ -67,15 +68,16 @@ function Main() {
           <SearchResults SearchValue={SearchValue} />
         ) : (
           <div>
-            <div className="mt-[40px]">
+            <div className="mt-[30px]">
               <BestActivities></BestActivities>
             </div>
-            <div className=" mt-[60px]">
+            <div className=" mt-[40px]">
               <AllActivities></AllActivities>
             </div>
           </div>
         )}
       </div>
+      <ViewedActivities />
     </main>
   );
 }

@@ -204,7 +204,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
         onSubmit={isEdit ? onSubmitEdit : onSubmitRegister}
         className="m:w-full m:p-[16px]"
       >
-        <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-full m:w-full m:h-full m:px-[15px]">
+        <div className="flex flex-col w-[792px] gap-[24px] t:w-[429px] t:h-full m:w-full m:h-full m:px-0">
           <div className="flex justify-between items-center">
             <div className="flex m:gap-[15px]">
               <Image

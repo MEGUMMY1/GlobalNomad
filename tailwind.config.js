@@ -51,10 +51,15 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateX(-10%)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translatey(10%)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        }
       },
       animation: {
         slideDown: 'slideDown 0.3s ease-in-out forwards',
         slideRight: 'slideRight 0.3s ease-in-out forwards',
+        slideUp: 'slideUp 0.3s ease-in-out forwards',
       },
       screens: {
         m: { max: '743px' },
@@ -68,5 +73,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('tailwind-scrollbar-hide'),
+  ],
 };

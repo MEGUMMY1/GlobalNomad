@@ -22,8 +22,13 @@ export const useUserData = () => {
   }, [userResponseData]);
 
   useEffect(() => {
-    const userId = localStorage.getItem('userId') || '';
-    if (userId) setUserId(userId);
+    let storedUserId = localStorage.getItem('userId') || '';
+    if (!storedUserId) {
+      storedUserId = sessionStorage.getItem('userId') || '';
+    }
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
   }, [userId]);
 
   return { userData, isLoading };

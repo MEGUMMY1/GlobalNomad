@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import '@/styles/calendar.css';
 import '@/styles/togglebutton.css';
+import '@/components/ViewedActivities/ViewedActivities.css';
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

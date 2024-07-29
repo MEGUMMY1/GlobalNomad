@@ -16,7 +16,7 @@ import socket from '@/server/server';
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
     <button
-      className="rounded-[6px] px-[46px] py-[18px] w-auto text-[18px] font-[500] hover:bg-var-gray2 dark:hover:text-var-dark2"
+      className="rounded-[6px] w-full h-[57px] text-[18px] font-[500] hover:bg-var-gray2 dark:hover:text-var-dark2 m:text-sm"
       onClick={onClick}
     >
       {children}
@@ -49,7 +49,7 @@ function Popover({ activityId, closePopover }: PopoverProps) {
 
   return (
     <div
-      className="flex flex-col absolute rounded-[6px] border border-solid border-var-gray3 dark:border-var-dark3 right-0 top-[50px] bg-white dark:bg-var-dark2 z-10 dark:text-var-gray2"
+      className="flex flex-col absolute rounded-[6px] w-40 h-[114px] m:w-24 m:h-20 border border-solid border-var-gray3 dark:border-var-dark3 right-0 top-[50px] m:top-10 bg-white dark:bg-var-dark2 z-10 dark:text-var-gray2"
       ref={popoverRef}
     >
       <PopoverButton onClick={handleClickEdit}>수정하기</PopoverButton>
@@ -117,7 +117,7 @@ function Card({
             <div className="h-[21px] text-var-black m:text-[14px] dark:text-var-gray2">{`${formatNumberToFixed(rating)} (${reviewCount})`}</div>
           </div>
           <Link href={`/activity-details/${activityId}`}>
-            <p className="text-[20px] mt-[8px] font-bold tracking-tight hover:underline t:text-[18px] t:mt-[0] m:text-[14px] m:mt-[0] m:py-[2px]">
+            <p className="text-[20px] mt-[8px] font-bold tracking-tight hover:underline t:text-[18px] t:mt-[0] m:text-[14px] m:mt-[0] m:py-[2px] line-clamp-2">
               {title}
             </p>
           </Link>

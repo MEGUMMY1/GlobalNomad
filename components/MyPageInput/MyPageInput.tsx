@@ -99,7 +99,7 @@ export default function MyPageInput() {
   }
 
   return (
-    <div className="flex flex-col w-[792px] h-[564px] t:w-[429px] t:h-[556px] m:w-full m:h-full m:pb-[150px] m:px-[16px] ">
+    <div className="flex flex-col w-[792px] t:w-[429px] m:w-full m:pb-[150px] m:px-[16px] pb-14">
       <form
         className="flex flex-col gap-[24px] t:gap-[16px]"
         onSubmit={handleSubmit(onSubmit)}

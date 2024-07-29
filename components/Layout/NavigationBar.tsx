@@ -30,6 +30,10 @@ export default function NavigationBar() {
     setDarkMode(!darkMode);
   };
 
+  const handleDarkModeChange = () => {
+    setDarkMode(!darkMode);
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -70,17 +74,17 @@ export default function NavigationBar() {
             type="checkbox"
             name="checkbox"
             className="switch"
-            onClick={toggleDarkMode}
+            onChange={handleDarkModeChange}
             checked={darkMode}
-          ></input>
+          />
           {isLoggedIn ? (
             <div className="flex items-center gap-2">
               <button onClick={toggleNotifyDropdown}>
                 <div className="relative">
                   <Image src={notificationIcon} alt="알림 아이콘" />
                   {data?.totalCount !== undefined && data?.totalCount > 0 && (
-                    <span className="absolute top-[-7px] right-[-7px] bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
-                      <p className="pr-[1.5px] translate-y-[-10%]">
+                    <span className="absolute top-[-7px] right-[-7px] flex items-center justify-center bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
+                      <p className="translate-y-[-4%] translate-x-[-10%]">
                         {data.totalCount}
                       </p>
                     </span>

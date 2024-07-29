@@ -7,15 +7,23 @@ export default function SilentRefresh() {
   const { setIsLoggedIn } = useLoginState();
 
   useEffect(() => {
-    const refreshToken =
+    const refreshTokenInLocal =
       typeof window !== 'undefined'
         ? localStorage.getItem('refreshToken')
         : null;
-    if (refreshToken && !refreshed) {
+    if (refreshTokenInLocal && !refreshed) {
       apiRefreshToken(setIsLoggedIn).then(() => setRefreshed(!refreshed));
     }
 
-    if (!refreshToken) setIsLoggedIn(false);
+    const refreshTokenInSession =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('refreshToken')
+        : null;
+    if (refreshTokenInSession && !refreshed) {
+      apiRefreshToken(setIsLoggedIn).then(() => setRefreshed(!refreshed));
+    }
+
+    if (!refreshTokenInLocal && !refreshTokenInSession) setIsLoggedIn(false);
   }, [refreshed]);
 
   return null;

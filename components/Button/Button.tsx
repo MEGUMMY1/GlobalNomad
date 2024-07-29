@@ -14,7 +14,7 @@ const primarySizeClasses = {
 };
 
 const primaryStyleClasses = {
-  dark: 'bg-nomad-black text-white dark:bg-var-dark3 dark:text-var-gray2 dark:hover:bg-nomad-black',
+  dark: 'bg-nomad-black text-white dark:text-var-gray2 dark:hover:bg-var-green2',
   bright: 'bg-white text-nomad-black border border-nomad-black',
   disabled: 'bg-var-gray6 text-white',
   enabled: 'bg-nomad-black text-white',
