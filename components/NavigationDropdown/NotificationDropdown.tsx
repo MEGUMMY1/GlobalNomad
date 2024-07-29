@@ -6,6 +6,7 @@ import useDeleteNotification from '@/hooks/useDeleteNotification';
 import { useInView } from 'react-intersection-observer';
 import useGetNotificationList from '@/hooks/useGetNotificationList';
 import formatTimeAgo from '@/utils/formatTimeAgo';
+import Link from 'next/link';
 
 export default function NotificationDropdown({
   data,
@@ -84,12 +85,14 @@ export default function NotificationDropdown({
                   <CloseButton onClick={() => handleDelete(notification.id)} />
                 </div>
               </div>
-              <div className="w-[298px] min-h-[44px] mb-[4px]">
-                {ContentWithHighlights(notification.content)}
-              </div>
-              <div className="text-[12px]">
-                {formatTimeAgo(notification.updatedAt)}
-              </div>
+              <Link href="/reservation">
+                <div className="w-[298px] min-h-[44px] mb-[4px]">
+                  {ContentWithHighlights(notification.content)}
+                </div>
+                <div className="text-[12px]">
+                  {formatTimeAgo(notification.updatedAt)}
+                </div>
+              </Link>
             </div>
           ))}
           {hasNextPage && <div ref={ref} />}
