@@ -46,7 +46,7 @@ function ChatPopup({
   }, []);
 
   return (
-    <div className="flex items-center justify-center fixed top-[250px] t:top-[200px] m:top-[210px] right-[56px] w-[400px] z-50">
+    <div className="flex items-center justify-center fixed w-[400px] bottom-[30px] right-[30px] z-50">
       <div className="flex flex-col bg-var-gray2 w-full rounded-[20px]">
         <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[20px]">
           <p>문의 채팅</p>
