@@ -56,8 +56,8 @@ function ChatPopup({
 
   return (
     <div className="flex items-center justify-center fixed w-[400px] bottom-[30px] right-[30px] z-50 m:inset-0 m:w-full m:bg-black m:bg-opacity-70">
-      <div className="flex flex-col bg-var-gray2 w-full rounded-[20px] dark:bg-var-dark2">
-        <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[20px] dark:bg-var-dark3">
+      <div className="flex flex-col bg-var-gray2 w-full rounded-[20px] dark:bg-var-dark2 dark:border-4 dark:border-solid dark:border-var-dark3">
+        <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[15px] dark:bg-var-dark3">
           <p>문의 채팅</p>
           <div className="flex items-center h-[30px]">
             {isEnter && (
