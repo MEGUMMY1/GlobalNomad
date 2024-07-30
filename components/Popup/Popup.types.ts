@@ -6,6 +6,6 @@ export interface PopupProps {
   callBackFnc?: () => void;
 }
 
-export interface AddressPopupProps {
+export interface ClosePopupProps {
   closePopup: () => void;
 }

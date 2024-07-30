@@ -26,6 +26,7 @@ import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
 import { darkModeState } from '@/states/themeState';
+import SendChat from '../Chat/SendChat';
 import { ShareButton } from '../ShareButton/ShareButton';
 import { ViewedActivitiesState } from '@/states/ViewedState';
 import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
@@ -202,14 +203,22 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
             </div>
           </div>
-          <div className="flex t:items-center m:items-end">
-            <ShareButton
-              type="none-bg"
-              title={activityData?.title}
-              bannerImageUrl={activityData?.bannerImageUrl}
-              description={activityData?.description}
-              activityId={id}
-            />
+          <div className="flex items-center t:items-center m:items-end">
+            <div className="flex gap-[12px]">
+              {!isAuthor && (
+                <SendChat
+                  receiver={Number(activityData?.userId)}
+                  activityId={Number(activityData?.id)}
+                />
+              )}
+              <ShareButton
+                type="none-bg"
+                title={activityData?.title}
+                bannerImageUrl={activityData?.bannerImageUrl}
+                description={activityData?.description}
+                activityId={id}
+              />
+            </div>
             {isAuthor && (
               <div className="flex items-center">
                 <MeatballButton onClick={toggleMenu} />

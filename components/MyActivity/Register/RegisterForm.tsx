@@ -213,7 +213,9 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
                 className="p:hidden t:hidden"
                 onClick={() => openSideNavigation()}
               />
-              <h1 className="text-[32px] font-[700]">내 체험 등록</h1>
+              <h1 className="text-[32px] font-[700]">
+                {isEdit ? '내 체험 수정' : '내 체험 등록'}
+              </h1>
             </div>
             <PrimaryButton
               type="submit"
