@@ -9,6 +9,8 @@ import {
 import socket from '@/server/server';
 import { useUserData } from '@/hooks/useUserData';
 import Image from 'next/image';
+import { useRecoilValue } from 'recoil';
+import { darkModeState } from '@/states/themeState';
 
 function ChatPopup({
   closePopup,
@@ -18,6 +20,13 @@ function ChatPopup({
   const [message, setMessage] = useState('');
   const [senderId, setSenderId] = useState(0);
   const [isSendEnabled, setIsSendEnabled] = useState(true);
+  const [isEnter, setIsEnter] = useState(false);
+  const isDarkMode = useRecoilValue(darkModeState);
+
+  const handleClickPrev = () => {
+    setIsEnter(false);
+    setIsSendEnabled(false);
+  };
 
   const sendMessage = (event: any) => {
     event.preventDefault();
@@ -51,6 +60,20 @@ function ChatPopup({
         <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[20px] dark:bg-var-dark3">
           <p>문의 채팅</p>
           <div className="flex items-center h-[30px]">
+            {isEnter && (
+              <button onClick={handleClickPrev}>
+                <Image
+                  src={
+                    isDarkMode
+                      ? 'icon/prev_arrow_dark.svg'
+                      : '/icon/prev_arrow.svg'
+                  }
+                  alt="이전"
+                  width={20}
+                  height={20}
+                />
+              </button>
+            )}
             <CloseButtonBold onClick={closePopup} />
           </div>
         </div>
@@ -60,6 +83,8 @@ function ChatPopup({
               activityId={activityId}
               handleSenderId={setSenderId}
               handleSendEnable={setIsSendEnabled}
+              isEnter={isEnter}
+              handleIsEnter={setIsEnter}
             />
           ) : (
             <ShowChatList />
@@ -91,16 +116,17 @@ function ShowChatRoomList({
   activityId,
   handleSenderId,
   handleSendEnable,
+  isEnter,
+  handleIsEnter,
 }: ChatRoomPopupProps) {
   const [rooms, setRooms] = useState<ChatRoomProps[]>([]);
-  const [isEnter, setIsEnter] = useState(false);
   const { userData } = useUserData();
 
   const handleClickRoom = (userId: number) => {
     socket.emit('inquiryAdmin', userData.id, activityId, userId, (res: any) => {
       console.log('inquiryAdmin res', res);
     });
-    setIsEnter(true);
+    handleIsEnter(true);
     handleSenderId(userId);
     handleSendEnable(true);
   };

@@ -21,6 +21,8 @@ export interface ChatRoomPopupProps {
   activityId: number;
   handleSenderId: Dispatch<SetStateAction<number>>;
   handleSendEnable: Dispatch<SetStateAction<boolean>>;
+  isEnter: boolean;
+  handleIsEnter: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ChatListProps {
