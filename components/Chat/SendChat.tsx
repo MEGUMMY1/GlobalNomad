@@ -41,22 +41,13 @@ function SendChat({ receiver, activityId }: SendChatProps) {
 
   return (
     <>
-      <button type="button" onClick={handleClick}>
-        {isDarkMode ? (
-          <Image
-            src="/icon/live_help_gray.svg"
-            alt="채팅 아이콘"
-            width={34}
-            height={34}
-          />
-        ) : (
-          <Image
-            src="/icon/live_help.svg"
-            alt="채팅 아이콘"
-            width={34}
-            height={34}
-          />
-        )}
+      <button type="button" onClick={handleClick} className="w-[34px] h-[34px]">
+        <Image
+          src={isDarkMode ? '/icon/live_help_gray.svg' : '/icon/live_help.svg'}
+          alt="채팅 아이콘"
+          width={34}
+          height={34}
+        />
       </button>
       {isPopupOpen && (
         <ChatPopup closePopup={closePopup} activityId={activityId} />
