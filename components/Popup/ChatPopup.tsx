@@ -47,8 +47,8 @@ function ChatPopup({
 
   return (
     <div className="flex items-center justify-center fixed w-[400px] bottom-[30px] right-[30px] z-50">
-      <div className="flex flex-col bg-var-gray2 w-full rounded-[20px]">
-        <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[20px]">
+      <div className="flex flex-col bg-var-gray2 w-full rounded-[20px] dark:bg-var-dark2">
+        <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[20px] dark:bg-var-dark3">
           <p>문의 채팅</p>
           <div className="flex items-center h-[30px]">
             <CloseButtonBold onClick={closePopup} />
@@ -130,7 +130,7 @@ function ShowChatRoomList({
                 <button
                   type="button"
                   onClick={() => handleClickRoom(room.user.id)}
-                  className={`flex items-center gap-[15px] p-[15px] h-[75px] bg-var-gray2 w-full max-w-[400px] border-b border-solid border-b-var-gray4`}
+                  className={`flex items-center gap-[15px] p-[15px] h-[75px] bg-var-gray2 w-full max-w-[400px] border-b border-solid border-b-var-gray4 dark:bg-var-dark2`}
                 >
                   <div className="w-[50px] h-[50px] rounded-full overflow-hidden">
                     <Image
@@ -141,7 +141,7 @@ function ShowChatRoomList({
                     />
                   </div>
                   <div className="flex flex-col items-start">
-                    <div className="font-[500] text-nomad-black">
+                    <div className="font-[500] text-nomad-black dark:text-var-gray2">
                       {room.user.name}
                     </div>
                     <div className="text-var-gray6">
@@ -153,7 +153,7 @@ function ShowChatRoomList({
             ))}
           </div>
         ) : (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center mt-[20px]">
             <p>아직 문의 채팅이 없습니다.</p>
           </div>
         ))}
@@ -200,7 +200,7 @@ function ShowChatList({ isAdmin = false }: ChatListProps) {
               className={`inline-block max-w-max rounded-[10px] p-[8px] pl-[10px] ${
                 sender[index] === 'user'
                   ? 'bg-var-green2 text-white'
-                  : 'bg-var-gray3'
+                  : 'bg-var-gray3 text-var-dark1'
               }`}
             >
               {message}
