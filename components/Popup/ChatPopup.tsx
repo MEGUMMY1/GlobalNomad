@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { CloseButtonBold } from '../Button/Button';
 import {
   ChatListProps,
   ChatPopupProps,
@@ -9,8 +8,6 @@ import {
 import socket from '@/server/server';
 import { useUserData } from '@/hooks/useUserData';
 import Image from 'next/image';
-import { useRecoilValue } from 'recoil';
-import { darkModeState } from '@/states/themeState';
 
 function ChatPopup({
   closePopup,
@@ -21,7 +18,6 @@ function ChatPopup({
   const [senderId, setSenderId] = useState(0);
   const [isSendEnabled, setIsSendEnabled] = useState(true);
   const [isEnter, setIsEnter] = useState(false);
-  const isDarkMode = useRecoilValue(darkModeState);
 
   const handleClickPrev = () => {
     setIsEnter(false);
@@ -63,18 +59,21 @@ function ChatPopup({
             {isEnter && (
               <button onClick={handleClickPrev}>
                 <Image
-                  src={
-                    isDarkMode
-                      ? 'icon/prev_arrow_dark.svg'
-                      : '/icon/prev_arrow.svg'
-                  }
+                  src="/icon/prev_arrow.svg"
                   alt="이전"
                   width={20}
                   height={20}
                 />
               </button>
             )}
-            <CloseButtonBold onClick={closePopup} />
+            <button onClick={closePopup}>
+              <Image
+                src="/icon/chat_close.svg"
+                alt="닫기"
+                width={24}
+                height={24}
+              />
+            </button>
           </div>
         </div>
         <div className="flex flex-col h-[500px]">
