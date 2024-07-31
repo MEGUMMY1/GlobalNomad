@@ -32,6 +32,7 @@ function ChatPopup({
 
   const sendMessage = (event: any) => {
     event.preventDefault();
+    if (message === '') return;
     if (isAdmin) {
       socket.emit(
         'sendMessageAdmin',
