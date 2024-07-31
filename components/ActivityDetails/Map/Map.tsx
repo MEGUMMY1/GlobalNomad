@@ -159,7 +159,7 @@ export default function Map({ address }: MapProps) {
       </div>
       <div
         id="map"
-        className="w-[800px] h-[500px] rounded-2xl ipad-pro:h-[400px] t:w-full t:h-[276px] m:w-full m:h-[450px]"
+        className="w-full h-[500px] rounded-2xl ipad-pro:h-[400px] t:h-[276px] m:h-[450px]"
       />
       <div className="flex gap-1 mt-2 items-center">
         <Image
