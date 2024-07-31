@@ -3,6 +3,7 @@ import useLoginState from './useLoginState';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { userDefaultState, userState } from '@/states/userState';
 import { useQueryClient } from '@tanstack/react-query';
+import socket from '@/server/server';
 
 export default function useLogout() {
   const { setIsLoggedIn } = useLoginState();
@@ -19,6 +20,7 @@ export default function useLogout() {
     sessionStorage.removeItem('refreshToken');
     sessionStorage.removeItem('userId');
     setIsLoggedIn(false);
+    socket.disconnect();
     route.push('/');
   };
 
