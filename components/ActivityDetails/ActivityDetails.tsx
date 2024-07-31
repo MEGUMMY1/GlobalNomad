@@ -28,6 +28,7 @@ import { usePopup } from '@/hooks/usePopup';
 import { darkModeState } from '@/states/themeState';
 import SendChat from '../Chat/SendChat';
 import { ShareButton } from '../ShareButton/ShareButton';
+import { loginState } from '@/states/loginState';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -113,6 +114,8 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
 
   const paginatedReviews = reviewData?.reviews || [];
   const isAuthor = activityData?.userId === userData?.id;
+  const isLogined = useRecoilValue(loginState);
+  console.log(isAuthor);
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   return (
@@ -166,7 +169,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           </div>
           <div className="flex items-center t:items-center m:items-center">
             <div className="flex gap-[12px]">
-              {!isAuthor && (
+              {isLogined && !isAuthor && (
                 <SendChat
                   receiver={Number(activityData?.userId)}
                   activityId={Number(activityData?.id)}
