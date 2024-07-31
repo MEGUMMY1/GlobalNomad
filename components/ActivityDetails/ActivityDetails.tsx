@@ -29,6 +29,8 @@ import { darkModeState } from '@/states/themeState';
 import SendChat from '../Chat/SendChat';
 import { ShareButton } from '../ShareButton/ShareButton';
 import { loginState } from '@/states/loginState';
+import { ViewedActivitiesState } from '@/states/ViewedState';
+import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
