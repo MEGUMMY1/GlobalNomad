@@ -12,16 +12,22 @@ import Image from 'next/image';
 function ChatPopup({
   closePopup,
   activityId,
+  activityTitle,
+  activityImage,
   isAdmin = false,
 }: ChatPopupProps) {
   const [message, setMessage] = useState('');
   const [senderId, setSenderId] = useState(0);
+  const [nickname, setNickName] = useState('문의 하기');
+  const [profile, setProfile] = useState(activityImage);
   const [isSendEnabled, setIsSendEnabled] = useState(true);
   const [isEnter, setIsEnter] = useState(false);
 
   const handleClickPrev = () => {
     setIsEnter(false);
     setIsSendEnabled(false);
+    setNickName('문의 내역');
+    setProfile(activityImage);
   };
 
   const sendMessage = (event: any) => {
@@ -48,13 +54,31 @@ function ChatPopup({
 
   useEffect(() => {
     setIsSendEnabled(!isAdmin);
+    if (isAdmin) {
+      setNickName('문의 내역');
+    }
   }, []);
 
   return (
     <div className="flex items-center justify-center fixed w-[400px] bottom-[30px] right-[30px] z-50 m:inset-0 m:w-full m:bg-black m:bg-opacity-70">
       <div className="flex flex-col bg-var-gray2 w-full rounded-[20px] dark:bg-var-dark2 dark:border-4 dark:border-solid dark:border-var-dark3">
-        <div className="flex justify-between pt-[7px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[15px] dark:bg-var-dark3">
-          <p>문의 채팅</p>
+        <div className="flex justify-between h-[64px] pt-[10px] pb-[3px] px-[20px] items-center bg-var-gray3 rounded-t-[15px] dark:bg-var-dark3">
+          <div className="flex gap-[10px]">
+            <div className="w-[40px] h-[40px] rounded-full">
+              <Image
+                src={profile}
+                alt="프로필"
+                width={40}
+                height={40}
+                className="w-[40px] h-[40px] rounded-full"
+              />
+            </div>
+            <div>
+              <p className="font-[500] line-clamp-1">{activityTitle}</p>
+              <p className="text-var-gray6">{`@${nickname}`}</p>
+            </div>
+          </div>
+
           <div className="flex items-center h-[30px]">
             {isEnter && (
               <button onClick={handleClickPrev}>
@@ -84,6 +108,8 @@ function ChatPopup({
               handleSendEnable={setIsSendEnabled}
               isEnter={isEnter}
               handleIsEnter={setIsEnter}
+              handleNickName={setNickName}
+              handleProfile={setProfile}
             />
           ) : (
             <ShowChatList />
@@ -117,17 +143,21 @@ function ShowChatRoomList({
   handleSendEnable,
   isEnter,
   handleIsEnter,
+  handleNickName,
+  handleProfile,
 }: ChatRoomPopupProps) {
   const [rooms, setRooms] = useState<ChatRoomProps[]>([]);
   const { userData } = useUserData();
 
-  const handleClickRoom = (userId: number) => {
+  const handleClickRoom = (userId: number, index: number) => {
     socket.emit('inquiryAdmin', userData.id, activityId, userId, (res: any) => {
       console.log('inquiryAdmin res', res);
     });
     handleIsEnter(true);
     handleSenderId(userId);
     handleSendEnable(true);
+    handleNickName(rooms[index].user.name);
+    handleProfile(rooms[index].user.profile);
   };
 
   useEffect(() => {
@@ -154,7 +184,7 @@ function ShowChatRoomList({
               <div key={room.user.id} className="flex justify-center">
                 <button
                   type="button"
-                  onClick={() => handleClickRoom(room.user.id)}
+                  onClick={() => handleClickRoom(room.user.id, index)}
                   className={`flex items-center gap-[15px] p-[15px] h-[75px] bg-var-gray2 w-full max-w-[400px] border-b border-solid border-b-var-gray4 dark:bg-var-dark2`}
                 >
                   <div className="w-[50px] h-[50px] rounded-full overflow-hidden">

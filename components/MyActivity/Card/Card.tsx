@@ -150,6 +150,8 @@ function Card({
             <ChatPopup
               closePopup={closePopup}
               activityId={activityId}
+              activityTitle={title}
+              activityImage={activityImage}
               isAdmin
             />
           )}

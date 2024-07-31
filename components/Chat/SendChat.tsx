@@ -7,7 +7,12 @@ import { useState } from 'react';
 import ChatPopup from '../Popup/ChatPopup';
 import { SendChatProps } from './SendChat.types';
 
-function SendChat({ receiver, activityId }: SendChatProps) {
+function SendChat({
+  receiver,
+  activityId,
+  activityTitle,
+  activityImage,
+}: SendChatProps) {
   const isDarkMode = useRecoilValue(darkModeState);
   const { userData } = useUserData();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -50,7 +55,12 @@ function SendChat({ receiver, activityId }: SendChatProps) {
         />
       </button>
       {isPopupOpen && (
-        <ChatPopup closePopup={closePopup} activityId={activityId} />
+        <ChatPopup
+          closePopup={closePopup}
+          activityId={activityId}
+          activityTitle={activityTitle}
+          activityImage={activityImage}
+        />
       )}
     </>
   );

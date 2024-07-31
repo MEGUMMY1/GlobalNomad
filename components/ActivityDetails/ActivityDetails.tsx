@@ -211,6 +211,8 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                 <SendChat
                   receiver={Number(activityData?.userId)}
                   activityId={Number(activityData?.id)}
+                  activityTitle={String(activityData?.title)}
+                  activityImage={String(activityData?.bannerImageUrl)}
                 />
               )}
               <ShareButton
