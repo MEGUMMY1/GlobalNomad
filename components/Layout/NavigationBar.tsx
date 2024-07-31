@@ -58,7 +58,7 @@ export default function NavigationBar() {
   }
 
   return (
-    <div className="sticky top-0 flex h-[70px] justify-center items-center z-30 px-[24px] t:px-[24px] m:px-[24px] border-b bg-white dark:bg-var-dark1 border-var-gray3">
+    <div className="sticky top-0 flex h-[70px] justify-center items-center z-30 px-[24px] t:px-[24px] m:px-[24px] border-b border-solid bg-white border-var-gray3 dark:bg-var-dark1 dark:border-var-dark1">
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
@@ -84,7 +84,7 @@ export default function NavigationBar() {
                   <Image src={notificationIcon} alt="알림 아이콘" />
                   {data?.totalCount !== undefined && data?.totalCount > 0 && (
                     <span className="absolute top-[-7px] right-[-7px] flex items-center justify-center bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
-                      <p className="translate-y-[-4%] translate-x-[-10%]">
+                      <p className="translate-y-[2%] translate-x-[-10%]">
                         {data.totalCount}
                       </p>
                     </span>
