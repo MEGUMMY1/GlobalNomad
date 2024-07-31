@@ -26,7 +26,7 @@ const TopButton = () => {
   return (
     <>
       {showButton && (
-        <div className="fixed right-[30px] bottom-[30px] z-30">
+        <div className="fixed right-[30px] m:right-[14px] bottom-[30px] z-30">
           <button
             onClick={scrollToTop}
             type="button"
