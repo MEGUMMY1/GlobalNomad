@@ -12,8 +12,6 @@ import Link from 'next/link';
 import ChatPopup from '@/components/Popup/ChatPopup';
 import { useUserData } from '@/hooks/useUserData';
 import socket from '@/server/server';
-import { useRecoilValue } from 'recoil';
-import { darkModeState } from '@/states/themeState';
 
 function PopoverButton({ children, onClick }: PopoverButtonProps) {
   return (
@@ -71,7 +69,7 @@ function Card({
 }: CardProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const isDarkMode = useRecoilValue(darkModeState);
+  const { userData } = useUserData();
 
   const handleClickMeatball = () => {
     setIsPopoverOpen(!isPopoverOpen);
@@ -134,11 +132,7 @@ function Card({
           <div className="m:w-[32px] m:h-[32px] flex items-center">
             <button onClick={handleClickChat}>
               <Image
-                src={
-                  isDarkMode
-                    ? '/icon/chat_bubble_gray.svg'
-                    : '/icon/chat_bubble.svg'
-                }
+                src="/icon/chat_bubble.svg"
                 alt="문의 내역"
                 width={30}
                 height={30}
@@ -150,8 +144,6 @@ function Card({
             <ChatPopup
               closePopup={closePopup}
               activityId={activityId}
-              activityTitle={title}
-              activityImage={activityImage}
               isAdmin
             />
           )}
