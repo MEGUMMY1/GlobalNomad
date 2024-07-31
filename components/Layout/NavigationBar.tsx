@@ -58,7 +58,7 @@ export default function NavigationBar() {
   }
 
   return (
-    <div className="sticky top-0 flex h-[70px] justify-center items-center z-30 px-[24px] t:px-[24px] m:px-[24px] border-b bg-white dark:bg-var-dark1 border-var-gray3 dark:border-none border-solid">
+    <div className="sticky top-0 flex h-[70px] justify-center items-center z-30 px-[24px] t:px-[24px] m:px-[24px] border-b bg-white dark:bg-var-dark1 border-var-gray3">
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
