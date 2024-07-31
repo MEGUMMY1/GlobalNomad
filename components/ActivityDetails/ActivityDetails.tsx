@@ -34,6 +34,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = useRecoilValue(darkModeState);
+  const isLogined = useRecoilValue(loginState);
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
@@ -114,8 +115,6 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
 
   const paginatedReviews = reviewData?.reviews || [];
   const isAuthor = activityData?.userId === userData?.id;
-  const isLogined = useRecoilValue(loginState);
-  console.log(isAuthor);
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   return (
