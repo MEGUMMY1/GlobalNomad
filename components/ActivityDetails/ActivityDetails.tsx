@@ -294,9 +294,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                   >
                     <div className="flex-shrink-0">
                       <Image
-                        src={
-                          review.user.profileImageUrl || profileThumbnail
-                        }
+                        src={review.user.profileImageUrl || profileThumbnail}
                         alt={`${review.user.nickname}의 프로필 이미지`}
                         width={45}
                         height={45}
