@@ -20,7 +20,7 @@ export const mainPageState = atom<mainPageStateProps>({
     itemsPerPage: 8,
     selectedKategorie: '',
     selectedSorted: '',
-    sortedName: '',
+    sortedName: '정렬',
   },
   effects_UNSTABLE: [persistAtom],
 });

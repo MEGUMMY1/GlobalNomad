@@ -12,7 +12,7 @@ function ViewedActivity({ id, bannerImage, title }: ViewedActivityProps) {
 
   return (
     <div
-      className="min-w-[140px] min-h-[80px] rounded bg-gray-200 flex items-center justify-between cursor-pointer block hover:bg-gray-300"
+      className="min-w-[140px] min-h-[80px] rounded bg-gray-200 flex items-center justify-between cursor-pointer block hover:bg-gray-300 dark:bg-gray-600"
       onClick={linkToClick}
     >
       <Image
