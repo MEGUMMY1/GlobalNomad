@@ -56,7 +56,7 @@ function ViewedActivities() {
       </div>
       {isOpen && (
         <div
-          className={`w-[180px] h-[300px] rounded-lg fixed right-[32px] m:right-[14px] bottom-[138px] z-30 bg-white border-solid border-4 border-gray-800 ${faded} flex flex-col items-center px-[10px] pt-[10px] gap-[10px] overflow-y-auto overflow-x-hidden pb-[10px] custom-scrollbar dark:border-white dark:bg-gray-900`}
+          className={`w-[180px] h-[300px] rounded-lg fixed right-[32px] m:right-[14px] bottom-[138px] z-30 bg-white border-solid border-4 border-gray-800 ${faded} flex flex-col items-center px-[10px] pt-[10px] gap-[10px] overflow-y-auto overflow-x-hidden pb-[10px] custom-scrollbar dark:border-gray-400 dark:bg-gray-900`}
         >
           <div className="font-sans text-[14px] font-[600]">
             최근 방문한 체험
