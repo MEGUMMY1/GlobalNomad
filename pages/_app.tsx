@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import Theme from '@/components/Theme/Theme';
 import TopButton from '@/components/Button/TopButton';
+import ImageModal from '@/components/ImageModal/ImageModal';
 
 declare global {
   interface Window {
@@ -68,6 +69,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Spinner />
       ) : (
         <QueryClientProvider client={queryClient}>
+          <ImageModal />
           <Theme />
           {childContent}
           <Popup />
