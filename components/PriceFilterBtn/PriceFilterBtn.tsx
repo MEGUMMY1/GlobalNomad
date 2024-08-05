@@ -31,10 +31,10 @@ export default function PriceFilterBtn() {
   return (
     <div className="relative" ref={dropDownElement}>
       <button
-        className="flex justify-between items-center w-[147px] h-[53px] border-solid border-[1px] rounded-[15px] t:w-[140px] m:w-[94px] m:h-[41px] border-var-green2 px-[20px] m:px-[10px] bg-white dark:bg-var-dark2 dark:border-none"
+        className="flex justify-between items-center w-[147px] h-[53px] border-solid border-[2px] m:border-[1px] rounded-[15px] t:w-[140px] m:w-[94px] m:h-[41px] border-var-green2 px-[20px] m:px-[10px] bg-white dark:bg-var-dark2 dark:border-none"
         onClick={() => setShowMenuList((prev) => !prev)}
       >
-        <p className="text-[18px] t:text-[16px] m:text-[12px] text-var-green2 dark:text-var-gray2">
+        <p className="text-[18px] t:text-[16px] m:text-[12px] text-var-green2 dark:text-var-gray2 font-[600]">
           {isClient && !showMenuList ? sortedName || '정렬' : sortedName}
         </p>
         <Image

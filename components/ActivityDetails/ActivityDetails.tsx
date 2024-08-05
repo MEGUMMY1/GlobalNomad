@@ -26,11 +26,12 @@ import { ActivityDetailsPageMeta } from '../MetaData/MetaData';
 import useDeleteActivity from '@/hooks/myActivity/useDeleteActivity';
 import { usePopup } from '@/hooks/usePopup';
 import { darkModeState } from '@/states/themeState';
-import SendChat from '../Chat/SendChat';
 import { ShareButton } from '../ShareButton/ShareButton';
 import { ViewedActivitiesState } from '@/states/ViewedState';
 import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
 import useLoginState from '@/hooks/useLoginState';
+import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
+import SendChat from '../Chat/SendChat';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
@@ -256,7 +257,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           />
         )}
         <div className="flex gap-4 m:block m:relative">
-          <div className="mb-20 ipad-pro:w-[725px] w-full m:px-[24px]">
+          <div className="mb-20 w-full ipad-pro:w-[725px] t:w-full m:w-full m:px-[24px]">
             <div className="border-t-2 border-var-gray3 dark:border-var-dark4 border-solid pt-10 m:pt-6" />
             <div className="flex flex-col gap-4">
               <p className="text-nomad-black dark:text-var-gray2 font-bold text-xl">
@@ -306,7 +307,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
                   >
                     <div className="flex-shrink-0">
                       <Image
-                        src={review.user.profileImageUrl}
+                        src={review.user.profileImageUrl || profileThumbnail}
                         alt={`${review.user.nickname}의 프로필 이미지`}
                         width={45}
                         height={45}
