@@ -19,5 +19,9 @@ export const useModal = () => {
     });
   };
 
+  window.addEventListener('popstate', function (event) {
+    closeModal();
+  });
+
   return { openModal, closeModal };
 };
