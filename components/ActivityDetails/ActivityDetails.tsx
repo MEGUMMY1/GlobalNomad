@@ -29,12 +29,15 @@ import { darkModeState } from '@/states/themeState';
 import { ShareButton } from '../ShareButton/ShareButton';
 import { ViewedActivitiesState } from '@/states/ViewedState';
 import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
+import useLoginState from '@/hooks/useLoginState';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
+import SendChat from '../Chat/SendChat';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = useRecoilValue(darkModeState);
+  const isLogined = useLoginState();
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
@@ -203,14 +206,24 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
               </div>
             </div>
           </div>
-          <div className="flex t:items-center m:items-end">
-            <ShareButton
-              type="none-bg"
-              title={activityData?.title}
-              bannerImageUrl={activityData?.bannerImageUrl}
-              description={activityData?.description}
-              activityId={id}
-            />
+          <div className="flex items-center t:items-center m:items-center">
+            <div className="flex gap-[12px]">
+              {isLogined.isLoggedIn && !isAuthor && (
+                <SendChat
+                  receiver={Number(activityData?.userId)}
+                  activityId={Number(activityData?.id)}
+                  activityTitle={String(activityData?.title)}
+                  activityImage={String(activityData?.bannerImageUrl)}
+                />
+              )}
+              <ShareButton
+                type="none-bg"
+                title={activityData?.title}
+                bannerImageUrl={activityData?.bannerImageUrl}
+                description={activityData?.description}
+                activityId={id}
+              />
+            </div>
             {isAuthor && (
               <div className="flex items-center">
                 <MeatballButton onClick={toggleMenu} />
