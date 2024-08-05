@@ -8,7 +8,6 @@ import useLoginState from '@/hooks/useLoginState';
 import { useSideNavigation } from '@/hooks/useSideNavigation';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = '내정보 | GLOBALNOMAD';
