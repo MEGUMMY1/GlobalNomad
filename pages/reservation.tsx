@@ -87,7 +87,7 @@ export default function MyReservationPage({ OGTitle, OGUrl }: SSRMetaProps) {
             )}
           </div>
           {reservationListByFilter.length > 0 ? (
-            <div className="flex flex-col animate-slideDown gap-[24px] overflow-auto scrollbar-hide pb-[20px] h-[calc(100vh-220px)] t:h-[calc(100vh-160px)] t:gap-[16px] m:h-[calc(100vh-100px)]">
+            <div className="flex w-full flex-col animate-slideDown gap-[24px] overflow-auto scrollbar-hide pb-[20px] h-[calc(100vh-220px)] t:h-[calc(100vh-160px)] t:gap-[16px] m:h-[calc(100vh-100px)]">
               {reservationListByFilter.map(
                 (reservationData: MyReservationProps) => {
                   return (
