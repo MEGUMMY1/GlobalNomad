@@ -28,15 +28,15 @@ import { usePopup } from '@/hooks/usePopup';
 import { darkModeState } from '@/states/themeState';
 import SendChat from '../Chat/SendChat';
 import { ShareButton } from '../ShareButton/ShareButton';
-import { loginState } from '@/states/loginState';
 import { ViewedActivitiesState } from '@/states/ViewedState';
 import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
+import useLoginState from '@/hooks/useLoginState';
 
 export default function ActivityDetails({ id }: ActivityDetailsProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = useRecoilValue(darkModeState);
-  const isLogined = useRecoilValue(loginState);
+  const isLogined = useLoginState();
   const [currentPage, setCurrentPage] = useState<number>(
     router.query.page ? parseInt(router.query.page as string, 10) : 1
   );
@@ -207,7 +207,7 @@ export default function ActivityDetails({ id }: ActivityDetailsProps) {
           </div>
           <div className="flex items-center t:items-center m:items-center">
             <div className="flex gap-[12px]">
-              {isLogined && !isAuthor && (
+              {isLogined.isLoggedIn && !isAuthor && (
                 <SendChat
                   receiver={Number(activityData?.userId)}
                   activityId={Number(activityData?.id)}
