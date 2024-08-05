@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const TopButton = () => {
   const [showButton, setShowButton] = useState(false);
+  const router = useRouter();
+  const isActivityDetailPage = router.pathname.startsWith('/activity-details/');
 
   const scrollToTop = () => {
     window.scroll({
@@ -26,7 +29,13 @@ const TopButton = () => {
   return (
     <>
       {showButton && (
-        <div className="fixed right-[30px] m:right-[14px] bottom-[30px] z-30">
+        <div
+          className="fixed z-30"
+          style={{
+            bottom: isActivityDetailPage ? '70px' : '30px',
+            right: isActivityDetailPage ? '13px' : '30px',
+          }}
+        >
           <button
             onClick={scrollToTop}
             type="button"

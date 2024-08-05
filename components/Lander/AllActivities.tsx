@@ -157,7 +157,7 @@ function AllActivities() {
 
   return (
     <div ref={PaginationScrollRef}>
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-[120px]">
         <div className="relative t:w-[520px] m:w-[230px]">
           <div className="flex gap-[24px] t:gap-[14px] m:gap-[8px] t:w-[520px] m:w-[230px] overflow-auto scrollbar-hide">
             {Kategories.map((Kategorie, index) => (
