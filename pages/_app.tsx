@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Popup from '@/components/Popup/Popup';
 import Layout from '@/components/Layout/Layout';
 import Modal from '@/components/Modal/Modal';
-import SilentRefresh from '@/hooks/useSilentRefresh';
+import SilentRefresh from '@/hooks/Auth/useSilentRefresh';
 import Spinner from '@/components/Spinner/Spinner';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';

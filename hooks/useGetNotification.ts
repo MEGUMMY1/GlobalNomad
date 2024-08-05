@@ -4,7 +4,7 @@ import {
   MyNotificationListResponse,
 } from '@/pages/api/myNotifications/apiMyNotifications.types';
 import { apiMyNotificationList } from '@/pages/api/myNotifications/apiMyNotifications';
-import useLoginState from './useLoginState';
+import useLoginState from './Auth/useLoginState';
 
 export default function useGetNotification(query: MyNotificationListQuery) {
   const { cursorId = undefined, size = 10 } = query;

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import useLoginState from './useLoginState';
+import useLoginState from './Auth/useLoginState';
 import { MyNotificationListResponse } from '@/components/NavigationDropdown/NotificationDropdown.types';
 import { apiMyNotificationList } from '@/pages/api/myNotifications/apiMyNotifications';
 import { useMemo } from 'react';

@@ -3,7 +3,7 @@ import { apiSignup } from '@/pages/api/users/apiUsers';
 import { UseMutationResult, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { usePopup } from './usePopup';
+import { usePopup } from '../usePopup';
 
 export default function useSignup() {
   const router = useRouter();

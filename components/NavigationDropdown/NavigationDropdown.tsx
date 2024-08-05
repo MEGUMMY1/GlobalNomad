@@ -1,4 +1,4 @@
-import useLogout from '@/hooks/useLogout';
+import useLogout from '@/hooks/Auth/useLogout';
 import Link from 'next/link';
 
 export default function NavigationDropdown() {

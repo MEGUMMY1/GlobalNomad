@@ -9,7 +9,7 @@ import NavigationDropdown from '../NavigationDropdown/NavigationDropdown';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetNotification from '@/hooks/useGetNotification';
 import NotificationDropdown from '../NavigationDropdown/NotificationDropdown';
-import useLoginState from '@/hooks/useLoginState';
+import useLoginState from '@/hooks/Auth/useLoginState';
 import Spinner from '../Spinner/Spinner';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 import { useRecoilState } from 'recoil';

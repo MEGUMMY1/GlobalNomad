@@ -18,7 +18,7 @@ import { darkModeState } from '@/states/themeState';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import { GetServerSideProps } from 'next';
 import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
-import useAuthRedirect from '@/hooks/useAuthRedirect';
+import useAuthRedirect from '@/hooks/Auth/useAuthRedirect';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = '예약내역 | GLOBALNOMAD';

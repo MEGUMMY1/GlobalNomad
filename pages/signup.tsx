@@ -1,14 +1,14 @@
 import AuthInputBox from '@/components/AuthInputBox/AuthInputBox';
 import Image from 'next/image';
 import Link from 'next/link';
-import useSignup from '@/hooks/useSignup';
+import useSignup from '@/hooks/Auth/useSignup';
 import { useForm } from 'react-hook-form';
 import { signUpFormValues } from '@/components/AuthInputBox/AuthInputBox.types';
 import { signupValidation } from '@/components/AuthInputBox/validation';
 import { PrimaryButton } from '@/components/Button/Button';
 import { SignupBody } from './api/users/apiUser.types';
 import { useEffect, useMemo, useState } from 'react';
-import useLoginState from '@/hooks/useLoginState';
+import useLoginState from '@/hooks/Auth/useLoginState';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import useEnterSubmit from '@/hooks/useEnterSubmit';

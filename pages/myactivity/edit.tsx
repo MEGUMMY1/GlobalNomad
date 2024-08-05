@@ -6,7 +6,7 @@ import { getActivityInfo } from '../api/activities/apiactivities';
 import { GetServerSideProps } from 'next';
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
-import useAuthRedirect from '@/hooks/useAuthRedirect';
+import useAuthRedirect from '@/hooks/Auth/useAuthRedirect';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = '내 체험 수정 | GLOBALNOMAD';
