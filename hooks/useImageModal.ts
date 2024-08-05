@@ -14,5 +14,17 @@ export const useImageModal = () => {
     });
   };
 
+  const closeImageModal = () => {
+    setImageModal({
+      ...imageModal,
+      isOpen: false,
+    });
+  };
+
+  // 브라우저 뒤로가기 버튼이벤트 발생 시 모달 닫기
+  window.addEventListener('popstate', function (event) {
+    closeImageModal();
+  });
+
   return openImageModal;
 };
