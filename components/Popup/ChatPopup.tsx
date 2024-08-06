@@ -124,7 +124,7 @@ function ChatPopup({
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="메시지 입력"
-                  className="w-[70%] h-[30px] rounded-[10px] p-[5px] pl-[10px]"
+                  className="w-[70%] h-[30px] rounded-[10px] p-[5px] pl-[10px] dark:text-black"
                 />
                 <button className="bg-nomad-black text-white w-[25%] rounded-[5px]">
                   전송
