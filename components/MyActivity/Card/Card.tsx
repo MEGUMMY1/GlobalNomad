@@ -132,7 +132,7 @@ function Card({
             </span>
           </div>
           <div className="m:w-[32px] m:h-[32px] flex items-center">
-            <button onClick={handleClickChat}>
+            <button onClick={handleClickChat} disabled={isPopupOpen}>
               <Image
                 src={
                   isDarkMode
