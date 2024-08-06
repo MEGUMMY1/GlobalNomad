@@ -58,7 +58,7 @@ export default function NavigationBar() {
   }
 
   return (
-    <div className="sticky top-0 flex h-[70px] justify-center items-center z-30 px-[24px] t:px-[24px] m:px-[24px] border-b border-solid bg-white border-var-gray3 dark:bg-var-dark1 dark:border-var-dark1">
+    <div className="sticky top-0 flex h-[70px] justify-center items-center z-50 px-[24px] t:px-[24px] m:px-[24px] border-b border-solid border-var-gray3 bg-var-gray1 dark:bg-var-dark1 dark:border-var-dark1">
       <div className="w-[1200px] flex justify-between items-center ">
         <div className="flex items-center">
           <Link href="/">
@@ -78,16 +78,21 @@ export default function NavigationBar() {
             checked={darkMode}
           />
           {isLoggedIn ? (
-            <div className="flex items-center gap-2">
-              <button onClick={toggleNotifyDropdown}>
-                <div className="relative">
-                  <Image src={notificationIcon} alt="알림 아이콘" />
+            <div className="flex items-center justify-center gap-2">
+              <button onClick={toggleNotifyDropdown} className="relative">
+                <Image
+                  src={notificationIcon}
+                  width={25}
+                  height={25}
+                  alt="알림 아이콘"
+                />
+                <div>
                   {data?.totalCount !== undefined && data?.totalCount > 0 && (
-                    <span className="absolute top-[-7px] right-[-7px] flex items-center justify-center bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
-                      <p className="translate-y-[2%] translate-x-[-10%]">
+                    <div className="absolute top-[-7px] right-[-5px] flex items-center justify-center  bg-red-500 w-[15px] h-[15px] text-white text-[12px] rounded-full">
+                      <p className="dark:translate-x-[-0.2px] dark:translate-y-[-0.6px]">
                         {data.totalCount}
                       </p>
-                    </span>
+                    </div>
                   )}
                 </div>
               </button>
