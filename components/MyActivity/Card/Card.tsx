@@ -81,6 +81,14 @@ function Card({
   };
 
   const handleClickChat = () => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+
+    socket.on('connect', () => {
+      console.log('connection server');
+    });
+
     socket.emit('inquiryList', activityId);
     setIsPopupOpen(!isPopupOpen);
   };
