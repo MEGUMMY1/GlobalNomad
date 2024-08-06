@@ -147,10 +147,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   // form 제출이 가능한지 체크 - 시간, 날짜 관련
   const isTimeFieldValid = () =>
     Array.from({ length: timeSlotCount }).every(
-      (_, i) =>
-        selectedDate[i].endTime !== '00:00' &&
-        selectedDate[i].startTime <= selectedDate[i].endTime &&
-        selectedDate[i].date !== ''
+      (_, i) => selectedDate[i].date !== ''
     );
 
   // form 제출이 가능한지 체크
