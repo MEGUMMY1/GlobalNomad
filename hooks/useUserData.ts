@@ -1,9 +1,9 @@
 import { apiMyInfo } from '@/pages/api/users/apiUsers';
-import { userDefaultState, userState } from '@/states/userState';
+import { userState } from '@/states/userState';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import useLoginState from './useLoginState';
+import useLoginState from './Auth/useLoginState';
 
 export const useUserData = () => {
   const [userId, setUserId] = useState<string>();

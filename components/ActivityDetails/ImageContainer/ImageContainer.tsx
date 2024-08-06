@@ -5,6 +5,7 @@ import { ImageContainerProps } from './ImageContainer.types';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { PaginationButton } from '@/components/Button/Button';
+import { useImageModal } from '@/hooks/useImageModal';
 
 export default function ImageContainer({
   bannerImageUrl,
@@ -12,6 +13,7 @@ export default function ImageContainer({
 }: ImageContainerProps) {
   const defaultImage = '/image/globalnomad.png';
   const filledSubImages = [...subImages];
+  const openImageModal = useImageModal();
 
   // 빈 자리는 기본 이미지 채워 넣음
   for (let i = subImages.length + 1; i <= 4; i++) {
@@ -38,8 +40,9 @@ export default function ImageContainer({
 
   return (
     <div className="flex max-w-[1200px] h-[500px] gap-2 my-10 t:w-full t:h-[310px] m:w-full m:h-[300px] m:my-6 m:justify-center m:relative m:left-0 m:right-0">
-      <div
+      <button
         className={`relative w-1/2 h-full ${shouldUseSlider ? 'm:hidden' : 'm:block m:w-full'}`}
+        onClick={() => openImageModal({ imageUrl: bannerImageUrl })}
       >
         <Image
           src={bannerImageUrl}
@@ -48,12 +51,13 @@ export default function ImageContainer({
           objectFit="cover"
           className="object-cover rounded-l-lg m:rounded-none"
         />
-      </div>
+      </button>
       <div className="w-1/2 grid grid-cols-2 grid-rows-2 gap-2 rounded-r-lg overflow-hidden m:hidden">
         {filledSubImages.map((image) => (
-          <div
+          <button
             key={image.id}
             className="relative w-full h-full overflow-hidden"
+            onClick={() => openImageModal({ imageUrl: image.imageUrl })}
           >
             <Image
               src={image.imageUrl}
@@ -62,7 +66,7 @@ export default function ImageContainer({
               objectFit="cover"
               className="object-cover"
             />
-          </div>
+          </button>
         ))}
       </div>
       {shouldUseSlider && (
@@ -71,6 +75,7 @@ export default function ImageContainer({
             {mobileImages.map((image) => (
               <div
                 key={image.id}
+                onClick={() => openImageModal({ imageUrl: image.imageUrl })}
                 className="m:relative m:w-full m:h-[300px] outline-none"
               >
                 <Image

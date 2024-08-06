@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import useLoginState from './useLoginState';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userDefaultState, userState } from '@/states/userState';
 import { useQueryClient } from '@tanstack/react-query';
 import socket from '@/server/server';

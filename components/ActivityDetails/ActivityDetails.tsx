@@ -29,7 +29,7 @@ import { darkModeState } from '@/states/themeState';
 import { ShareButton } from '../ShareButton/ShareButton';
 import { ViewedActivitiesState } from '@/states/ViewedState';
 import { ViewedActivityProps } from '../ViewedActivities/ViewedActivities.type';
-import useLoginState from '@/hooks/useLoginState';
+import useLoginState from '@/hooks/Auth/useLoginState';
 import profileThumbnail from '@/public/image/profile-circle-icon-512x512-zxne30hp.png';
 import SendChat from '../Chat/SendChat';
 

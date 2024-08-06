@@ -33,7 +33,7 @@ function ViewedActivities() {
 
   return (
     <div ref={ViewedActivitiesElement}>
-      <div className="fixed right-[32px] m:right-[14px] bottom-[90px] z-30 w-[40px] h-[40px] bg-gray-200 border-[1px] dark:bg-black dark:border-[2px] dark:bg-var-dark2 border-solid dark:border-var-dark3 flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-300">
+      <div className="fixed right-[32px] m:right-[14px] bottom-[90px] z-30 w-[40px] h-[40px] bg-gray-200 border-[1px] dark:border-[2px] dark:bg-var-dark2 border-solid dark:border-var-dark3 flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-300">
         {!isOpen ? (
           <Image
             src={isDarkMode ? HistoryImg_white : HistoryImg_black}

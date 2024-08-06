@@ -1,7 +1,6 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/router';
-import { usePopup } from './usePopup';
+import { usePopup } from '../usePopup';
 import { LoginBody, LoginResponse } from '@/pages/api/auth/auth.types';
 import { LoginAccess } from '@/pages/api/auth/auth';
 import INSTANCE_URL from '@/pages/api/instance';

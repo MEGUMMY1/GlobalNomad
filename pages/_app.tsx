@@ -8,13 +8,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Popup from '@/components/Popup/Popup';
 import Layout from '@/components/Layout/Layout';
 import Modal from '@/components/Modal/Modal';
-import SilentRefresh from '@/hooks/useSilentRefresh';
+import SilentRefresh from '@/hooks/Auth/useSilentRefresh';
 import Spinner from '@/components/Spinner/Spinner';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SidenNavigationMobile from '@/components/SideNavigation/SideNavigationMobile';
 import Theme from '@/components/Theme/Theme';
 import TopButton from '@/components/Button/TopButton';
+import ImageModal from '@/components/ImageModal/ImageModal';
 
 declare global {
   interface Window {
@@ -68,6 +69,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Spinner />
       ) : (
         <QueryClientProvider client={queryClient}>
+          <ImageModal />
           <Theme />
           {childContent}
           <Popup />

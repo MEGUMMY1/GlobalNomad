@@ -1,7 +1,7 @@
 import { InitialPageMeta } from '@/components/MetaData/MetaData';
 import { SSRMetaProps } from '@/components/MetaData/MetaData.type';
 import RegisterForm from '@/components/MyActivity/Register/RegisterForm';
-import useAuthRedirect from '@/hooks/useAuthRedirect';
+import useAuthRedirect from '@/hooks/Auth/useAuthRedirect';
 import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async () => {
