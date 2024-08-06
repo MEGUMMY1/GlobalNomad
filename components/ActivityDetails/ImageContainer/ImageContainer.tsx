@@ -75,6 +75,7 @@ export default function ImageContainer({
             {mobileImages.map((image) => (
               <div
                 key={image.id}
+                onClick={() => openImageModal({ imageUrl: image.imageUrl })}
                 className="m:relative m:w-full m:h-[300px] outline-none"
               >
                 <Image
