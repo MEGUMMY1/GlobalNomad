@@ -18,6 +18,7 @@ function TimeDropdown({
   handleChange,
   startTime,
   selectedTime,
+  disabled = false,
 }: TimeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,8 +47,11 @@ function TimeDropdown({
     <div ref={dropdownRef} className="relative">
       <button
         type="button"
-        className="flex justify-between items-center p:w-[140px] w-full h-[56px] py-[4px] px-[16px] m:px-[7px] rounded-md border border-var-gray6 dark:border-var-dark3 bg-white dark:bg-var-dark2 text-var-gray7 dark:text-var-gray2 text-left t:w-[104px] m:w-full"
+        className="flex justify-between items-center p:w-[140px] w-full h-[56px] py-[4px] px-[16px] m:px-[7px] 
+        rounded-md border border-var-gray6 dark:border-var-dark3 bg-white dark:bg-var-dark2 text-var-gray7
+         dark:text-var-gray2 text-left t:w-[104px] m:w-full disabled:bg-var-gray2"
         onClick={handleClickDropdown}
+        disabled={disabled}
       >
         <p>{selectedTime}</p>
         <Image

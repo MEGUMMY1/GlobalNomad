@@ -29,3 +29,10 @@ export interface RegisterFormProps {
   };
   isEdit?: boolean;
 }
+
+export interface SelectedDateProps {
+  date: string;
+  startTime: string;
+  endTime: string;
+  id: number;
+}
