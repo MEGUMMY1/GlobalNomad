@@ -179,6 +179,14 @@ function TimeSlot({ isEdit }: TimeSlotProps) {
       setEditSchedule((prevSchedule) => ({
         ...prevSchedule,
         idsToRemove: [...prevSchedule.idsToRemove, id],
+        toAdd: prevSchedule.toAdd.filter(
+          (schedule) =>
+            !(
+              schedule.date === scheduleToRemove.date &&
+              schedule.startTime === scheduleToRemove.startTime &&
+              schedule.endTime === scheduleToRemove.endTime
+            )
+        ),
       }));
     } else {
       console.log('No matching time slot found');
