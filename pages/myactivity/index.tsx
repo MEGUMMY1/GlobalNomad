@@ -55,7 +55,7 @@ function MyActivity({ OGTitle, OGUrl }: SSRMetaProps) {
   return (
     <>
       <InitialPageMeta title={OGTitle} url={OGUrl} />
-      <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0 min-h-screen">
+      <div className="flex justify-center w-full mt-[72px] mb-12 gap-[24px] t:mt-[24px] t:gap-[16px] m:mt-[26px] m:gap-0">
         <div className="m:hidden">
           <SideNavigation />
         </div>
@@ -78,7 +78,7 @@ function MyActivity({ OGTitle, OGUrl }: SSRMetaProps) {
             </PrimaryButton>
           </div>
           {totalCount !== 0 ? (
-            <>
+            <div className="flex flex-col gap-[24px] overflow-auto scrollbar-hide pb-[20px] h-[calc(100vh-220px)] t:h-[calc(100vh-160px)] t:gap-[16px] m:h-[calc(100vh-100px)]">
               {myActivityList?.map((activity) => {
                 return (
                   <Card
@@ -97,7 +97,7 @@ function MyActivity({ OGTitle, OGUrl }: SSRMetaProps) {
                   ...
                 </div>
               )}
-            </>
+            </div>
           ) : (
             <div className="flex flex-col h-[500px] items-center justify-center">
               <Image

@@ -104,6 +104,12 @@ export interface updataMyReservationResponse {
   updatedAt: string;
 }
 
+interface ScheduleToAddProps {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
 export interface updataMyActivitiesParams {
   title: string;
   category: string;
@@ -114,7 +120,7 @@ export interface updataMyActivitiesParams {
   subImageIdsToRemove: number[];
   subImageUrlsToAdd: string[];
   scheduleIdsToRemove: number[];
-  schedulesToAdd: { date: string; startTime: string; endTime: string }[];
+  schedulesToAdd: ScheduleToAddProps[];
 }
 
 export interface updataMyActivitiesResponse {

@@ -15,18 +15,15 @@ import {
   addressState,
   bannerImageState,
   detailImageState,
-  endTimeState,
   selectedDateState,
-  startTimeState,
   timeSlotCountState,
-  timeSlotState,
+  scheduleState,
 } from '@/states/registerState';
 import useRegisterActivity from '@/hooks/myActivity/useRegisterActivity';
-import { formatDate } from '@/utils/formatDate';
 import SidenNavigation from '@/components/SideNavigation/SideNavigation';
 import AddressInput from '@/components/MyActivity/Register/AddressInput';
 import { useEffect } from 'react';
-import { RegisterFormProps } from './RegisterForm.types';
+import { RegisterFormProps, SelectedDateProps } from './RegisterForm.types';
 import useEditMyActivity from '@/hooks/myActivity/useEditMyActivity';
 import useResetRegisterState from '@/hooks/myActivity/useResetRegisterState';
 import { sideNavigationState } from '@/states/sideNavigationState';
@@ -42,11 +39,9 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   const [bannerImage, setBannerImage] = useRecoilState(bannerImageState);
   const [detailImage, setDetailImage] = useRecoilState(detailImageState);
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
-  const [timeSlots, setTimeSlots] = useRecoilState(timeSlotState);
   const [timeSlotCount, setTimeSlotCount] = useRecoilState(timeSlotCountState);
-  const [startTime, setStartTime] = useRecoilState(startTimeState);
-  const [endTime, setEndTime] = useRecoilState(endTimeState);
   const [address, setAddress] = useRecoilState(addressState);
+  const [editSchedules, setEditSchedules] = useRecoilState(scheduleState);
 
   const {
     register,
@@ -69,24 +64,21 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
       setDetailImage(activityData.subImages);
       setAddress(activityData.address);
       setTimeSlotCount(activityData.schedules.length);
-      const tempDate = [...selectedDate];
-      const tempStartTime = [...startTime];
-      const tempEndTime = [...endTime];
-      const tempTimeSlots: { id: number }[] = [];
+      const updatedDates: SelectedDateProps[] = activityData.schedules.map(
+        (schedule) => {
+          // endTime이 '00:00'인 경우 '24:00'으로 변환
+          const normalizedEndTime =
+            schedule.endTime === '00:00' ? '24:00' : schedule.endTime;
 
-      activityData.schedules.forEach((schedule, index) => {
-        tempDate[index] = schedule.date;
-        tempStartTime[index] = schedule.startTime;
-        tempEndTime[index] =
-          schedule.endTime === '00:00' ? '24:00' : schedule.endTime;
-        tempTimeSlots.push({ id: schedule.id });
-      });
-      tempTimeSlots.pop();
-
-      setSelectedDate(tempDate);
-      setStartTime(tempStartTime);
-      setEndTime(tempEndTime);
-      setTimeSlots(tempTimeSlots);
+          return {
+            date: schedule.date,
+            startTime: schedule.startTime,
+            endTime: normalizedEndTime,
+            id: schedule.id,
+          };
+        }
+      );
+      setSelectedDate(updatedDates);
     }
   }, [activityData]);
 
@@ -94,12 +86,13 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   const { postActivityMutation } = useRegisterActivity();
   const { patchActivityMutation } = useEditMyActivity();
 
-  const formatSchedules = () =>
-    Array.from({ length: timeSlotCount }, (_, i) => ({
-      endTime: endTime[i] === '24:00' ? '00:00' : endTime[i],
-      startTime: startTime[i],
-      date: formatDate(selectedDate[i]),
+  const formatSchedules = () => {
+    return selectedDate.map((schedule, i) => ({
+      date: schedule.date,
+      startTime: schedule.startTime,
+      endTime: schedule.endTime === '24:00' ? '00:00' : schedule.endTime,
     }));
+  };
 
   // 수정 버튼 클릭 시
   const onSubmitEdit = async (data: FieldValues) => {
@@ -107,16 +100,14 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
       return;
     }
     const { title, description, price } = data;
-    const schedules = formatSchedules();
     const subImageUrls = detailImage.map((image) => image.imageUrl);
     const subImageIdsToRemove = [];
-    const scheduleIdsToRemove = [];
     for (let i = 0; i < activityData.subImages.length; i++) {
       subImageIdsToRemove.push(activityData.subImages[i].id);
     }
-    for (let i = 0; i < activityData.schedules.length; i++) {
-      scheduleIdsToRemove.push(activityData.schedules[i].id);
-    }
+    const filteredIds = editSchedules.idsToRemove.filter((id) =>
+      activityData.schedules.some((schedule) => schedule.id === id)
+    );
 
     patchActivityMutation.mutate({
       activityId: activityData.id,
@@ -129,8 +120,8 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
         bannerImageUrl: bannerImage[0],
         subImageIdsToRemove,
         subImageUrlsToAdd: subImageUrls,
-        scheduleIdsToRemove,
-        schedulesToAdd: schedules,
+        scheduleIdsToRemove: filteredIds,
+        schedulesToAdd: editSchedules.toAdd,
       },
     });
   };
@@ -156,10 +147,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
   // form 제출이 가능한지 체크 - 시간, 날짜 관련
   const isTimeFieldValid = () =>
     Array.from({ length: timeSlotCount }).every(
-      (_, i) =>
-        endTime[i] !== '00:00' &&
-        startTime[i] <= endTime[i] &&
-        selectedDate[i] !== ''
+      (_, i) => selectedDate[i].date !== ''
     );
 
   // form 제출이 가능한지 체크
@@ -252,7 +240,7 @@ function RegisterForm({ activityData, isEdit = false }: RegisterFormProps) {
               errors={errors}
             />
             <AddressInput />
-            <TimeSlot />
+            <TimeSlot isEdit={isEdit} />
             <UploadBannerImage />
             <UploadDetailImage />
           </div>

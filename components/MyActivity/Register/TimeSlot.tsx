@@ -1,15 +1,16 @@
 import { MinusButton, PlusButton } from '@/components/Button/Button';
 import DateInput from './DateInput';
 import TimeDropdown from './TimeDropdown';
-import { TimeSlotGroupProps } from './TimeSlot.types';
+import { TimeSlotGroupProps, TimeSlotProps } from './TimeSlot.types';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {
-  startTimeState,
-  endTimeState,
   timeSlotCountState,
-  timeSlotState,
+  scheduleState,
+  selectedDateState,
+  ScheduleToAddProps,
 } from '@/states/registerState';
+import { useQuery } from '@tanstack/react-query';
 
 function autoSelectedTime(time: string) {
   const tempTime = Number(time.substring(0, 2)) + 1;
@@ -24,36 +25,52 @@ function TimeSlotGroup({
   handleClickPlus = () => {},
   handleClickMinus = (id: number) => {},
   id = -1,
-  index,
+  index = -1,
+  disabled = false,
 }: TimeSlotGroupProps) {
   const [selectedStartTime, setSelectedStartTime] = useState<string>('00:00');
-  const [selectedEndTime, setSelectedEndTime] = useState<string>('00:00');
-  const [startTime, setStartTime] = useRecoilState(startTimeState);
-  const [endTime, setEndTime] = useRecoilState(endTimeState);
+  const [selectedEndTime, setSelectedEndTime] = useState<string>('01:00');
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  const [editSchedule, setEditSchedule] = useRecoilState(scheduleState);
 
   const handleChange = (type: string, time: string) => {
     if (type === 'start') {
       setSelectedStartTime(time);
       setSelectedEndTime(autoSelectedTime(time));
-      const updatedStartTime = [...startTime];
-      updatedStartTime[index] = time;
-      setStartTime(updatedStartTime);
-
-      const updatedEndTime = [...endTime];
-      updatedEndTime[index] = autoSelectedTime(time);
-      setEndTime(updatedEndTime);
+      setSelectedDate((prevSelectedDate) =>
+        prevSelectedDate.map((selectedDate) =>
+          selectedDate.id === id
+            ? {
+                ...selectedDate,
+                startTime: time,
+                endTime: autoSelectedTime(time),
+              }
+            : selectedDate
+        )
+      );
+      setEditSchedule((prevSchedule) => ({
+        ...prevSchedule,
+        toAdd: prevSchedule.toAdd.map((schedule) =>
+          schedule.id === id ? { ...schedule, startTime: time } : schedule
+        ),
+      }));
     } else {
       setSelectedEndTime(time);
-      const updatedEndTime = [...endTime];
-      updatedEndTime[index] = time;
-      setEndTime(updatedEndTime);
+      setSelectedDate((prevSelectedDate) =>
+        prevSelectedDate.map((selectedDate) =>
+          selectedDate.id === id
+            ? { ...selectedDate, endTime: time }
+            : selectedDate
+        )
+      );
+      setEditSchedule((prevSchedule) => ({
+        ...prevSchedule,
+        toAdd: prevSchedule.toAdd.map((schedule) =>
+          schedule.id === id ? { ...schedule, endTime: time } : schedule
+        ),
+      }));
     }
   };
-
-  useEffect(() => {
-    setSelectedStartTime(startTime[index]);
-    setSelectedEndTime(endTime[index]);
-  }, [startTime[index], endTime[index]]);
 
   return (
     <div className="flex items-end t:justify-between m:justify-between gap-[20px] t:gap-[4px] m:gap-[6px] m:mr-4">
@@ -64,7 +81,7 @@ function TimeSlotGroup({
               날짜
             </label>
           )}
-          <DateInput index={index} />
+          <DateInput id={id} disabled={disabled} />
         </div>
         <div className="flex gap-[12px] items-center t:gap-[2px] m:gap-[2px] grow">
           <div className="m:w-[50%]">
@@ -76,8 +93,9 @@ function TimeSlotGroup({
             <TimeDropdown
               type="start"
               handleChange={handleChange}
-              startTime={startTime[index]}
-              selectedTime={selectedStartTime}
+              startTime={selectedStartTime}
+              selectedTime={selectedDate[index].startTime}
+              disabled={disabled}
             />
           </div>
           <div>
@@ -99,8 +117,9 @@ function TimeSlotGroup({
             <TimeDropdown
               type="end"
               handleChange={handleChange}
-              startTime={startTime[index]}
-              selectedTime={selectedEndTime}
+              startTime={selectedStartTime}
+              selectedTime={selectedDate[index].endTime}
+              disabled={disabled}
             />
           </div>
         </div>
@@ -120,41 +139,115 @@ function TimeSlotGroup({
   );
 }
 
-function TimeSlot() {
-  const [timeSlots, setTimeSlots] = useRecoilState(timeSlotState);
+function TimeSlot({ isEdit }: TimeSlotProps) {
   const [timeSlotCount, setTimeSlotCount] = useRecoilState(timeSlotCountState);
+  const [selectedDates, setSelectedDates] = useRecoilState(selectedDateState);
+  const [editSchedule, setEditSchedule] = useRecoilState(scheduleState);
+  // const [disabledInputId, setDisabledInputId] = useState<number[]>([]);
 
   const handleClickPlus = () => {
-    const newTimeSlot = {
-      id: Date.now(),
+    const newId = Date.now();
+    setSelectedDates((prevSelectedDate) => [
+      ...prevSelectedDate,
+      {
+        date: '',
+        startTime: '00:00',
+        endTime: '01:00',
+        id: newId,
+      },
+    ]);
+    const newSchedule: ScheduleToAddProps = {
+      date: '',
+      startTime: '00:00',
+      endTime: '01:00',
+      id: newId,
     };
-    setTimeSlots((prevTimeSlots) => [...prevTimeSlots, newTimeSlot]);
+    setEditSchedule((prevSchedule) => ({
+      ...prevSchedule,
+      toAdd: [...prevSchedule.toAdd, newSchedule],
+    }));
     setTimeSlotCount(timeSlotCount + 1);
   };
 
   const handleClickMinus = (id: number) => {
-    setTimeSlots((prevTimeSlots) =>
-      prevTimeSlots.filter((timeSlot) => timeSlot.id !== id)
-    );
     setTimeSlotCount(timeSlotCount - 1);
+
+    const scheduleToRemove = selectedDates.find(
+      (selectedDate) => selectedDate.id === id
+    );
+    if (scheduleToRemove) {
+      setEditSchedule((prevSchedule) => ({
+        ...prevSchedule,
+        idsToRemove: [...prevSchedule.idsToRemove, id],
+        toAdd: prevSchedule.toAdd.filter(
+          (schedule) =>
+            !(
+              schedule.date === scheduleToRemove.date &&
+              schedule.startTime === scheduleToRemove.startTime &&
+              schedule.endTime === scheduleToRemove.endTime
+            )
+        ),
+      }));
+    } else {
+      console.log('No matching time slot found');
+    }
+    setSelectedDates((prevSelectedDate) =>
+      prevSelectedDate.filter((selectedDate) => selectedDate.id !== id)
+    );
   };
+
+  useEffect(() => {
+    if (!isEdit) {
+      const initialDate = {
+        date: '',
+        startTime: '00:00',
+        endTime: '01:00',
+        id: Date.now(),
+      };
+
+      setSelectedDates((prevSelectedDate) => [
+        ...prevSelectedDate,
+        initialDate,
+      ]);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (isEdit && disabledInputId.length === 0) {
+  //     setDisabledInputId((prevId) => [
+  //       ...prevId,
+  //       ...selectedDates.map((date) => date.id),
+  //     ]);
+  //   }
+  // }, [selectedDates]);
+
+  // 상태 업데이트 후의 값을 로그로 확인하기 위한 useEffect
+  useEffect(() => {
+    console.log('State after update:', editSchedule);
+  }, [editSchedule]); // selectedDates가 변경될 때마다 실행
+
+  // useEffect(() => {
+  //   console.log('disabled input: ', disabledInputId);
+  // }, [disabledInputId]);
 
   return (
     <div>
       <label className="text-[24px] font-[700] block mb-[24px] text-var-black dark:text-var-gray2">
         예약 가능한 시간대
       </label>
-      <TimeSlotGroup isDefault handleClickPlus={handleClickPlus} index={0} />
-      <hr className="mt-[20px] mb-[20px]" />
       <div className="space-y-[20px]">
-        {timeSlots.map((timeSlot, index) => (
+        <hr className="mt-[20px] mb-[20px]" />
+        {selectedDates.map((selectedDate, index) => (
           <TimeSlotGroup
-            key={timeSlot.id}
-            id={timeSlot.id}
-            index={index + 1}
+            key={selectedDate.id}
+            id={selectedDate.id}
+            index={index}
+            isDefault={index === 0}
+            handleClickPlus={handleClickPlus}
             handleClickMinus={() => {
-              handleClickMinus(timeSlot.id);
+              handleClickMinus(selectedDate.id);
             }}
+            // disabled={disabledInputId.includes(selectedDate.id)}
           />
         ))}
       </div>

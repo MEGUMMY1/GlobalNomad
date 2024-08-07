@@ -4,11 +4,9 @@ import {
   addressState,
   bannerImageState,
   detailImageState,
-  endTimeState,
+  scheduleState,
   selectedDateState,
-  startTimeState,
   timeSlotCountState,
-  timeSlotState,
 } from '@/states/registerState';
 
 function useResetRegisterState() {
@@ -17,10 +15,8 @@ function useResetRegisterState() {
   const resetBannerImage = useResetRecoilState(bannerImageState);
   const resetDetailImage = useResetRecoilState(detailImageState);
   const resetSelectedDate = useResetRecoilState(selectedDateState);
-  const resetTimeSlot = useResetRecoilState(timeSlotState);
   const resetTimeSlotCount = useResetRecoilState(timeSlotCountState);
-  const resetStartTime = useResetRecoilState(startTimeState);
-  const resetEndTime = useResetRecoilState(endTimeState);
+  const resetSchedule = useResetRecoilState(scheduleState);
 
   const resetAllStates = () => {
     resetKategorie();
@@ -28,10 +24,8 @@ function useResetRegisterState() {
     resetBannerImage();
     resetDetailImage();
     resetSelectedDate();
-    resetTimeSlot();
     resetTimeSlotCount();
-    resetStartTime();
-    resetEndTime();
+    resetSchedule();
   };
 
   return resetAllStates;

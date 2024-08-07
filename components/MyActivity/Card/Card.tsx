@@ -81,6 +81,14 @@ function Card({
   };
 
   const handleClickChat = () => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+
+    socket.on('connect', () => {
+      console.log('connection server');
+    });
+
     socket.emit('inquiryList', activityId);
     setIsPopupOpen(!isPopupOpen);
   };
@@ -132,7 +140,7 @@ function Card({
             </span>
           </div>
           <div className="m:w-[32px] m:h-[32px] flex items-center">
-            <button onClick={handleClickChat}>
+            <button onClick={handleClickChat} disabled={isPopupOpen}>
               <Image
                 src={
                   isDarkMode
