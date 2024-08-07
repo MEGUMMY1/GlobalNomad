@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { EventClickArg } from '@fullcalendar/core';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMyMonthSchedule } from '@/pages/api/myActivities/apimyActivities';
 import { CalendarProps } from './Calendar.types';
 import { getMyMonthScheduleResponse } from '@/pages/api/myActivities/apimyActivities.types';
@@ -17,8 +17,9 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
   const darkMode = useRecoilValue(darkModeState);
   const year = new Date().getFullYear().toString();
   const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  const queryClient = useQueryClient();
 
-  const { data, error, isLoading } = useQuery<
+  const { data, error, isLoading, refetch } = useQuery<
     getMyMonthScheduleResponse[],
     Error
   >({
@@ -39,6 +40,9 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
         <ReservationModalContent
           selectedDate={newDate}
           activityId={activityId}
+          onActionComplete={() => {
+            refetch();
+          }}
         />
       ),
     });
@@ -59,7 +63,6 @@ const Calendar: React.FC<CalendarProps> = ({ activityId }) => {
   const events =
     data?.flatMap((item: getMyMonthScheduleResponse) => {
       const { date, reservations } = item;
-
       const events = [];
 
       if (reservations.completed > 0) {
