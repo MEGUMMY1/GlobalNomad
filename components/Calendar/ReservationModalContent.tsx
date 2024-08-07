@@ -125,7 +125,8 @@ const ApplicationList: React.FC<{
   activityId: number;
   scheduleId: number;
   status: string;
-}> = ({ activityId, scheduleId, status }) => {
+  onActionComplete: () => void;
+}> = ({ activityId, scheduleId, status, onActionComplete }) => {
   const {
     data: timeSchedule,
     isLoading: isTimeScheduleLoading,
@@ -167,6 +168,7 @@ const ApplicationList: React.FC<{
         queryKey: ['myReservations', activityId],
       });
       refetch();
+      onActionComplete();
     },
     onError: (error) => {
       console.error('Error updating reservation:', error);
@@ -255,7 +257,8 @@ const ApplicationList: React.FC<{
 const ReservationModalContent: React.FC<{
   selectedDate: Date;
   activityId: number;
-}> = ({ selectedDate, activityId }) => {
+  onActionComplete: () => void;
+}> = ({ selectedDate, activityId, onActionComplete }) => {
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(
     null
   );
@@ -265,6 +268,13 @@ const ReservationModalContent: React.FC<{
 
   const handleSelectTime = (scheduleId: number) => {
     setSelectedScheduleId(scheduleId);
+  };
+
+  const handleActionComplete = () => {
+    refetchPending();
+    refetchConfirmed();
+    refetchDeclined();
+    onActionComplete();
   };
 
   const { data: pendingData, refetch: refetchPending } = useMyTimeSchedule({
@@ -319,6 +329,7 @@ const ReservationModalContent: React.FC<{
               activityId={activityId}
               scheduleId={selectedScheduleId}
               status="pending"
+              onActionComplete={handleActionComplete}
             />
           )}
         </div>
@@ -333,6 +344,7 @@ const ReservationModalContent: React.FC<{
               activityId={activityId}
               scheduleId={selectedScheduleId}
               status="confirmed"
+              onActionComplete={handleActionComplete}
             />
           )}
         </div>
@@ -347,6 +359,7 @@ const ReservationModalContent: React.FC<{
               activityId={activityId}
               scheduleId={selectedScheduleId}
               status="declined"
+              onActionComplete={handleActionComplete}
             />
           )}
         </div>
