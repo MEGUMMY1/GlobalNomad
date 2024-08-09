@@ -1,4 +1,19 @@
-# 🫂 팀원
+# 🌐 GLOBAL_NOMAD
+<div align="center">
+https://globalnomad-5-8.netlify.app/
+</div>
+
+## 💡 서비스 소개
+<div align="center">
+<img src="https://github.com/user-attachments/assets/55a9c18b-0f8a-4012-bfca-914a4c2f86db" alt="image" width="600"/>
+  <br>  <br>
+
+> 사람들이 여행을 갈 때, 가서 뭘 할지, 비용은 얼마인지 등 여러 고민을 하게 된다. <br>
+바쁜 현대인의 이런 고민을 줄여주기 위해 플랫폼 안에 잘 짜인 <br>체험 상품을 보고 간단하게 예약할 수 있는 서비스입니다.
+<br>
+</div>
+
+## 🫂 팀원
 <div align="center">
   
 | 이름       | 역할                                                                                                                                             |
@@ -11,22 +26,12 @@
 
 </div>
 
-# 💡 서비스 소개
-<div align="center">
-<img src="https://github.com/user-attachments/assets/55a9c18b-0f8a-4012-bfca-914a4c2f86db" alt="image" width="600"/>
-  <br>  <br>
-
-> 사람들이 여행을 갈 때, 가서 뭘 할지, 비용은 얼마인지 등 여러 고민을 하게 된다. <br>
-바쁜 현대인의 이런 고민을 줄여주기 위해 플랫폼 안에 잘 짜인 체험 상품을 보고 간단하게 예약할 수 있는 서비스입니다.
-<br>
-</div>
-
-# 🧑‍💻 개발 환경
+## 🧑‍💻 개발 환경
 <div align="center">
 <img src="https://github.com/user-attachments/assets/9eecd07b-f981-4231-a37d-0e1e87ed554d" alt="image" width="600"/>
 </div>
 
-# 📌 컨벤션
+## 📌 컨벤션
 <details>
 <summary>컨벤션</summary>
 
@@ -41,13 +46,13 @@
 
 </details>
 
-# 🛠️ CI/CD
+## 🛠️ CI/CD
 * github actions를 활용해서 지속적 통합 및 배포
 * 개인 브랜치에서 변경 사항을 Push하면, CI가 동작된다.
 * 개인 브랜치에서 master로 Pull Request를 보내면, CI가 동작되고 build error가 없어야 Merge가 된다.
 * Merge가 되면, 운영 리소스에 배포된다.
 
-# 🏗️ 프로젝트 구조
+## 🏗️ 프로젝트 구조
 
 <details>
 <summary>프로젝트 구조</summary>
@@ -125,8 +130,31 @@
 
 </details>
 
+## 🎞️ 시연
+<div align="center">
 
-# 🤔 회고
+  ### [로그인] 
+![login](https://github.com/user-attachments/assets/803476ca-40ec-465f-901f-1334222fe6d4)
+  ### [메인화면1]
+![landing](https://github.com/user-attachments/assets/78827ceb-355c-436b-9b95-c3fc52e26754)
+  ### [메인화면2]
+![landing2](https://github.com/user-attachments/assets/ef194c13-2aca-46f9-ae60-2d95c2712315)
+  ### [예약 내역]
+![reservationlist](https://github.com/user-attachments/assets/dc1ef0c8-ed93-4110-8eeb-c7baf834a01e)
+  ### [체험 등록]
+![register](https://github.com/user-attachments/assets/e1d3855b-ec05-406b-80f2-49205dae2ff5)
+  ### [문의 채팅, 체험 수정]
+![chatnedit](https://github.com/user-attachments/assets/7e152993-4d72-420c-89db-cc02f1632c0f)
+  ### [예약 현황, 알림]
+![calendarnnoti](https://github.com/user-attachments/assets/40298133-dcbb-49de-be1c-0cebfd467ec4)
+  ### [체험 상세]
+![activity](https://github.com/user-attachments/assets/1839fbdf-3d09-4bd4-9e5c-e8fe9d44f540)
+  ### [모바일 반응형]
+![mobile](https://github.com/user-attachments/assets/3bf9d537-1bc2-498a-9958-5dd05649b22e)
+  
+</div>
+
+## 🤔 회고
 <details>
 <summary>⭐ KEEP</summary>
 
