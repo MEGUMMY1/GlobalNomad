@@ -1,6 +1,8 @@
 # 🌐 GLOBAL_NOMAD
+
 <div align="center">
-https://globalnomad-5-8.netlify.app/
+    <a href="https://globalnomad-5-8.netlify.app/" target="_blank">서비스 배포 링크</a> <br>
+    <a href="https://towering-omelet-db2.notion.site/GLOBALNOMAD_8-93b3ea7d66344c9c9a5e910e3aa65571?pvs=74" target="_blank">협업 노션 링크</a>
 </div>
 
 ## 💡 서비스 소개
